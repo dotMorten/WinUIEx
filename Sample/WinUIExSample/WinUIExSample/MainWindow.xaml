@@ -1,0 +1,31 @@
+﻿<winex:WindowEx
+    x:Class="WinUIExSample.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:WinUIExSample"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:winex="using:WinUIEx"
+    IsMinimizeButtonVisible="False"
+    IsMaximizeButtonVisible="True"
+    IsCloseButtonVisible="True"
+    mc:Ignorable="d">
+    
+    <winex:WindowEx.Icon>
+        <BitmapImage UriSource="ms-appx:///Images/WindowIcon.gif" DecodePixelHeight="32" />
+    </winex:WindowEx.Icon>
+
+    <winex:WindowEx.TitleBar>
+        <TextBlock Text="WinUI Window Extensions" VerticalAlignment="Center" />
+    </winex:WindowEx.TitleBar>
+    
+    <StackPanel Margin="20">
+        <TextBlock Text="Hello WinUI" />
+        <ToggleSwitch Header="Show Minimize Button" IsOn="{x:Bind IsMinimizeButtonVisible, Mode=TwoWay}" />
+        <ToggleSwitch Header="Show Maximize Button" IsOn="{x:Bind IsMaximizeButtonVisible, Mode=TwoWay}" />
+        <ToggleSwitch Header="Show Close Button" IsOn="{x:Bind IsCloseButtonVisible, Mode=TwoWay}" />
+        <ToggleSwitch Header="Always On Top" IsOn="{x:Bind IsAlwaysOnTop, Mode=TwoWay}" />
+        <ToggleSwitch Header="ExtendsContentIntoTitleBar" IsOn="{x:Bind ExtendsContentIntoTitleBar, Mode=TwoWay}" />
+        <Button Content="Center On Screen" Click="Center_Click" />
+    </StackPanel>
+</winex:WindowEx>

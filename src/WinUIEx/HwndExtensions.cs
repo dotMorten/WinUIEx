@@ -41,7 +41,7 @@ namespace WinUIEx
         /// </param>
         /// <returns>
         /// <para><c>true</c> if the window was brought to the foreground.</para>
-        /// <para><c>false</c> if the window was not brought to the foreground, the return value is zero.</para>
+        /// <para><c>false</c> if the window was not brought to the foreground.</para>
         /// </returns>
         /// <remarks>
         /// <para><see href = "https://docs.microsoft.com/windows/win32/api//winuser/nf-winuser-setforegroundwindow">Learn more about this API from docs.microsoft.com</see>.</para>
@@ -77,7 +77,6 @@ namespace WinUIEx
         /// </summary>
         /// <param name="hwnd">Window handle</param>
         /// <param name="enable">Whether to display on top</param>
-        /// <returns><c>true</c> it the function succeeds</returns>
         public static void SetAlwaysOnTop(IntPtr hwnd, bool enable)
             => SetWindowPosOrThrow(new HWND(hwnd), new HWND(enable ? -1 : -2), 0, 0, 0, 0, (uint) (SetWindowPos_Flags.SWP_NOSIZE | SetWindowPos_Flags.SWP_NOMOVE));
 

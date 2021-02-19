@@ -33,7 +33,7 @@ namespace WinUIEx
         /// </param>
         /// <returns>
         /// <para><c>true</c> if the window was brought to the foreground.</para>
-        /// <para><c>false</c> if the window was not brought to the foreground, the return value is zero.</para>
+        /// <para><c>false</c> if the window was not brought to the foreground.</para>
         /// </returns>
         public static bool SetForegroundWindow(this Microsoft.UI.Xaml.Window window) => HwndExtensions.SetForegroundWindow(window.GetWindowHandle());
 
@@ -42,7 +42,6 @@ namespace WinUIEx
         /// </summary>
         /// <param name="window">Window</param>
         /// <param name="enable">Whether to display on top</param>
-        /// <returns><c>true</c> it the function succeeds</returns>
         public static void SetAlwaysOnTop(this Microsoft.UI.Xaml.Window window, bool enable)
             => HwndExtensions.SetAlwaysOnTop(GetWindowHandle(window), enable);
 

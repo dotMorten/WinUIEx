@@ -26,3 +26,4 @@ GetClientRect
 LoadIcon
 UpdateLayeredWindow
 GetDpiForMonitor
+ShowWindow

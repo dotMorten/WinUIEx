@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -35,6 +36,30 @@ namespace WinUIExSample
         private void Center_Click(object sender, RoutedEventArgs e)
         {
             this.CenterOnScreen();
+        }
+
+        private void MaximizeWindow_Click(object sender, RoutedEventArgs e)
+        {
+            this.MaximizeWindow();
+        }
+
+        private void RestoreWindow_Click(object sender, RoutedEventArgs e)
+        {
+            this.RestoreWindow();
+        }
+
+        private async void MinimizeWindow_Click(object sender, RoutedEventArgs e)
+        {
+            this.MinimizeWindow();
+            await Task.Delay(2000);
+            this.RestoreWindow();
+        }
+
+        private async void HideWindow_Click(object sender, RoutedEventArgs e)
+        {
+            this.HideWindow();
+            await Task.Delay(2000);
+            this.RestoreWindow();
         }
     }
 }

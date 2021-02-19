@@ -18,14 +18,27 @@
     <winex:WindowEx.TitleBar>
         <TextBlock Text="WinUI Window Extensions" VerticalAlignment="Center" />
     </winex:WindowEx.TitleBar>
-    
-    <StackPanel Margin="20">
-        <TextBlock Text="Hello WinUI" />
-        <ToggleSwitch Header="Show Minimize Button" IsOn="{x:Bind IsMinimizeButtonVisible, Mode=TwoWay}" />
-        <ToggleSwitch Header="Show Maximize Button" IsOn="{x:Bind IsMaximizeButtonVisible, Mode=TwoWay}" />
-        <ToggleSwitch Header="Show Close Button" IsOn="{x:Bind IsCloseButtonVisible, Mode=TwoWay}" />
-        <ToggleSwitch Header="Always On Top" IsOn="{x:Bind IsAlwaysOnTop, Mode=TwoWay}" />
-        <ToggleSwitch Header="ExtendsContentIntoTitleBar" IsOn="{x:Bind ExtendsContentIntoTitleBar, Mode=TwoWay}" />
-        <Button Content="Center On Screen" Click="Center_Click" />
-    </StackPanel>
+
+    <Grid ColumnDefinitions="Auto,Auto" Margin="20">
+        <StackPanel>
+            <ToggleSwitch Header="Show Minimize Button" IsOn="{x:Bind IsMinimizeButtonVisible, Mode=TwoWay}" />
+            <ToggleSwitch Header="Show Maximize Button" IsOn="{x:Bind IsMaximizeButtonVisible, Mode=TwoWay}" />
+            <ToggleSwitch Header="Show Close Button" IsOn="{x:Bind IsCloseButtonVisible, Mode=TwoWay}" />
+            <ToggleSwitch Header="Always On Top" IsOn="{x:Bind IsAlwaysOnTop, Mode=TwoWay}" />
+            <ToggleSwitch Header="ExtendsContentIntoTitleBar" IsOn="{x:Bind ExtendsContentIntoTitleBar, Mode=TwoWay}" />
+        </StackPanel>
+        <StackPanel Grid.Column="1">
+            <StackPanel.Resources>
+                <Style TargetType="Button">
+                    <Setter Property="HorizontalAlignment" Value="Stretch" />
+                    <Setter Property="Margin" Value="5" />
+                </Style>
+            </StackPanel.Resources>
+            <Button Content="Center On Screen" Click="Center_Click" />
+            <Button Content="Maximize" Click="MaximizeWindow_Click" />
+            <Button Content="Restore" Click="RestoreWindow_Click" />
+            <Button Content="Minimize + Restore (2 second delay)" Click="MinimizeWindow_Click" />
+            <Button Content="Hide + Restore (2 second delay)" Click="HideWindow_Click" />
+        </StackPanel>
+    </Grid>
 </winex:WindowEx>

@@ -27,3 +27,5 @@ LoadIcon
 UpdateLayeredWindow
 GetDpiForMonitor
 ShowWindow
+LoadImage
+SendMessage

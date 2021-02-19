@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.UI.Input;
@@ -177,7 +178,7 @@ namespace WinUIEx
         /// <summary>
         /// Gets or sets the image icon for the title bar
         /// </summary>
-        public ImageSource? Icon
+        public ImageSource? TitleBarIcon
         {
             get => iconArea.Source;
             set => iconArea.Source = value;

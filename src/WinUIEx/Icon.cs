@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Windows.Sdk;
@@ -11,23 +12,23 @@ namespace WinUIEx
 {
     public unsafe class Icon : IDisposable
     {
-        private DestroyIconSafeHandle handle;
+        private SafeHandle handle;
 
 
-        private Icon(DestroyIconSafeHandle icon)
+        private Icon(SafeHandle icon)
         {
             handle = icon;
         }
         internal IntPtr DangerousGetHandle() => handle.DangerousGetHandle();
-
-        public static Icon ExclamationIcon()
+        public static Icon FromFile(string filename)
         {
-            var handle = PInvoke.LoadIcon(new FreeLibrarySafeHandle(IntPtr.Zero), "idi_exclamation" /* "IDI_EXCLAMATION" */);
-
+            const uint LR_LOADFROMFILE = 0x00000010;
+            var handle = PInvoke.LoadImage(new FreeLibrarySafeHandle(IntPtr.Zero), filename, 1, 16, 16, LR_LOADFROMFILE);
             ThrowIfInvalid(handle);
             return new Icon(handle);
         }
-        private static void ThrowIfInvalid(DestroyIconSafeHandle handle)
+
+        private static void ThrowIfInvalid(SafeHandle handle)
         {
             if (handle == null || handle.IsInvalid)
             {

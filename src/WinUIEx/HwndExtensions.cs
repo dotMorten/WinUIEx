@@ -147,6 +147,28 @@ namespace WinUIEx
         }
 
         /// <summary>
+        /// Sets the application bar icon to the provided icon
+        /// </summary>
+        /// <param name="hWnd">Window handle</param>
+        /// <param name="icon">Icon</param>
+        public static void SetAppIcon(IntPtr hWnd, Icon icon)
+        {
+            PInvoke.SendMessage(new HWND(hWnd), (uint)WindowsMessages.WM_SETICON, new WPARAM(0), new LPARAM(icon.DangerousGetHandle()));
+        }
+
+        /// <summary>
+        /// Sets the application bar icon to the provided icon
+        /// </summary>
+        /// <param name="hWnd">Window handle</param>
+        /// <param name="filename">Path to the .ico file</param>
+        public static void SetAppIcon(IntPtr hWnd, string filename)
+        {
+            uint LR_LOADFROMFILE = 0x00000010;
+            var hIcon = PInvoke.LoadImage(new FreeLibrarySafeHandle(), filename, 1, 16, 16, LR_LOADFROMFILE);
+            PInvoke.SendMessage(new HWND(hWnd), (uint)WindowsMessages.WM_SETICON, new WPARAM(0), new LPARAM(hIcon.DangerousGetHandle()));
+        }
+
+        /// <summary>
         /// Activates the window and displays it in its current size and position.
         /// </summary>
         /// <param name="hwnd">Window handle</param>

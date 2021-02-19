@@ -22,15 +22,10 @@ namespace WinUIExSample
     /// </summary>
     public sealed partial class MainWindow : WindowEx
     {
-        TrayIcon tray;
         public MainWindow()
         {
             this.InitializeComponent();
-            //this.SetWindowSize(1024, 768);
-            // var icon = WinUIEx.Icon.ExclamationIcon();
-            // tray = new TrayIcon();
-            // tray.SetIcon(icon);
-            // tray.TrayIconLeftMouseDown += (s, e) => this.BringToFront();
+            this.SetAppIcon("Images/WindowIcon.ico");
         }
 
         private void Center_Click(object sender, RoutedEventArgs e) => this.CenterOnScreen();
@@ -51,6 +46,39 @@ namespace WinUIExSample
             this.HideWindow();
             await Task.Delay(2000);
             this.RestoreWindow();
+        }
+
+        private TrayIcon tray;
+
+        private void ToggleTrayIcon_Click(object sender, RoutedEventArgs e)
+        {
+            if (tray is null)
+            {
+                var icon = Icon.FromFile("Images/WindowIcon.ico");
+                tray = new TrayIcon();
+                tray.SetIcon(icon);
+                tray.TrayIconLeftMouseDown += (s, e) => this.BringToFront();
+            }
+            else
+            {
+                tray.Dispose();
+                tray = null;
+            }
+        }
+
+        private void MinimizeTrayIcon_Click(object sender, RoutedEventArgs e)
+        {
+            tray?.Dispose();
+            var icon = Icon.FromFile("Images/WindowIcon.ico");
+            tray = new TrayIcon();
+            tray.SetIcon(icon);
+            tray.TrayIconLeftMouseDown += (s, e) =>
+            {
+                this.ShowWindow();
+                tray.Dispose();
+                tray = null;
+            };
+            this.HideWindow();
         }
     }
 }

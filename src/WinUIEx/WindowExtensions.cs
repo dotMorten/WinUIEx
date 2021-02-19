@@ -113,5 +113,19 @@ namespace WinUIEx
         /// </summary>
         /// <param name="window">Window</param>
         public static void RestoreWindow(this Microsoft.UI.Xaml.Window window) => HwndExtensions.RestoreWindow(GetWindowHandle(window));
+
+        /// <summary>
+        /// Sets the application bar icon to the provided icon
+        /// </summary>
+        /// <param name="window">Window</param>
+        /// <param name="icon">Icon</param>
+        public static void SetAppIcon(this Microsoft.UI.Xaml.Window window, Icon icon) => HwndExtensions.SetAppIcon(window.GetWindowHandle(), icon);
+
+        /// <summary>
+        /// Sets the application bar icon to the provided .ico file
+        /// </summary>
+        /// <param name="window">Window</param>
+        /// <param name="filename">Path to the .ico file</param>
+        public static void SetAppIcon(this Microsoft.UI.Xaml.Window window, string filename) => HwndExtensions.SetAppIcon(window.GetWindowHandle(), filename);
     }
 }

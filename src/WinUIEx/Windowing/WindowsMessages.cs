@@ -142,6 +142,11 @@ namespace WinUIEx
         WM_USER = 0x0400,
 
         /// <summary>
+        /// Associates a new large or small icon with a window. The system displays the large icon in the ALT+TAB dialog box, and the small icon in the window caption.
+        /// </summary>
+        WM_SETICON = 0x0080,
+
+        /// <summary>
         /// This message is only send when using NOTIFYICON_VERSION_4, the Shell now sends the associated application an NIN_SELECT notification.
         /// Send when a notify icon is activated with mouse or ENTER key.
         /// Earlier versions send WM_RBUTTONDOWN and WM_RBUTTONUP messages.

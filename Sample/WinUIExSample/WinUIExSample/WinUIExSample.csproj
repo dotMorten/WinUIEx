@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net5.0-windows10.0.18362.0</TargetFramework>
@@ -9,10 +9,11 @@
     <RuntimeIdentifiers>win10-x86;win10-x64;win10-arm64</RuntimeIdentifiers>
   </PropertyGroup>
   <ItemGroup>
-    <None Remove="Images\WindowIcon.gif" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Images\WindowIcon.gif" />
+    <None Remove="Images\**\*.*" />
+    <Content Include="Images\**\*.*" />
+    <Content Update="Images\**\*.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
@@ -23,4 +24,5 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\src\WinUIEx\WinUIEx.csproj" />
   </ItemGroup>
+
 </Project>

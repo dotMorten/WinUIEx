@@ -4,6 +4,9 @@
 ![image](https://github.com/dotMorten/WinUIEx/raw/main/src/WinUIEx/logo.png)
 
 A set of extension methods and classes to fill some gaps in WinUI 3, mostly around windowing.
+
+To get the extension methods, first add `using WinUIEx;` to the top of your code.
+
 - Minimize/Maximize/Restore and Hide window.
 ```cs
     myWindow.MinimizeWindow();

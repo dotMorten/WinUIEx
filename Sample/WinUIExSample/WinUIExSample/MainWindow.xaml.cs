@@ -33,20 +33,11 @@ namespace WinUIExSample
             // tray.TrayIconLeftMouseDown += (s, e) => this.BringToFront();
         }
 
-        private void Center_Click(object sender, RoutedEventArgs e)
-        {
-            this.CenterOnScreen();
-        }
+        private void Center_Click(object sender, RoutedEventArgs e) => this.CenterOnScreen();
 
-        private void MaximizeWindow_Click(object sender, RoutedEventArgs e)
-        {
-            this.MaximizeWindow();
-        }
+        private void MaximizeWindow_Click(object sender, RoutedEventArgs e) => this.MaximizeWindow();
 
-        private void RestoreWindow_Click(object sender, RoutedEventArgs e)
-        {
-            this.RestoreWindow();
-        }
+        private void RestoreWindow_Click(object sender, RoutedEventArgs e) => this.RestoreWindow();
 
         private async void MinimizeWindow_Click(object sender, RoutedEventArgs e)
         {

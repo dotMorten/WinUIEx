@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.UI.Input;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Automation.Peers;
 using Microsoft.UI.Xaml.Controls;
@@ -22,7 +23,7 @@ namespace WinUIEx
         private readonly Image iconArea;
         private readonly ContentControl titleBarContainer;
         private readonly ContentControl windowArea;
-        
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Window"/> class.
         /// </summary>
@@ -31,7 +32,7 @@ namespace WinUIEx
             var rootContent = new Grid();
             rootContent.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Auto), MinHeight = 35 });
             rootContent.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Star) });
-            
+
             titleBarArea = new Grid();
             titleBarArea.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Auto) });
             titleBarArea.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
@@ -42,7 +43,7 @@ namespace WinUIEx
             titleBarContainer = new ContentControl() { VerticalAlignment = VerticalAlignment.Stretch, VerticalContentAlignment = VerticalAlignment.Stretch };
             Grid.SetColumn(titleBarContainer, 1);
             titleBarArea.Children.Add(titleBarContainer);
-            
+
             windowArea = new ContentControl();
             Grid.SetRow(windowArea, 1);
             rootContent.Children.Add(windowArea);
@@ -52,9 +53,22 @@ namespace WinUIEx
             ExtendsContentIntoTitleBar = true;
             rootContent.Loaded += RootLoaded;
             //this.Activated += WindowEx_Activated;
+
+            //Bug: In Preview 4 Alt + F4 doesn't close the Window. This is a workaround.
+            rootContent.AddHandler(UIElement.KeyDownEvent, new Microsoft.UI.Xaml.Input.KeyEventHandler(RootContent_KeyDown), true);
+        }
+
+        private void RootContent_KeyDown(object sender, Microsoft.UI.Xaml.Input.KeyRoutedEventArgs e)
+        {
+            if (e.Key == Windows.System.VirtualKey.F4 &&
+                KeyboardInput.GetKeyStateForCurrentThread(Windows.System.VirtualKey.Menu).HasFlag(Windows.UI.Core.CoreVirtualKeyStates.Down))
+            {
+                this.Close();
+            }
         }
 
         private bool isInitialized;
+
         private void WindowEx_Activated(object sender, WindowActivatedEventArgs args)
         {
             if (args.WindowActivationState == WindowActivationState.Deactivated)
@@ -82,8 +96,7 @@ namespace WinUIEx
         }
 
         private void RootLoaded(object sender, RoutedEventArgs e)
-        {
-            
+        {            
             var clientAreaPresenter = VisualTreeHelper.GetParent(Content) as ContentPresenter;
             WindowRoot = VisualTreeHelper.GetParent(clientAreaPresenter) as Grid;
             SetVisibility("MinimizeButton", IsMinimizeButtonVisible);

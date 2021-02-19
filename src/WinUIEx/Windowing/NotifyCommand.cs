@@ -2,7 +2,7 @@ namespace WinUIEx
 {
     /// <summary>
     /// Main operations performed on the
-    /// <see cref="WinApi.Shell_NotifyIcon"/> function.
+    /// <see cref="Microsoft.Windows.Sdk.PInvoke.Shell_NotifyIcon(uint, in Microsoft.Windows.Sdk.NOTIFYICONDATAW)"/> function.
     /// </summary>
     internal enum NotifyCommand
     {

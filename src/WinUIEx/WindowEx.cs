@@ -12,6 +12,9 @@ using Microsoft.Windows.Sdk;
 
 namespace WinUIEx
 {
+    /// <summary>
+    /// A custom WinUI Window with more convenience methods
+    /// </summary>
     [ContentProperty(Name = "WindowContent")]
     public class WindowEx : Window
     {
@@ -20,6 +23,9 @@ namespace WinUIEx
         private readonly ContentControl titleBarContainer;
         private readonly ContentControl windowArea;
         
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Window"/> class.
+        /// </summary>
         public WindowEx()
         {
             var rootContent = new Grid();
@@ -66,7 +72,7 @@ namespace WinUIEx
             }
         }
 
-        private FrameworkElement WindowRoot;
+        private FrameworkElement? WindowRoot;
 
         private void SetVisibility(string name, bool visible)
         {
@@ -87,9 +93,18 @@ namespace WinUIEx
                 IsAlwaysOnTop = true;
         }
 
+        /// <summary>
+        /// Brings the window to the front
+        /// </summary>
+        /// <returns></returns>
+        public bool BringToFront() => WindowExtensions.SetForegroundWindow(this);
+
 
         private bool _IsMinimizeButtonVisible;
         
+        /// <summary>
+        /// Gets or sets a value indicating whether the minimimze button is visible
+        /// </summary>
         public bool IsMinimizeButtonVisible
         {
             get => _IsMinimizeButtonVisible;
@@ -102,6 +117,9 @@ namespace WinUIEx
 
         private bool _IsMaximizeButtonVisible;
 
+        /// <summary>
+        /// Gets or sets a value indicating whether the maximimze button is visible
+        /// </summary>
         public bool IsMaximizeButtonVisible
         {
             get => _IsMaximizeButtonVisible;
@@ -115,6 +133,9 @@ namespace WinUIEx
 
         private bool _IsCloseButtonVisible;
 
+        /// <summary>
+        /// Gets or sets a value indicating whether the close button is visible
+        /// </summary>
         public bool IsCloseButtonVisible
         {
             get => _IsCloseButtonVisible;
@@ -127,6 +148,9 @@ namespace WinUIEx
 
         private bool _IsAlwaysOnTop;
 
+        /// <summary>
+        /// Gets or sets a value indicating whether the window is displayed on top of other windows
+        /// </summary>
         public bool IsAlwaysOnTop
         {
             get => _IsAlwaysOnTop;
@@ -137,15 +161,21 @@ namespace WinUIEx
             }
         }
 
-        public ImageSource Icon
+        /// <summary>
+        /// Gets or sets the image icon for the title bar
+        /// </summary>
+        public ImageSource? Icon
         {
             get => iconArea.Source;
             set => iconArea.Source = value;
         }
 
-        private UIElement _titleBarContent;
+        private UIElement? _titleBarContent;
 
-        public UIElement TitleBar
+        /// <summary>
+        /// Gets or sets the title bar content
+        /// </summary>
+        public UIElement? TitleBar
         {
             get => _titleBarContent;
             set
@@ -155,29 +185,36 @@ namespace WinUIEx
             }
         }
 
-        public object WindowContent
+        /// <summary>
+        /// Gets or sets the Window content
+        /// </summary>
+        public object? WindowContent
         {
             get { return windowArea.Content; }
             set { windowArea.Content = value; }
         }
 
-        public bool BringToFront() => WindowExtensions.SetForegroundWindow(this);
-
 
         private double _width = 1024;
 
+        /// <summary>
+        /// Gets or sets the width of the window
+        /// </summary>
         public double Width
         {
             get { return _width; }
             set { _width = value; }
         }
+
         private double _height = 786;
 
+        /// <summary>
+        /// Gets or sets the height of the window
+        /// </summary>
         public double Height
         {
             get { return _height; }
             set { _height = value; }
         }
-
     }
 }

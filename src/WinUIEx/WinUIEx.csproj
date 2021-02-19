@@ -3,10 +3,31 @@
     <TargetFramework>net5.0-windows10.0.18362.0</TargetFramework>
     <TargetPlatformMinVersion>10.0.17134.0</TargetPlatformMinVersion>
     <RootNamespace>WinUIExtensions</RootNamespace>
-    <RuntimeIdentifiers>win10-x86;win10-x64;win10-arm64</RuntimeIdentifiers>
     <RestoreAdditionalProjectSources>https://pkgs.dev.azure.com/azure-public/vside/_packaging/winsdk/nuget/v3/index.json;$(RestoreAdditionalProjectSources)</RestoreAdditionalProjectSources>
     <UseCSWin32>False</UseCSWin32>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <Configurations>Debug;Release</Configurations>
+    <Platforms>AnyCPU</Platforms>
+    <Nullable>enable</Nullable>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
+  </PropertyGroup>
+
+  <PropertyGroup Label="PackageInfo">
+    <Authors>Morten Nielsen</Authors>
+    <Company>Morten Nielsen</Company>
+    <Description>...</Description>
+    <PackageTags>WinUI</PackageTags>
+    <PackageId>WinUIEx</PackageId>
+    <Version>0.1-beta</Version>
+    <Product>WinUI Extensions</Product>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/dotMorten/WinUIEx</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/dotMorten/WinUIEx</RepositoryUrl>
+    <Copyright>Copyright © Morten Nielsen 2021</Copyright>
+    <PackageReleaseNotes />
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
   </PropertyGroup>
 
 
@@ -20,6 +41,11 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.WinUI" Version="3.0.0-preview4.210210.4" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <None Include="logo.png" Pack="true" PackagePath="" />
   </ItemGroup>
   
 </Project>

@@ -12,11 +12,6 @@ namespace WinUIEx
 
         public TrayIcon()
         {
-            CreateIcon();
-        }
-
-        private void CreateIcon()
-        {
             messageSink = new WindowMessageSink();
             iconData = new NOTIFYICONDATAW()
             {
@@ -64,7 +59,7 @@ namespace WinUIEx
             }
         }
 
-        public event EventHandler TrayIconLeftMouseDown;
+        public event EventHandler? TrayIconLeftMouseDown;
 
         private void OnTaskbarCreated()
         {

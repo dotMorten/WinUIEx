@@ -32,7 +32,8 @@ To get the extension methods, first add `using WinUIEx;` to the top of your code
 ```
 
 - Remove Window chrome buttons
-Make your window class inherit from WindowEx instead, and set properties `IsCloseButtonVisible`, `IsMaximizeButtonVisible`, `IsMinimizeButtonVisible`
+
+Make your window class inherit from `WinUIEx.WindowEx` instead, and set properties `IsCloseButtonVisible`, `IsMaximizeButtonVisible`, `IsMinimizeButtonVisible`
 
 - Create a Tray Icon
 ```cs

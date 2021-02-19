@@ -3,7 +3,7 @@ using System;
 namespace WinUIEx
 {
     /// <summary>
-    /// Indicates which members of a <see cref="NotifyIconData"/> structure
+    /// Indicates which members of a <see cref="Microsoft.Windows.Sdk.NOTIFYICONDATAW"/> structure
     /// were set, and thus contain valid data or provide additional information
     /// to the ToolTip as to how it should display.
     /// </summary>
@@ -26,18 +26,21 @@ namespace WinUIEx
         Tip = 0x04,
 
         /// <summary>
-        /// State information (<see cref="IconState"/>) is set. This
-        /// applies to both <see cref="NotifyIconData.IconState"/> and
-        /// <see cref="NotifyIconData.StateMask"/>.
+        /// The <see cref="Microsoft.Windows.Sdk.NOTIFYICONDATAW.dwState"/> and <see cref="Microsoft.Windows.Sdk.NOTIFYICONDATAW.dwStateMask"/> members are valid.
         /// </summary>
         State = 0x08,
 
         /// <summary>
-        /// The balloon ToolTip is set. Accordingly, the following
-        /// members are set: <see cref="NotifyIconData.BalloonText"/>,
-        /// <see cref="NotifyIconData.BalloonTitle"/>, <see cref="NotifyIconData.BalloonFlags"/>,
-        /// and <see cref="NotifyIconData.VersionOrTimeout"/>.
+        /// 0x00000010. Display a balloon notification. The <see cref="Microsoft.Windows.Sdk.NOTIFYICONDATAW.szInfo"/>, 
+        /// <see cref="Microsoft.Windows.Sdk.NOTIFYICONDATAW.szInfoTitle"/>, <see cref="Microsoft.Windows.Sdk.NOTIFYICONDATAW.dwInfoFlags"/>,
+        /// and uTimeout members are valid. Note that uTimeout is valid only in Windows 2000 and Windows XP.
         /// </summary>
+        /// <remarks>
+        /// <para>To display the balloon notification, specify NIF_INFO and provide text in szInfo.</para>
+        /// <para>To remove a balloon notification, specify NIF_INFO and provide an empty string through szInfo.</para>
+        /// <para>To add a notification area icon without displaying a notification, do not set the NIF_INFO flag.</para>
+        /// <para>See https://docs.microsoft.com/en-us/windows/win32/api/shellapi/ns-shellapi-notifyicondataw#nif_info-0x00000010</para>
+        /// </remarks>
         Info = 0x10,
 
         // Internal identifier is set. Reserved, thus commented out.

@@ -4,13 +4,19 @@ using Microsoft.Windows.Sdk;
 
 namespace WinUIEx
 {
+    /// <summary>
+    /// Creates and manages a tray icon in the task bar
+    /// </summary>
     public class TrayIcon : IDisposable
     {
         private WindowMessageSink messageSink;
         private NOTIFYICONDATAW iconData;
         private object lockObject = new object();
 
-        public TrayIcon()
+        /// <summary>
+        /// Initializes a new instance of the tray icon
+        /// </summary>
+        public TrayIcon(Icon icon)
         {
             messageSink = new WindowMessageSink();
             iconData = new NOTIFYICONDATAW()
@@ -29,8 +35,14 @@ namespace WinUIEx
             messageSink.TaskbarCreated += OnTaskbarCreated;
             messageSink.ChangeToolTipStateRequest += OnToolTipChange;
             messageSink.BalloonToolTipChanged += OnBalloonToolTipChanged;
+
+            SetIcon(icon);
         }
 
+        /// <summary>
+        /// Updates the icon in the tray
+        /// </summary>
+        /// <param name="icon"></param>
         public unsafe void SetIcon(Icon icon)
         {
             iconData.uFlags = (uint)IconDataMembers.Icon;
@@ -59,6 +71,9 @@ namespace WinUIEx
             }
         }
 
+        /// <summary>
+        /// Fired when the user left-clicks the tray icon
+        /// </summary>
         public event EventHandler? TrayIconLeftMouseDown;
 
         private void OnTaskbarCreated()
@@ -118,6 +133,9 @@ namespace WinUIEx
             }
         }
 
+        /// <summary>
+        /// Gets a value indicating whether the this instance has been disposed
+        /// </summary>
         public bool IsDisposed { get; private set; }
 
         private void EnsureNotDisposed()
@@ -125,11 +143,13 @@ namespace WinUIEx
             if (IsDisposed) throw new ObjectDisposedException(GetType().FullName);
         }
 
+        /// <inheritdoc />
         ~TrayIcon()
         {
             Dispose(false);
         }
 
+        /// <inheritdoc />
         public void Dispose()
         {
             Dispose(true);

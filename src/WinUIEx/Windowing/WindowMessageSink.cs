@@ -61,18 +61,18 @@ namespace WinUIEx
 
         //internal delegate LRESULT WindowProcedureHandler(HWND hWnd, uint uMsg, WPARAM wParam, LPARAM lParam);
 
-        /// <summary>
-        /// A delegate that processes messages of the hidden
-        /// native window that receives window messages. Storing
-        /// this reference makes sure we don't loose our reference
-        /// to the message window.
-        /// </summary>
+        // <summary>
+        // A delegate that processes messages of the hidden
+        // native window that receives window messages. Storing
+        // this reference makes sure we don't loose our reference
+        // to the message window.
+        // </summary>
         //private WindowProcedureHandler messageHandler;
 
         /// <summary>
         /// Window class ID.
         /// </summary>
-        internal string WindowId { get; private set; }
+        internal string? WindowId { get; private set; }
 
         /// <summary>
         /// Handle for the message window.
@@ -198,7 +198,7 @@ namespace WinUIEx
         [System.Runtime.InteropServices.UnmanagedCallersOnly(CallConvs = new[] { typeof(System.Runtime.CompilerServices.CallConvStdcall) })]
         private static LRESULT OnWindowMessageReceivedStatic(HWND hWnd, uint messageId, WPARAM wParam, LPARAM lParam)
         {
-            if(ids.TryGetValue(hWnd.Value, out WindowMessageSink sink))
+            if(ids.TryGetValue(hWnd.Value, out WindowMessageSink? sink))
             {
                 sink.OnWindowMessageReceived(hWnd, messageId, wParam, lParam);
             }
@@ -223,7 +223,7 @@ namespace WinUIEx
         /// Processes incoming system messages.
         /// </summary>
         /// <param name="msg">Callback ID.</param>
-        /// <param name="wParam">If the version is <see cref="NotifyIconVersion.Vista"/>
+        /// <param name="wParam">If the version is Vista
         /// or higher, this parameter can be used to resolve mouse coordinates.
         /// Currently not in use.</param>
         /// <param name="lParam">Provides information about the event.</param>

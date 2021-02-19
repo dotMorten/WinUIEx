@@ -21,10 +21,8 @@ GetWindowRect
 GetMonitorInfo
 CreateIcon
 GetModuleHandle
-GetLastError
 GetDesktopWindow
 GetClientRect
 LoadIcon
-GetLastError
 UpdateLayeredWindow
 GetDpiForMonitor

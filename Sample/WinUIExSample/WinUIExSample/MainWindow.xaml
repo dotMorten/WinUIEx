@@ -41,6 +41,7 @@
             <Button Content="Hide + Restore (2 second delay)" Click="HideWindow_Click" />
             <Button Content="Toggle Tray Icon" Click="ToggleTrayIcon_Click" />
             <Button Content="Minimime to tray (click tray to reopen)" Click="MinimizeTrayIcon_Click" />
+            <Button Content="Bring to front (2 second delay)" Click="BringToFront_Click" />
         </StackPanel>
     </Grid>
 </winex:WindowEx>

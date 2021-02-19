@@ -13,6 +13,7 @@ using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Notifications;
 using WinUIEx;
 
 namespace WinUIExSample
@@ -79,6 +80,12 @@ namespace WinUIExSample
                 tray = null;
             };
             this.HideWindow();
+        }
+
+        private async void BringToFront_Click(object sender, RoutedEventArgs e)
+        {
+            await Task.Delay(2000);
+            this.BringToFront();
         }
     }
 }

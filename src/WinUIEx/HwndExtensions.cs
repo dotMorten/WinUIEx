@@ -171,39 +171,38 @@ namespace WinUIEx
         /// <summary>
         /// Activates the window and displays it in its current size and position.
         /// </summary>
-        /// <param name="hwnd">Window handle</param>
-        public static void ShowWindow(IntPtr hwnd) => ShowWindowOrThrow(new HWND(hwnd), 5);
+        /// <param name="hWnd">Window handle</param>
+        /// <returns><c>true</c> if the window was previously visible, or <c>false</c> if the window was previously hidden.</returns>
+        public static bool ShowWindow(IntPtr hWnd) => PInvoke.ShowWindow(new HWND(hWnd), 5);
 
         /// <summary>
         /// Hides the window and activates another window.
         /// </summary>
-        /// <param name="hwnd">Window handle</param>
-        public static void HideWindow(IntPtr hwnd) => ShowWindowOrThrow(new HWND(hwnd), 0);
+        /// <param name="hWnd">Window handle</param>
+        /// <returns><c>true</c> if the window was previously visible, or <c>false</c> if the window was previously hidden.</returns>
+        public static bool HideWindow(IntPtr hWnd) => PInvoke.ShowWindow(new HWND(hWnd), 0);
 
         /// <summary>
         /// Maximizes the specified window.
         /// </summary>
-        /// <param name="hwnd">Window handle</param>
-        public static void MaximizeWindow(IntPtr hwnd) => ShowWindowOrThrow(new HWND(hwnd), 3);
+        /// <param name="hWnd">Window handle</param>
+        /// <returns><c>true</c> if the window was previously visible, or <c>false</c> if the window was previously hidden.</returns>
+        public static bool MaximizeWindow(IntPtr hWnd) => PInvoke.ShowWindow(new HWND(hWnd), 3);
 
         /// <summary>
         /// Minimizes the specified window and activates the next top-level window in the Z order.
         /// </summary>
-        /// <param name="hwnd">Window handle</param>
-        public static void MinimizeWindow(IntPtr hwnd) => ShowWindowOrThrow(new HWND(hwnd), 6);
+        /// <param name="hWnd">Window handle</param>
+        /// <returns><c>true</c> if the window was previously visible, or <c>false</c> if the window was previously hidden.</returns>
+        public static bool MinimizeWindow(IntPtr hWnd) => PInvoke.ShowWindow(new HWND(hWnd), 6);
 
         /// <summary>
         /// Activates and displays the window. If the window is minimized or maximized, the system restores
         /// it to its original size and position. An application should specify this flag when restoring a minimized window.
         /// </summary>
-        /// <param name="hwnd">Window handle</param>
-        public static void RestoreWindow(IntPtr hwnd) => ShowWindowOrThrow(new HWND(hwnd), 9);
+        /// <param name="hWnd">Window handle</param>
+        /// <returns><c>true</c> if the window was previously visible, or <c>false</c> if the window was previously hidden.</returns>
+        public static bool RestoreWindow(IntPtr hWnd) => PInvoke.ShowWindow(new HWND(hWnd), 9);
 
-        private static void ShowWindowOrThrow(IntPtr hWnd, int nCmdShow)
-        {
-            bool result = PInvoke.ShowWindow(new HWND(hWnd), nCmdShow);
-            if (!result)
-                Marshal.ThrowExceptionForHR(Marshal.GetLastWin32Error());
-        }
     }
 }

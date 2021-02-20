@@ -26,6 +26,7 @@
     <Copyright>Copyright © Morten Nielsen 2021</Copyright>
     <PackageReleaseNotes />
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <PackageOutputPath>..\..\artifacts\NuGet\$(Configuration)\</PackageOutputPath>
   </PropertyGroup>
 
 

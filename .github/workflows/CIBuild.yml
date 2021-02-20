@@ -26,4 +26,4 @@ jobs:
       uses: actions/upload-artifact@v1
       with:
         name: NuGet Packages
-        path: src\WinUIEx\bin\Release\*.nupkg
+        path: artifacts\NuGet\Release

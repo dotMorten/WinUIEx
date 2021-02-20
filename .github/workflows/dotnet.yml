@@ -1,0 +1,29 @@
+name: .NET
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+
+    steps:
+    - name: Clone Repo
+      uses: actions/checkout@v1
+    
+    - name: Setup Visual Studio Command Prompt
+      uses: microsoft/setup-msbuild@v1.0.2
+      
+    - name: Build
+      run: |
+        msbuild /restore /t:Build;Pack src/WinUIEx/WinUIEx.csproj /p:Configuration=Release
+      
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v1
+      with:
+        name: NuGet Packages
+        path: src\WinUIEx\bin\Release\*.nupkg

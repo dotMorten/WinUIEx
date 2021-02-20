@@ -20,7 +20,7 @@ jobs:
       
     - name: Build
       run: |
-        msbuild /restore /t:Build;Pack src/WinUIEx/WinUIEx.csproj /p:Configuration=Release
+        msbuild /restore /t:Build,Pack src/WinUIEx/WinUIEx.csproj /p:Configuration=Release
       
     - name: Upload artifacts
       uses: actions/upload-artifact@v1

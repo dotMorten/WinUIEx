@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\src\WinUIEx\WinUIEx.csproj" />
+    <ProjectReference Include="..\WinUIEx\WinUIEx.csproj" />
   </ItemGroup>
 
 </Project>

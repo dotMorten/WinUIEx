@@ -44,7 +44,9 @@ namespace WinUIExSample
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
             m_window = new MainWindow() { Title = "New window" };
-            var splash = new SplashScreen(m_window);
+            //var splash = new SplashScreen(m_window);
+            var splash = new SplashScreen(typeof(MainWindow));
+            splash.Completed += (s, e) => m_window = e;
         }
 
         /// <summary>

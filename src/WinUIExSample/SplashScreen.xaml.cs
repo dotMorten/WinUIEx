@@ -29,6 +29,11 @@ namespace WinUIExSample
             this.InitializeComponent();
         }
 
+        public SplashScreen(Type window) : base(window)
+        {
+            this.InitializeComponent();
+        }
+
         protected override async Task OnLoading()
         {
             status.Text = "Loading 20%...";

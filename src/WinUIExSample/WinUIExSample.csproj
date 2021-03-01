@@ -11,7 +11,6 @@
   <ItemGroup>
     <None Remove="Images\**\*.*" />
     <Content Include="Images\**\*.*" />
-    <None Remove="SplashScreen.xaml" />
     <Content Update="Images\**\*.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -24,12 +23,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\WinUIEx\WinUIEx.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Page Update="SplashScreen.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
 
 </Project>

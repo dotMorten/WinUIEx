@@ -32,3 +32,4 @@ SendMessage
 SetWindowLong
 GetWindowLong
 UpdateLayeredWindow
+DestroyIcon

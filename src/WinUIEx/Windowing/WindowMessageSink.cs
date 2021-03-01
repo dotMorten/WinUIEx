@@ -178,7 +178,7 @@ namespace WinUIEx
             var hwnd = new HWND();
             //var hwnd = PInvoke.GetActiveWindow();
             // Create the message window
-            MessageWindowHandle = PInvoke.CreateWindowEx(0, WindowId, "", 0, 0, 0, 1, 1, hwnd, new DestroyMenuSafeHandle(IntPtr.Zero), new FreeLibrarySafeHandle(IntPtr.Zero), null);
+            MessageWindowHandle = PInvoke.CreateWindowEx(0, WindowId, "", 0, 0, 0, 1, 1, hwnd, null, null, null);
 
             if (MessageWindowHandle == IntPtr.Zero)
             {

@@ -15,14 +15,14 @@ namespace WinUIEx
     /// </summary>
     public unsafe class Icon : IDisposable
     {
-        private readonly SafeHandle handle;
+        private readonly HICON handle;
 
-        private Icon(SafeHandle icon)
+        private Icon(HICON icon)
         {
             handle = icon;
         }
 
-        internal IntPtr DangerousGetHandle() => handle.DangerousGetHandle();
+        internal HICON Handle => handle;
 
         /// <summary>
         /// Loads an icon from an .ico file.
@@ -32,9 +32,9 @@ namespace WinUIEx
         public static Icon FromFile(string filename)
         {
             const uint LR_LOADFROMFILE = 0x00000010;
-            var handle = PInvoke.LoadImage(new FreeLibrarySafeHandle(IntPtr.Zero), filename, 1, 16, 16, LR_LOADFROMFILE);
+            var handle = PInvoke.LoadImage(null, filename, 1, 16, 16, LR_LOADFROMFILE);
             ThrowIfInvalid(handle);
-            return new Icon(handle);
+            return new Icon(new HICON(handle.DangerousGetHandle()));
         }
 
         /// <summary>
@@ -56,14 +56,23 @@ namespace WinUIEx
             }
 
             var hinstance = PInvoke.GetModuleHandle((string?)null);
-            DestroyIconSafeHandle handle;
+            HICON handle;
             fixed (byte* and = ANDmaskIcon)
             fixed (byte* xor = XORmaskIcon)
             {
-                handle = PInvoke.CreateIcon(new FreeLibrarySafeHandle(hinstance), 32, 32, 24, 1, xor, and);
+                handle = PInvoke.CreateIcon(new HINSTANCE(hinstance), 32, 32, 24, 1, xor, and);
             }
             ThrowIfInvalid(handle);
             return new Icon(handle);
+        }
+
+        private static void ThrowIfInvalid(HICON handle)
+        {
+            if (handle.Value == IntPtr.Zero)
+            {
+                var ex = new Win32Exception(System.Runtime.InteropServices.Marshal.GetLastWin32Error());
+                throw ex;
+            }
         }
 
         private static void ThrowIfInvalid(SafeHandle handle)
@@ -166,7 +175,7 @@ namespace WinUIEx
             fixed (byte* and = ANDmaskIcon)
             fixed (byte* xor = XORmaskIcon)
             {
-                var icon = PInvoke.CreateIcon(new FreeLibrarySafeHandle(hinstance), 32, 32, 1, 1, and, xor);
+                var icon = PInvoke.CreateIcon(new HINSTANCE(hinstance), 32, 32, 1, 1, and, xor);
                 return new Icon(icon);
             }
         }
@@ -192,7 +201,7 @@ namespace WinUIEx
         {
             if(disposing)
             {
-                handle.Dispose();
+                PInvoke.DestroyIcon(Handle);
             }
         }
     }

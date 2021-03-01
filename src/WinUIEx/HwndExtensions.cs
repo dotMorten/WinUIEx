@@ -100,7 +100,7 @@ namespace WinUIEx
         /// <param name="height">Height of the window in device independent pixels, or <c>null</c> if keeping the current size</param>
         public static void CenterOnScreen(IntPtr hwnd, double? width = null, double? height = null)
         {
-            var hwndDesktop = new HWND(PInvoke.MonitorFromWindow(new(hwnd), MONITOR_DEFAULTTONEAREST));
+            var hwndDesktop = PInvoke.MonitorFromWindow(new(hwnd), MONITOR_DEFAULTTONEAREST);
             MONITORINFO info = new MONITORINFO();
             info.cbSize = 40;
             PInvoke.GetMonitorInfo(hwndDesktop, ref info);
@@ -152,7 +152,7 @@ namespace WinUIEx
         /// <param name="icon">Icon</param>
         public static void SetTaskBarIcon(IntPtr hWnd, Icon icon)
         {
-            PInvoke.SendMessage(new HWND(hWnd), (uint)WindowsMessages.WM_SETICON, new WPARAM(0), new LPARAM(icon?.DangerousGetHandle() ?? IntPtr.Zero));
+            PInvoke.SendMessage(new HWND(hWnd), (uint)WindowsMessages.WM_SETICON, new WPARAM(0), new LPARAM(icon?.Handle.Value ?? IntPtr.Zero));
         }
 
         /// <summary>
@@ -263,7 +263,7 @@ namespace WinUIEx
         /// <summary>The window is the first control of a group of controls. The group consists of this first control and all controls defined after it, up to the next control with the GROUP style. The first control in each group usually has the TABSTOP style so that the user can move from group to group. The user can subsequently change the keyboard focus from one control in the group to the next control in the group by using the direction keys.
         /// You can turn this style on and off to change dialog box navigation. To change this style after a window has been created, use the SetWindowLong function.</summary>
         Group = 0x00020000,
-        /// <summary>The window has a horizontal scroll bar.
+        /// <summary>The window has a horizontal scroll bar.</summary>
         HScroll = 0x00100000,
         /// <summary>The window is initially minimized. Same as the MINIMIZE style.</summary>
         Iconic = 0x20000000,

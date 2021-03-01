@@ -46,7 +46,7 @@ namespace WinUIEx
         public unsafe void SetIcon(Icon icon)
         {
             iconData.uFlags = (uint)IconDataMembers.Icon;
-            iconData.hIcon = new HICON(icon.DangerousGetHandle());
+            iconData.hIcon = icon.Handle;
             var status = PInvoke.Shell_NotifyIcon((uint)NotifyCommand.Modify, iconData);
         }
 

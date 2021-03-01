@@ -29,3 +29,6 @@ GetDpiForMonitor
 ShowWindow
 LoadImage
 SendMessage
+SetWindowLong
+GetWindowLong
+UpdateLayeredWindow

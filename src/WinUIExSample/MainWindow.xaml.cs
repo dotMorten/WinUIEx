@@ -25,8 +25,8 @@ namespace WinUIExSample
     {
         public MainWindow()
         {
+            TaskBarIcon = Icon.FromFile("Images/WindowIcon.ico");
             this.InitializeComponent();
-            this.SetAppIcon("Images/WindowIcon.ico");
         }
 
         private void Center_Click(object sender, RoutedEventArgs e) => this.CenterOnScreen();

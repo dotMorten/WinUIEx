@@ -7,9 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WinUIEx", "WinUIEx\WinUIEx.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sample", "Sample", "{D1DA471E-DDC4-4E38-90DE-176962DC066C}"
 EndProject
-Project("{C7167F0D-BC9F-4E6E-AFE1-012C56B48DB5}") = "WinUIExSample (Package)", "..\Sample\WinUIExSample\WinUIExSample (Package)\WinUIExSample (Package).wapproj", "{20CE4C09-69CC-473F-8B59-48B76AC78CA8}"
+Project("{C7167F0D-BC9F-4E6E-AFE1-012C56B48DB5}") = "WinUIExSample (Package)", "WinUIExSample (Package)\WinUIExSample (Package).wapproj", "{20CE4C09-69CC-473F-8B59-48B76AC78CA8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinUIExSample", "..\Sample\WinUIExSample\WinUIExSample\WinUIExSample.csproj", "{739260A2-39B2-40B3-BF4A-6CC567E989EB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinUIExSample", "WinUIExSample\WinUIExSample.csproj", "{739260A2-39B2-40B3-BF4A-6CC567E989EB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -7,13 +7,38 @@ using Microsoft.UI.Xaml;
 
 namespace WinUIEx
 {
+    /// <summary>
+    /// A splash screen window that shows with no chrome, and once <see cref="SplashScreen.OnLoading"/> has completed,
+    /// opens a new window
+    /// </summary>
     public class SplashScreen : Window
     {
         private Window? _window;
+        private Type? _windowType;        
 
+        /// <summary>
+        /// Creates and activates a new splashscreen, and opens the specified window once complete.
+        /// </summary>
+        /// <param name="window">Window to open once splash screen is complete</param>
         public SplashScreen(Window window)
         {
             _window = window ?? throw new ArgumentNullException(nameof(window));
+            this.Activated += SplashScreen_Activated;
+            this.DispatcherQueue.TryEnqueue(Microsoft.System.DispatcherQueuePriority.Normal, () =>
+            {
+                this.Activate();
+            });
+        }
+
+        /// <summary>
+        /// Creates and activates a new splashscreen, and creates and opens the specified window type once complete.
+        /// </summary>
+        /// <param name="window">Type of window to create. Must have an empty constructor</param>
+        public SplashScreen(Type window)
+        {
+            if (!window.IsSubclassOf(typeof(Window)) && window != typeof(Window))
+                throw new ArgumentException("Type must be a Window");
+            _windowType = window ?? throw new ArgumentNullException(nameof(window));
             this.Activated += SplashScreen_Activated;
             this.DispatcherQueue.TryEnqueue(Microsoft.System.DispatcherQueuePriority.Normal, () =>
             {
@@ -40,18 +65,21 @@ namespace WinUIEx
 
             this.CenterOnScreen(w, h);
             await OnLoading();
+            if (_windowType != null)
+                _window = Activator.CreateInstance(_windowType) as Window;
             _window?.Activate();
             this.Close();
             _window?.SetForegroundWindow();
+            Completed?.Invoke(this, _window);
             _window = null;
         }
 
         private void SplashScreen_Activated(object sender, WindowActivatedEventArgs args)
         {
             this.Activated -= SplashScreen_Activated;
+            this.HideWindow(); // Hides until content is loaded
             var hwnd = this.GetWindowHandle();
             HwndExtensions.ToggleWindowStyle(hwnd, false, WindowStyle.TiledWindow);
-            HwndExtensions.ToggleWindowStyle(hwnd, true, WindowStyle.ExLayered);
             var content = this.Content as FrameworkElement;
             if (content is null || content.IsLoaded)
                 Content_Loaded(this, new RoutedEventArgs());
@@ -76,5 +104,15 @@ namespace WinUIEx
         /// Gets or sets the height of the splash screen. Set to NaN to size for content
         /// </summary>
         public double Height { get; set; } = 480;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the splash screen should be top-most
+        /// </summary>
+        public bool IsAlwaysOnTop { get; set; } = true;
+
+        /// <summary>
+        /// Raised once the splash screen has completed <see cref="OnLoading"/>.
+        /// </summary>
+        public event EventHandler<Window?>? Completed;
     }
 }

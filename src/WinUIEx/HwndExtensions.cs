@@ -281,7 +281,7 @@ namespace WinUIEx
         OverlappedWindow = (Overlapped | Caption | SysMenu | ThickFrame | MinimizeBox | MaximizeBox),
         // <summary>The window is a pop-up window. This style cannot be used with the CHILD style.</summary>
         //POPUP = 0x80000000,
-        /// <summary>The window is a pop-up window. The CAPTION and POPUPWINDOW styles must be combined to make the window menu visible.</summary>
+        // <summary>The window is a pop-up window. The CAPTION and POPUPWINDOW styles must be combined to make the window menu visible.</summary>
         //POPUPWINDOW = (POPUP | BORDER | SYSMENU),
         /// <summary>The window has a sizing border. Same as the THICKFRAME style.</summary>
         SizeBox = 0x00040000,
@@ -301,6 +301,5 @@ namespace WinUIEx
         Visible = 0x10000000,
         /// <summary>The window has a vertical scroll bar.</summary>
         VScroll = 0x00200000,
-        ExLayered = 0x00080000,
     }
 }

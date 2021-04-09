@@ -156,7 +156,7 @@ namespace WinUIEx
             // Create a simple window class which is reference through
             WNDCLASSW wc = new WNDCLASSW();
             wc.style = 0;
-            wc.lpfnWndProc = &OnWindowMessageReceivedStatic;
+            wc.lpfnWndProc = OnWindowMessageReceived;
             wc.cbClsExtra = 0;
             wc.cbWndExtra = 0;
             wc.hInstance = new HINSTANCE(IntPtr.Zero);
@@ -184,29 +184,15 @@ namespace WinUIEx
             {
                 throw new Win32Exception("Message window handle was not a valid pointer");
             }
-            ids.TryAdd(MessageWindowHandle.Value, this);
         }
         #endregion CreateMessageWindow
 
         #region Handle Window Messages
 
-        static ConcurrentDictionary<nint, WindowMessageSink> ids = new ConcurrentDictionary<nint, WindowMessageSink>();
-
         /// <summary>
         /// Callback method that receives messages from the taskbar area.
         /// </summary>
-        [System.Runtime.InteropServices.UnmanagedCallersOnly(CallConvs = new[] { typeof(System.Runtime.CompilerServices.CallConvStdcall) })]
-        private static LRESULT OnWindowMessageReceivedStatic(HWND hWnd, uint messageId, WPARAM wParam, LPARAM lParam)
-        {
-            if(ids.TryGetValue(hWnd.Value, out WindowMessageSink? sink))
-            {
-                sink.OnWindowMessageReceived(hWnd, messageId, wParam, lParam);
-            }
-
-            // Pass the message to the default window procedure
-            return PInvoke.DefWindowProc(hWnd, messageId, wParam, lParam);
-        }
-        private void OnWindowMessageReceived(HWND hWnd, uint messageId, WPARAM wParam, LPARAM lParam)
+        private LRESULT OnWindowMessageReceived(HWND hWnd, uint messageId, WPARAM wParam, LPARAM lParam)
         {
             if (messageId == taskbarRestartMessageId)
             {
@@ -217,6 +203,7 @@ namespace WinUIEx
 
             //forward message
             ProcessWindowMessage(messageId, wParam, lParam);
+            return PInvoke.DefWindowProc(hWnd, messageId, wParam, lParam);
         }
 
         /// <summary>
@@ -375,7 +362,6 @@ namespace WinUIEx
             IsDisposed = true;
 
             //always destroy the unmanaged handle (even if called from the GC)
-            ids.TryRemove(MessageWindowHandle.Value, out _);
             PInvoke.DestroyWindow(MessageWindowHandle);
         }
 

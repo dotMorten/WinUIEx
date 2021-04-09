@@ -3,7 +3,6 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Microsoft.Windows.Sdk;
 using WinRT;
-using WinUIExtensions.Windowing;
 
 namespace WinUIEx
 {
@@ -12,10 +11,6 @@ namespace WinUIEx
     /// </summary>
     public static class HwndExtensions
     {
-        private const uint MONITOR_DEFAULTTONULL = 0x00000000;
-        private const uint MONITOR_DEFAULTTOPRIMARY = 0x00000001; // Returns a handle to the primary display monitor.
-        private const uint MONITOR_DEFAULTTONEAREST = 0x00000002; // Returns a handle to the display monitor that is nearest to the window.
-
         /// <summary>Returns the dots per inch (dpi) value for the associated window.</summary>
         /// <param name = "hwnd">The window you want to get information about.</param>
         /// <returns>The DPI for the window which depends on the <a href = "/windows/desktop/api/windef/ne-windef-dpi_awareness">DPI_AWARENESS</a> of the window. See the Remarks for more information. An invalid <i>hwnd</i> value will result in a return value of 0.</returns>
@@ -31,7 +26,7 @@ namespace WinUIEx
         /// <returns></returns>
         public static uint GetDpiForWindowsMonitor(IntPtr hwnd)
         {
-            var hwndDesktop = new HWND(PInvoke.MonitorFromWindow(new(hwnd), MONITOR_DEFAULTTONEAREST));
+            var hwndDesktop = new HWND(PInvoke.MonitorFromWindow(new(hwnd), MonitorFrom_dwFlags.MONITOR_DEFAULTTONEAREST));
             return PInvoke.GetDpiForWindow(new HWND(hwndDesktop));
         }
 
@@ -78,9 +73,9 @@ namespace WinUIEx
         /// <param name="hwnd">Window handle</param>
         /// <param name="enable">Whether to display on top</param>
         public static void SetAlwaysOnTop(IntPtr hwnd, bool enable)
-            => SetWindowPosOrThrow(new HWND(hwnd), new HWND(enable ? -1 : -2), 0, 0, 0, 0, (uint)(SetWindowPos_Flags.SWP_NOSIZE | SetWindowPos_Flags.SWP_NOMOVE));
+            => SetWindowPosOrThrow(new HWND(hwnd), new HWND(enable ? -1 : -2), 0, 0, 0, 0, SetWindowPos_uFlags.SWP_NOSIZE | SetWindowPos_uFlags.SWP_NOMOVE);
 
-        private static void SetWindowPosOrThrow(HWND hWnd, HWND hWndInsertAfter, int X, int Y, int cx, int cy, uint uFlags)
+        private static void SetWindowPosOrThrow(HWND hWnd, HWND hWndInsertAfter, int X, int Y, int cx, int cy, SetWindowPos_uFlags uFlags)
         {
             bool result = PInvoke.SetWindowPos(hWnd, hWndInsertAfter, X, Y, cx, cy, uFlags);
             if (!result)
@@ -100,7 +95,7 @@ namespace WinUIEx
         /// <param name="height">Height of the window in device independent pixels, or <c>null</c> if keeping the current size</param>
         public static void CenterOnScreen(IntPtr hwnd, double? width = null, double? height = null)
         {
-            var hwndDesktop = PInvoke.MonitorFromWindow(new(hwnd), MONITOR_DEFAULTTONEAREST);
+            var hwndDesktop = PInvoke.MonitorFromWindow(new(hwnd), MonitorFrom_dwFlags.MONITOR_DEFAULTTONEAREST);
             MONITORINFO info = new MONITORINFO();
             info.cbSize = 40;
             PInvoke.GetMonitorInfo(hwndDesktop, ref info);
@@ -113,7 +108,7 @@ namespace WinUIEx
             var cy = (info.rcMonitor.bottom + info.rcMonitor.top) / 2;
             var left = cx - (w / 2);
             var top = cy - (h / 2);
-            SetWindowPosOrThrow(new HWND(hwnd), new HWND(), left, top, w, h, (uint)SetWindowPos_Flags.SWP_SHOWWINDOW);
+            SetWindowPosOrThrow(new HWND(hwnd), new HWND(), left, top, w, h, SetWindowPos_uFlags.SWP_SHOWWINDOW);
         }
 
         /// <summary>
@@ -128,7 +123,7 @@ namespace WinUIEx
         {
             var dpi = GetDpiForWindow(hwnd);
             var scalingFactor = dpi / 96d;
-            SetWindowPosOrThrow(new HWND(hwnd), new HWND(0), (int)(x * scalingFactor), (int)(y * scalingFactor), (int)(width * scalingFactor), (int)(height * scalingFactor), (uint)SetWindowPos_Flags.SWP_NOSENDCHANGING);
+            SetWindowPosOrThrow(new HWND(hwnd), new HWND(0), (int)(x * scalingFactor), (int)(y * scalingFactor), (int)(width * scalingFactor), (int)(height * scalingFactor), SetWindowPos_uFlags.SWP_NOSENDCHANGING);
         }
 
         /// <summary>
@@ -142,7 +137,7 @@ namespace WinUIEx
             var dpi = GetDpiForWindow(hwnd);
             var scalingFactor = dpi / 96d;
             SetWindowPosOrThrow(new HWND(hwnd), new HWND(0), 0, 0, (int)(width * scalingFactor), (int)(height * scalingFactor),
-                (uint)(SetWindowPos_Flags.SWP_NOREPOSITION | SetWindowPos_Flags.SWP_NOSENDCHANGING));
+                SetWindowPos_uFlags.SWP_NOREPOSITION | SetWindowPos_uFlags.SWP_NOSENDCHANGING);
         }
 
         /// <summary>
@@ -160,7 +155,7 @@ namespace WinUIEx
         /// </summary>
         /// <param name="hWnd">Window handle</param>
         /// <returns><c>true</c> if the window was previously visible, or <c>false</c> if the window was previously hidden.</returns>
-        public static bool ShowWindow(IntPtr hWnd) => PInvoke.ShowWindow(new HWND(hWnd), 5);
+        public static bool ShowWindow(IntPtr hWnd) => PInvoke.ShowWindow(new HWND(hWnd), SHOW_WINDOW_CMD.SW_SHOW);
 
         /// <summary>
         /// Hides the window and activates another window.
@@ -174,14 +169,14 @@ namespace WinUIEx
         /// </summary>
         /// <param name="hWnd">Window handle</param>
         /// <returns><c>true</c> if the window was previously visible, or <c>false</c> if the window was previously hidden.</returns>
-        public static bool MaximizeWindow(IntPtr hWnd) => PInvoke.ShowWindow(new HWND(hWnd), 3);
+        public static bool MaximizeWindow(IntPtr hWnd) => PInvoke.ShowWindow(new HWND(hWnd), SHOW_WINDOW_CMD.SW_SHOWMAXIMIZED);
 
         /// <summary>
         /// Minimizes the specified window and activates the next top-level window in the Z order.
         /// </summary>
         /// <param name="hWnd">Window handle</param>
         /// <returns><c>true</c> if the window was previously visible, or <c>false</c> if the window was previously hidden.</returns>
-        public static bool MinimizeWindow(IntPtr hWnd) => PInvoke.ShowWindow(new HWND(hWnd), 6);
+        public static bool MinimizeWindow(IntPtr hWnd) => PInvoke.ShowWindow(new HWND(hWnd), SHOW_WINDOW_CMD.SW_MINIMIZE);
 
         /// <summary>
         /// Activates and displays the window. If the window is minimized or maximized, the system restores
@@ -189,9 +184,8 @@ namespace WinUIEx
         /// </summary>
         /// <param name="hWnd">Window handle</param>
         /// <returns><c>true</c> if the window was previously visible, or <c>false</c> if the window was previously hidden.</returns>
-        public static bool RestoreWindow(IntPtr hWnd) => PInvoke.ShowWindow(new HWND(hWnd), 9);
+        public static bool RestoreWindow(IntPtr hWnd) => PInvoke.ShowWindow(new HWND(hWnd), SHOW_WINDOW_CMD.SW_RESTORE);
 
-        private const int GWL_STYLE = -16;
         /// <summary>
         /// Gets the current window style
         /// </summary>
@@ -200,7 +194,7 @@ namespace WinUIEx
         public static WindowStyle GetWindowStyle(IntPtr hWnd)
         {
             var h = new HWND(hWnd);
-            return (WindowStyle)PInvoke.GetWindowLong(h, GWL_STYLE);
+            return (WindowStyle)PInvoke.GetWindowLong(h, GetWindowLongPtr_nIndex.GWL_STYLE);
         }
 
         /// <summary>
@@ -212,13 +206,13 @@ namespace WinUIEx
         public static void ToggleWindowStyle(IntPtr hWnd, bool visible, WindowStyle style)
         {
             var h = new HWND(hWnd);
-            var currentStyle = PInvoke.GetWindowLong(h, GWL_STYLE);
+            var currentStyle = PInvoke.GetWindowLong(h, GetWindowLongPtr_nIndex.GWL_STYLE);
             var newStyle = currentStyle;
             if (visible)
                 newStyle = (newStyle & (int)style);
             else
                 newStyle = (newStyle & ~(int)style);
-            var r = PInvoke.SetWindowLong(h, GWL_STYLE, newStyle);
+            var r = PInvoke.SetWindowLong(h, GetWindowLongPtr_nIndex.GWL_STYLE, newStyle);
             if (r != currentStyle)
                 Marshal.ThrowExceptionForHR(Marshal.GetLastWin32Error());
         }
@@ -231,8 +225,8 @@ namespace WinUIEx
         public static void SetWindowStyle(IntPtr hWnd, WindowStyle newStyle)
         {
             var h = new HWND(hWnd);
-            var currentStyle = PInvoke.GetWindowLong(h, GWL_STYLE);
-            var r = PInvoke.SetWindowLong(h, GWL_STYLE, (int)newStyle);
+            var currentStyle = PInvoke.GetWindowLong(h, GetWindowLongPtr_nIndex.GWL_STYLE);
+            var r = PInvoke.SetWindowLong(h, GetWindowLongPtr_nIndex.GWL_STYLE, (int)newStyle);
             if (r != currentStyle)
                 Marshal.ThrowExceptionForHR(Marshal.GetLastWin32Error());
         }

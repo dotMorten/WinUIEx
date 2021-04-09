@@ -31,8 +31,7 @@ namespace WinUIEx
         /// <returns>Icon</returns>
         public static Icon FromFile(string filename)
         {
-            const uint LR_LOADFROMFILE = 0x00000010;
-            var handle = PInvoke.LoadImage(null, filename, 1, 16, 16, LR_LOADFROMFILE);
+            var handle = PInvoke.LoadImage(null, filename, CopyImage_type.IMAGE_ICON, 16, 16, ImageListLoadImage_uFlags.LR_LOADFROMFILE);
             ThrowIfInvalid(handle);
             return new Icon(new HICON(handle.DangerousGetHandle()));
         }

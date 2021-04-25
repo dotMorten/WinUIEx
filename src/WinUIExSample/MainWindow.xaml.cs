@@ -25,7 +25,6 @@ namespace WinUIExSample
     {
         public MainWindow()
         {
-            TaskBarIcon = Icon.FromFile("Images/WindowIcon.ico");
             this.InitializeComponent();
         }
 

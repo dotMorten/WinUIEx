@@ -26,7 +26,7 @@ namespace WinUIEx
         private readonly ContentControl windowArea;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Window"/> class.
+        /// Initializes a new instance of the <see cref="WindowEx"/> class.
         /// </summary>
         public WindowEx()
         {

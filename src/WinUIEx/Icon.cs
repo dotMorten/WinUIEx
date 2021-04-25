@@ -7,17 +7,18 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Windows.Sdk;
+using Windows.Foundation.Metadata;
 
 namespace WinUIEx
 {
     /// <summary>
     /// Manages a native Windows Icon instance
     /// </summary>
+    [CreateFromString(MethodName = "WinUIEx.Icon.FromFile")]
     public unsafe class Icon : IDisposable
     {
         private readonly HICON handle;
         private readonly Microsoft.Win32.SafeHandles.SafeFileHandle? _fileHandle;
-        
 
         private Icon(Microsoft.Win32.SafeHandles.SafeFileHandle fileHandle) 
         {

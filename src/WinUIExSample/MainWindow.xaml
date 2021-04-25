@@ -9,6 +9,7 @@
     IsMinimizeButtonVisible="False"
     IsMaximizeButtonVisible="True"
     IsCloseButtonVisible="True"
+    TaskBarIcon="Images/WindowIcon.ico"
     mc:Ignorable="d">
     
     <winex:WindowEx.TitleBarIcon>

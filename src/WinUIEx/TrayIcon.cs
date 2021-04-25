@@ -12,6 +12,7 @@ namespace WinUIEx
         private WindowMessageSink messageSink;
         private NOTIFYICONDATAW iconData;
         private object lockObject = new object();
+        private Icon _icon;
 
         /// <summary>
         /// Initializes a new instance of the tray icon
@@ -45,6 +46,7 @@ namespace WinUIEx
         /// <param name="icon"></param>
         public unsafe void SetIcon(Icon icon)
         {
+            _icon = icon; // pin to avoid GC
             iconData.uFlags = (uint)IconDataMembers.Icon;
             iconData.hIcon = icon.Handle;
             var status = PInvoke.Shell_NotifyIcon((uint)NotifyCommand.Modify, iconData);
@@ -164,29 +166,27 @@ namespace WinUIEx
         private void Dispose(bool disposing)
         {
             // don't do anything if the component is already disposed
-            if (IsDisposed || !disposing) return;
+            if (IsDisposed) return;
 
-            lock (lockObject)
+            if (disposing)
             {
-                IsDisposed = true;
 
-                // de-register application event listener
-                /*
-                if (Application.Current != null)
+                lock (lockObject)
                 {
-                    Application.Current.Exit -= OnExit;
-                }*/
+                    IsDisposed = true;
+                    // dispose message sink
+                    messageSink.Dispose();
 
-                // stop timers
-                // singleClickTimer.Dispose();
-                // balloonCloseTimer.Dispose();
+                    _icon.Dispose();
 
-                // dispose message sink
-                messageSink.Dispose();
+                    // stop timers
+                    // singleClickTimer.Dispose();
+                    // balloonCloseTimer.Dispose();
 
-                // remove icon
-                RemoveTaskbarIcon();
+                }
             }
+            // remove icon
+            RemoveTaskbarIcon();
         }
     }
 }

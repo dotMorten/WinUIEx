@@ -16,6 +16,16 @@ namespace WinUIEx
     public unsafe class Icon : IDisposable
     {
         private readonly HICON handle;
+        private readonly Microsoft.Win32.SafeHandles.SafeFileHandle? _fileHandle;
+        
+
+        private Icon(Microsoft.Win32.SafeHandles.SafeFileHandle fileHandle) 
+        {
+            _fileHandle = fileHandle; //pin
+            bool hInstanceAddRef = false;
+            fileHandle.DangerousAddRef(ref hInstanceAddRef);
+            handle = new HICON(fileHandle.DangerousGetHandle());
+        }
 
         private Icon(HICON icon)
         {
@@ -33,7 +43,7 @@ namespace WinUIEx
         {
             var handle = PInvoke.LoadImage(null, filename, CopyImage_type.IMAGE_ICON, 16, 16, ImageListLoadImage_uFlags.LR_LOADFROMFILE);
             ThrowIfInvalid(handle);
-            return new Icon(new HICON(handle.DangerousGetHandle()));
+            return new Icon(handle);
         }
 
         /// <summary>
@@ -198,10 +208,7 @@ namespace WinUIEx
         /// <param name="disposing"></param>
         protected void Dispose(bool disposing)
         {
-            if(disposing)
-            {
-                PInvoke.DestroyIcon(Handle);
-            }
+            PInvoke.DestroyIcon(Handle); // also closes filehandle
         }
     }
 }

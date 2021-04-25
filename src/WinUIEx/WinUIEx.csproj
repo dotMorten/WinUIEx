@@ -17,7 +17,7 @@
     <Description>A set of extension methods and classes to fill some gaps in WinUI 3, mostly around windowing.</Description>
     <PackageTags>WinUI</PackageTags>
     <PackageId>WinUIEx</PackageId>
-    <Version>0.1-beta</Version>
+    <Version>0.5.5</Version>
     <Product>WinUI Extensions</Product>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/dotMorten/WinUIEx</PackageProjectUrl>
@@ -34,12 +34,17 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.ProjectReunion.WinUI" Version="0.5.0" />
+    <PackageReference Include="Microsoft.ProjectReunion.WinUI" Version="0.5.5" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
   </ItemGroup>
   
   <ItemGroup>
     <None Include="logo.png" Pack="true" PackagePath="" />
   </ItemGroup>
-  
+
+
+  <ItemGroup>
+    <FrameworkReference Update="Microsoft.Windows.SDK.NET.Ref" RuntimeFrameworkVersion="10.0.19041.16" />
+    <FrameworkReference Update="Microsoft.Windows.SDK.NET.Ref" TargetingPackVersion="10.0.19041.16" />
+  </ItemGroup>
 </Project>

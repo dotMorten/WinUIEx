@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 
 namespace WinUIEx
@@ -24,7 +25,7 @@ namespace WinUIEx
         {
             _window = window ?? throw new ArgumentNullException(nameof(window));
             this.Activated += SplashScreen_Activated;
-            this.DispatcherQueue.TryEnqueue(Microsoft.System.DispatcherQueuePriority.Normal, () =>
+            this.DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Normal, () =>
             {
                 this.Activate();
             });
@@ -40,7 +41,7 @@ namespace WinUIEx
                 throw new ArgumentException("Type must be a Window");
             _windowType = window ?? throw new ArgumentNullException(nameof(window));
             this.Activated += SplashScreen_Activated;
-            this.DispatcherQueue.TryEnqueue(Microsoft.System.DispatcherQueuePriority.Normal, () =>
+            this.DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Normal, () =>
             {
                 this.Activate();
             });

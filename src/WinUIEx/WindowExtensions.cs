@@ -11,14 +11,6 @@ namespace WinUIEx
     /// </summary>
     public static class WindowExtensions
     {       
-        [ComImport]
-        [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-        [Guid("EECDBF0E-BAE9-4CB6-A68E-9598E1CB57BB")]
-        internal interface IWindowNative
-        {
-            IntPtr WindowHandle { get; }
-        }
-
         /// <summary>Returns the dots per inch (dpi) value for the associated window.</summary>
         /// <param name = "window">The window you want to get information about.</param>
         /// <returns>The DPI for the window which depends on the <a href = "/windows/desktop/api/windef/ne-windef-dpi_awareness">DPI_AWARENESS</a> of the window. See the Remarks for more information. An invalid <i>hwnd</i> value will result in a return value of 0.</returns>
@@ -79,8 +71,8 @@ namespace WinUIEx
         /// </summary>
         /// <param name="window">The window to return the handle for</param>
         /// <returns>HWND handle</returns>
-        public static IntPtr GetWindowHandle(this Microsoft.UI.Xaml.Window window) 
-            => window is null ? throw new ArgumentNullException(nameof(window)) : window.As<IWindowNative>().WindowHandle;
+        public static IntPtr GetWindowHandle(this Microsoft.UI.Xaml.Window window)
+            => window is null ? throw new ArgumentNullException(nameof(window)) : WinRT.Interop.WindowNative.GetWindowHandle(window);
 
         /// <summary>
         /// Activates the window and displays it in its current size and position.

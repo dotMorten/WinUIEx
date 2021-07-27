@@ -6,8 +6,10 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.Windows.Sdk;
+using Windows.Win32;
 using Windows.Foundation.Metadata;
+using Windows.Win32.UI.WindowsAndMessaging;
+using Windows.Win32.Foundation;
 
 namespace WinUIEx
 {
@@ -42,7 +44,7 @@ namespace WinUIEx
         /// <returns>Icon</returns>
         public static Icon FromFile(string filename)
         {
-            var handle = PInvoke.LoadImage(null, filename, CopyImage_type.IMAGE_ICON, 16, 16, ImageListLoadImage_uFlags.LR_LOADFROMFILE);
+            var handle = PInvoke.LoadImage(null, filename, GDI_IMAGE_TYPE.IMAGE_ICON, 16, 16, Windows.Win32.UI.Controls.IMAGE_FLAGS.LR_LOADFROMFILE);
             ThrowIfInvalid(handle);
             return new Icon(handle);
         }
@@ -70,7 +72,7 @@ namespace WinUIEx
             fixed (byte* and = ANDmaskIcon)
             fixed (byte* xor = XORmaskIcon)
             {
-                handle = PInvoke.CreateIcon(new HINSTANCE(hinstance), 32, 32, 24, 1, xor, and);
+                handle = PInvoke.CreateIcon(new HINSTANCE(hinstance.DangerousGetHandle()), 32, 32, 24, 1, xor, and);
             }
             ThrowIfInvalid(handle);
             return new Icon(handle);
@@ -185,7 +187,7 @@ namespace WinUIEx
             fixed (byte* and = ANDmaskIcon)
             fixed (byte* xor = XORmaskIcon)
             {
-                var icon = PInvoke.CreateIcon(new HINSTANCE(hinstance), 32, 32, 1, 1, and, xor);
+                var icon = PInvoke.CreateIcon(new HINSTANCE(hinstance.DangerousGetHandle()), 32, 32, 1, 1, and, xor);
                 return new Icon(icon);
             }
         }

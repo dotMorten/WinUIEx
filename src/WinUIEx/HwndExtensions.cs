@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using Microsoft.Windows.Sdk;
+using Windows.Win32;
+using Windows.Win32.Foundation;
+using Windows.Win32.UI.WindowsAndMessaging;
+using Windows.Win32.Graphics.Gdi;
 using WinRT;
 
 namespace WinUIEx
@@ -26,7 +29,7 @@ namespace WinUIEx
         /// <returns></returns>
         public static uint GetDpiForWindowsMonitor(IntPtr hwnd)
         {
-            var hwndDesktop = new HWND(PInvoke.MonitorFromWindow(new(hwnd), MonitorFrom_dwFlags.MONITOR_DEFAULTTONEAREST));
+            var hwndDesktop = new HWND(PInvoke.MonitorFromWindow(new(hwnd), MONITOR_FROM_FLAGS.MONITOR_DEFAULTTONEAREST));
             return PInvoke.GetDpiForWindow(new HWND(hwndDesktop));
         }
 
@@ -73,9 +76,9 @@ namespace WinUIEx
         /// <param name="hwnd">Window handle</param>
         /// <param name="enable">Whether to display on top</param>
         public static void SetAlwaysOnTop(IntPtr hwnd, bool enable)
-            => SetWindowPosOrThrow(new HWND(hwnd), new HWND(enable ? -1 : -2), 0, 0, 0, 0, SetWindowPos_uFlags.SWP_NOSIZE | SetWindowPos_uFlags.SWP_NOMOVE);
+            => SetWindowPosOrThrow(new HWND(hwnd), new HWND(enable ? -1 : -2), 0, 0, 0, 0, SET_WINDOW_POS_FLAGS.SWP_NOSIZE | SET_WINDOW_POS_FLAGS.SWP_NOMOVE);
 
-        private static void SetWindowPosOrThrow(HWND hWnd, HWND hWndInsertAfter, int X, int Y, int cx, int cy, SetWindowPos_uFlags uFlags)
+        private static void SetWindowPosOrThrow(HWND hWnd, HWND hWndInsertAfter, int X, int Y, int cx, int cy, SET_WINDOW_POS_FLAGS uFlags)
         {
             bool result = PInvoke.SetWindowPos(hWnd, hWndInsertAfter, X, Y, cx, cy, uFlags);
             if (!result)
@@ -95,7 +98,7 @@ namespace WinUIEx
         /// <param name="height">Height of the window in device independent pixels, or <c>null</c> if keeping the current size</param>
         public static void CenterOnScreen(IntPtr hwnd, double? width = null, double? height = null)
         {
-            var hwndDesktop = PInvoke.MonitorFromWindow(new(hwnd), MonitorFrom_dwFlags.MONITOR_DEFAULTTONEAREST);
+            var hwndDesktop = PInvoke.MonitorFromWindow(new(hwnd), MONITOR_FROM_FLAGS.MONITOR_DEFAULTTONEAREST);
             MONITORINFO info = new MONITORINFO();
             info.cbSize = 40;
             PInvoke.GetMonitorInfo(hwndDesktop, ref info);
@@ -108,7 +111,7 @@ namespace WinUIEx
             var cy = (info.rcMonitor.bottom + info.rcMonitor.top) / 2;
             var left = cx - (w / 2);
             var top = cy - (h / 2);
-            SetWindowPosOrThrow(new HWND(hwnd), new HWND(), left, top, w, h, SetWindowPos_uFlags.SWP_SHOWWINDOW);
+            SetWindowPosOrThrow(new HWND(hwnd), new HWND(), left, top, w, h, SET_WINDOW_POS_FLAGS.SWP_SHOWWINDOW);
         }
 
         /// <summary>
@@ -123,7 +126,7 @@ namespace WinUIEx
         {
             var dpi = GetDpiForWindow(hwnd);
             var scalingFactor = dpi / 96d;
-            SetWindowPosOrThrow(new HWND(hwnd), new HWND(0), (int)(x * scalingFactor), (int)(y * scalingFactor), (int)(width * scalingFactor), (int)(height * scalingFactor), SetWindowPos_uFlags.SWP_NOSENDCHANGING);
+            SetWindowPosOrThrow(new HWND(hwnd), new HWND(0), (int)(x * scalingFactor), (int)(y * scalingFactor), (int)(width * scalingFactor), (int)(height * scalingFactor), SET_WINDOW_POS_FLAGS.SWP_NOSENDCHANGING);
         }
 
         /// <summary>
@@ -137,7 +140,7 @@ namespace WinUIEx
             var dpi = GetDpiForWindow(hwnd);
             var scalingFactor = dpi / 96d;
             SetWindowPosOrThrow(new HWND(hwnd), new HWND(0), 0, 0, (int)(width * scalingFactor), (int)(height * scalingFactor),
-                SetWindowPos_uFlags.SWP_NOREPOSITION | SetWindowPos_uFlags.SWP_NOSENDCHANGING);
+                SET_WINDOW_POS_FLAGS.SWP_NOREPOSITION | SET_WINDOW_POS_FLAGS.SWP_NOSENDCHANGING);
         }
 
         /// <summary>
@@ -194,7 +197,7 @@ namespace WinUIEx
         public static WindowStyle GetWindowStyle(IntPtr hWnd)
         {
             var h = new HWND(hWnd);
-            return (WindowStyle)PInvoke.GetWindowLong(h, GetWindowLongPtr_nIndex.GWL_STYLE);
+            return (WindowStyle)PInvoke.GetWindowLong(h, WINDOW_LONG_PTR_INDEX.GWL_STYLE);
         }
 
         /// <summary>
@@ -206,13 +209,13 @@ namespace WinUIEx
         public static void ToggleWindowStyle(IntPtr hWnd, bool visible, WindowStyle style)
         {
             var h = new HWND(hWnd);
-            var currentStyle = PInvoke.GetWindowLong(h, GetWindowLongPtr_nIndex.GWL_STYLE);
+            var currentStyle = PInvoke.GetWindowLong(h, WINDOW_LONG_PTR_INDEX.GWL_STYLE);
             var newStyle = currentStyle;
             if (visible)
                 newStyle = (newStyle & (int)style);
             else
                 newStyle = (newStyle & ~(int)style);
-            var r = PInvoke.SetWindowLong(h, GetWindowLongPtr_nIndex.GWL_STYLE, newStyle);
+            var r = PInvoke.SetWindowLong(h, WINDOW_LONG_PTR_INDEX.GWL_STYLE, newStyle);
             if (r != currentStyle)
                 Marshal.ThrowExceptionForHR(Marshal.GetLastWin32Error());
         }
@@ -225,8 +228,8 @@ namespace WinUIEx
         public static void SetWindowStyle(IntPtr hWnd, WindowStyle newStyle)
         {
             var h = new HWND(hWnd);
-            var currentStyle = PInvoke.GetWindowLong(h, GetWindowLongPtr_nIndex.GWL_STYLE);
-            var r = PInvoke.SetWindowLong(h, GetWindowLongPtr_nIndex.GWL_STYLE, (int)newStyle);
+            var currentStyle = PInvoke.GetWindowLong(h, WINDOW_LONG_PTR_INDEX.GWL_STYLE);
+            var r = PInvoke.SetWindowLong(h, WINDOW_LONG_PTR_INDEX.GWL_STYLE, (int)newStyle);
             if (r != currentStyle)
                 Marshal.ThrowExceptionForHR(Marshal.GetLastWin32Error());
         }

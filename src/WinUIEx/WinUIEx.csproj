@@ -9,6 +9,8 @@
     <Nullable>enable</Nullable>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
+    <!--<RuntimeIdentifiers>win10-x64;win10-x86;win10-arm64</RuntimeIdentifiers>
+    <ExtrasBuildEachRuntimeIdentifier>true</ExtrasBuildEachRuntimeIdentifier>-->
   </PropertyGroup>
 
   <PropertyGroup Label="PackageInfo">
@@ -28,7 +30,6 @@
     <PackageOutputPath>..\..\artifacts\NuGet\$(Configuration)\</PackageOutputPath>
   </PropertyGroup>
 
-
   <ItemGroup>
     <PackageReference Include="Microsoft.Windows.CsWin32" Version="0.1.506-beta">
       <PrivateAssets>all</PrivateAssets>
@@ -41,4 +42,7 @@
   <ItemGroup>
     <None Include="logo.png" Pack="true" PackagePath="" />
   </ItemGroup>
+
+  <!-- Workaround for https://github.com/microsoft/WindowsAppSDK/issues/1217 -->
+  <Target Name="BinPlaceBootstrapDll" />
 </Project>

@@ -30,10 +30,10 @@ namespace WinUIEx
         public WindowEx()
         {
             var rootContent = new Grid();
-            rootContent.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Auto), MinHeight = 35 });
+            rootContent.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Auto), MinHeight = 0 });
             rootContent.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Star) });
 
-            titleBarArea = new Grid();
+            titleBarArea = new Grid() { Visibility = Visibility.Collapsed };
             titleBarArea.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Auto) });
             titleBarArea.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
             rootContent.Children.Add(titleBarArea);
@@ -50,61 +50,13 @@ namespace WinUIEx
 
             this.Content = rootContent;
             SetTitleBar(titleBarArea);
-            ExtendsContentIntoTitleBar = true;
-            rootContent.Loaded += RootLoaded;
-            //this.Activated += WindowEx_Activated;
-
-            //Bug: In Preview 4 Alt + F4 doesn't close the Window. This is a workaround.
-            rootContent.AddHandler(UIElement.KeyDownEvent, new Microsoft.UI.Xaml.Input.KeyEventHandler(RootContent_KeyDown), true);
+            //rootContent.Loaded += RootLoaded;
         }
 
-        private void RootContent_KeyDown(object sender, Microsoft.UI.Xaml.Input.KeyRoutedEventArgs e)
-        {
-            if (e.Key == Windows.System.VirtualKey.F4 &&
-                KeyboardInput.GetKeyStateForCurrentThread(Windows.System.VirtualKey.Menu).HasFlag(Windows.UI.Core.CoreVirtualKeyStates.Down))
-            {
-                this.Close();
-            }
-        }
-
-        private bool isInitialized;
-
-        private void WindowEx_Activated(object sender, WindowActivatedEventArgs args)
-        {
-            if (args.WindowActivationState == WindowActivationState.Deactivated)
-                return;
-            if(!isInitialized)
-            {
-                isInitialized = true;
-                var clientAreaPresenter = VisualTreeHelper.GetParent(Content) as ContentPresenter;
-                WindowRoot = VisualTreeHelper.GetParent(clientAreaPresenter) as Grid;
-                SetVisibility("MinimizeButton", IsMinimizeButtonVisible);
-                SetVisibility("MaximizeButton", IsMaximizeButtonVisible);
-                SetVisibility("CloseButton", IsCloseButtonVisible);
-                if (IsAlwaysOnTop)
-                    IsAlwaysOnTop = true;
-            }
-        }
-
-        private FrameworkElement? WindowRoot;
-
-        private void SetVisibility(string name, bool visible)
-        {
-            var element = WindowRoot?.FindName(name) as FrameworkElement;
-            if (element != null)
-                element.Visibility = visible ? Visibility.Visible : Visibility.Collapsed;
-        }
-
-        private void RootLoaded(object sender, RoutedEventArgs e)
-        {            
-            var clientAreaPresenter = VisualTreeHelper.GetParent(Content) as ContentPresenter;
-            WindowRoot = VisualTreeHelper.GetParent(clientAreaPresenter) as Grid;
-            SetVisibility("MinimizeButton", IsMinimizeButtonVisible);
-            SetVisibility("MaximizeButton", IsMaximizeButtonVisible);
-            SetVisibility("CloseButton", IsCloseButtonVisible);
-            if (IsAlwaysOnTop)
-                IsAlwaysOnTop = true;
-        }
+        /// <summary>
+        /// Gets a reference to the AppWindow for the app
+        /// </summary>
+        public Microsoft.UI.Windowing.AppWindow AppWindow => this.GetAppWindow();
 
         /// <summary>
         /// Brings the window to the front
@@ -112,12 +64,12 @@ namespace WinUIEx
         /// <returns></returns>
         public bool BringToFront() => WindowExtensions.SetForegroundWindow(this);
 
-        private Icon _TaskBarIcon;
+        private Icon? _TaskBarIcon;
 
         /// <summary>
         /// Gets or sets the task bar icon.
         /// </summary>
-        public Icon TaskBarIcon
+        public Icon? TaskBarIcon
         {
             get { return _TaskBarIcon; }
             set {
@@ -126,37 +78,91 @@ namespace WinUIEx
             }
         }
 
-
-        private bool _IsMinimizeButtonVisible;
-        
         /// <summary>
-        /// Gets or sets a value indicating whether the minimimze button is visible
+        /// Gets or sets the window title.
         /// </summary>
-        public bool IsMinimizeButtonVisible
+        public new string Title // Workaround for https://github.com/microsoft/microsoft-ui-xaml/issues/3689
         {
-            get => _IsMinimizeButtonVisible;
+            get => base.Title;
+            set => base.Title = value;
+        }
+
+        /// <summary>
+        /// Gets or sets the Window content 
+        /// /// </summary>
+        public UIElement? TitleBar
+        {
+            get { return titleBarContainer.Content as UIElement; }
             set
             {
-                _IsMinimizeButtonVisible = value;
-                SetVisibility("MinimizeButton", value);
+                AppWindow.TitleBar.ResetToDefault();
+                titleBarContainer.Content = value;
+                if (value is null)
+                {
+                    titleBarArea.Visibility = Visibility.Collapsed;
+                    base.ExtendsContentIntoTitleBar = false;
+                }
+                else
+                {
+                    titleBarArea.Visibility = Visibility.Visible;
+                    base.ExtendsContentIntoTitleBar = true;
+                    SetTitleBar(TitleBar);
+                }
             }
         }
 
-        private bool _IsMaximizeButtonVisible;
+        /// <summary>
+        /// Gets or sets the Window content 
+        /// /// </summary>
+        public object? WindowContent
+        {
+            get { return windowArea.Content; }
+            set { windowArea.Content = value; }
+          
+        }
+
+        private bool _IsTitleBarVisible = true;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the default title bar is visible or not.
+        /// </summary>
+        public bool IsTitleBarVisible
+        {
+            get { return _IsTitleBarVisible; }
+            set
+            {
+                _IsTitleBarVisible = value;
+                this.SetHasTitleBar(value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the window has a frame or not.
+        /// </summary>
+        public bool IsFrameVisible
+        {
+            get => AppWindow.Configuration.HasFrame;
+            set => this.SetHasFrame(value);
+        }
+                
+        /// <summary>
+        /// Gets or sets a value indicating whether the minimimze button is visible
+        /// </summary>
+        public bool IsMinimizable
+        {
+            get => AppWindow.Configuration.IsMinimizable;
+            set => this.SetIsMinimizable(value);
+        }
 
         /// <summary>
         /// Gets or sets a value indicating whether the maximimze button is visible
         /// </summary>
-        public bool IsMaximizeButtonVisible
-        {
-            get => _IsMaximizeButtonVisible;
-            set
-            {
-                _IsMaximizeButtonVisible = value;
-                SetVisibility("MaximizeButton", value);
-            }
-        }
+        public bool IsMaximizable
 
+        {
+            get => AppWindow.Configuration.IsMaximizable;
+            set => this.SetIsMaximizable(value);
+        }
 
         private bool _IsCloseButtonVisible;
 
@@ -169,58 +175,18 @@ namespace WinUIEx
             set
             {
                 _IsCloseButtonVisible = value;
-                SetVisibility("CloseButton", value);
+                this.SetIsModal(!value);
             }
         }
-
-        private bool _IsAlwaysOnTop;
 
         /// <summary>
         /// Gets or sets a value indicating whether the window is displayed on top of other windows
         /// </summary>
         public bool IsAlwaysOnTop
         {
-            get => _IsAlwaysOnTop;
-            set
-            {
-                _IsAlwaysOnTop = value;
-                WindowExtensions.SetAlwaysOnTop(this, value);
-            }
+            get => AppWindow.Configuration.IsAlwaysOnTop;
+            set => WindowExtensions.SetAlwaysOnTop(this, value);
         }
-
-        /// <summary>
-        /// Gets or sets the image icon for the title bar
-        /// </summary>
-        public ImageSource? TitleBarIcon
-        {
-            get => iconArea.Source;
-            set => iconArea.Source = value;
-        }
-
-        private UIElement? _titleBarContent;
-
-        /// <summary>
-        /// Gets or sets the title bar content
-        /// </summary>
-        public UIElement? TitleBar
-        {
-            get => _titleBarContent;
-            set
-            {
-                _titleBarContent = value;
-                titleBarContainer.Content = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the Window content
-        /// </summary>
-        public object? WindowContent
-        {
-            get { return windowArea.Content; }
-            set { windowArea.Content = value; }
-        }
-
 
         private double _width = 1024;
 
@@ -243,5 +209,7 @@ namespace WinUIEx
             get { return _height; }
             set { _height = value; }
         }
+
+        private double ScaleFactor => this.GetDpiForWindow() / 96d;
     }
 }

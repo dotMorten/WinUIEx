@@ -148,7 +148,7 @@ namespace WinUIEx
         /// </summary>
         /// <param name="hWnd">Window handle</param>
         /// <param name="icon">Icon</param>
-        public static void SetTaskBarIcon(IntPtr hWnd, Icon icon)
+        public static void SetTaskBarIcon(IntPtr hWnd, Icon? icon)
         {
             PInvoke.SendMessage(new HWND(hWnd), (uint)WindowsMessages.WM_SETICON, new WPARAM(0), new LPARAM(icon?.Handle.Value ?? IntPtr.Zero));
         }

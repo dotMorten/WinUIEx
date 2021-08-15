@@ -6,27 +6,27 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:winex="using:WinUIEx"
-    IsMinimizeButtonVisible="False"
-    IsMaximizeButtonVisible="True"
-    IsCloseButtonVisible="True"
     TaskBarIcon="Images/WindowIcon.ico"
+    Title="WinUI EX Test App"
     mc:Ignorable="d">
     
-    <winex:WindowEx.TitleBarIcon>
+    <!--<winex:WindowEx.TitleBarIcon>
         <BitmapImage UriSource="ms-appx:///Images/WindowIcon.gif" DecodePixelHeight="32" />
-    </winex:WindowEx.TitleBarIcon>
+    </winex:WindowEx.TitleBarIcon>-->
 
-    <winex:WindowEx.TitleBar>
+    <!--<winex:WindowEx.TitleBar>
         <TextBlock Text="WinUI Window Extensions" VerticalAlignment="Center" />
-    </winex:WindowEx.TitleBar>
+    </winex:WindowEx.TitleBar>-->
 
-    <Grid ColumnDefinitions="Auto,Auto" Margin="20">
+    <Grid ColumnDefinitions="Auto,Auto,*" Margin="20">
         <StackPanel>
-            <ToggleSwitch Header="Show Minimize Button" IsOn="{x:Bind IsMinimizeButtonVisible, Mode=TwoWay}" />
-            <ToggleSwitch Header="Show Maximize Button" IsOn="{x:Bind IsMaximizeButtonVisible, Mode=TwoWay}" />
-            <ToggleSwitch Header="Show Close Button" IsOn="{x:Bind IsCloseButtonVisible, Mode=TwoWay}" />
+            <ToggleSwitch Header="Can Minimize" IsOn="{x:Bind IsMinimizable, Mode=TwoWay}" />
+            <ToggleSwitch Header="Can Maximize" IsOn="{x:Bind IsMaximizable, Mode=TwoWay}" />
+            <!--<ToggleSwitch Header="Show Close Button" IsOn="{x:Bind IsCloseButtonVisible, Mode=TwoWay}" />-->
+            <ToggleSwitch Header="Is Frame Visible" IsOn="{x:Bind IsFrameVisible, Mode=TwoWay}" />
             <ToggleSwitch Header="Always On Top" IsOn="{x:Bind IsAlwaysOnTop, Mode=TwoWay}" />
-            <ToggleSwitch Header="ExtendsContentIntoTitleBar" IsOn="{x:Bind ExtendsContentIntoTitleBar, Mode=TwoWay}" />
+            <ToggleSwitch Header="Set Custom Titlebar" Toggled="CustomTitleBar_Toggled" />
+            <ToggleSwitch Header="Full screen" Toggled="Fullscreen_Toggled" />
         </StackPanel>
         <StackPanel Grid.Column="1">
             <StackPanel.Resources>
@@ -35,6 +35,7 @@
                     <Setter Property="Margin" Value="5" />
                 </Style>
             </StackPanel.Resources>
+            <TextBox Header="Title:" Text="{x:Bind Title, Mode=TwoWay}" />
             <Button Content="Center On Screen" Click="Center_Click" />
             <Button Content="Maximize" Click="MaximizeWindow_Click" />
             <Button Content="Restore" Click="RestoreWindow_Click" />
@@ -44,5 +45,10 @@
             <Button Content="Minimime to tray (click tray to reopen)" Click="MinimizeTrayIcon_Click" />
             <Button Content="Bring to front (2 second delay)" Click="BringToFront_Click" />
         </StackPanel>
+        <Grid Grid.Column="2" RowDefinitions="Auto,*" >
+            <TextBlock Text="Window Events" />
+            <TextBox IsReadOnly="True" AcceptsReturn="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" x:Name="WindowEventLog" Grid.Row="1" />
+        </Grid>
+        
     </Grid>
 </winex:WindowEx>

@@ -84,5 +84,25 @@ namespace WinUIExSample
             await Task.Delay(2000);
             this.BringToFront();
         }
+        private void CustomTitleBar_Toggled(object sender, RoutedEventArgs e)
+        {
+            if(((ToggleSwitch)sender).IsOn)
+            {
+                TitleBar = new TextBlock() { Text = Title, FontSize = 24, Foreground = new SolidColorBrush(Microsoft.UI.Colors.Red) };
+            }
+            else
+            {
+                TitleBar = null;
+            }
+
+        }
+
+        private void Fullscreen_Toggled(object sender, RoutedEventArgs e)
+        {
+            if (((ToggleSwitch)sender).IsOn)
+                this.SetWindowPresenter(Microsoft.UI.Windowing.AppWindowPresenterKind.FullScreen);
+            else
+                this.SetWindowPresenter(Microsoft.UI.Windowing.AppWindowPresenterKind.Overlapped);
+        }
     }
 }

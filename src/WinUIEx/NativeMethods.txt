@@ -1,7 +1,7 @@
 ﻿FindWindow
-SHAppBarMessage
+//SHAppBarMessage
 SystemParametersInfo
-Shell_NotifyIcon
+//Shell_NotifyIcon
 CreateWindowEx
 DefWindowProc
 RegisterClass

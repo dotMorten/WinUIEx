@@ -1,9 +1,10 @@
 using System;
+using Windows.Win32;
 
 namespace WinUIEx
 {
     /// <summary>
-    /// Indicates which members of a <see cref="Microsoft.Windows.Sdk.NOTIFYICONDATAW"/> structure
+    /// Indicates which members of a <see cref="NOTIFYICONDATAW32"/> structure
     /// were set, and thus contain valid data or provide additional information
     /// to the ToolTip as to how it should display.
     /// </summary>
@@ -26,13 +27,13 @@ namespace WinUIEx
         Tip = 0x04,
 
         /// <summary>
-        /// The <see cref="Microsoft.Windows.Sdk.NOTIFYICONDATAW.dwState"/> and <see cref="Microsoft.Windows.Sdk.NOTIFYICONDATAW.dwStateMask"/> members are valid.
+        /// The <see cref="NOTIFYICONDATAW32.dwState"/> and <see cref="NOTIFYICONDATAW32.dwStateMask"/> members are valid.
         /// </summary>
         State = 0x08,
 
         /// <summary>
-        /// 0x00000010. Display a balloon notification. The <see cref="Microsoft.Windows.Sdk.NOTIFYICONDATAW.szInfo"/>, 
-        /// <see cref="Microsoft.Windows.Sdk.NOTIFYICONDATAW.szInfoTitle"/>, <see cref="Microsoft.Windows.Sdk.NOTIFYICONDATAW.dwInfoFlags"/>,
+        /// 0x00000010. Display a balloon notification. The <see cref="NOTIFYICONDATAW32.szInfo"/>, 
+        /// <see cref="NOTIFYICONDATAW32.szInfoTitle"/>, <see cref="NOTIFYICONDATAW32.dwInfoFlags"/>,
         /// and uTimeout members are valid. Note that uTimeout is valid only in Windows 2000 and Windows XP.
         /// </summary>
         /// <remarks>

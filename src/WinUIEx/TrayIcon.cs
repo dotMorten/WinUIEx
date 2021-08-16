@@ -11,7 +11,8 @@ namespace WinUIEx
     public class TrayIcon : IDisposable
     {
         private WindowMessageSink messageSink;
-        private NOTIFYICONDATAW iconData;
+        private NOTIFYICONDATAW32 iconData32;
+        private NOTIFYICONDATAW64 iconData64;
         private object lockObject = new object();
         private Icon _icon;
 
@@ -21,17 +22,33 @@ namespace WinUIEx
         public TrayIcon(Icon icon)
         {
             messageSink = new WindowMessageSink();
-            iconData = new NOTIFYICONDATAW()
+            if (Environment.Is64BitProcess)
             {
-                cbSize = (uint)Marshal.SizeOf(iconData),
-                hWnd = messageSink.MessageWindowHandle,
-                uCallbackMessage = WindowMessageSink.CallbackMessageId,
-                hIcon = new HICON(IntPtr.Zero),
-                dwState = 0x01, //Hidden
-                dwStateMask = 0x01, // hidden
-                Anonymous = new NOTIFYICONDATAW._Anonymous_e__Union() { uVersion = 0x00 },
-            };
-            
+                iconData64 = new NOTIFYICONDATAW64()
+                {
+                    cbSize = (uint)Marshal.SizeOf(iconData64),
+                    hWnd = messageSink.MessageWindowHandle,
+                    uCallbackMessage = WindowMessageSink.CallbackMessageId,
+                    hIcon = new HICON(IntPtr.Zero),
+                    dwState = 0x01, //Hidden
+                    dwStateMask = 0x01, // hidden
+                    Anonymous = new NOTIFYICONDATAW64._Anonymous_e__Union() { uVersion = 0x00 },
+                };
+            }
+            else
+            {
+                iconData32 = new NOTIFYICONDATAW32()
+                {
+                    cbSize = (uint)Marshal.SizeOf(iconData32),
+                    hWnd = messageSink.MessageWindowHandle,
+                    uCallbackMessage = WindowMessageSink.CallbackMessageId,
+                    hIcon = new HICON(IntPtr.Zero),
+                    dwState = 0x01, //Hidden
+                    dwStateMask = 0x01, // hidden
+                    Anonymous = new NOTIFYICONDATAW32._Anonymous_e__Union() { uVersion = 0x00 },
+                };
+            }
+
             CreateTaskbarIcon(); 
             messageSink.MouseEventReceived += OnMouseEvent;
             messageSink.TaskbarCreated += OnTaskbarCreated;
@@ -48,9 +65,18 @@ namespace WinUIEx
         public unsafe void SetIcon(Icon icon)
         {
             _icon = icon; // pin to avoid GC
-            iconData.uFlags = (uint)IconDataMembers.Icon;
-            iconData.hIcon = icon.Handle;
-            var status = PInvoke.Shell_NotifyIcon((uint)NotifyCommand.Modify, iconData);
+            if (Environment.Is64BitProcess)
+            {
+                iconData64.uFlags = (uint)IconDataMembers.Icon;
+                iconData64.hIcon = icon.Handle;
+                var status = PInvoke.Shell_NotifyIcon((uint)NotifyCommand.Modify, iconData64);
+            }
+            else
+            {
+                iconData32.uFlags = (uint)IconDataMembers.Icon;
+                iconData32.hIcon = icon.Handle;
+                var status = PInvoke.Shell_NotifyIcon((uint)NotifyCommand.Modify, iconData32);
+            }
         }
 
         private void OnBalloonToolTipChanged(bool obj)
@@ -98,9 +124,18 @@ namespace WinUIEx
                                                 | IconDataMembers.Icon
                                                 | IconDataMembers.Tip;
 
-                iconData.uFlags = (uint)members;
                 //write initial configuration
-                var status = PInvoke.Shell_NotifyIcon((uint)NotifyCommand.Add, iconData);
+                bool status;
+                if (Environment.Is64BitProcess)
+                {
+                    iconData64.uFlags = (uint)members;
+                    status = PInvoke.Shell_NotifyIcon((uint)NotifyCommand.Add, iconData64);
+                }
+                else
+                {
+                    iconData32.uFlags = (uint)members;
+                    status = PInvoke.Shell_NotifyIcon((uint)NotifyCommand.Add, iconData32);
+                }
                 if (!status)
                 {
                     // couldn't create the icon - we can assume this is because explorer is not running (yet!)
@@ -130,8 +165,16 @@ namespace WinUIEx
                 {
                     return;
                 }
-                iconData.dwInfoFlags = (uint)IconDataMembers.Message;
-                PInvoke.Shell_NotifyIcon((uint)NotifyCommand.Delete, iconData);
+                if (Environment.Is64BitProcess)
+                {
+                    iconData64.dwInfoFlags = (uint)IconDataMembers.Message;
+                    PInvoke.Shell_NotifyIcon((uint)NotifyCommand.Delete, iconData64);
+                }
+                else
+                {
+                    iconData32.dwInfoFlags = (uint)IconDataMembers.Message;
+                    PInvoke.Shell_NotifyIcon((uint)NotifyCommand.Delete, iconData32);
+                }
                 IsTaskbarIconCreated = false;
             }
         }

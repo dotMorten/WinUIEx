@@ -145,7 +145,7 @@ namespace WinUIEx
         /// <param name="window"></param>
         /// <param name="kind"></param>
         /// <returns></returns>
-        public static bool SetWindowPresenter(this Microsoft.UI.Xaml.Window window, AppWindowPresenterKind kind) => window.GetAppWindow().TrySetPresenter(kind);
+        public static bool TrySetWindowPresenter(this Microsoft.UI.Xaml.Window window, AppWindowPresenterKind kind) => window.GetAppWindow().TrySetPresenter(kind);
 
         /// <summary>
         /// Sets the window style for the window.

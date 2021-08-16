@@ -19,7 +19,7 @@
     <Description>A set of extension methods and classes to fill some gaps in WinUI 3, mostly around windowing.</Description>
     <PackageTags>WinUI</PackageTags>
     <PackageId>WinUIEx</PackageId>
-    <Version>0.8.0</Version>
+    <Version>1.0.0-experimental1</Version>
     <Product>WinUI Extensions</Product>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/dotMorten/WinUIEx</PackageProjectUrl>

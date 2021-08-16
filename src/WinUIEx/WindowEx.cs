@@ -50,7 +50,6 @@ namespace WinUIEx
 
             this.Content = rootContent;
             SetTitleBar(titleBarArea);
-            //rootContent.Loaded += RootLoaded;
         }
 
         /// <summary>

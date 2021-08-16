@@ -62,9 +62,10 @@ namespace WinUIEx
         /// Updates the icon in the tray
         /// </summary>
         /// <param name="icon"></param>
+        [System.Diagnostics.CodeAnalysis.MemberNotNull(nameof(_icon))]
         public unsafe void SetIcon(Icon icon)
         {
-            _icon = icon; // pin to avoid GC
+            _icon = icon ?? throw new ArgumentNullException(nameof(_icon)) ; // pin to avoid GC
             if (Environment.Is64BitProcess)
             {
                 iconData64.uFlags = (uint)IconDataMembers.Icon;

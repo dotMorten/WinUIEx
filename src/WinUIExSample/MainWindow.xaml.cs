@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
+using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -23,10 +25,32 @@ namespace WinUIExSample
     /// </summary>
     public sealed partial class MainWindow : WindowEx
     {
+#if EXPERIMENTAL
+        private readonly WindowMessageMonitor monitor;
+        private readonly Queue<string> windowEvents = new Queue<string>();
+#endif
         public MainWindow()
         {
             this.InitializeComponent();
+
+#if EXPERIMENTAL
+            monitor = new WindowMessageMonitor(this);
+            monitor.WindowMessageRecieved += Monitor_WindowMessageRecieved;
+#endif
         }
+
+#if EXPERIMENTAL
+        private void Monitor_WindowMessageRecieved(object sender, WindowMessageEventArgs e)
+        {
+            DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Normal, () =>
+            {
+                windowEvents.Enqueue($"{e.MessageType}: w={e.WParam}, l={e.LParam}");
+                if (windowEvents.Count > 100)
+                    windowEvents.Dequeue();
+                WindowEventLog.Text = string.Join('\n', windowEvents.Reverse());
+            });
+        }
+#endif
 
         private void Center_Click(object sender, RoutedEventArgs e) => this.CenterOnScreen();
 
@@ -84,6 +108,7 @@ namespace WinUIExSample
             await Task.Delay(2000);
             this.BringToFront();
         }
+
         private void CustomTitleBar_Toggled(object sender, RoutedEventArgs e)
         {
             if(((ToggleSwitch)sender).IsOn)

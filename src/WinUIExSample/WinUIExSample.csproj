@@ -8,7 +8,18 @@
     <Platforms>x86;x64;arm64</Platforms>
     <RuntimeIdentifiers>win10-x86;win10-x64;win10-arm64</RuntimeIdentifiers>
     <UseWinUI>true</UseWinUI>
+    <Configurations>Debug;Release;Experimental</Configurations>
   </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)'=='Experimental'">
+    <DefineConstants>$(DefineConstants);EXPERIMENTAL</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(Configuration)'!='Experimental'">
+    <Compile Remove="SplashScreen.xaml.cs" />
+    <Page Remove="SplashScreen.xaml" />
+  </ItemGroup>
+
   <ItemGroup>
     <None Remove="Images\**\*.*" />
     <Content Include="Images\**\*.*" />

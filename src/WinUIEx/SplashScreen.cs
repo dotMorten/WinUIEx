@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if EXPERIMENTAL
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -117,3 +118,4 @@ namespace WinUIEx
         public event EventHandler<Window?>? Completed;
     }
 }
+#endif

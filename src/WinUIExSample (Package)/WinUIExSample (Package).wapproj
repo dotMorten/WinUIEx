@@ -8,6 +8,18 @@
       <Configuration>Debug</Configuration>
       <Platform>x86</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="Experimental|arm64">
+      <Configuration>Experimental</Configuration>
+      <Platform>arm64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Experimental|x64">
+      <Configuration>Experimental</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Experimental|x86">
+      <Configuration>Experimental</Configuration>
+      <Platform>x86</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="Release|x86">
       <Configuration>Release</Configuration>
       <Platform>x86</Platform>
@@ -64,7 +76,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.0.0-experimental1" >
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.0.0-experimental1">
       <IncludeAssets>build</IncludeAssets>
     </PackageReference>
   </ItemGroup>

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31005.135
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31606.5
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WinUIEx", "WinUIEx\WinUIEx.csproj", "{484F19F7-0843-4987-8DCB-31DB8AAC8B58}"
 EndProject
@@ -17,6 +17,10 @@ Global
 		Debug|arm64 = Debug|arm64
 		Debug|x64 = Debug|x64
 		Debug|x86 = Debug|x86
+		Experimental|Any CPU = Experimental|Any CPU
+		Experimental|arm64 = Experimental|arm64
+		Experimental|x64 = Experimental|x64
+		Experimental|x86 = Experimental|x86
 		Release|Any CPU = Release|Any CPU
 		Release|arm64 = Release|arm64
 		Release|x64 = Release|x64
@@ -31,6 +35,14 @@ Global
 		{484F19F7-0843-4987-8DCB-31DB8AAC8B58}.Debug|x64.Build.0 = Debug|Any CPU
 		{484F19F7-0843-4987-8DCB-31DB8AAC8B58}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{484F19F7-0843-4987-8DCB-31DB8AAC8B58}.Debug|x86.Build.0 = Debug|Any CPU
+		{484F19F7-0843-4987-8DCB-31DB8AAC8B58}.Experimental|Any CPU.ActiveCfg = Experimental|Any CPU
+		{484F19F7-0843-4987-8DCB-31DB8AAC8B58}.Experimental|Any CPU.Build.0 = Experimental|Any CPU
+		{484F19F7-0843-4987-8DCB-31DB8AAC8B58}.Experimental|arm64.ActiveCfg = Experimental|Any CPU
+		{484F19F7-0843-4987-8DCB-31DB8AAC8B58}.Experimental|arm64.Build.0 = Experimental|Any CPU
+		{484F19F7-0843-4987-8DCB-31DB8AAC8B58}.Experimental|x64.ActiveCfg = Experimental|Any CPU
+		{484F19F7-0843-4987-8DCB-31DB8AAC8B58}.Experimental|x64.Build.0 = Experimental|Any CPU
+		{484F19F7-0843-4987-8DCB-31DB8AAC8B58}.Experimental|x86.ActiveCfg = Experimental|Any CPU
+		{484F19F7-0843-4987-8DCB-31DB8AAC8B58}.Experimental|x86.Build.0 = Experimental|Any CPU
 		{484F19F7-0843-4987-8DCB-31DB8AAC8B58}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{484F19F7-0843-4987-8DCB-31DB8AAC8B58}.Release|Any CPU.Build.0 = Release|Any CPU
 		{484F19F7-0843-4987-8DCB-31DB8AAC8B58}.Release|arm64.ActiveCfg = Release|Any CPU
@@ -51,6 +63,18 @@ Global
 		{20CE4C09-69CC-473F-8B59-48B76AC78CA8}.Debug|x86.ActiveCfg = Debug|x86
 		{20CE4C09-69CC-473F-8B59-48B76AC78CA8}.Debug|x86.Build.0 = Debug|x86
 		{20CE4C09-69CC-473F-8B59-48B76AC78CA8}.Debug|x86.Deploy.0 = Debug|x86
+		{20CE4C09-69CC-473F-8B59-48B76AC78CA8}.Experimental|Any CPU.ActiveCfg = Experimental|x86
+		{20CE4C09-69CC-473F-8B59-48B76AC78CA8}.Experimental|Any CPU.Build.0 = Experimental|x86
+		{20CE4C09-69CC-473F-8B59-48B76AC78CA8}.Experimental|Any CPU.Deploy.0 = Experimental|x86
+		{20CE4C09-69CC-473F-8B59-48B76AC78CA8}.Experimental|arm64.ActiveCfg = Experimental|arm64
+		{20CE4C09-69CC-473F-8B59-48B76AC78CA8}.Experimental|arm64.Build.0 = Experimental|arm64
+		{20CE4C09-69CC-473F-8B59-48B76AC78CA8}.Experimental|arm64.Deploy.0 = Experimental|arm64
+		{20CE4C09-69CC-473F-8B59-48B76AC78CA8}.Experimental|x64.ActiveCfg = Experimental|x64
+		{20CE4C09-69CC-473F-8B59-48B76AC78CA8}.Experimental|x64.Build.0 = Experimental|x64
+		{20CE4C09-69CC-473F-8B59-48B76AC78CA8}.Experimental|x64.Deploy.0 = Experimental|x64
+		{20CE4C09-69CC-473F-8B59-48B76AC78CA8}.Experimental|x86.ActiveCfg = Experimental|x86
+		{20CE4C09-69CC-473F-8B59-48B76AC78CA8}.Experimental|x86.Build.0 = Experimental|x86
+		{20CE4C09-69CC-473F-8B59-48B76AC78CA8}.Experimental|x86.Deploy.0 = Experimental|x86
 		{20CE4C09-69CC-473F-8B59-48B76AC78CA8}.Release|Any CPU.ActiveCfg = Release|x86
 		{20CE4C09-69CC-473F-8B59-48B76AC78CA8}.Release|arm64.ActiveCfg = Release|arm64
 		{20CE4C09-69CC-473F-8B59-48B76AC78CA8}.Release|arm64.Build.0 = Release|arm64
@@ -69,6 +93,14 @@ Global
 		{739260A2-39B2-40B3-BF4A-6CC567E989EB}.Debug|x64.Build.0 = Debug|x64
 		{739260A2-39B2-40B3-BF4A-6CC567E989EB}.Debug|x86.ActiveCfg = Debug|x86
 		{739260A2-39B2-40B3-BF4A-6CC567E989EB}.Debug|x86.Build.0 = Debug|x86
+		{739260A2-39B2-40B3-BF4A-6CC567E989EB}.Experimental|Any CPU.ActiveCfg = Experimental|x86
+		{739260A2-39B2-40B3-BF4A-6CC567E989EB}.Experimental|Any CPU.Build.0 = Experimental|x86
+		{739260A2-39B2-40B3-BF4A-6CC567E989EB}.Experimental|arm64.ActiveCfg = Experimental|arm64
+		{739260A2-39B2-40B3-BF4A-6CC567E989EB}.Experimental|arm64.Build.0 = Experimental|arm64
+		{739260A2-39B2-40B3-BF4A-6CC567E989EB}.Experimental|x64.ActiveCfg = Experimental|x64
+		{739260A2-39B2-40B3-BF4A-6CC567E989EB}.Experimental|x64.Build.0 = Experimental|x64
+		{739260A2-39B2-40B3-BF4A-6CC567E989EB}.Experimental|x86.ActiveCfg = Experimental|x86
+		{739260A2-39B2-40B3-BF4A-6CC567E989EB}.Experimental|x86.Build.0 = Experimental|x86
 		{739260A2-39B2-40B3-BF4A-6CC567E989EB}.Release|Any CPU.ActiveCfg = Release|x86
 		{739260A2-39B2-40B3-BF4A-6CC567E989EB}.Release|arm64.ActiveCfg = Release|arm64
 		{739260A2-39B2-40B3-BF4A-6CC567E989EB}.Release|arm64.Build.0 = Release|arm64

@@ -8,6 +8,7 @@
     xmlns:winex="using:WinUIEx"
     TaskBarIcon="Images/WindowIcon.ico"
     Title="WinUI EX Test App"
+    Width="1024" Height="768"
     mc:Ignorable="d">
     
     <!--<winex:WindowEx.TitleBarIcon>

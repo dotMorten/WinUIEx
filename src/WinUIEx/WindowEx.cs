@@ -50,6 +50,21 @@ namespace WinUIEx
 
             this.Content = rootContent;
             SetTitleBar(titleBarArea);
+            AppWindow.Changed += AppWindow_Changed;
+            var size = AppWindow.Size;
+            _width = size.Width;
+            _height = size.Height;
+        }
+
+        private void AppWindow_Changed(Microsoft.UI.Windowing.AppWindow sender, Microsoft.UI.Windowing.AppWindowChangedEventArgs args)
+        {
+            if (args.DidPositionChange)
+                PositionChanged?.Invoke(this, EventArgs.Empty);
+            if(args.DidSizeChange)
+            {
+                _width = sender.Size.Width;
+                _height = sender.Size.Height;
+            }
         }
 
         /// <summary>
@@ -187,7 +202,7 @@ namespace WinUIEx
             set => WindowExtensions.SetAlwaysOnTop(this, value);
         }
 
-        private double _width = 1024;
+        private double _width;
 
         /// <summary>
         /// Gets or sets the width of the window
@@ -195,10 +210,14 @@ namespace WinUIEx
         public double Width
         {
             get { return _width; }
-            set { _width = value; }
+            set
+            {
+                _width = value; 
+                this.SetWindowSize(_width, _height);
+            }
         }
 
-        private double _height = 786;
+        private double _height;
 
         /// <summary>
         /// Gets or sets the height of the window
@@ -206,9 +225,16 @@ namespace WinUIEx
         public double Height
         {
             get { return _height; }
-            set { _height = value; }
+            set
+            {
+                _height = value;
+                this.SetWindowSize(_width, _height);
+            }
         }
 
-        private double ScaleFactor => this.GetDpiForWindow() / 96d;
+        /// <summary>
+        /// Raised if the window position changes
+        /// </summary>
+        public event EventHandler? PositionChanged;
     }
 }

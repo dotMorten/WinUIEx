@@ -124,17 +124,15 @@ namespace WinUIExSample
 
         private void Fullscreen_Toggled(object sender, RoutedEventArgs e)
         {
-#if EXPERIMENTAL
             // Disabled until this is fixed:
             if (((ToggleSwitch)sender).IsOn)
             {
-                bool succcess = this.TrySetWindowPresenter(Microsoft.UI.Windowing.AppWindowPresenterKind.FullScreen);
+                bool succcess = AppWindow.TrySetPresenter(Microsoft.UI.Windowing.AppWindowPresenterKind.FullScreen);
             }
             else
             {
-                bool succcess = this.TrySetWindowPresenter(Microsoft.UI.Windowing.AppWindowPresenterKind.Overlapped);
+                bool succcess = AppWindow.TrySetPresenter(Microsoft.UI.Windowing.AppWindowPresenterKind.Overlapped);
             }
-#endif
         }
     }
 }

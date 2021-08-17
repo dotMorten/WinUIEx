@@ -17,7 +17,12 @@ namespace WinUIEx
         /// </summary>
         /// <param name="window"></param>
         /// <returns></returns>
-        public static AppWindow GetAppWindow(this Microsoft.UI.Xaml.Window window) => GetAppWindowFromWindowHandle(window.GetWindowHandle());
+        public static AppWindow GetAppWindow(this Microsoft.UI.Xaml.Window window)
+        {
+            if (window is WindowEx wex)
+                return wex.AppWindow; //Use cached version
+            return GetAppWindowFromWindowHandle(window.GetWindowHandle());
+        }
 
         /// <summary>Returns the dots per inch (dpi) value for the associated window.</summary>
         /// <param name = "window">The window you want to get information about.</param>

@@ -105,6 +105,20 @@ namespace WinUIEx
         /// <param name="enable"></param>
         public static void SetIsShownInSwitchers(this Microsoft.UI.Xaml.Window window, bool enable) => window.UpdateWindowConfiguration((c) => c.IsShownInSwitchers = enable);
 
+        /// <summary>
+        /// Sets the icon for the window, using the specified icon path.
+        /// </summary>
+        /// <param name="window">Window</param>
+        /// <param name="iconPath">The path of the icon.</param>
+        public static void SetIcon(this Microsoft.UI.Xaml.Window window, string iconPath) => HwndExtensions.SetIcon(window.GetWindowHandle(), iconPath);
+
+        /// <summary>
+        /// Sets the icon for the window, using the specified icon ID.
+        /// </summary>
+        /// <param name="window">Window</param>
+        /// <param name="iconId">The ID of the icon.</param>
+        public static void SetIcon(this Microsoft.UI.Xaml.Window window, IconId iconId) => HwndExtensions.SetIcon(window.GetWindowHandle(), iconId);
+
         private static void UpdateWindowConfiguration(this Microsoft.UI.Xaml.Window window, Action<AppWindowConfiguration> action)
         {
             var appwindow = window.GetAppWindow();
@@ -206,7 +220,7 @@ namespace WinUIEx
         public static IntPtr GetWindowHandle(this Microsoft.UI.Xaml.Window window)
             => window is null ? throw new ArgumentNullException(nameof(window)) : WinRT.Interop.WindowNative.GetWindowHandle(window);
 
-        [DllImport("Microsoft.UI.Windowing.Core.dll", CharSet = CharSet.Unicode)]
+        [DllImport("Microsoft.Internal.FrameworkUdk.dll", EntryPoint = "Windowing_GetWindowHandleFromWindowId", CharSet = CharSet.Unicode)]
         private static extern IntPtr GetWindowHandleFromWindowId(WindowId windowId, out IntPtr result);
 
         /// <summary>
@@ -221,7 +235,7 @@ namespace WinUIEx
             return hwnd;
         }
 
-        [DllImport("Microsoft.UI.Windowing.Core.dll", CharSet = CharSet.Unicode)]
+        [DllImport("Microsoft.Internal.FrameworkUdk.dll", EntryPoint = "Windowing_GetWindowIdFromWindowHandle", CharSet = CharSet.Unicode)]
         private static extern IntPtr GetWindowIdFromWindowHandle(IntPtr hwnd, out WindowId result);
 
         /// <summary>

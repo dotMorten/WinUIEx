@@ -6,6 +6,7 @@ using Windows.Win32.Foundation;
 using Windows.Win32.UI.WindowsAndMessaging;
 using Windows.Win32.Graphics.Gdi;
 using WinRT;
+using Microsoft.UI;
 
 namespace WinUIEx
 {
@@ -112,6 +113,28 @@ namespace WinUIEx
             var left = cx - (w / 2);
             var top = cy - (h / 2);
             SetWindowPosOrThrow(new HWND(hwnd), new HWND(), left, top, w, h, SET_WINDOW_POS_FLAGS.SWP_SHOWWINDOW);
+        }
+
+        /// <summary>
+        /// Sets the icon for the window, using the specified icon ID.
+        /// </summary>
+        /// <param name="hwnd">Window handle</param>
+        /// <param name="iconId">The ID of the icon.</param>
+        public static void SetIcon(IntPtr hwnd, IconId iconId)
+        {
+            var appWindow = WindowExtensions.GetAppWindowFromWindowHandle(hwnd);
+            appWindow.SetIcon(iconId);
+        }
+
+        /// <summary>
+        /// Sets the icon for the window, using the specified icon path.
+        /// </summary>
+        /// <param name="hwnd">Window handle</param>
+        /// <param name="iconPath">The path of the icon.</param>
+        public static void SetIcon(IntPtr hwnd, string iconPath)
+        {
+            var appWindow = WindowExtensions.GetAppWindowFromWindowHandle(hwnd);
+            appWindow.SetIcon(iconPath);
         }
 
         /// <summary>

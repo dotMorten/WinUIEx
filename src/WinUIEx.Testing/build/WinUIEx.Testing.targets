@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <IsTestProject>true</IsTestProject>
+    </PropertyGroup>
+    <ItemGroup>
+        <ProjectCapability Include="TestContainer" />
+        <!--<PackageReference Include="MSTest.TestAdapter">
+            <Version>2.2.8</Version>
+        </PackageReference>
+        <PackageReference Include="Microsoft.TestPlatform.TestHost">
+            <Version>17.0.0</Version>
+            <ExcludeAssets>build</ExcludeAssets>
+        </PackageReference>-->
+    </ItemGroup>
+</Project>

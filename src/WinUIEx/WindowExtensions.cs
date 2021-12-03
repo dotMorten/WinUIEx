@@ -17,12 +17,7 @@ namespace WinUIEx
         /// </summary>
         /// <param name="window"></param>
         /// <returns></returns>
-        public static AppWindow GetAppWindow(this Microsoft.UI.Xaml.Window window)
-        {
-            if (window is WindowEx wex)
-                return wex.AppWindow; //Use cached version
-            return GetAppWindowFromWindowHandle(window.GetWindowHandle());
-        }
+        public static AppWindow GetAppWindow(this Microsoft.UI.Xaml.Window window) => GetAppWindowFromWindowHandle(window.GetWindowHandle());
 
         /// <summary>Returns the dots per inch (dpi) value for the associated window.</summary>
         /// <param name = "window">The window you want to get information about.</param>
@@ -30,7 +25,7 @@ namespace WinUIEx
         /// <remarks>
         /// <para><see href = "https://docs.microsoft.com/windows/win32/api//winuser/nf-winuser-getdpiforwindow">Learn more about this API from docs.microsoft.com</see>.</para>
         /// </remarks>
-        public static uint GetDpiForWindow(this Microsoft.UI.Xaml.Window window) => HwndExtensions.GetDpiForWindow(window.GetWindowHandle());
+        public static uint GetDpiForWindow(this Microsoft.UI.Xaml.Window window) => (uint?)(window.Content?.XamlRoot.RasterizationScale * 96f) ?? HwndExtensions.GetDpiForWindow(window.GetWindowHandle());
 
         /// <summary>Brings the thread that created the specified window into the foreground and activates the window.</summary>
         /// <param name="window">
@@ -174,18 +169,14 @@ namespace WinUIEx
             return hwnd;
         }
 
-        [DllImport("Microsoft.Internal.FrameworkUdk.dll", EntryPoint = "Windowing_GetWindowIdFromWindowHandle", CharSet = CharSet.Unicode)]
-        private static extern IntPtr GetWindowIdFromWindowHandle(IntPtr hwnd, out WindowId result);
-
         /// <summary>
         /// Gets the AppWindow from an HWND
         /// </summary>
         /// <param name="hwnd"></param>
         /// <returns>AppWindow</returns>
         public static AppWindow GetAppWindowFromWindowHandle(IntPtr hwnd)
-        {
-            WindowId windowId;
-            GetWindowIdFromWindowHandle(hwnd, out windowId);
+        {;
+            WindowId windowId = Win32Interop.GetWindowIdFromWindow(hwnd);
             return AppWindow.GetFromWindowId(windowId);
         }
 

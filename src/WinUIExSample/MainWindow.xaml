@@ -27,7 +27,7 @@
             <!--<ToggleSwitch Header="Is Frame Visible" IsOn="{x:Bind IsFrameVisible, Mode=TwoWay}" />
             <ToggleSwitch Header="Always On Top" IsOn="{x:Bind IsAlwaysOnTop, Mode=TwoWay}" />-->
             <ToggleSwitch Header="Set Custom Titlebar" Toggled="CustomTitleBar_Toggled" />
-            <ToggleSwitch Header="Full screen" Toggled="Fullscreen_Toggled" />
+            <!--<ToggleSwitch Header="Full screen" Toggled="Fullscreen_Toggled" />-->
         </StackPanel>
         <StackPanel Grid.Column="1">
             <StackPanel.Resources>

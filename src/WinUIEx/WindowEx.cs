@@ -29,7 +29,6 @@ namespace WinUIEx
         /// </summary>
         public WindowEx()
         {
-            AppWindow = WindowExtensions.GetAppWindowFromWindowHandle(this.GetWindowHandle());
 
             var rootContent = new Grid();
             rootContent.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Auto), MinHeight = 0 });
@@ -72,7 +71,7 @@ namespace WinUIEx
         /// <summary>
         /// Gets a reference to the AppWindow for the app
         /// </summary>
-        public Microsoft.UI.Windowing.AppWindow AppWindow { get; }
+        public Microsoft.UI.Windowing.AppWindow AppWindow => this.GetAppWindow();
 
         /// <summary>
         /// Brings the window to the front

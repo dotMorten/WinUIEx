@@ -42,6 +42,7 @@ namespace WinUIEx
         /// </returns>
         public static bool SetForegroundWindow(this Microsoft.UI.Xaml.Window window) => HwndExtensions.SetForegroundWindow(window.GetWindowHandle());
 
+        /*
         /// <summary>
         /// Configures whether the window should always be displayed on top of other windows or not
         /// </summary>
@@ -55,13 +56,14 @@ namespace WinUIEx
         /// <param name="window">Window to assign an owner to.</param>
         /// <param name="parent">Parent</param>
         public static void SetOwnerWindow(this Microsoft.UI.Xaml.Window window, Microsoft.UI.Xaml.Window parent) => window.UpdateWindowConfiguration((c) => c.OwnerWindowId = parent.GetAppWindow().Id);
-
+        
         /// <summary>
         /// Enables or disables the window frame.
         /// </summary>
         /// <param name="window"></param>
         /// <param name="enable"></param>
         public static void SetHasFrame(this Microsoft.UI.Xaml.Window window, bool enable) => window.UpdateWindowConfiguration((c) => c.HasFrame = enable);
+        
 
         /// <summary>
         /// Enables or disables the title bar.
@@ -69,20 +71,6 @@ namespace WinUIEx
         /// <param name="window"></param>
         /// <param name="enable"></param>
         public static void SetHasTitleBar(this Microsoft.UI.Xaml.Window window, bool enable) => window.UpdateWindowConfiguration((c) => c.HasTitleBar = enable);
-
-        /// <summary>
-        /// Enables or disables the maximize button.
-        /// </summary>
-        /// <param name="window"></param>
-        /// <param name="enable"></param>
-        public static void SetIsMaximizable(this Microsoft.UI.Xaml.Window window, bool enable) => window.UpdateWindowConfiguration((c) => c.IsMaximizable = enable);
-
-        /// <summary>
-        /// Enables or disables the minimize button
-        /// </summary>
-        /// <param name="window"></param>
-        /// <param name="enable"></param>
-        public static void SetIsMinimizable(this Microsoft.UI.Xaml.Window window, bool enable) => window.UpdateWindowConfiguration((c) => c.IsMinimizable = enable);
 
         /// <summary>
         /// Sets a value defining whether this is a modal window or not.
@@ -97,7 +85,7 @@ namespace WinUIEx
         /// <param name="window"></param>
         /// <param name="enable"></param>
         public static void SetIsResizable(this Microsoft.UI.Xaml.Window window, bool enable) => window.UpdateWindowConfiguration((c) => c.IsResizable = enable);
-
+        */
         /// <summary>
         /// Enables or disables showing the window in the switchers.
         /// </summary>
@@ -119,12 +107,10 @@ namespace WinUIEx
         /// <param name="iconId">The ID of the icon.</param>
         public static void SetIcon(this Microsoft.UI.Xaml.Window window, IconId iconId) => HwndExtensions.SetIcon(window.GetWindowHandle(), iconId);
 
-        private static void UpdateWindowConfiguration(this Microsoft.UI.Xaml.Window window, Action<AppWindowConfiguration> action)
+        private static void UpdateWindowConfiguration(this Microsoft.UI.Xaml.Window window, Action<AppWindow> action)
         {
             var appwindow = window.GetAppWindow();
-            var config = appwindow.Configuration;
-            action(config);
-            appwindow.ApplyConfiguration(config);
+            action(appwindow);
         }
 
         /// <summary>
@@ -155,8 +141,7 @@ namespace WinUIEx
         /// <param name="width">Width of the window in device-independent units.</param>
         /// <param name="height">Height of the window in device-independent units.</param>
         public static void SetWindowSize(this Microsoft.UI.Xaml.Window window, double width, double height)
-            => window.GetAppWindow().Resize(new Windows.Graphics.SizeInt32((int)width, (int)height)); // TODO: Adjust for dpi
-                                                                                                      //=> HwndExtensions.SetWindowSize(GetWindowHandle(window), width, height);
+            => window.GetAppWindow().Resize(new Windows.Graphics.SizeInt32((int)width, (int)height));
 
         /// <summary>
         /// Sets the window presenter kind used.
@@ -164,53 +149,7 @@ namespace WinUIEx
         /// <param name="window"></param>
         /// <param name="kind"></param>
         /// <returns></returns>
-        public static bool TrySetWindowPresenter(this Microsoft.UI.Xaml.Window window, AppWindowPresenterKind kind) => window.GetAppWindow().TrySetPresenter(kind);
-
-        /// <summary>
-        /// Sets the window style for the window.
-        /// </summary>
-        /// <param name="window"></param>
-        /// <param name="style"></param>
-        public static void SetWindowStyle(this Microsoft.UI.Xaml.Window window, WindowStyle style)
-        {
-            switch(style)
-            {
-                case WindowStyle.Default:
-                    window.GetAppWindow().ApplyConfiguration(AppWindowConfiguration.CreateDefault()); break;
-                case WindowStyle.ContextMenu:
-                    window.GetAppWindow().ApplyConfiguration(AppWindowConfiguration.CreateForContextMenu()); break;
-                case WindowStyle.Dialog:
-                    window.GetAppWindow().ApplyConfiguration(AppWindowConfiguration.CreateDefault()); break;
-                case WindowStyle.ToolWindow:
-                    window.GetAppWindow().ApplyConfiguration(AppWindowConfiguration.CreateForToolWindow()); break;
-            }    
-        }
-
-        /// <summary>
-        /// The window style used with <see cref="SetWindowStyle(Microsoft.UI.Xaml.Window, WindowStyle)"/>
-        /// </summary>
-        public enum WindowStyle
-        {
-            /// <summary>
-            /// Default
-            /// </summary>
-            Default, 
-
-            /// <summary>
-            /// Context menu
-            /// </summary>
-            ContextMenu,
-
-            /// <summary>
-            /// Dialog
-            /// </summary>
-            Dialog,
-
-            /// <summary>
-            /// Tool window
-            /// </summary>
-            ToolWindow
-        }
+        public static void SetWindowPresenter(this Microsoft.UI.Xaml.Window window, AppWindowPresenterKind kind) => window.GetAppWindow().SetPresenter(kind);
 
         /// <summary>
         /// Gets the native HWND pointer handle for the window

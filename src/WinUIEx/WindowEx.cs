@@ -136,7 +136,7 @@ namespace WinUIEx
             set { windowArea.Content = value; }
           
         }
-
+        /*
         private bool _IsTitleBarVisible = true;
 
         /// <summary>
@@ -150,8 +150,8 @@ namespace WinUIEx
                 _IsTitleBarVisible = value;
                 this.SetHasTitleBar(value);
             }
-        }
-
+        }*/
+        /*
         /// <summary>
         /// Gets or sets a value indicating whether the window has a frame or not.
         /// </summary>
@@ -178,8 +178,8 @@ namespace WinUIEx
         {
             get => AppWindow.Configuration.IsMaximizable;
             set => this.SetIsMaximizable(value);
-        }
-
+        }*/
+        /*
         private bool _IsCloseButtonVisible;
 
         /// <summary>
@@ -193,8 +193,8 @@ namespace WinUIEx
                 _IsCloseButtonVisible = value;
                 this.SetIsModal(!value);
             }
-        }
-
+        }*/
+        /*
         /// <summary>
         /// Gets or sets a value indicating whether the window is displayed on top of other windows
         /// </summary>
@@ -202,7 +202,7 @@ namespace WinUIEx
         {
             get => AppWindow.Configuration.IsAlwaysOnTop;
             set => WindowExtensions.SetAlwaysOnTop(this, value);
-        }
+        }*/
 
         private double _width;
 

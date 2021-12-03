@@ -2,17 +2,15 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace WinUIEx.Testing
+namespace WinUIEx.TestTools.MSTest
 {
     public static class UnitTestClient
     {
         public static void Run(Microsoft.UI.Xaml.Window window)
         {
-            Window = window;
+            TestHost.Window = window;
             Microsoft.VisualStudio.TestPlatform.TestExecutor.UnitTestClient.CreateDefaultUI();
             Microsoft.VisualStudio.TestPlatform.TestExecutor.UnitTestClient.Run(Environment.CommandLine);
         }
-
-        public static Microsoft.UI.Xaml.Window Window { get; private set; }
     }
 }

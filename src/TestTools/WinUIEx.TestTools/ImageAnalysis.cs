@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Windows.UI;
 using System.Runtime.InteropServices.WindowsRuntime;
 
-namespace WinUIEx.Testing
+namespace WinUIEx.TestTools
 {
     /// <summary>
     /// Method for finding pixels connected to each other. Great for finding UI Elements on the screen
@@ -75,7 +75,7 @@ namespace WinUIEx.Testing
             int height = image.PixelHeight;
             bool[] pixels = new bool[width * height];
 
-            double scaleFactor = UnitTestClient.Window?.Content.XamlRoot?.RasterizationScale ?? 1;
+            double scaleFactor = TestHost.Window?.Content.XamlRoot?.RasterizationScale ?? 1;
 
             int bitsPerPixel = 32;
             int stride = image.PixelWidth * bitsPerPixel / 8;

@@ -11,21 +11,22 @@
     <UseWinUI>true</UseWinUI>
     <EnablePreviewMsixTooling>true</EnablePreviewMsixTooling>
   </PropertyGroup>
+
   <PropertyGroup>
     <IsTestProject>true</IsTestProject>
   </PropertyGroup>
 
-    <ItemGroup>
-        <ProjectCapability Include="TestContainer" />
-        <PackageReference Include="MSTest.TestAdapter">
-            <Version>2.2.8</Version>
-        </PackageReference>
-        <PackageReference Include="MSTest.TestFramework" Version="2.2.8" />
-        <PackageReference Include="Microsoft.TestPlatform.TestHost">
-            <Version>17.0.0</Version>
-            <ExcludeAssets>build</ExcludeAssets>
-        </PackageReference>
-    </ItemGroup>
+  <ItemGroup>
+      <ProjectCapability Include="TestContainer" />
+      <PackageReference Include="MSTest.TestAdapter">
+          <Version>2.2.8</Version>
+      </PackageReference>
+      <PackageReference Include="MSTest.TestFramework" Version="2.2.8" />
+      <PackageReference Include="Microsoft.TestPlatform.TestHost">
+          <Version>17.0.0</Version>
+          <ExcludeAssets>build</ExcludeAssets>
+      </PackageReference>
+  </ItemGroup>
 
   <ItemGroup>
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -50,7 +51,7 @@
     <ProjectCapability Include="Msix" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\WinUIEx.Testing.CodeGenerator\WinUIEx.Testing.CodeGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
-    <ProjectReference Include="..\WinUIEx.Testing\WinUIEx.Testing.csproj" />
+    <ProjectReference Include="..\WinUIEx.TestTools.MSTest.CodeGenerator\WinUIEx.TestTools.MSTest.CodeGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+    <ProjectReference Include="..\WinUIEx.TestTools.MSTest\WinUIEx.TestTools.MSTest.csproj" />
   </ItemGroup>
 </Project>

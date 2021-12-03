@@ -2,12 +2,13 @@
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Threading.Tasks;
-using WinUIEx.Testing;
+using WinUIEx.TestTools;
+using WinUIEx.TestTools.MSTest;
 
 namespace WinUIUnitTests
 {
     [TestClass]
-    public partial class MyTests
+    public partial class TestToolsTests
     {
         [WinUITestMethod]
         public async Task TestGridArrange()

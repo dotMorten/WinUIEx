@@ -6,7 +6,7 @@ Please read known issues at the end.
 Getting started:
 Add the following line to App.xaml.cs at the end of the "OnLaunched" method:
 -------------------------------------
-     WinUIEx.Testing.UnitTestClient.Run(m_window);
+     WinUIEx.TestTools.MSTest.UnitTestClient.Run(m_window);
 -------------------------------------
 
 Next add the following package reference to your project file:
@@ -26,7 +26,8 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Threading.Tasks;
-using WinUIEx.Testing;
+using WinUIEx.TestTools;
+using WinUIEx.TestTools.MSTest;
 
 namespace MyTestApp
 {

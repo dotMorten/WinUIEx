@@ -7,7 +7,7 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Text;
 
-namespace WinUIEx.Testing
+namespace WinUIEx.TestTools.MSTest
 {
     [Generator]
     public class TestGenerator : ISourceGenerator
@@ -25,7 +25,7 @@ namespace WinUIEx.Testing
                 return;
 
             // get the added attribute, and INotifyPropertyChanged
-            INamedTypeSymbol attributeSymbol = context.Compilation.GetTypeByMetadataName("WinUIEx.Testing.WinUITestMethodAttribute");
+            INamedTypeSymbol attributeSymbol = context.Compilation.GetTypeByMetadataName("WinUIEx.TestTools.WinUITestMethodAttribute");
 
             // group the fields by class, and generate the source
             foreach (IGrouping<INamedTypeSymbol, IMethodSymbol> group in receiver.Methods.GroupBy(f => f.ContainingType))
@@ -79,7 +79,7 @@ namespace {namespaceName}
             
             foreach (var attribute in methodSymbol.GetAttributes())
             {
-                if (attribute.AttributeClass.ToString() == "WinUIEx.Testing.WinUITestMethodAttribute")
+                if (attribute.AttributeClass.ToString() == "WinUIEx.TestTools.MSTest.WinUITestMethodAttribute")
                     continue;
                 source.Append($"        [{attribute.AttributeClass}({string.Join(", ", attribute.ConstructorArguments.Select(s => s.ToCSharpString()))}");
                 foreach(var arg in attribute.NamedArguments)
@@ -100,10 +100,10 @@ namespace {namespaceName}
             source.AppendLine(")");
             source.AppendLine($@"        {{
             System.Threading.Tasks.TaskCompletionSource<object> tcs = new System.Threading.Tasks.TaskCompletionSource<object>();
-            WindowContext = WinUIEx.Testing.UnitTestClient.Window;
-            bool ok = WinUIEx.Testing.UnitTestClient.Window.DispatcherQueue.TryEnqueue({(isAsync ? "async " : "")}() =>
+            WindowContext = WinUIEx.TestTools.TestHost.Window;
+            bool ok = WinUIEx.TestTools.TestHost.Window.DispatcherQueue.TryEnqueue({(isAsync ? "async " : "")}() =>
             {{
-                var content = WinUIEx.Testing.UnitTestClient.Window.Content;
+                var content = WinUIEx.TestTools.TestHost.Window.Content;
                 try
                 {{
                     {(isAsync ? "await " : "")}{methodSymbol.Name}({string.Join(", ", methodSymbol.Parameters.Select(s => s.Name))});
@@ -113,7 +113,7 @@ namespace {namespaceName}
                 {{
                     tcs.SetException(ex);
                 }}
-                WinUIEx.Testing.UnitTestClient.Window.Content = content;
+                WinUIEx.TestTools.TestHost.Window.Content = content;
             }});
             await tcs.Task;
         }}
@@ -138,7 +138,7 @@ namespace {namespaceName}
                     && methodDeclarationSyntax.AttributeLists.Count > 0)
                 {
                     IMethodSymbol methodSymbol = context.SemanticModel.GetDeclaredSymbol(methodDeclarationSyntax) as IMethodSymbol;
-                    if (methodSymbol.GetAttributes().Any(ad => ad.AttributeClass.ToDisplayString() == "WinUIEx.Testing.WinUITestMethodAttribute"))
+                    if (methodSymbol.GetAttributes().Any(ad => ad.AttributeClass.ToDisplayString() == "WinUIEx.TestTools.MSTest.WinUITestMethodAttribute"))
                     {
                         Methods.Add(methodSymbol);
                     }

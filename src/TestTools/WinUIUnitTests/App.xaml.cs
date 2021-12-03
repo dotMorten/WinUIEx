@@ -45,7 +45,7 @@ namespace WinUIUnitTests
         {
             m_window = new Window();
             m_window.Activate();
-            WinUIEx.Testing.UnitTestClient.Run(m_window);
+            WinUIEx.TestTools.MSTest.UnitTestClient.Run(m_window);
         }
 
         private Window m_window;

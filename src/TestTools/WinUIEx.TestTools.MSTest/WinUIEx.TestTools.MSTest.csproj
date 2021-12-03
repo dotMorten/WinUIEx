@@ -3,7 +3,7 @@
   <PropertyGroup>
       <TargetFramework>net5.0-windows10.0.19041</TargetFramework>
       <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
-      <PackageId>WinUIEx.Testing</PackageId>
+      <PackageId>WinUIEx.TestTools.MSTest</PackageId>
       <Version>1.0.0-preview1</Version>
       <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
@@ -21,9 +21,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="build\WinUIEx.Testing.targets" Pack="true" PackageFlatten="false" PackagePath="build\$(TargetFramework)\$(PackageId).targets" />
-    <None Include="..\WinUIEx.Testing.CodeGenerator\bin\$(Configuration)\netstandard2.0\WinUIEx.Testing.CodeGenerator.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Link="analyzers/dotnet/cs/WinUIEx.Testing.CodeGenerator.dll" />
+    <None Include="build\WinUIEx.TestTools.MSTest.targets" Pack="true" PackageFlatten="false" PackagePath="build\$(TargetFramework)\$(PackageId).targets" />
+    <None Include="..\WinUIEx.TestTools.MSTest.CodeGenerator\bin\$(Configuration)\netstandard2.0\WinUIEx.TestTools.MSTest.CodeGenerator.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Link="analyzers/dotnet/cs/WinUIEx.TestTools.MSTest.CodeGenerator.dll" />
     <None Include="readme.txt" pack="true" PackagePath="." />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\WinUIEx.TestTools\WinUIEx.TestTools.csproj" />
   </ItemGroup>
     
 </Project>

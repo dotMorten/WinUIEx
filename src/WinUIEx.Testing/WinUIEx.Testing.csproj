@@ -22,7 +22,7 @@
 
   <ItemGroup>
     <None Include="build\WinUIEx.Testing.targets" Pack="true" PackageFlatten="false" PackagePath="build\$(TargetFramework)\$(PackageId).targets" />
-    <None Include="..\WinUIEx.Testing.CodeGenerator\bin\$(Configuration)\netstandard2.0\WinUIEx.Testing.CodeGenerator.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+    <None Include="..\WinUIEx.Testing.CodeGenerator\bin\$(Configuration)\netstandard2.0\WinUIEx.Testing.CodeGenerator.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Link="analyzers/dotnet/cs/WinUIEx.Testing.CodeGenerator.dll" />
     <None Include="readme.txt" pack="true" PackagePath="." />
   </ItemGroup>
     

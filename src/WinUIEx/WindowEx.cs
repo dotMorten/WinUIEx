@@ -174,22 +174,7 @@ namespace WinUIEx
             get => overlappedPresenter.IsMaximizable;
             set => overlappedPresenter.IsMaximizable = value;
         }
-        
-        private bool _IsCloseButtonVisible;
 
-        /// <summary>
-        /// Gets or sets a value indicating whether the close button is visible
-        /// </summary>
-        public bool IsCloseButtonVisible
-        {
-            get => _IsCloseButtonVisible;
-            set
-            {
-                _IsCloseButtonVisible = value;
-                overlappedPresenter.IsModal = value;
-            }
-        }
-        
         /// <summary>
         /// Gets or sets a value indicating whether this window is shown in task switchers.
         /// </summary>

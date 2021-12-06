@@ -1,9 +1,7 @@
 ﻿using Microsoft.UI;
 using Microsoft.UI.Windowing;
 using System;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using WinRT;
 
 namespace WinUIEx
 {
@@ -37,63 +35,74 @@ namespace WinUIEx
         /// </returns>
         public static bool SetForegroundWindow(this Microsoft.UI.Xaml.Window window) => HwndExtensions.SetForegroundWindow(window.GetWindowHandle());
 
-        /*
         /// <summary>
         /// Configures whether the window should always be displayed on top of other windows or not
         /// </summary>
+        /// <remarks>The presenter must be an overlapped presenter.</remarks>
+        /// <exception cref="NotSupportedException">Throw if the AppWindow Presenter isn't an overlapped presenter.</exception>
         /// <param name="window">Window</param>
         /// <param name="enable">Whether to display on top</param>
-        public static void SetAlwaysOnTop(this Microsoft.UI.Xaml.Window window, bool enable) => window.UpdateWindowConfiguration((c) => c.IsAlwaysOnTop = enable);
+        public static void SetIsAlwaysOnTop(this Microsoft.UI.Xaml.Window window, bool enable) => window.UpdateOverlappedPresenter((c) => c.IsAlwaysOnTop = enable);
 
         /// <summary>
-        /// Sets the parent window for the window
+        /// Gets a value indicating whether this window is on top or not.
         /// </summary>
-        /// <param name="window">Window to assign an owner to.</param>
-        /// <param name="parent">Parent</param>
-        public static void SetOwnerWindow(this Microsoft.UI.Xaml.Window window, Microsoft.UI.Xaml.Window parent) => window.UpdateWindowConfiguration((c) => c.OwnerWindowId = parent.GetAppWindow().Id);
-        
-        /// <summary>
-        /// Enables or disables the window frame.
-        /// </summary>
-        /// <param name="window"></param>
-        /// <param name="enable"></param>
-        public static void SetHasFrame(this Microsoft.UI.Xaml.Window window, bool enable) => window.UpdateWindowConfiguration((c) => c.HasFrame = enable);
-        
-
-        /// <summary>
-        /// Enables or disables the title bar.
-        /// </summary>
-        /// <param name="window"></param>
-        /// <param name="enable"></param>
-        public static void SetHasTitleBar(this Microsoft.UI.Xaml.Window window, bool enable) => window.UpdateWindowConfiguration((c) => c.HasTitleBar = enable);
-
-        /// <summary>
-        /// Sets a value defining whether this is a modal window or not.
-        /// </summary>
-        /// <param name="window"></param>
-        /// <param name="enable"></param>
-        public static void SetIsModal(this Microsoft.UI.Xaml.Window window, bool enable) => window.UpdateWindowConfiguration((c) => c.IsModal = enable);
+        /// <param name="window">window</param>
+        /// <returns><c>True</c> if the overlapped presenter is on top, otherwise <c>false</c>.</returns>
+        public static bool GetIsAlwaysOnTop(this Microsoft.UI.Xaml.Window window) => window.GetOverlappedPresenterValue((c) => c?.IsAlwaysOnTop ?? false);
 
         /// <summary>
         /// Enables or disables the ability to resize the window.
         /// </summary>
+        /// <remarks>The presenter must be an overlapped presenter.</remarks>
+        /// <exception cref="NotSupportedException">Throw if the AppWindow Presenter isn't an overlapped presenter.</exception>
         /// <param name="window"></param>
         /// <param name="enable"></param>
-        public static void SetIsResizable(this Microsoft.UI.Xaml.Window window, bool enable) => window.UpdateWindowConfiguration((c) => c.IsResizable = enable);
-        */
-        /// <summary>
-        /// Enables or disables showing the window in the switchers.
-        /// </summary>
-        /// <param name="window"></param>
-        /// <param name="enable"></param>
-        public static void SetIsShownInSwitchers(this Microsoft.UI.Xaml.Window window, bool enable) => window.UpdateWindowConfiguration((c) => c.IsShownInSwitchers = enable);
+        public static void SetIsResizable(this Microsoft.UI.Xaml.Window window, bool enable) => window.UpdateOverlappedPresenter((c) => c.IsResizable = enable);
 
         /// <summary>
-        /// Sets the icon for the window, using the specified icon path.
+        /// Gets a value indicating whether this resizable or not.
         /// </summary>
-        /// <param name="window">Window</param>
-        /// <param name="iconPath">The path of the icon.</param>
-        public static void SetIcon(this Microsoft.UI.Xaml.Window window, string iconPath) => HwndExtensions.SetIcon(window.GetWindowHandle(), iconPath);
+        /// <param name="window">window</param>
+        /// <returns><c>True</c> if the overlapped presenter is resizeable, otherwise <c>false</c>.</returns>
+        public static bool GetIsResizable(this Microsoft.UI.Xaml.Window window) => GetOverlappedPresenterValue(window, (c) => c?.IsResizable ?? false);
+
+        /// <summary>
+        /// </summary>
+        /// <remarks>The presenter must be an overlapped presenter.</remarks>
+        /// <exception cref="NotSupportedException">Throw if the AppWindow Presenter isn't an overlapped presenter.</exception>
+        /// <param name="window">window</param>
+        /// <param name="enable"><c>true</c> if this window should be maximizable.</param>
+        public static void SetIsMaximizable(this Microsoft.UI.Xaml.Window window, bool enable) => window.UpdateOverlappedPresenter((c) => c.IsMaximizable = enable);
+
+        /// <summary>
+        /// Gets a value indicating whether this window is maximizeable or not.
+        /// </summary>
+        /// <param name="window">window</param>
+        /// <returns><c>True</c> if the overlapped presenter is on maximizable, otherwise <c>false</c>.</returns>
+        public static bool GetIsMaximizable(this Microsoft.UI.Xaml.Window window) => GetOverlappedPresenterValue(window, (c) => c?.IsMaximizable ?? false);
+
+        /// <summary>
+        /// </summary>
+        /// <remarks>The presenter must be an overlapped presenter.</remarks>
+        /// <exception cref="NotSupportedException">Throw if the AppWindow Presenter isn't an overlapped presenter.</exception>
+        /// <param name="window">window</param>
+        /// <param name="enable"><c>true</c> if this window should be minimizable.</param>
+        public static void SetIsMinimizable(this Microsoft.UI.Xaml.Window window, bool enable) => window.UpdateOverlappedPresenter((c) => c.IsMinimizable = enable);
+
+        /// <summary>
+        /// Gets a value indicating whether this window is minimizeable or not.
+        /// </summary>
+        /// <param name="window">window</param>
+        /// <returns><c>True</c> if the overlapped presenter is on minimizable, otherwise <c>false</c>.</returns>
+        public static bool GetIsMinimizable(this Microsoft.UI.Xaml.Window window) => GetOverlappedPresenterValue(window, (c) => c?.IsMinimizable ?? false);
+
+        /// <summary>
+        /// Enables or disables showing the window in the task switchers.
+        /// </summary>
+        /// <param name="window">window</param>
+        /// <param name="enable"><c>true</c> if this window should be shown in the task switchers, otherwise <c>false</c>.</param>
+        public static void SetIsShownInSwitchers(this Microsoft.UI.Xaml.Window window, bool enable) => window.GetAppWindow().IsShownInSwitchers = enable;
 
         /// <summary>
         /// Sets the icon for the window, using the specified icon ID.
@@ -102,10 +111,22 @@ namespace WinUIEx
         /// <param name="iconId">The ID of the icon.</param>
         public static void SetIcon(this Microsoft.UI.Xaml.Window window, IconId iconId) => HwndExtensions.SetIcon(window.GetWindowHandle(), iconId);
 
-        private static void UpdateWindowConfiguration(this Microsoft.UI.Xaml.Window window, Action<AppWindow> action)
+        private static void UpdateOverlappedPresenter(this Microsoft.UI.Xaml.Window window, Action<OverlappedPresenter> action)
         {
+            if (window is null)
+                throw new ArgumentNullException(nameof(window));
             var appwindow = window.GetAppWindow();
-            action(appwindow);
+            if (appwindow.Presenter is OverlappedPresenter overlapped)
+                action(overlapped);
+            else 
+                throw new NotSupportedException($"Not supported with a {appwindow.Presenter.Kind} presenter");
+        }
+        private static T GetOverlappedPresenterValue<T>(this Microsoft.UI.Xaml.Window window, Func<OverlappedPresenter?,T> action)
+        {
+            if (window is null)
+                throw new ArgumentNullException(nameof(window));
+            var appwindow = window.GetAppWindow();
+            return action(appwindow.Presenter as OverlappedPresenter);
         }
 
         /// <summary>
@@ -175,7 +196,9 @@ namespace WinUIEx
         /// <param name="hwnd"></param>
         /// <returns>AppWindow</returns>
         public static AppWindow GetAppWindowFromWindowHandle(IntPtr hwnd)
-        {;
+        {
+            if(hwnd == IntPtr.Zero)
+                    throw new ArgumentNullException(nameof(hwnd));
             WindowId windowId = Win32Interop.GetWindowIdFromWindow(hwnd);
             return AppWindow.GetFromWindowId(windowId);
         }
@@ -185,37 +208,46 @@ namespace WinUIEx
         /// </summary>
         /// <param name="window">Window</param>
         /// <returns><c>true</c> if the window was previously visible, or <c>false</c> if the window was previously hidden.</returns>
-        public static bool ShowWindow(this Microsoft.UI.Xaml.Window window) => HwndExtensions.ShowWindow(GetWindowHandle(window));
+        public static bool Show(this Microsoft.UI.Xaml.Window window) => HwndExtensions.ShowWindow(GetWindowHandle(window));
 
         /// <summary>
         /// Hides the window and activates another window.
         /// </summary>
         /// <param name="window">Window</param>
         /// <returns><c>true</c> if the window was previously visible, or <c>false</c> if the window was previously hidden.</returns>
-        public static bool HideWindow(this Microsoft.UI.Xaml.Window window) => HwndExtensions.HideWindow(GetWindowHandle(window));
+        public static bool Hide(this Microsoft.UI.Xaml.Window window) => HwndExtensions.HideWindow(GetWindowHandle(window));
 
         /// <summary>
         /// Maximizes the specified window.
         /// </summary>
+        /// <remarks>The presenter must be an overlapped presenter.</remarks>
+        /// <exception cref="NotSupportedException">Throw if the AppWindow Presenter isn't an overlapped presenter.</exception>
         /// <param name="window">Window</param>
-        /// <returns><c>true</c> if the window was previously visible, or <c>false</c> if the window was previously hidden.</returns>
-        public static bool MaximizeWindow(this Microsoft.UI.Xaml.Window window) => HwndExtensions.MaximizeWindow(GetWindowHandle(window));
+        public static void Maximize(this Microsoft.UI.Xaml.Window window) => UpdateOverlappedPresenter(window, (c) => c.Maximize());
 
         /// <summary>
         /// Minimizes the specified window and activates the next top-level window in the Z order.
         /// </summary>
+        /// <remarks>The presenter must be an overlapped presenter.</remarks>
+        /// <exception cref="NotSupportedException">Throw if the AppWindow Presenter isn't an overlapped presenter.</exception>
         /// <param name="window">Window</param>
-        /// <returns><c>true</c> if the window was previously visible, or <c>false</c> if the window was previously hidden.</returns>
-        public static bool MinimizeWindow(this Microsoft.UI.Xaml.Window window) => HwndExtensions.MinimizeWindow(GetWindowHandle(window));
+        public static void Minimize(this Microsoft.UI.Xaml.Window window) => UpdateOverlappedPresenter(window, (c) => c.Minimize());
 
         /// <summary>
         /// Activates and displays the window. If the window is minimized or maximized, the system restores
-        /// it to its original size and position. An application should specify this flag when restoring a minimized window.
+        /// it to its original size and position.
+        /// </summary>
+        /// <remarks>The presenter must be an overlapped presenter.</remarks>
+        /// <exception cref="NotSupportedException">Throw if the AppWindow Presenter isn't an overlapped presenter.</exception>
+        /// <param name="window">Window</param>
+        public static void Restore(this Microsoft.UI.Xaml.Window window) => UpdateOverlappedPresenter(window, (c) => c.Restore());
+
+        /// <summary>
+        /// Sets the icon for the window, using the specified icon path.
         /// </summary>
         /// <param name="window">Window</param>
-        /// <returns><c>true</c> if the window was previously visible, or <c>false</c> if the window was previously hidden.</returns>
-        public static bool RestoreWindow(this Microsoft.UI.Xaml.Window window) => HwndExtensions.RestoreWindow(GetWindowHandle(window));
-
+        /// <param name="iconPath">The path of the icon.</param>
+        public static void SetIcon(this Microsoft.UI.Xaml.Window window, string iconPath) => HwndExtensions.SetIcon(window.GetWindowHandle(), iconPath);
         /// <summary>
         /// Sets the task bar icon to the provided icon
         /// </summary>

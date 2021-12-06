@@ -24,12 +24,14 @@ namespace WinUIEx
         private readonly ContentControl titleBarContainer;
         private readonly ContentControl windowArea;
 
+        private readonly Microsoft.UI.Windowing.OverlappedPresenter overlappedPresenter;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="WindowEx"/> class.
         /// </summary>
         public WindowEx()
         {
-
+            overlappedPresenter = Microsoft.UI.Windowing.OverlappedPresenter.Create();
             var rootContent = new Grid();
             rootContent.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Auto), MinHeight = 0 });
             rootContent.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Star) });
@@ -65,6 +67,10 @@ namespace WinUIEx
             {
                 _width = sender.Size.Width;
                 _height = sender.Size.Height;
+            }
+            if(args.DidPresenterChange)
+            {
+                PresenterChanged?.Invoke(this, EventArgs.Empty);
             }
         }
 
@@ -135,7 +141,7 @@ namespace WinUIEx
             set { windowArea.Content = value; }
           
         }
-        /*
+        
         private bool _IsTitleBarVisible = true;
 
         /// <summary>
@@ -147,17 +153,8 @@ namespace WinUIEx
             set
             {
                 _IsTitleBarVisible = value;
-                this.SetHasTitleBar(value);
+                overlappedPresenter.SetBorderAndTitleBar(true /* Crash if you ever set this to false */, value);
             }
-        }*/
-        /*
-        /// <summary>
-        /// Gets or sets a value indicating whether the window has a frame or not.
-        /// </summary>
-        public bool IsFrameVisible
-        {
-            get => AppWindow.Configuration.HasFrame;
-            set => this.SetHasFrame(value);
         }
                 
         /// <summary>
@@ -165,20 +162,19 @@ namespace WinUIEx
         /// </summary>
         public bool IsMinimizable
         {
-            get => AppWindow.Configuration.IsMinimizable;
-            set => this.SetIsMinimizable(value);
+            get => overlappedPresenter.IsMinimizable;
+            set => overlappedPresenter.IsMinimizable = value;
         }
 
         /// <summary>
         /// Gets or sets a value indicating whether the maximimze button is visible
         /// </summary>
         public bool IsMaximizable
-
         {
-            get => AppWindow.Configuration.IsMaximizable;
-            set => this.SetIsMaximizable(value);
-        }*/
-        /*
+            get => overlappedPresenter.IsMaximizable;
+            set => overlappedPresenter.IsMaximizable = value;
+        }
+        
         private bool _IsCloseButtonVisible;
 
         /// <summary>
@@ -190,18 +186,53 @@ namespace WinUIEx
             set
             {
                 _IsCloseButtonVisible = value;
-                this.SetIsModal(!value);
+                overlappedPresenter.IsModal = value;
             }
-        }*/
-        /*
+        }
+        
         /// <summary>
-        /// Gets or sets a value indicating whether the window is displayed on top of other windows
+        /// Gets or sets a value indicating whether this window is shown in task switchers.
+        /// </summary>
+        public bool IsShownInSwitchers
+        {
+            get => AppWindow.IsShownInSwitchers;
+            set => AppWindow.IsShownInSwitchers = value;
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this window is shown in task switchers.
         /// </summary>
         public bool IsAlwaysOnTop
         {
-            get => AppWindow.Configuration.IsAlwaysOnTop;
-            set => WindowExtensions.SetAlwaysOnTop(this, value);
-        }*/
+            get => overlappedPresenter.IsAlwaysOnTop;
+            set => overlappedPresenter.IsAlwaysOnTop = value;
+        }
+
+        /// <summary>
+        /// Gets or sets the presenter for the current window
+        /// </summary>
+        /// <seealso cref="PresenterKind"/>
+        /// <seealso cref="PresenterChanged"/>
+        public Microsoft.UI.Windowing.AppWindowPresenter Presenter
+        {
+            get => AppWindow.Presenter;
+        }
+
+        /// <summary>
+        /// Gets or sets the presenter kind for the current window
+        /// </summary>
+        /// <seealso cref="Presenter"/>
+        /// <seealso cref="PresenterChanged"/>
+        public Microsoft.UI.Windowing.AppWindowPresenterKind PresenterKind
+        {
+            get => AppWindow.Presenter.Kind;
+            set {
+                if (value is Microsoft.UI.Windowing.AppWindowPresenterKind.Overlapped)
+                    AppWindow.SetPresenter(overlappedPresenter);
+                else
+                    AppWindow.SetPresenter(value);
+            }
+        }
 
         private double _width;
 
@@ -234,8 +265,15 @@ namespace WinUIEx
         }
 
         /// <summary>
-        /// Raised if the window position changes
+        /// Raised if the window position changes.
         /// </summary>
         public event EventHandler? PositionChanged;
+
+        /// <summary>
+        /// Raised if the presenter for the window changes.
+        /// </summary>
+        /// <seealso cref="Presenter"/>
+        /// <seealso cref="PresenterKind"/>
+        public event EventHandler? PresenterChanged;
     }
 }

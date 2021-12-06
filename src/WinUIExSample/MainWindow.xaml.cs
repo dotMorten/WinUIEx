@@ -25,51 +25,63 @@ namespace WinUIExSample
     /// </summary>
     public sealed partial class MainWindow : WindowEx
     {
+        private readonly Queue<string> windowEvents = new Queue<string>();
+
 #if EXPERIMENTAL
         private readonly WindowMessageMonitor monitor;
-        private readonly Queue<string> windowEvents = new Queue<string>();
 #endif
         public MainWindow()
         {
             this.InitializeComponent();
-
+            this.PresenterChanged += (s, e) => Log("PresenterChanged");
+            this.PositionChanged += (s, e) => Log("PositionChanged");
 #if EXPERIMENTAL
             monitor = new WindowMessageMonitor(this);
             monitor.WindowMessageRecieved += Monitor_WindowMessageRecieved;
 #endif
         }
 
+        private void Log(string message)
+        {
+            if (!DispatcherQueue.HasThreadAccess)
+            {
+                DispatcherQueue.TryEnqueue(() =>
+                {
+                    Log(message);
+                });
+                return;
+            }
+            windowEvents.Enqueue(message);
+            if (windowEvents.Count > 100)
+                windowEvents.Dequeue();
+            WindowEventLog.Text = string.Join('\n', windowEvents.Reverse());
+        }
+
 #if EXPERIMENTAL
         private void Monitor_WindowMessageRecieved(object sender, WindowMessageEventArgs e)
         {
-            DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Normal, () =>
-            {
-                windowEvents.Enqueue($"{e.MessageType}: w={e.WParam}, l={e.LParam}");
-                if (windowEvents.Count > 100)
-                    windowEvents.Dequeue();
-                WindowEventLog.Text = string.Join('\n', windowEvents.Reverse());
-            });
+            Log($"{e.MessageType}: w={e.WParam}, l={e.LParam}");
         }
 #endif
 
         private void Center_Click(object sender, RoutedEventArgs e) => this.CenterOnScreen();
 
-        private void MaximizeWindow_Click(object sender, RoutedEventArgs e) => this.MaximizeWindow();
+        private void MaximizeWindow_Click(object sender, RoutedEventArgs e) => this.Maximize();
 
-        private void RestoreWindow_Click(object sender, RoutedEventArgs e) => this.RestoreWindow();
+        private void RestoreWindow_Click(object sender, RoutedEventArgs e) => this.Restore();
 
         private async void MinimizeWindow_Click(object sender, RoutedEventArgs e)
         {
-            this.MinimizeWindow();
+            this.Minimize();
             await Task.Delay(2000);
-            this.RestoreWindow();
+            this.Restore();
         }
 
         private async void HideWindow_Click(object sender, RoutedEventArgs e)
         {
-            this.HideWindow();
+            this.Hide();
             await Task.Delay(2000);
-            this.RestoreWindow();
+            this.Restore();
         }
 
         private TrayIcon tray;
@@ -96,11 +108,11 @@ namespace WinUIExSample
             tray = new TrayIcon(icon);
             tray.TrayIconLeftMouseDown += (s, e) =>
             {
-                this.ShowWindow();
+                this.Show();
                 tray.Dispose();
                 tray = null;
             };
-            this.HideWindow();
+            this.Hide();
         }
 
         private async void BringToFront_Click(object sender, RoutedEventArgs e)
@@ -111,7 +123,7 @@ namespace WinUIExSample
 
         private void CustomTitleBar_Toggled(object sender, RoutedEventArgs e)
         {
-            if(((ToggleSwitch)sender).IsOn)
+            if (((ToggleSwitch)sender).IsOn)
             {
                 TitleBar = new TextBlock() { Text = Title, FontSize = 24, Foreground = new SolidColorBrush(Microsoft.UI.Colors.Red) };
             }
@@ -119,21 +131,17 @@ namespace WinUIExSample
             {
                 TitleBar = null;
             }
-
         }
-        /*
-        private void Fullscreen_Toggled(object sender, RoutedEventArgs e)
+
+        private void Presenter_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            
-            // Disabled until this is fixed:
-            if (((ToggleSwitch)sender).IsOn)
-            {
-                bool succcess = AppWindow.TrySetPresenter(Microsoft.UI.Windowing.AppWindowPresenterKind.FullScreen);
-            }
-            else
-            {
-                bool succcess = AppWindow.TrySetPresenter(Microsoft.UI.Windowing.AppWindowPresenterKind.Overlapped);
-            }
-     }*/
+            var index = ((ComboBox)sender).SelectedIndex;
+            if (index == 0)
+                PresenterKind = Microsoft.UI.Windowing.AppWindowPresenterKind.Overlapped;
+            else if (index == 1)
+                PresenterKind = Microsoft.UI.Windowing.AppWindowPresenterKind.CompactOverlay;
+            else if (index == 2)
+                PresenterKind = Microsoft.UI.Windowing.AppWindowPresenterKind.FullScreen;
+        }
     }
 }

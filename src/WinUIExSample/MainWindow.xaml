@@ -20,15 +20,21 @@
     </winex:WindowEx.TitleBar>-->
 
     <Grid ColumnDefinitions="Auto,Auto,*" Margin="20">
+        <ScrollViewer>
         <StackPanel>
-            <!--<ToggleSwitch Header="Can Minimize" IsOn="{x:Bind IsMinimizable, Mode=TwoWay}" />
-            <ToggleSwitch Header="Can Maximize" IsOn="{x:Bind IsMaximizable, Mode=TwoWay}" />-->
-            <!--<ToggleSwitch Header="Show Close Button" IsOn="{x:Bind IsCloseButtonVisible, Mode=TwoWay}" />-->
-            <!--<ToggleSwitch Header="Is Frame Visible" IsOn="{x:Bind IsFrameVisible, Mode=TwoWay}" />
-            <ToggleSwitch Header="Always On Top" IsOn="{x:Bind IsAlwaysOnTop, Mode=TwoWay}" />-->
+            <ToggleSwitch Header="Can Minimize" IsOn="{x:Bind IsMinimizable, Mode=TwoWay}" />
+            <ToggleSwitch Header="Can Maximize" IsOn="{x:Bind IsMaximizable, Mode=TwoWay}" />
+            <ToggleSwitch Header="Show Close Button" IsOn="{x:Bind IsCloseButtonVisible, Mode=TwoWay}" />
+            <ToggleSwitch Header="Is Titlebar Visible" IsOn="{x:Bind IsTitleBarVisible, Mode=TwoWay}" />
+            <ToggleSwitch Header="Always On Top" IsOn="{x:Bind IsAlwaysOnTop, Mode=TwoWay}" />
             <ToggleSwitch Header="Set Custom Titlebar" Toggled="CustomTitleBar_Toggled" />
-            <!--<ToggleSwitch Header="Full screen" Toggled="Fullscreen_Toggled" />-->
+            <ComboBox Header="Presenter" SelectedIndex="0" SelectionChanged="Presenter_SelectionChanged">
+                <ComboBoxItem>Overlapped</ComboBoxItem>
+                <ComboBoxItem>Compact</ComboBoxItem>
+                <ComboBoxItem>Fullscren</ComboBoxItem>
+            </ComboBox>
         </StackPanel>
+        </ScrollViewer>
         <StackPanel Grid.Column="1">
             <StackPanel.Resources>
                 <Style TargetType="Button">

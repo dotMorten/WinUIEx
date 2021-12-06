@@ -51,6 +51,7 @@
     <ProjectCapability Include="Msix" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\WinUIEx\WinUIEx.csproj" />
     <ProjectReference Include="..\WinUIEx.TestTools.MSTest.CodeGenerator\WinUIEx.TestTools.MSTest.CodeGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
     <ProjectReference Include="..\WinUIEx.TestTools.MSTest\WinUIEx.TestTools.MSTest.csproj" />
   </ItemGroup>

@@ -6,6 +6,13 @@
       <PackageId>WinUIEx.TestTools.MSTest</PackageId>
       <Version>1.0.0-preview1</Version>
       <GenerateDocumentationFile>True</GenerateDocumentationFile>
+      <Description>Test extensions for supporting WinUI UITests in MSTest</Description>
+      <Authors>Morten Nielsen</Authors>
+      <PackageProjectUrl>https://github.com/dotMorten/WinUIEx</PackageProjectUrl>
+      <RepositoryUrl>https://github.com/dotMorten/WinUIEx</RepositoryUrl>
+      <RepositoryType>git</RepositoryType>
+      <PackageTags>UITest;WinUI;MSTest;MS Test;Test;UI Test;</PackageTags>
+      <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
   </PropertyGroup>
 
     <ItemGroup>

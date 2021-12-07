@@ -158,7 +158,7 @@ namespace WinUIEx
         }
                 
         /// <summary>
-        /// Gets or sets a value indicating whether the minimimze button is visible
+        /// Gets or sets a value indicating whether the minimize button is visible
         /// </summary>
         public bool IsMinimizable
         {
@@ -173,6 +173,15 @@ namespace WinUIEx
         {
             get => overlappedPresenter.IsMaximizable;
             set => overlappedPresenter.IsMaximizable = value;
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the window can be resized.
+        /// </summary>
+        public bool IsResizable
+        {
+            get => overlappedPresenter.IsResizable;
+            set => overlappedPresenter.IsResizable = value;
         }
 
         /*

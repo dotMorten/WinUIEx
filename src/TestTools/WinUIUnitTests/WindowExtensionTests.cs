@@ -22,12 +22,12 @@ namespace WinUIUnitTests
         }
 
         [TestCleanup]
-        public void TestCleanup()
+        public async Task TestCleanup()
         {
-            WindowEx.Width = sizeWidth;
-            WindowEx.Height = sizeHeight;
             WindowEx.PresenterKind = Microsoft.UI.Windowing.AppWindowPresenterKind.Overlapped;
             WindowEx.Restore();
+            WindowEx.SetWindowSize(sizeWidth, sizeHeight);
+            await UIExtensions.WaitFrame();
         }
         public WindowEx WindowEx => (WindowEx)WindowContext;
 
@@ -36,12 +36,12 @@ namespace WinUIUnitTests
         {
             var grid = new Grid();
             WindowContext.Content = grid;
-            await grid.LoadAsync();
-            var width = WindowContext.Bounds.Width;
+            await grid.SizeChangedAsync();
+            var width = grid.ActualWidth;
             var windowPadding = WindowEx.Width - width;
             WindowEx.Width = 500;            
-            await grid.LayoutUpdatedAsync();
-            Assert.AreEqual(500, grid.ActualWidth + windowPadding);
+            await grid.SizeChangedAsync();
+            Assert.AreEqual(500, grid.ActualWidth + windowPadding, "Width after window resize");
         }
 
         [WinUITestMethod]
@@ -50,11 +50,11 @@ namespace WinUIUnitTests
             var grid = new Grid();
             WindowContext.Content = grid;
             await grid.LoadAsync();
-            var height = WindowContext.Bounds.Height;
+            var height = grid.ActualHeight;
             var windowPadding = WindowEx.Height - height;
             WindowEx.Height = 500;
-            await grid.LayoutUpdatedAsync();
-            Assert.AreEqual(500, grid.ActualHeight + windowPadding);
+            await grid.SizeChangedAsync();
+            Assert.AreEqual(500, grid.ActualHeight + windowPadding, "Height after window resize");
         }
 
         [WinUITestMethod]
@@ -80,12 +80,13 @@ namespace WinUIUnitTests
             var presenter = WindowEx.AppWindow.Presenter as Microsoft.UI.Windowing.OverlappedPresenter;
             WindowEx.Maximize();
             Assert.AreEqual(Microsoft.UI.Windowing.OverlappedPresenterState.Maximized, presenter.State);
-            await grid.LayoutUpdatedAsync();
-            Assert.IsTrue(grid.ActualHeight > size);
+            await grid.SizeChangedAsync();
+            Assert.IsTrue(grid.ActualHeight > size, "grid.ActualHeight > size");
+            size = grid.ActualHeight;
             WindowEx.Restore();
             Assert.AreEqual(Microsoft.UI.Windowing.OverlappedPresenterState.Restored, presenter.State);
-            await grid.LayoutUpdatedAsync();
-            Assert.AreEqual(size, grid.ActualHeight);
+            await grid.SizeChangedAsync();
+            Assert.IsTrue(grid.ActualHeight < size, "grid.ActualHeight < size");
         }
 
         [WinUITestMethod]
@@ -97,7 +98,7 @@ namespace WinUIUnitTests
             var width = WindowContext.Bounds.Width;
             var height = WindowContext.Bounds.Height;
             WindowEx.PresenterKind = Microsoft.UI.Windowing.AppWindowPresenterKind.CompactOverlay;
-            await grid.LayoutUpdatedAsync();
+            await grid.SizeChangedAsync();
             Assert.IsTrue(grid.ActualWidth < width);
             Assert.IsTrue(grid.ActualHeight < height);
         }
@@ -111,9 +112,9 @@ namespace WinUIUnitTests
             var width = WindowContext.Bounds.Width;
             var height = WindowContext.Bounds.Height;
             WindowEx.PresenterKind = Microsoft.UI.Windowing.AppWindowPresenterKind.FullScreen;
-            await grid.LayoutUpdatedAsync();
-            Assert.IsTrue(grid.ActualWidth > width);
-            Assert.IsTrue(grid.ActualHeight > height);
+            await grid.SizeChangedAsync();
+            Assert.IsTrue(grid.ActualWidth > width, "width");
+            Assert.IsTrue(grid.ActualHeight > height, "height");
         }
     }
 }

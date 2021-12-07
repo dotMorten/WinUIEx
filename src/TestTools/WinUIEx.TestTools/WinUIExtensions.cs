@@ -174,6 +174,35 @@ namespace WinUIEx.TestTools
         }
 
         /// <summary>
+        /// Waits one rendering frame.
+        /// </summary>
+        /// <returns></returns>
+        public static async Task WaitFrame(int frameCount = 1)
+        {
+            var tcs = new TaskCompletionSource<object>();
+            if (TestHost.Window?.DispatcherQueue.HasThreadAccess == false)
+            {
+                TestHost.Window.DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Normal, async () =>
+                {
+                    await WaitFrame(frameCount);
+                    tcs.SetResult(null);
+                });
+                await tcs.Task;
+                return;
+            }
+
+            int counter = 0;
+            EventHandler<object> handler = (s, e) =>
+            {
+                if (++counter == frameCount)
+                    tcs.SetResult(null);
+            };
+            Microsoft.UI.Xaml.Media.CompositionTarget.Rendering += handler;
+            await tcs.Task;
+            Microsoft.UI.Xaml.Media.CompositionTarget.Rendering -= handler;
+        }
+
+        /// <summary>
         /// Returns a bitmap of the provided element.
         /// </summary>
         /// <param name="element">Element.</param>

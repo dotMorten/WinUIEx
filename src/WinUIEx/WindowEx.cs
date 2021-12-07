@@ -48,6 +48,9 @@ namespace WinUIEx
             titleBarContainer = new ContentControl() { VerticalAlignment = VerticalAlignment.Stretch, VerticalContentAlignment = VerticalAlignment.Stretch };
             Grid.SetColumn(titleBarContainer, 1);
             titleBarArea.Children.Add(titleBarContainer);
+#if EXPERIMENTAL
+            titleBarContainer.SizeChanged += (s,e) => UpdateDragRectangles();
+#endif
 
             windowArea = new ContentControl();
             Grid.SetRow(windowArea, 1);
@@ -55,10 +58,6 @@ namespace WinUIEx
 
             this.Content = rootContent;
             AppWindow.Changed += AppWindow_Changed;
-            SizeChanged += Window_SizeChanged;
-            var size = AppWindow.Size;
-            _width = size.Width;
-            _height = size.Height;
         }
 
         private void AppWindow_Changed(Microsoft.UI.Windowing.AppWindow sender, Microsoft.UI.Windowing.AppWindowChangedEventArgs args)
@@ -67,8 +66,9 @@ namespace WinUIEx
                 PositionChanged?.Invoke(this, EventArgs.Empty);
             if(args.DidSizeChange)
             {
-                _width = sender.Size.Width;
-                _height = sender.Size.Height;
+#if EXPERIMENTAL
+                UpdateDragRectangles();
+#endif
             }
             if(args.DidPresenterChange)
             {
@@ -166,11 +166,70 @@ namespace WinUIEx
             }
         }
 
-        private void Window_SizeChanged(object sender, WindowSizeChangedEventArgs args)
+#if EXPERIMENTAL
+        private void UpdateDragRectangles()
         {
-            _width = args.Size.Width;
-            _height = args.Size.Height;
+            if (base.ExtendsContentIntoTitleBar)
+            {
+                var ri = AppWindow.TitleBar.RightInset;
+                var li = AppWindow.TitleBar.LeftInset;
+                var _width = AppWindow.Size.Width;
+                var _height = AppWindow.Size.Height;
+                List<Windows.Foundation.Rect> bounds = new List<Windows.Foundation.Rect>();
+                if (TitleBar is not null)
+                {
+                    var transform = TitleBar.TransformToVisual((UIElement)Content);
+                    foreach (var elm in GetInteractiveUIElement(TitleBar))
+                    {
+                        if (elm.ActualSize.X > 0 && elm.ActualSize.Y > 0)
+                        {
+                            var bound = transform.TransformBounds(new Windows.Foundation.Rect(elm.ActualOffset.X, elm.ActualOffset.Y, elm.ActualSize.X, elm.ActualSize.Y));
+                            bounds.Add(bound);
+                        }
+                    }
+                }
+                double start = 0;
+                var height = TitleBar?.ActualSize.Y ?? 0;
+                if (height == 0) return;
+                List<Windows.Graphics.RectInt32> rects = new List<Windows.Graphics.RectInt32>(1);
+                foreach (var bound in bounds)
+                {
+                    if (bound.X > start)
+                    {
+                        var w = bound.Width;
+                        if (w + bound.X > _width)
+                            w = _width - bound.X;
+                        if (w > 0)
+                        {
+                            rects.Add(new Windows.Graphics.RectInt32((int)start, 0, (int)(bound.X - start), (int)height));
+                            start = bound.X + w;
+                        }
+                    }
+                }
+                if(start < _width)
+                    rects.Add(new Windows.Graphics.RectInt32((int)start, 0, (int)(_width - start), (int)height));
+                AppWindow.TitleBar.SetDragRectangles(rects.ToArray());
+            }
+
         }
+        private static IEnumerable<FrameworkElement> GetInteractiveUIElement(UIElement element)
+        {
+            if (element is Panel panel)
+            {
+                foreach (var child in panel.Children)
+                {
+                    foreach (var ce in GetInteractiveUIElement(child))
+                        yield return ce;
+                }
+            }
+            else if (element is FrameworkElement fe && fe.IsHitTestVisible)
+            {
+                if (element is Microsoft.UI.Xaml.Controls.Primitives.ButtonBase || element is TextBox)
+                    yield return fe;
+            }
+        }
+#endif
+
         /// <summary>
         /// Gets or sets the Window content 
         /// /// </summary>
@@ -287,33 +346,27 @@ namespace WinUIEx
             }
         }
 
-        private double _width;
-
         /// <summary>
         /// Gets or sets the width of the window
         /// </summary>
         public double Width
         {
-            get { return _width; }
+            get { return AppWindow.Size.Width; }
             set
             {
-                _width = value; 
-                this.SetWindowSize(_width, _height);
+                this.SetWindowSize(value, AppWindow.Size.Height);
             }
         }
-
-        private double _height;
 
         /// <summary>
         /// Gets or sets the height of the window
         /// </summary>
         public double Height
         {
-            get { return _height; }
+            get { return AppWindow.Size.Height; }
             set
             {
-                _height = value;
-                this.SetWindowSize(_width, _height);
+                this.SetWindowSize(AppWindow.Size.Width, value);
             }
         }
 

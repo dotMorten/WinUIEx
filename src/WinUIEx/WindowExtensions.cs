@@ -8,7 +8,7 @@ namespace WinUIEx
     /// <summary>
     /// WinUI Window Extension Methods
     /// </summary>
-    public static class WindowExtensions
+    public static partial class WindowExtensions
     {
         /// <summary>
         /// Gets the AppWindow from the handle

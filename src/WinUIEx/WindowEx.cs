@@ -95,8 +95,7 @@ namespace WinUIEx
         /// <returns>An object that represents the asynchronous operation.</returns>
         public Task<Windows.UI.Popups.IUICommand> ShowMessageDialogAsync(string content, IList<Windows.UI.Popups.IUICommand>? commands, uint defaultCommandIndex = 0, uint cancelCommandIndex = 1, string title = "")
         {
-            var dialog = new Windows.UI.Popups.MessageDialog(content, title);
-            WinRT.Interop.InitializeWithWindow.Initialize(dialog, this.GetWindowHandle());
+            var dialog = this.CreateMessageDialog(content, title);
             if (commands != null)
             {
                 foreach (var command in commands)

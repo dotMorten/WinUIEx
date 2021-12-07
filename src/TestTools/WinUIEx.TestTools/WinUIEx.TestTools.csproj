@@ -13,6 +13,7 @@
       <RepositoryType>git</RepositoryType>
       <PackageTags>UITest;WinUI;Test;UI Test;</PackageTags>
       <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+      <PackageOutputPath>..\..\..\artifacts\NuGet\$(Configuration)\</PackageOutputPath>
   </PropertyGroup>
 
     <ItemGroup>

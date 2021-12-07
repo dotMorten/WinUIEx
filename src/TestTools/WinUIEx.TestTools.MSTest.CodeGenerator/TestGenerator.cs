@@ -31,7 +31,7 @@ namespace WinUIEx.TestTools.MSTest
             foreach (IGrouping<INamedTypeSymbol, IMethodSymbol> group in receiver.Methods.GroupBy(f => f.ContainingType))
             {
                 string classSource = ProcessClass(group.Key, group.ToList(), attributeSymbol, context);
-                System.IO.File.WriteAllText($"e:\\{group.Key.Name}_generatedUITests.cs", classSource);
+                // System.IO.File.WriteAllText($"e:\\{group.Key.Name}_generatedUITests.cs", classSource);
                 context.AddSource($"{group.Key.Name}_generatedUITests.cs", SourceText.From(classSource, Encoding.UTF8));
             }
         }

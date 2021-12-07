@@ -55,6 +55,7 @@ namespace WinUIEx
 
             this.Content = rootContent;
             AppWindow.Changed += AppWindow_Changed;
+            SizeChanged += Window_SizeChanged;
             var size = AppWindow.Size;
             _width = size.Width;
             _height = size.Height;
@@ -166,6 +167,11 @@ namespace WinUIEx
             }
         }
 
+        private void Window_SizeChanged(object sender, WindowSizeChangedEventArgs args)
+        {
+            _width = args.Size.Width;
+            _height = args.Size.Height;
+        }
         /// <summary>
         /// Gets or sets the Window content 
         /// /// </summary>

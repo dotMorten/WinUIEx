@@ -1,0 +1,12 @@
+- name: Getting Started
+  href: index.md
+- name: WindowEx window class
+  href: WindowEx.md
+- name: Window Extension Methods
+  href: WindowExtensions.md
+- name: HWND Extension Methods
+  href: HwndExtensions.md
+- name: Tray Icon
+  href: TrayIcon.md
+- name: Object Model Diagram
+  href: ../api/omd.html

@@ -3,7 +3,7 @@
  
 ![image](https://github.com/dotMorten/WinUIEx/raw/main/src/logo.png)
 
-A set of extension methods and classes to fill some gaps in WinUI 3, mostly around windowing.
+A set of extension methods and classes to fill some gaps in WinUI 3, mostly around windowing and unit testing.
 
 ### NuGet Packages:
   - [WinUIEX](https://www.nuget.org/packages/WinUIEx/)

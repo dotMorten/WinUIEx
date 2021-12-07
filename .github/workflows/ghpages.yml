@@ -29,7 +29,7 @@ jobs:
     - name: Generate OMD
       run: |
         mkdir artifacts/docs/api
-        .tools/omd/generateomd /source=src/WinUIEx/.;src/TestTools/WinUIEx.TestTools/.;src/TestTools/WinUIEx.TestTools.MSTest/. /output=artifacts/docs/api/omd.html
+        .tools/omd/generateomd /source="src/WinUIEx/.;src/TestTools/WinUIEx.TestTools/.;src/TestTools/WinUIEx.TestTools.MSTest/." /output=artifacts/docs/api/omd.html
 
     - name: Install NuGet
       uses: nuget/setup-nuget@v1

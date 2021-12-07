@@ -50,6 +50,7 @@
             <Button Content="Toggle Tray Icon" Click="ToggleTrayIcon_Click" />
             <Button Content="Minimime to tray (click tray to reopen)" Click="MinimizeTrayIcon_Click" />
             <Button Content="Bring to front (2 second delay)" Click="BringToFront_Click" />
+            <Button Content="Show dialog" Click="ShowDialog_Click" />
         </StackPanel>
         <Grid Grid.Column="2" RowDefinitions="Auto,*" >
             <TextBlock Text="Window Events" />

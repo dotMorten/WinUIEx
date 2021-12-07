@@ -144,5 +144,15 @@ namespace WinUIExSample
             else if (index == 2)
                 PresenterKind = Microsoft.UI.Windowing.AppWindowPresenterKind.FullScreen;
         }
+
+        private async void ShowDialog_Click(object sender, RoutedEventArgs e)
+        {
+            var commands = new List<Windows.UI.Popups.IUICommand>();
+            commands.Add(new Windows.UI.Popups.UICommand("OK"));
+            commands.Add(new Windows.UI.Popups.UICommand("Maybe"));
+            commands.Add(new Windows.UI.Popups.UICommand("Cancel"));
+            var result = await ShowMessageDialogAsync("This is a simple message dialog", commands, cancelCommandIndex: 2, title: "Dialog title");
+            Log("You clicked: " + result.Label);
+        }
     }
 }

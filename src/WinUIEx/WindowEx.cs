@@ -75,6 +75,39 @@ namespace WinUIEx
         }
 
         /// <summary>
+        /// Shows a message dialog
+        /// </summary>
+        /// <param name="content">The message displayed to the user.</param>
+        /// <param name="title">The title to display on the dialog, if any.</param>
+        /// <returns>An object that represents the asynchronous operation.</returns>
+        public Task ShowMessageDialogAsync(string content, string title = "") => ShowMessageDialogAsync(content, null, title: title);
+
+        /// <summary>
+        /// Shows a message dialog
+        /// </summary>
+        /// <param name="content">The message displayed to the user.</param>
+        /// <param name="commands">an array of commands that appear in the command bar of the message dialog. These commands makes the dialog actionable.</param>
+        /// <param name="defaultCommandIndex">The index of the command you want to use as the default. This is the command that fires by default when users press the ENTER key.</param>
+        /// <param name="cancelCommandIndex">The index of the command you want to use as the cancel command. This is the command that fires when users press the ESC key.</param>
+        /// <param name="title">The title to display on the dialog, if any.</param>
+        /// <returns>An object that represents the asynchronous operation.</returns>
+        public Task<Windows.UI.Popups.IUICommand> ShowMessageDialogAsync(string content, IList<Windows.UI.Popups.IUICommand>? commands, uint defaultCommandIndex = 0, uint cancelCommandIndex = 1, string title = "")
+        {
+            var dialog = new Windows.UI.Popups.MessageDialog(content, title);
+            WinRT.Interop.InitializeWithWindow.Initialize(dialog, this.GetWindowHandle());
+            if (commands != null)
+            {
+                foreach (var command in commands)
+                    dialog.Commands.Add(command);
+                if (commands.Count > defaultCommandIndex)
+                    dialog.DefaultCommandIndex = defaultCommandIndex;
+                if (commands.Count > cancelCommandIndex && cancelCommandIndex != defaultCommandIndex)
+                    dialog.CancelCommandIndex = cancelCommandIndex;
+            }
+            return dialog.ShowAsync().AsTask();
+        }
+
+        /// <summary>
         /// Gets a reference to the AppWindow for the app
         /// </summary>
         public Microsoft.UI.Windowing.AppWindow AppWindow => this.GetAppWindow();

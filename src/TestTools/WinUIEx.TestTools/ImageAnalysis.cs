@@ -249,15 +249,25 @@ namespace WinUIEx.TestTools
         /// </summary>
         public class Blob
         {
+            /// <summary>Blob id</summary>
             public int Id;
+            /// <summary>The starting column of the blob in device independent pixels.</summary>
             public double MinColumn;
+            /// <summary>The ending column of the blob in device independent pixels.</summary>
             public double MaxColumn;
+            /// <summary>The starting row of the blob in device independent pixels.</summary>
             public double MinRow;
+            /// <summary>The end row of the blob in device independent pixels.</summary>
             public double MaxRow;
+            /// <summary>The width of the blob in device independent pixels.</summary>
             public double Width => MaxColumn - MinColumn + 1;
+            /// <summary>The height of the blob in device independent pixels.</summary>
             public double Height => MaxRow - MinRow + 1;
+            /// <summary>The center row of the blob in device independent pixels.</summary>
             public double CenterRow => MinRow + Height / 2;
+            /// <summary>The center column of the blob in device independent pixels.</summary>
             public double CenterColumn => MinColumn + Width / 2;
+            /// <summary>The set of connected pixels.</summary>
             public List<System.Drawing.Point> Pixels { get; } = new List<System.Drawing.Point>();
         }
 

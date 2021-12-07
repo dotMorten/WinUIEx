@@ -11,6 +11,8 @@
 
     <ItemGroup>
      <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.0.0" />
+     <PackageReference Include="SharpDX.Direct2D1" Version="4.2.0" Condition="'$(Configuration)'=='Experimental'" />
+     <PackageReference Include="SharpDX.Direct3D11" Version="4.2.0" Condition="'$(Configuration)'=='Experimental'"  />
   </ItemGroup>
     
 </Project>

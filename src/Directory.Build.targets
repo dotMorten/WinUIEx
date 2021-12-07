@@ -19,5 +19,9 @@
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
     <None Include="$(MSBuildThisFileDirectory)logo.png" Pack="true" PackagePath="" />
   </ItemGroup>
+
+  <PropertyGroup Condition="'$(Configuration)'=='Experimental'">
+      <DefineConstants>$(DefineConstants);EXPERIMENTAL</DefineConstants>
+  </PropertyGroup>
   
 </Project>

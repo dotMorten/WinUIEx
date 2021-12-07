@@ -39,5 +39,13 @@ namespace WinUIUnitTests
             Assert.AreEqual(300, blobs[0].Width);
             Assert.AreEqual(100, blobs[0].Height);
         }
+
+#if EXPERIMENTAL
+        [WinUITestMethod]
+        public async Task CaptureWindow()
+        {
+            var result = await WindowContext.CaptureWindow();
+        }
+#endif
     }
 }

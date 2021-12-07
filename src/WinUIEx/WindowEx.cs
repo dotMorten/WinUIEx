@@ -32,6 +32,8 @@ namespace WinUIEx
         public WindowEx()
         {
             overlappedPresenter = Microsoft.UI.Windowing.OverlappedPresenter.Create();
+            AppWindow.SetPresenter(overlappedPresenter);
+
             var rootContent = new Grid();
             rootContent.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Auto), MinHeight = 0 });
             rootContent.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Star) });

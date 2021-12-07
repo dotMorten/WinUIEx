@@ -28,11 +28,11 @@ jobs:
         msbuild /restore /t:Build src\TestTools\WinUIEx.TestTools.MSTest.CodeGenerator\WinUIEx.TestTools.MSTest.CodeGenerator.csproj /p:Configuration=Release
         msbuild /restore /t:Build,Pack src\TestTools\WinUIEx.TestTools.MSTest\WinUIEx.TestTools.MSTest.csproj /p:Configuration=Release
         
-#    - name: Test
-#      run: |
-#        msbuild /restore /t:Build src\TestTools\WinUIUnitTests\WinUIUnitTests.csproj /p:Platform=x64 /p:Configuration=Release
-#        vstest.console.exe src\TestTools\WinUIUnitTests\bin\x64\Release\net5.0-windows10.0.19041.0\win10-x64\WinUIUnitTests.build.appxrecipe --logger:"console;verbosity=normal" /InIsolation
-      
+    - name: Test
+      run: |
+        msbuild /restore /t:Build src\TestTools\WinUIUnitTests\WinUIUnitTests.csproj /p:Platform=x64 /p:Configuration=Release
+        vstest.console.exe src\TestTools\WinUIUnitTests\bin\x64\Release\net5.0-windows10.0.19041.0\win10-x64\WinUIUnitTests.build.appxrecipe --logger:"console;verbosity=normal" /InIsolation
+
     - name: Upload artifacts
       uses: actions/upload-artifact@v1
       with:

@@ -1,7 +1,7 @@
 # WinUIEx
  WinUI Extensions
  
-![image](https://github.com/dotMorten/WinUIEx/raw/main/src/WinUIEx/logo.png)
+![image](https://github.com/dotMorten/WinUIEx/raw/main/src/logo.png)
 
 A set of extension methods and classes to fill some gaps in WinUI 3, mostly around windowing.
 

@@ -1,0 +1,23 @@
+<Project>
+
+  <PropertyGroup Label="PackageInfo" Condition="'$(PackageId)'!=''">
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/dotMorten/WinUIEx</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/dotMorten/WinUIEx</RepositoryUrl>
+    <Copyright>Copyright © Morten Nielsen 2021</Copyright>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PackageOutputPath>$(MSBuildThisFileDirectory)..\artifacts\NuGet\$(Configuration)\</PackageOutputPath>
+    <Authors>Morten Nielsen - https://xaml.dev</Authors>
+    <Company>Morten Nielsen - https://xaml.dev</Company>
+    <PackageIcon>logo.png</PackageIcon>
+    <Version>1.0.0-preview1</Version>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(PackageId)'!=''">
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
+    <None Include="$(MSBuildThisFileDirectory)logo.png" Pack="true" PackagePath="" />
+  </ItemGroup>
+  
+</Project>

@@ -1,19 +1,12 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
       <TargetFramework>net5.0-windows10.0.19041</TargetFramework>
       <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
       <PackageId>WinUIEx.TestTools</PackageId>
-      <Version>1.0.0-preview1</Version>
       <GenerateDocumentationFile>True</GenerateDocumentationFile>
       <Description>Test helpers for supporting WinUI UITests</Description>
-      <Authors>Morten Nielsen</Authors>
-      <PackageProjectUrl>https://github.com/dotMorten/WinUIEx</PackageProjectUrl>
-      <RepositoryUrl>https://github.com/dotMorten/WinUIEx</RepositoryUrl>
-      <RepositoryType>git</RepositoryType>
       <PackageTags>UITest;WinUI;Test;UI Test;</PackageTags>
-      <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
-      <PackageOutputPath>..\..\..\artifacts\NuGet\$(Configuration)\</PackageOutputPath>
   </PropertyGroup>
 
     <ItemGroup>

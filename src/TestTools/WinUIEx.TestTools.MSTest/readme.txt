@@ -48,7 +48,7 @@ namespace MyTestApp
             Assert.AreEqual(300, grid.ActualWidth, "ActualWidth");
             Assert.AreEqual(100, grid.ActualHeight, "ActualHeight");
 
-            var bitmap = await grid.AsBitmap();
+            var bitmap = await grid.AsBitmapAsync();
             Assert.AreEqual(300, bitmap.PixelWidth);
             Assert.AreEqual(100, bitmap.PixelHeight);
 

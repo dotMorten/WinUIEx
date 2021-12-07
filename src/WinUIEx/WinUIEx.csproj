@@ -9,25 +9,14 @@
     <Nullable>enable</Nullable>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
-    <!--<RuntimeIdentifiers>win10-x64;win10-x86;win10-arm64</RuntimeIdentifiers>
-    <ExtrasBuildEachRuntimeIdentifier>true</ExtrasBuildEachRuntimeIdentifier>-->
   </PropertyGroup>
 
   <PropertyGroup Label="PackageInfo">
-    <Authors>Morten Nielsen - https://xaml.dev</Authors>
-    <Company>Morten Nielsen - https://xaml.dev</Company>
     <Description>A set of extension methods and classes to fill some gaps in WinUI 3, mostly around windowing.</Description>
     <PackageTags>WinUI</PackageTags>
     <PackageId>WinUIEx</PackageId>
-    <Version>1.0.0-preview1</Version>
     <Product>WinUI Extensions</Product>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageProjectUrl>https://github.com/dotMorten/WinUIEx</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/dotMorten/WinUIEx</RepositoryUrl>
-    <Copyright>Copyright © Morten Nielsen 2021</Copyright>
     <PackageReleaseNotes />
-    <PublishRepositoryUrl>true</PublishRepositoryUrl>
-    <PackageOutputPath>..\..\artifacts\NuGet\$(Configuration)\</PackageOutputPath>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)'=='Experimental'">
@@ -39,12 +28,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-      <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.0.0" />
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.0.0" />
   </ItemGroup>
-  
-  <ItemGroup>
-    <None Include="logo.png" Pack="true" PackagePath="" />
-  </ItemGroup>
-	
+  	
 </Project>

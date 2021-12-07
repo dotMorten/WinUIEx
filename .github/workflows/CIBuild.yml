@@ -21,6 +21,11 @@ jobs:
     - name: Build
       run: |
         msbuild /restore /t:Build,Pack src/WinUIEx/WinUIEx.csproj /p:Configuration=Release
+        
+    - name: Test
+      run: |
+        msbuild /restore /t:Build src\TestTools\WinUIUnitTests\WinUIUnitTests.csproj /p:Platform=x64;Configuration=Release
+        vstest.console.exe src\TestTools\WinUIUnitTests\bin\x64\Release\net6.0-windows10.0.19041.0\win10-x64\WinUIUnitTests.build.appxrecipe --logger:console;verbosity=normal /InIsolation
       
     - name: Upload artifacts
       uses: actions/upload-artifact@v1

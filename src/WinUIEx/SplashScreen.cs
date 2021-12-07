@@ -50,7 +50,7 @@ namespace WinUIEx
 
         private async void Content_Loaded(object sender, RoutedEventArgs e)
         {
-            this.SetAlwaysOnTop(true);
+            this.SetIsAlwaysOnTop(true);
             double h = Height;
             double w = Width;
             if (Content is FrameworkElement f)
@@ -79,7 +79,7 @@ namespace WinUIEx
         private void SplashScreen_Activated(object sender, WindowActivatedEventArgs args)
         {
             this.Activated -= SplashScreen_Activated;
-            this.HideWindow(); // Hides until content is loaded
+            this.Hide(); // Hides until content is loaded
             var hwnd = this.GetWindowHandle();
             HwndExtensions.ToggleWindowStyle(hwnd, false, WindowStyle.TiledWindow);
             var content = this.Content as FrameworkElement;

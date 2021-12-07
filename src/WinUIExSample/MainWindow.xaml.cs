@@ -126,7 +126,15 @@ namespace WinUIExSample
         {
             if (((ToggleSwitch)sender).IsOn)
             {
+#if EXPERIMENTAL
+                StackPanel stackPanel = new StackPanel() { Orientation = Orientation.Horizontal };
+                stackPanel.Children.Add(new TextBlock() { Text = Title, FontSize = 24, Foreground = new SolidColorBrush(Microsoft.UI.Colors.Red) });
+                stackPanel.Children.Add(new TextBox() { PlaceholderText = "Search", Width = 150, Margin = new Thickness(50,0,20,0), VerticalAlignment = VerticalAlignment.Center } );
+                stackPanel.Children.Add(new Button() { Content = "OK", VerticalAlignment = VerticalAlignment.Center });
+                TitleBar = stackPanel;
+#else
                 TitleBar = new TextBlock() { Text = Title, FontSize = 24, Foreground = new SolidColorBrush(Microsoft.UI.Colors.Red) };
+#endif
             }
             else
             {

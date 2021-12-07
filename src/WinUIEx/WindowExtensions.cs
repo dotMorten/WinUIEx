@@ -254,5 +254,20 @@ namespace WinUIEx
         /// <param name="window">Window</param>
         /// <param name="icon">Icon</param>
         public static void SetTaskBarIcon(this Microsoft.UI.Xaml.Window window, Icon? icon) => HwndExtensions.SetTaskBarIcon(window.GetWindowHandle(), icon);
+
+        /// <summary>
+        /// Gets the background color for the title bar and all its buttons and their states.
+        /// </summary>
+        /// <param name="window">window</param>
+        /// <param name="color">color</param>
+        public static void SetTitleBarBackgroundColors(this Microsoft.UI.Xaml.Window window, Windows.UI.Color color)
+        {
+            var appWindow = window.GetAppWindow();
+            appWindow.TitleBar.ButtonBackgroundColor = color;
+            appWindow.TitleBar.BackgroundColor = color;
+            appWindow.TitleBar.ButtonInactiveBackgroundColor = color;
+            appWindow.TitleBar.ButtonPressedBackgroundColor = color;
+            appWindow.TitleBar.InactiveBackgroundColor = color;
+        }
     }
 }

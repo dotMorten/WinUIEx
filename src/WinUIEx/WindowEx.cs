@@ -175,6 +175,26 @@ namespace WinUIEx
             set => overlappedPresenter.IsMaximizable = value;
         }
 
+        /*
+         * These are currently throwing
+        /// <summary>
+        /// Gets or sets a value indicating whether the window has a border or not.
+        /// </summary>
+        public bool HasBorder
+        {
+            get => overlappedPresenter.HasBorder;
+            set => overlappedPresenter.SetBorderAndTitleBar(value, overlappedPresenter.HasTitleBar);
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the window is modal or not.
+        /// </summary>
+        public bool IsModal
+        {
+            get => overlappedPresenter.IsModal;
+            set => overlappedPresenter.IsModal = value;
+        }*/
+
         /// <summary>
         /// Gets or sets a value indicating whether this window is shown in task switchers.
         /// </summary>

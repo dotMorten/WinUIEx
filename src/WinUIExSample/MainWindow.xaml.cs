@@ -35,6 +35,7 @@ namespace WinUIExSample
             this.InitializeComponent();
             this.PresenterChanged += (s, e) => Log("PresenterChanged");
             this.PositionChanged += (s, e) => Log("PositionChanged");
+            this.SetTitleBarBackgroundColors(Microsoft.UI.Colors.CornflowerBlue);
 #if EXPERIMENTAL
             monitor = new WindowMessageMonitor(this);
             monitor.WindowMessageRecieved += Monitor_WindowMessageRecieved;

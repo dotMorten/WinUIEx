@@ -54,7 +54,6 @@ namespace WinUIEx
             rootContent.Children.Add(windowArea);
 
             this.Content = rootContent;
-            SetTitleBar(titleBarArea);
             AppWindow.Changed += AppWindow_Changed;
             var size = AppWindow.Size;
             _width = size.Width;
@@ -162,7 +161,7 @@ namespace WinUIEx
                 {
                     titleBarArea.Visibility = Visibility.Visible;
                     base.ExtendsContentIntoTitleBar = true;
-                    SetTitleBar(TitleBar);
+                    SetTitleBar(titleBarArea);
                 }
             }
         }

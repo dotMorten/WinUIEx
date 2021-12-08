@@ -9,7 +9,7 @@ using WinUIEx.TestTools.MSTest;
 namespace WinUIUnitTests
 {
     [TestClass]
-    public partial class WindowExTests
+    public partial class WindowExtensionTests
     {
         private double sizeWidth;
         private double sizeHeight;

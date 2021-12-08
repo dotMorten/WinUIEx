@@ -52,7 +52,11 @@ namespace WinUIEx
             titleBarContainer.SizeChanged += (s,e) => UpdateDragRectangles();
 #endif
 
-            windowArea = new ContentControl();
+            windowArea = new ContentControl()
+            {
+                HorizontalContentAlignment = HorizontalAlignment.Stretch,
+                VerticalContentAlignment = VerticalAlignment.Stretch
+            };
             Grid.SetRow(windowArea, 1);
             rootContent.Children.Add(windowArea);
 

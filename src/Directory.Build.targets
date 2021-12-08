@@ -2,7 +2,7 @@
 
   <PropertyGroup Label="PackageInfo" Condition="'$(PackageId)'!=''">
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageProjectUrl>https://github.com/dotMorten/WinUIEx</PackageProjectUrl>
+    <PackageProjectUrl>https://dotmorten.github.io/WinUIEx</PackageProjectUrl>
     <RepositoryUrl>https://github.com/dotMorten/WinUIEx</RepositoryUrl>
     <Copyright>Copyright © Morten Nielsen 2021</Copyright>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>

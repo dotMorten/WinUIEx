@@ -6,5 +6,7 @@
   href: HwndExtensions.md
 - name: Tray Icon
   href: TrayIcon.md
+- name: UI Testing
+  href: UITests.md
 - name: Object Model Diagram
   href: ../api/omd.html

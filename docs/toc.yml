@@ -1,9 +1,10 @@
 - name: Home
   href: index.md
-- name: Concepts
-  href: concepts/index.md
+- name: Overview
+  href: concepts/
+  homepage: concepts/index.md
 - name: API Reference
-  href: api/toc.yml
+  href: obj/api/
 - name: Sponsor WinUIEx
   href: https://github.com/sponsors/dotMorten
 - name: GitHub

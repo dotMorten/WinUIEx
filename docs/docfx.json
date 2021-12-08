@@ -11,33 +11,25 @@
           "src" : "../src/"
         },
       ],
-      "dest": "../artifacts/docs/api/",
+      "dest": "obj/api",
       "disableGitFeatures": false,
       "disableDefaultFilter": false
     },
   ],
   "build": {
     "content": [
-        {
-        "files": [
-          "api/**/index.md"
-        ]
+      {
+        "files": [ "**/*.yml" ],
+        "src": "obj/api",
+        "dest": "api"
       },
       {
         "files": [
-          "api/**.yml",
-          "api/**/toc.yml"     
-        ],
-        "src" : "../artifacts/docs"
-      },
-      {
-        "files": [
-          "concepts/**.md",
-          "concepts/**/toc.yml",
-          "api/**.md",
-          "api/**/toc.yml",
-          "toc.yml",
-          "*.md"
+          "concepts/**/*.md",
+          "concepts/**/*.yml",
+	  "api/**/*.md",
+          "*.md",
+          "toc.yml"
         ]
       }
     ],

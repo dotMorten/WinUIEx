@@ -1,5 +1,3 @@
-- name: Getting Started
-  href: index.md
 - name: WindowEx window class
   href: WindowEx.md
 - name: Window Extension Methods

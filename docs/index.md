@@ -27,7 +27,7 @@ See here for details: https://github.com/sponsors/dotMorten
 
 ## Getting started:
 
-Read the [Getting Started](concepts/index.md) notes
+Read the [Overview](concepts/index.md) notes
 
 
 ![image](https://user-images.githubusercontent.com/1378165/108465563-1e2d8700-7237-11eb-8eb4-736644606a64.png)

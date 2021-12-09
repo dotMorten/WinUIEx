@@ -40,6 +40,10 @@ namespace WinUIExSample
             monitor = new WindowMessageMonitor(this);
             monitor.WindowMessageRecieved += Monitor_WindowMessageRecieved;
 #endif
+            var monitors = MonitorInfo.GetDisplayMonitors();
+            foreach (var monitor in monitors.Reverse())
+                Log("  - " + monitor.ToString());
+            Log($"{monitors.Count} monitors detected");
         }
 
         private void Log(string message)

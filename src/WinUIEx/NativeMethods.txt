@@ -33,3 +33,6 @@ SetWindowLong
 GetWindowLong
 UpdateLayeredWindow
 DestroyIcon
+GetSystemMetrics
+EnumDisplayMonitors
+MONITORINFOEXW

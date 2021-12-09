@@ -54,7 +54,7 @@
             <Button Content="Show dialog" Click="ShowDialog_Click" />
         </StackPanel>
         <Grid Grid.Column="2" RowDefinitions="Auto,*" >
-            <TextBlock Text="Window Events" />
+            <TextBlock Text="Log" />
             <TextBox IsReadOnly="True" AcceptsReturn="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" x:Name="WindowEventLog" Grid.Row="1" />
         </Grid>
         

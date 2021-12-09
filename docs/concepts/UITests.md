@@ -11,13 +11,15 @@ A set of UI Test tools to simplify creating WinUI 3 UI Tests.
 ### Installation
 
 1. Create a new `Blank App, Packaged (WinUI 3 in Desktop)` project (not the Windows Application Packaging Project).
+
   ![image](https://user-images.githubusercontent.com/1378165/145077633-0918e17b-d234-471d-9c08-26e8273a8372.png)
+
 2. Add the `WinUIEx.TestTools.MSTest` NuGet Packaged
 3. Add the following line to App.xaml.cs at the end of the "OnLaunched" method: 
 ```cs
      WinUIEx.TestTools.MSTest.UnitTestClient.Run(m_window);
 ```
-3.  Next add the following package reference to your project file:
+4.  Next add the following package reference to your project file:
 ```xml
 <ItemGroup>
     <PackageReference Include="MSTest.TestAdapter">
@@ -25,8 +27,8 @@ A set of UI Test tools to simplify creating WinUI 3 UI Tests.
     </PackageReference>
 </ItemGroup>
 ```
-4. Create a new class to contain your tests, and make the class a `partial` class
-5. Import the following namespaces:
+5. Create a new class to contain your tests, and make the class a `partial` class
+6. Import the following namespaces:
 ```cs
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -35,8 +37,8 @@ using System.Threading.Tasks;
 using WinUIEx.TestTools;
 using WinUIEx.TestTools.MSTest;
 ```
-6. Mark the class with the `[TestClass]` attribute
-7. Add a UI Test method. Example:
+7. Mark the class with the `[TestClass]` attribute
+8. Add a UI Test method. Example:
 ```cs
 [WinUITestMethod]
 public async Task TestGridArrange()

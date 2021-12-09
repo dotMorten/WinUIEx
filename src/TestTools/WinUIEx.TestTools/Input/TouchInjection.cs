@@ -56,28 +56,77 @@ namespace WinUIEx.TestTools.Input
             }
         }
 
-        public async Task TapAsync(Windows.Foundation.Point tapLocation, Microsoft.UI.Xaml.UIElement? relativeTo)
+        /// <summary>
+        /// Simulates touch tapping at the middle of the provided UIElement
+        /// </summary>
+        /// <param name="element">Element to tap.</param>
+        /// <returns></returns>
+        /// <exception cref="System.ComponentModel.Win32Exception"></exception>
+
+        public void Tap(Microsoft.UI.Xaml.UIElement element) => Tap(new Windows.Foundation.Point(element.ActualSize.X / 2, element.ActualSize.Y / 2), element);
+
+        /// <summary>
+        /// Simulates touch tapping at the provided location.
+        /// </summary>
+        /// <param name="tapLocation">Either raw screen coordinates, or if <paramref name="relativeTo"/> is provided, device independent coordinates relative to this object.</param>
+        /// <param name="relativeTo">Element coordinates are relative to, or <c>null</c>.</param>
+        /// <returns></returns>
+        /// <exception cref="System.ComponentModel.Win32Exception"></exception>
+        public void Tap(Windows.Foundation.Point tapLocation, Microsoft.UI.Xaml.UIElement? relativeTo)
         {
-            Windows.Win32.PInvoke.GetWindowRect(_hwnd, out Windows.Win32.Foundation.RECT lpRect);
             if (relativeTo != null)
             {
                 tapLocation = relativeTo.TransformToVisual(null).TransformPoint(tapLocation);
-                // TODO: Account for titlebar offset
+                
+                var p = new Windows.Win32.Foundation.POINT() { x = (int)(tapLocation.X * relativeTo.XamlRoot.RasterizationScale), y = (int)(tapLocation.Y * relativeTo.XamlRoot.RasterizationScale) };
+                bool success = Windows.Win32.PInvoke.ClientToScreen(_hwnd, ref p);
+                if (!success)
+                {
+                    throw new System.ComponentModel.Win32Exception(Marshal.GetLastWin32Error());
+                }
+                tapLocation = new Windows.Foundation.Point(p.x, p.y);
             }
-            tapLocation = new Windows.Foundation.Point(tapLocation.X + lpRect.left, tapLocation.Y + lpRect.top);
-            var pi = new PointerInfo() { PointerId = 0, PointerType = PointerInputType.Touch, PointerFlags = PointerFlag.Down | PointerFlag.InRange | PointerFlag.InContact, PixelLocation = tapLocation, Hwnd = _hwnd };
-            var touchInfo = new TouchInfo() { PointerInfo = pi };
+            var pDown = new PointerInfo()
+            {
+                PointerId = 1,
+                PointerType = PointerInputType.Touch,
+                PointerFlags = PointerFlag.Down | PointerFlag.InRange | PointerFlag.InContact,
+                PixelLocation = tapLocation,
+                Hwnd = _hwnd
+            };
+            var touchInfo = new TouchInfo() { PointerInfo = pDown };
             Inject(touchInfo);
-            pi.PointerFlags = PointerFlag.Up | PointerFlag.InRange;
-            var p1 = new TouchInfo() { PointerInfo = pi };
-            Inject(p1);
+            pDown.PointerFlags = PointerFlag.Up; // | PointerFlag.InRange;
+            var pUp = new TouchInfo()
+            {
+                PointerInfo = new PointerInfo()
+                {
+                    PointerId = 1,
+                    PointerType = PointerInputType.Touch,
+                    PointerFlags = PointerFlag.Up,
+                    PixelLocation = tapLocation,
+                }
+            };
+            Inject(pUp);
         }
 
-        public async Task DoubleTapAsync(Windows.Foundation.Point tapLocation, Microsoft.UI.Xaml.UIElement? relativeTo)
+        /// <summary>
+        /// Simulates double tapping at the provided location.
+        /// </summary>
+        /// <param name="element">Element to double-tap.</param>
+        /// <exception cref="System.ComponentModel.Win32Exception"></exception>
+        public void DoubleTap(Microsoft.UI.Xaml.UIElement element) => DoubleTap(new Windows.Foundation.Point(element.ActualSize.X / 2, element.ActualSize.Y / 2), element);
+
+        /// <summary>
+        /// Simulates double tapping at the provided location.
+        /// </summary>
+        /// <param name="tapLocation">Either raw screen coordinates, or if <paramref name="relativeTo"/> is provided, device independent coordinates relative to this object.</param>
+        /// <param name="relativeTo">Element coordinates are relative to, or <c>null</c>.</param>
+        /// <exception cref="System.ComponentModel.Win32Exception"></exception>
+        public async void DoubleTap(Windows.Foundation.Point tapLocation, Microsoft.UI.Xaml.UIElement? relativeTo)
         {
-            await TapAsync(tapLocation, relativeTo);
-            await Task.Delay(100);
-            await TapAsync(tapLocation, relativeTo);
+            Tap(tapLocation, relativeTo);
+            Tap(tapLocation, relativeTo);
         }
         /*
         public Task DragAsync(Windows.Foundation.Point fromLocation, Windows.Foundation.Point toLocation, TimeSpan duration, Microsoft.UI.Xaml.UIElement relativeTo)

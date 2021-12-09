@@ -12,10 +12,11 @@ public partial class TouchInjectionTests
         Button b = new Button() { Background = new SolidColorBrush(Microsoft.UI.Colors.Red), Content = "Click me", HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center };
         WindowContext.Content = b;
         await b.LoadAsync();
+        
         int clickCount = 0;
-        b.Click += (s, e) => { clickCount++; };
+        b.Click += (s, e) => { clickCount++; };        
         var ti = new TouchInjection(WindowContext.GetWindowHandle());
-        await ti.TapAsync(new Windows.Foundation.Point(50,50), b);
+        ti.Tap(b);
         await Task.Delay(100);
         Assert.AreEqual(1, clickCount);
     }
@@ -29,7 +30,7 @@ public partial class TouchInjectionTests
         int clickCount = 0;
         b.Tapped += (s, e) => { clickCount++; };
         var ti = new TouchInjection(WindowContext.GetWindowHandle());
-        await ti.TapAsync(new Windows.Foundation.Point(50, 50), b);
+        ti.Tap(b);
         await Task.Delay(100);
         Assert.AreEqual(1, clickCount);
     }
@@ -43,7 +44,7 @@ public partial class TouchInjectionTests
         int clickCount = 0;
         b.DoubleTapped += (s, e) => { clickCount++; };
         var ti = new TouchInjection(WindowContext.GetWindowHandle());
-        await ti.DoubleTapAsync(new Windows.Foundation.Point(50, 50), b);
+        ti.DoubleTap(b);
         await Task.Delay(100);
         Assert.AreEqual(1, clickCount);
     }

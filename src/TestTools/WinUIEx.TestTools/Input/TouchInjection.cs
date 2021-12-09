@@ -74,40 +74,9 @@ namespace WinUIEx.TestTools.Input
         /// <exception cref="System.ComponentModel.Win32Exception"></exception>
         public void Tap(Windows.Foundation.Point tapLocation, Microsoft.UI.Xaml.UIElement? relativeTo)
         {
-            if (relativeTo != null)
-            {
-                tapLocation = relativeTo.TransformToVisual(null).TransformPoint(tapLocation);
-                
-                var p = new Windows.Win32.Foundation.POINT() { x = (int)(tapLocation.X * relativeTo.XamlRoot.RasterizationScale), y = (int)(tapLocation.Y * relativeTo.XamlRoot.RasterizationScale) };
-                bool success = Windows.Win32.PInvoke.ClientToScreen(_hwnd, ref p);
-                if (!success)
-                {
-                    throw new System.ComponentModel.Win32Exception(Marshal.GetLastWin32Error());
-                }
-                tapLocation = new Windows.Foundation.Point(p.x, p.y);
-            }
-            var pDown = new PointerInfo()
-            {
-                PointerId = 1,
-                PointerType = PointerInputType.Touch,
-                PointerFlags = PointerFlag.Down | PointerFlag.InRange | PointerFlag.InContact,
-                PixelLocation = tapLocation,
-                Hwnd = _hwnd
-            };
-            var touchInfo = new TouchInfo() { PointerInfo = pDown };
-            Inject(touchInfo);
-            pDown.PointerFlags = PointerFlag.Up; // | PointerFlag.InRange;
-            var pUp = new TouchInfo()
-            {
-                PointerInfo = new PointerInfo()
-                {
-                    PointerId = 1,
-                    PointerType = PointerInputType.Touch,
-                    PointerFlags = PointerFlag.Up,
-                    PixelLocation = tapLocation,
-                }
-            };
-            Inject(pUp);
+            tapLocation = ToScreenLocation(tapLocation, relativeTo);
+            Inject(TouchInfo.CreateDown(tapLocation, _hwnd));
+            Inject(TouchInfo.CreateUp(tapLocation, _hwnd));
         }
 
         /// <summary>
@@ -125,28 +94,50 @@ namespace WinUIEx.TestTools.Input
         /// <exception cref="System.ComponentModel.Win32Exception"></exception>
         public async void DoubleTap(Windows.Foundation.Point tapLocation, Microsoft.UI.Xaml.UIElement? relativeTo)
         {
-            Tap(tapLocation, relativeTo);
-            Tap(tapLocation, relativeTo);
+            tapLocation = ToScreenLocation(tapLocation, relativeTo);
+            Tap(tapLocation, null);
+            Tap(tapLocation, null);
         }
+        
         /*
         public Task DragAsync(Windows.Foundation.Point fromLocation, Windows.Foundation.Point toLocation, TimeSpan duration, Microsoft.UI.Xaml.UIElement relativeTo)
         {
-            throw new NotImplementedException();
+            return DragAsync(new Windows.Foundation.Point[] { fromLocation, toLocation }, duration, relativeTo);
         }
 
         public Task DragAsync(IEnumerable<Windows.Foundation.Point> locations, TimeSpan duration, Microsoft.UI.Xaml.UIElement relativeTo)
         {
-            throw new NotImplementedException();
+            return DragAsync(new IEnumerable<Windows.Foundation.Point>[] { locations }, duration, relativeTo);
+        }
+
+        public Task TwoFingerDragAsync(Windows.Foundation.Point fromLocation1, Windows.Foundation.Point toLocation1, Windows.Foundation.Point fromLocation2, Windows.Foundation.Point toLocation2, TimeSpan duration, Microsoft.UI.Xaml.UIElement relativeTo)
+        {
+            return DragAsync(new IEnumerable<Windows.Foundation.Point>[] {
+                new Windows.Foundation.Point[] { fromLocation1, toLocation1 },
+                new Windows.Foundation.Point[] { fromLocation2, toLocation2 }
+            }, duration, relativeTo);
         }
 
         public Task DragAsync(IEnumerable<IEnumerable<Windows.Foundation.Point>> locations, TimeSpan duration, Microsoft.UI.Xaml.UIElement relativeTo)
         {
             throw new NotImplementedException();
-        }
-
-        public Task TwoFingerDragAsync(Windows.Foundation.Point fromLocation1, Windows.Foundation.Point toLocation1, Windows.Foundation.Point fromLocation2, Windows.Foundation.Point toLocation2, TimeSpan duration, Microsoft.UI.Xaml.UIElement relativeTo)
-        {
-            throw new NotImplementedException();
         }*/
+
+        private Windows.Foundation.Point ToScreenLocation(Windows.Foundation.Point point, Microsoft.UI.Xaml.UIElement? relativeTo)
+        {
+            if (relativeTo != null)
+            {
+                point = relativeTo.TransformToVisual(null).TransformPoint(point);
+
+                var p = new Windows.Win32.Foundation.POINT() { x = (int)(point.X * relativeTo.XamlRoot.RasterizationScale), y = (int)(point.Y * relativeTo.XamlRoot.RasterizationScale) };
+                bool success = Windows.Win32.PInvoke.ClientToScreen(_hwnd, ref p);
+                if (!success)
+                {
+                    throw new System.ComponentModel.Win32Exception(Marshal.GetLastWin32Error());
+                }
+                return new Windows.Foundation.Point(p.x, p.y);
+            }
+            return point;
+        }
     }
 }

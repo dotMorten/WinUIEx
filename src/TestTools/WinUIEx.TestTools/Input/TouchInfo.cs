@@ -14,6 +14,27 @@ namespace WinUIEx.TestTools.Input
         private const uint TOUCH_MASK_ORIENTATION = 0x00000002;
         private const uint TOUCH_MASK_PRESSURE = 0x00000004;
 
+        internal static TouchInfo CreateDown(Windows.Foundation.Point tapLocation, Windows.Win32.Foundation.HWND hwnd)
+        {
+            return Create(tapLocation, hwnd, PointerFlag.Down | PointerFlag.InRange | PointerFlag.InContact);
+        }
+        internal static TouchInfo CreateUp(Windows.Foundation.Point tapLocation, Windows.Win32.Foundation.HWND hwnd)
+        {
+            return Create(tapLocation, hwnd, PointerFlag.Up);
+        }
+        internal static TouchInfo Create(Windows.Foundation.Point tapLocation, Windows.Win32.Foundation.HWND hwnd, PointerFlag flags)
+        {
+            var pDown = new PointerInfo()
+            {
+                PointerId = 1,
+                PointerType = PointerInputType.Touch,
+                PointerFlags = flags,
+                PixelLocation = tapLocation,
+                Hwnd = hwnd
+            };
+            return new TouchInfo() { PointerInfo = pDown };
+        }
+
         internal Windows.Win32.UI.Input.Pointer.POINTER_TOUCH_INFO ToNative()
         {
             var pi = PointerInfo.ToNative();

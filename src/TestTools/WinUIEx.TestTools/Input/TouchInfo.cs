@@ -14,19 +14,23 @@ namespace WinUIEx.TestTools.Input
         private const uint TOUCH_MASK_ORIENTATION = 0x00000002;
         private const uint TOUCH_MASK_PRESSURE = 0x00000004;
 
-        internal static TouchInfo CreateDown(Windows.Foundation.Point tapLocation, Windows.Win32.Foundation.HWND hwnd)
+        internal static TouchInfo CreateDown(Windows.Foundation.Point tapLocation, Windows.Win32.Foundation.HWND hwnd, uint pointerId = 1)
         {
-            return Create(tapLocation, hwnd, PointerFlag.Down | PointerFlag.InRange | PointerFlag.InContact);
+            return Create(tapLocation, hwnd, PointerFlag.Down | PointerFlag.InRange | PointerFlag.InContact, pointerId);
         }
-        internal static TouchInfo CreateUp(Windows.Foundation.Point tapLocation, Windows.Win32.Foundation.HWND hwnd)
+        internal static TouchInfo CreateMove(Windows.Foundation.Point tapLocation, Windows.Win32.Foundation.HWND hwnd, uint pointerId = 1)
         {
-            return Create(tapLocation, hwnd, PointerFlag.Up);
+            return Create(tapLocation, hwnd, PointerFlag.Update | PointerFlag.InRange | PointerFlag.InContact, pointerId);
         }
-        internal static TouchInfo Create(Windows.Foundation.Point tapLocation, Windows.Win32.Foundation.HWND hwnd, PointerFlag flags)
+        internal static TouchInfo CreateUp(Windows.Foundation.Point tapLocation, Windows.Win32.Foundation.HWND hwnd, uint pointerId = 1)
+        {
+            return Create(tapLocation, hwnd, PointerFlag.Up, pointerId);
+        }
+        internal static TouchInfo Create(Windows.Foundation.Point tapLocation, Windows.Win32.Foundation.HWND hwnd, PointerFlag flags, uint pointerId = 1)
         {
             var pDown = new PointerInfo()
             {
-                PointerId = 1,
+                PointerId = pointerId,
                 PointerType = PointerInputType.Touch,
                 PointerFlags = flags,
                 PixelLocation = tapLocation,

@@ -267,7 +267,7 @@ namespace WinUIEx.TestTools.Input
                 uint j = 0;
                 foreach (var location in locations)
                 {
-                    var point = location.ElementAt((int)Math.Min(Math.Max(0, i), count - 1));
+                    var point = location.ElementAt(i);
                     if (i == 0)
                         touches[j] = TouchInfo.CreateDown(ToScreenLocation(point, relativeTo), _hwnd, j + 1);
                     else

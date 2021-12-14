@@ -83,11 +83,11 @@ public partial class TouchInjectionTests
         await grid.LoadAsync();
         var points = new List<ManipulationDeltaRoutedEventArgs>();
         var completed = ManipulationCompletionTracker(grid, TestContext, points);
-        await ti.DragAsync(new Windows.Foundation.Point(10,10), new Windows.Foundation.Point(60,110), TimeSpan.FromMilliseconds(1000), grid);
+        await ti.DragAsync(new Windows.Foundation.Point(100,100), new Windows.Foundation.Point(200,200), TimeSpan.FromMilliseconds(1000), grid);
         var endResult = await completed;
-        Assert.AreEqual(60, endResult.Position.X, .5);
-        Assert.AreEqual(110, endResult.Position.Y, .5);
-        Assert.AreEqual(50, endResult.Cumulative.Translation.X, 3);
+        Assert.AreEqual(200, endResult.Position.X, 1);
+        Assert.AreEqual(200, endResult.Position.Y, 1);
+        Assert.AreEqual(100, endResult.Cumulative.Translation.X, 3);
         Assert.AreEqual(100, endResult.Cumulative.Translation.Y);
     }
 

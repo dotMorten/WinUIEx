@@ -78,6 +78,7 @@ public partial class TouchInjectionTests
     [DataRow(100, 0)]
     [DataRow(0, 100)]
     [DataRow(100, 100)]
+    [DataRow(-100, -100)]
     [WinUITestMethod]
     public async Task Drag(double tx, double ty)
     {
@@ -92,10 +93,10 @@ public partial class TouchInjectionTests
         Assert.AreEqual(100 + ty, endResult.Position.Y, 2, "Position.Y");
         // Note: There's a drag threshold of 10px = 10^2=100
         var atan = Math.Atan2(ty, tx);
-        var thresholdX = 10 * Math.Cos(atan) * Math.Sign(tx);
-        var thresholdY = 10 * Math.Sin(atan) * Math.Sign(ty);
-        Assert.AreEqual(Math.Max(tx - thresholdX, 0), endResult.Cumulative.Translation.X, 4, "Translation.X");
-        Assert.AreEqual(Math.Max(ty - thresholdY, 0), endResult.Cumulative.Translation.Y, 4, "Translation.Y");
+        var thresholdX = 10 * Math.Cos(atan);
+        var thresholdY = 10 * Math.Sin(atan);
+        Assert.AreEqual(tx - thresholdX, endResult.Cumulative.Translation.X, 4, "Translation.X");
+        Assert.AreEqual(ty - thresholdY, endResult.Cumulative.Translation.Y, 4, "Translation.Y");
     }
 
     [WinUITestMethod]

@@ -75,20 +75,27 @@ public partial class TouchInjectionTests
         Assert.AreEqual(1, clickCount);
     }
 
+    [DataRow(100, 0)]
+    [DataRow(0, 100)]
+    [DataRow(100, 100)]
     [WinUITestMethod]
-    public async Task Drag()
+    public async Task Drag(double tx, double ty)
     {
         Grid grid = new Grid() { Background = new SolidColorBrush(Microsoft.UI.Colors.Red), ManipulationMode = NoInertia };
         WindowContext.Content = grid;
         await grid.LoadAsync();
         var points = new List<ManipulationDeltaRoutedEventArgs>();
         var completed = ManipulationCompletionTracker(grid, TestContext, points);
-        await ti.DragAsync(new Windows.Foundation.Point(100,100), new Windows.Foundation.Point(200,200), TimeSpan.FromMilliseconds(1000), grid);
+        await ti.DragAsync(new Windows.Foundation.Point(100, 100), new Windows.Foundation.Point(100 + tx, 100 + ty), TimeSpan.FromMilliseconds(1000), grid);
         var endResult = await completed;
-        Assert.AreEqual(200, endResult.Position.X, 1);
-        Assert.AreEqual(200, endResult.Position.Y, 1);
-        Assert.AreEqual(100, endResult.Cumulative.Translation.X, 3);
-        Assert.AreEqual(100, endResult.Cumulative.Translation.Y);
+        Assert.AreEqual(100 + tx, endResult.Position.X, 2, "Position.X");
+        Assert.AreEqual(100 + ty, endResult.Position.Y, 2, "Position.Y");
+        // Note: There's a drag threshold of 10px = 10^2=100
+        var atan = Math.Atan2(ty, tx);
+        var thresholdX = 10 * Math.Cos(atan) * Math.Sign(tx);
+        var thresholdY = 10 * Math.Sin(atan) * Math.Sign(ty);
+        Assert.AreEqual(Math.Max(tx - thresholdX, 0), endResult.Cumulative.Translation.X, 4, "Translation.X");
+        Assert.AreEqual(Math.Max(ty - thresholdY, 0), endResult.Cumulative.Translation.Y, 4, "Translation.Y");
     }
 
     [WinUITestMethod]

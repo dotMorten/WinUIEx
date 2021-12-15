@@ -45,7 +45,8 @@ namespace WinUIEx.TestTools.MSTest
             string namespaceName = classSymbol.ContainingNamespace.ToDisplayString();
 
             // begin building the generated source
-            StringBuilder source = new StringBuilder($@"
+            StringBuilder source = new StringBuilder($@"using Microsoft.VisualStudio.TestTools.UnitTesting;
+
 namespace {namespaceName}
 {{
     public partial class {classSymbol.Name}
@@ -81,17 +82,18 @@ namespace {namespaceName}
             {
                 if (attribute.AttributeClass.ToString() == "WinUIEx.TestTools.MSTest.WinUITestMethodAttribute")
                     continue;
-                source.Append($"        [{attribute.AttributeClass}({string.Join(", ", attribute.ConstructorArguments.Select(s => s.ToCSharpString()))}");
-                foreach(var arg in attribute.NamedArguments)
+                 source.Append($"        [{attribute.ApplicationSyntaxReference.GetSyntax().GetText()}");
+                foreach (var arg in attribute.NamedArguments)
                 {
                     source.Append($", {arg.Key} = {arg.Value.ToCSharpString()}");
                 }
-                if (attribute.AttributeClass.ToString() == "Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute" &&
-                    !attribute.NamedArguments.Any(n=>n.Key == "DisplayName"))
+                if (attribute.AttributeClass.ToString() == "Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute" && !attribute.NamedArguments.Any(n=>n.Key == "DisplayName"))
                 {
+                    source.Remove(source.Length - 1, 1);
                     source.Append($", DisplayName = \"{methodSymbol.Name}({string.Join(", ", attribute.ConstructorArguments.Select(s => s.ToCSharpString()))})\"");
+                    source.Append(")");
                 }
-                source.AppendLine(")]");
+                source.AppendLine("]");
             }
 
             source.Append($@"        public async System.Threading.Tasks.Task {methodSymbol.Name}_generated(");

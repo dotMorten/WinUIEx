@@ -20,7 +20,7 @@ struct RECT
     public int bottom;
 }
 
-private void WindowMessageReceived(object sender, WindowsNativeMessageEventArgs e)
+private void WindowMessageReceived(object sender, WindowMessageEventArgs e)
 {
     if (e.Message.MessageId == 0x0214) //WM_SIZING event
     {

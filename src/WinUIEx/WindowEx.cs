@@ -176,8 +176,9 @@ namespace WinUIEx
         }
 
         /// <summary>
-        /// Gets or sets the Window content 
-        /// /// </summary>
+        /// Gets or sets the title bar content 
+        /// </summary>
+        /// <value>The title bar content.</value>
         public UIElement? TitleBar
         {
             get { return titleBarContainer.Content as UIElement; }
@@ -265,7 +266,8 @@ namespace WinUIEx
 
         /// <summary>
         /// Gets or sets the Window content 
-        /// /// </summary>
+        /// </summary>
+        /// <value>The window content.</value>
         public object? WindowContent
         {
             get { return windowArea.Content; }

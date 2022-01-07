@@ -1,4 +1,4 @@
-name: Publish NuGet
+name: Publish WinUIEx NuGet
 
 on:
   workflow_dispatch:
@@ -24,7 +24,7 @@ jobs:
       
     - name: Build
       run: |
-        msbuild /restore /t:Build,Pack src/WinUIEx/WinUIEx.csproj /p:Configuration=Release /p:CertificatePath=${{ steps.cert_file.outputs.filePath }} /p:CertificatePassword=${{ secrets.PFX_PASSWORD }} /p:Version=${{ github.event.inputs.version }}
+        msbuild /restore /t:Build,Pack src/WinUIEx/WinUIEx.csproj /p:Configuration=Release /p:CertificatePath=${{ steps.cert_file.outputs.filePath }} /p:CertificatePassword=${{ secrets.PFX_PASSWORD }}
       
     - name: Sign NuGet Package
       run: nuget sign artifacts\NuGet\Release\*.nupkg -CertificatePath ${{ steps.cert_file.outputs.filePath }} -CertificatePassword ${{ secrets.PFX_PASSWORD }}  -Timestamper http://timestamp.digicert.com -NonInteractive

@@ -36,3 +36,6 @@ DestroyIcon
 GetSystemMetrics
 EnumDisplayMonitors
 MONITORINFOEXW
+SetWindowSubclass
+RemoveWindowSubclass
+DefSubclassProc 

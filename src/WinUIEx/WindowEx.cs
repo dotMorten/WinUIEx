@@ -10,6 +10,7 @@ using Microsoft.UI.Xaml.Automation.Peers;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Markup;
 using Microsoft.UI.Xaml.Media;
+using WinUIEx.Messaging;
 
 namespace WinUIEx
 {
@@ -23,7 +24,7 @@ namespace WinUIEx
         private readonly Image iconArea;
         private readonly ContentControl titleBarContainer;
         private readonly ContentControl windowArea;
-
+        private readonly WindowMessageMonitor mon;
         private readonly Microsoft.UI.Windowing.OverlappedPresenter overlappedPresenter;
 
         /// <summary>
@@ -62,6 +63,34 @@ namespace WinUIEx
 
             this.Content = rootContent;
             AppWindow.Changed += AppWindow_Changed;
+            mon = new WindowMessageMonitor(this);
+            mon.WindowMessageReceived += OnWindowMessage;
+        }
+
+        private unsafe void OnWindowMessage(object? sender, Messaging.WindowMessageEventArgs e)
+        {
+            switch(e.MessageType)
+            {
+                case WindowsMessages.WM_GETMINMAXINFO:
+                    {
+                        // Restrict min-size
+                        MINMAXINFO* rect2 = (MINMAXINFO*)e.Message.LParam;
+                        rect2->ptMinTrackSize.x = Math.Max((int)MinWidth, 139);
+                        rect2->ptMinTrackSize.y = Math.Max((int)MinHeight, 39);
+                    }
+                    break;
+            }
+        }
+
+        private struct MINMAXINFO
+        {
+#pragma warning disable CS0649
+            public Windows.Win32.Foundation.POINT ptReserved;
+            public Windows.Win32.Foundation.POINT ptMaxSize;
+            public Windows.Win32.Foundation.POINT ptMaxPosition;
+            public Windows.Win32.Foundation.POINT ptMinTrackSize;
+            public Windows.Win32.Foundation.POINT ptMaxTrackSize;
+#pragma warning restore CS0649
         }
 
         private void AppWindow_Changed(Microsoft.UI.Windowing.AppWindow sender, Microsoft.UI.Windowing.AppWindowChangedEventArgs args)
@@ -371,6 +400,39 @@ namespace WinUIEx
             set
             {
                 this.SetWindowSize(AppWindow.Size.Width, value);
+            }
+        }
+
+        private double _minWidth = 139;
+
+        /// <summary>
+        /// Gets or sets the minimum width of this window
+        /// </summary>
+        /// <remarks>A window is currently set to a minimum of 139 pixels.</remarks>
+        public double MinWidth
+        {
+            get => _minWidth; 
+            set
+            {
+                _minWidth = value;
+                if (Width < value)
+                    Width = value;
+            }
+        }
+
+        private double _minHeight = 39;
+
+        /// <summary>
+        /// Gets or sets the minimum height of this window
+        /// </summary>
+        /// <remarks>A window is currently set to a minimum of 39 pixels.</remarks>
+        public double MinHeight
+        {
+            get => _minHeight;
+            set {
+                _minHeight = value;
+                if (Height < value)
+                    Height = value;
             }
         }
 

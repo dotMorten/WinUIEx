@@ -27,15 +27,54 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-namespace WinUIEx
+namespace WinUIEx.Messaging
 {
     /// <summary>
     /// This enum defines the windows messages we respond to.
     /// See more on Windows messages <a href="https://docs.microsoft.com/en-us/windows/win32/learnwin32/window-messages">here</a>
     /// </summary>
-    [SuppressMessage("ReSharper", "IdentifierTypo")]
     internal enum WindowsMessages : uint
     {
+        /// <summary>
+        /// Sent after a window has been moved.
+        /// See <a href="https://docs.microsoft.com/en-us/windows/win32/winmsg/wm-move">WM_MOVE message</a>.
+        /// </summary>
+        WM_MOVE = 3,
+        /// <summary>
+        /// Sent after a window has been moved.
+        /// See <a href="https://docs.microsoft.com/en-us/windows/win32/winmsg/wm-moving">WM_MOVING message</a>.
+        /// </summary>
+        WM_MOVING = 0x0216,
+        /// <summary>
+        /// Sent to a window after its size has changed.
+        /// See <a href="https://docs.microsoft.com/en-us/windows/win32/winmsg/wm-size">WM_SIZE message</a>.
+        /// </summary>
+        WM_SIZE = 4,
+        /// <summary>
+        /// Sent to a window that the user is resizing. By processing this message, an application can monitor the size and position of the drag rectangle and, if needed, change its size or position.
+        /// See <a href="https://docs.microsoft.com/en-us/windows/win32/winmsg/wm-sizing">WM_SIZING message</a>.
+        /// </summary>
+        WM_SIZING = 0x0214,
+        /// <summary>
+        /// Sent to a window when the size or position of the window is about to change. An application can use this message to override the window's default maximized size and position, or its default minimum or maximum tracking size.
+        /// See <a href="https://docs.microsoft.com/en-us/windows/win32/winmsg/wm-getminmaxinfo">WM_GETMINMAXINFO message</a>.
+        /// </summary>
+        WM_GETMINMAXINFO = 0x0024,
+        /// <summary>
+        /// Sent when an application changes the enabled state of a window. It is sent to the window whose enabled state is changing. This message is sent before the <a href="https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-enablewindow">EnableWindow</a> function returns, but after the enabled state (WS_DISABLED style bit) of the window has changed.
+        /// See <a href="https://docs.microsoft.com/en-us/windows/win32/winmsg/wm-enable">WM_ENABLE message</a>.
+        /// </summary>
+        WM_ENABLE = 0x000A,
+        /// <summary>
+        /// Sent one time to a window after it enters the moving or sizing modal loop. The window enters the moving or sizing modal loop when the user clicks the window's title bar or sizing border, or when the window passes the WM_SYSCOMMAND message to the DefWindowProc function and the wParam parameter of the message specifies the SC_MOVE or SC_SIZE value. 
+        /// See <a href="https://docs.microsoft.com/en-us/windows/win32/winmsg/wm-entersizemove">WM_ENTERSIZEMOVE message</a>.
+        /// </summary>
+        WM_ENTERSIZEMOVE = 0x0231,
+        /// <summary>
+        /// ent one time to a window, after it has exited the moving or sizing modal loop. The window enters the moving or sizing modal loop when the user clicks the window's title bar or sizing border, or when the window passes the WM_SYSCOMMAND message to the DefWindowProc function and the wParam parameter of the message specifies the SC_MOVE or SC_SIZE value.
+        /// See <a href="https://docs.microsoft.com/en-us/windows/win32/winmsg/wm-exitsizemove">WM_EXITSIZEMOVE message</a>.
+        /// </summary>
+        WM_EXITSIZEMOVE = 0x0232,
         /// <summary>
         /// Notifies a window that the user clicked the right mouse button (right-clicked) in the window.
         /// See <a href="https://docs.microsoft.com/en-us/windows/win32/menurc/wm-contextmenu">WM_CONTEXTMENU message</a>
@@ -147,14 +186,39 @@ namespace WinUIEx
         WM_SETICON = 0x0080,
 
         /// <summary>
-        /// This message is only send when using NOTIFYICON_VERSION_4, the Shell now sends the associated application an NIN_SELECT notification.
+        /// Sent when the effective dots per inch (dpi) for a window has changed. 
+        /// See <a href="https://docs.microsoft.com/en-us/windows/win32/hidpi/wm-dpichanged">WM_DPICHANGED message</a>.
+        /// </summary>
+        WM_DPICHANGED = 0x02E0,
+
+        /// <summary>
+        /// The WM_DISPLAYCHANGE message is sent to all windows when the display resolution has changed.
+        /// See <a href="https://docs.microsoft.com/en-us/windows/win32/gdi/wm-displaychange">WM_DISPLAYCHANGE message</a>.
+        /// </summary>
+        WM_DISPLAYCHANGE = 0x007E,
+
+        /// <summary>
+        /// A message that is sent to all top-level windows when the SystemParametersInfo function changes a system-wide setting or when policy settings have changed.
+        /// <a href="https://docs.microsoft.com/en-us/windows/win32/winmsg/wm-settingchange">WM_SETTINGCHANGE message</a>
+        /// </summary>
+        WM_SETTINGCHANGE = 0x001A,
+
+        /// <summary>
+        /// Broadcast to every window following a theme change event. Examples of theme change events are the activation of a theme, 
+        /// the deactivation of a theme, or a transition from one theme to another.
+        /// See <a href="https://docs.microsoft.com/en-us/windows/win32/winmsg/wm-themechanged">WM_THEMECHANGE message</a>
+        /// </summary>
+        WM_THEMECHANGE = 0x031A,
+
+        /// <summary>
+        /// This message is only sent when using NOTIFYICON_VERSION_4, the Shell now sends the associated application an NIN_SELECT notification.
         /// Send when a notify icon is activated with mouse or ENTER key.
         /// Earlier versions send WM_RBUTTONDOWN and WM_RBUTTONUP messages.
         /// </summary>
         NIN_SELECT = WM_USER,
 
         /// <summary>
-        /// This message is only send when using NOTIFYICON_VERSION_4, the Shell now sends the associated application an NIN_SELECT notification.
+        /// This message is only sent when using NOTIFYICON_VERSION_4, the Shell now sends the associated application an NIN_SELECT notification.
         /// Send when a notify icon is activated with SPACEBAR or ENTER key.
         /// Earlier versions send WM_RBUTTONDOWN and WM_RBUTTONUP messages.
         /// </summary>
@@ -192,6 +256,6 @@ namespace WinUIEx
         /// <summary>
         /// Sent when a cursor no longer hovers over an icon to indicate that the rich pop-up UI should be closed.
         /// </summary>
-        NIN_POPUPCLOSE = WM_USER + 7
+        NIN_POPUPCLOSE = WM_USER + 7,
     }
 }

@@ -9,6 +9,7 @@
     <Nullable>enable</Nullable>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 
   <PropertyGroup Label="PackageInfo">
@@ -16,7 +17,7 @@
     <PackageTags>WinUI</PackageTags>
     <PackageId>WinUIEx</PackageId>
     <Product>WinUI Extensions</Product>
-    <PackageReleaseNotes />
+    <PackageReleaseNotes>Added Windows Message Monitor. Added MinWidth and MinHeight properties to WindowEX class.</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
@@ -25,6 +26,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.0.0" />
+    <None Include="README.md" Pack="true" PackagePath="\" />
   </ItemGroup>
   	
 </Project>

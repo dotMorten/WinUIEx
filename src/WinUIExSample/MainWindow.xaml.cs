@@ -17,6 +17,7 @@ using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Notifications;
 using WinUIEx;
+using WinUIEx.Messaging;
 
 namespace WinUIExSample
 {
@@ -26,20 +27,16 @@ namespace WinUIExSample
     public sealed partial class MainWindow : WindowEx
     {
         private readonly Queue<string> windowEvents = new Queue<string>();
-
-#if EXPERIMENTAL
         private readonly WindowMessageMonitor monitor;
-#endif
+        
         public MainWindow()
         {
             this.InitializeComponent();
             this.PresenterChanged += (s, e) => Log("PresenterChanged");
             this.PositionChanged += (s, e) => Log("PositionChanged");
             this.SetTitleBarBackgroundColors(Microsoft.UI.Colors.CornflowerBlue);
-#if EXPERIMENTAL
+           
             monitor = new WindowMessageMonitor(this);
-            monitor.WindowMessageRecieved += Monitor_WindowMessageRecieved;
-#endif
             var monitors = MonitorInfo.GetDisplayMonitors();
             foreach (var monitor in monitors.Reverse())
                 Log("  - " + monitor.ToString());
@@ -61,13 +58,6 @@ namespace WinUIExSample
                 windowEvents.Dequeue();
             WindowEventLog.Text = string.Join('\n', windowEvents.Reverse());
         }
-
-#if EXPERIMENTAL
-        private void Monitor_WindowMessageRecieved(object sender, WindowMessageEventArgs e)
-        {
-            Log($"{e.MessageType}: w={e.WParam}, l={e.LParam}");
-        }
-#endif
 
         private void Center_Click(object sender, RoutedEventArgs e) => this.CenterOnScreen();
 
@@ -165,6 +155,20 @@ namespace WinUIExSample
             commands.Add(new Windows.UI.Popups.UICommand("Cancel"));
             var result = await ShowMessageDialogAsync("This is a simple message dialog", commands, cancelCommandIndex: 2, title: "Dialog title");
             Log("You clicked: " + result.Label);
+        }
+
+        private void WMMessages_Toggled(object sender, RoutedEventArgs e)
+        {
+            if (((ToggleSwitch)sender).IsOn)
+                monitor.WindowMessageReceived += WindowMessageReceived;
+            else
+                monitor.WindowMessageReceived -= WindowMessageReceived;
+        }
+
+
+        private void WindowMessageReceived(object sender, WindowMessageEventArgs e)
+        {
+            Log(e.Message.ToString());
         }
     }
 }

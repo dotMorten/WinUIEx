@@ -4,7 +4,7 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://dotmorten.github.io/WinUIEx</PackageProjectUrl>
     <RepositoryUrl>https://github.com/dotMorten/WinUIEx</RepositoryUrl>
-    <Copyright>Copyright © Morten Nielsen 2021</Copyright>
+    <Copyright>Copyright © 2021-$([System.DateTime]::Now.ToString('yyyy')) - Morten Nielsen</Copyright>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
@@ -12,7 +12,7 @@
     <Authors>Morten Nielsen - https://xaml.dev</Authors>
     <Company>Morten Nielsen - https://xaml.dev</Company>
     <PackageIcon>logo.png</PackageIcon>
-    <Version>1.0.0</Version>
+    <Version>1.1.0</Version>
   </PropertyGroup>
 
   <ItemGroup Condition="'$(PackageId)'!=''">
@@ -24,4 +24,26 @@
       <DefineConstants>$(DefineConstants);EXPERIMENTAL</DefineConstants>
   </PropertyGroup>
   
+  <Target Name="SignAssemblies" Condition="Exists($(CertificatePath)) AND '$(CertificatePassword)'!=''" BeforeTargets="CopyFilesToOutputDirectory" DependsOnTargets="ComputeIntermediateSatelliteAssemblies"> 
+    <PropertyGroup>
+      <SignToolPath>$(ProgramFiles)\Windows Kits\10\bin\x64\signtool.exe</SignToolPath>
+      <SignToolPath Condition="!Exists($(SignToolPath))">$(ProgramFiles)\Windows Kits\10\bin\10.0.22000.0\x64\signtool.exe</SignToolPath>
+      <SignToolPath Condition="!Exists($(SignToolPath))">$(ProgramFiles)\Windows Kits\10\bin\10.0.19041.0\x64\signtool.exe</SignToolPath>
+      <SignToolPath Condition="!Exists($(SignToolPath))">$(ProgramFiles)\Windows Kits\10\bin\10.0.18362.0\x64\signtool.exe</SignToolPath>
+      <SignToolPath Condition="!Exists($(SignToolPath))">$(ProgramFiles)\Windows Kits\10\bin\10.0.17134.0\x64\signtool.exe</SignToolPath>
+      <SignToolPath Condition="!Exists($(SignToolPath))">$(WindowsSDK80Path)bin\x64\signtool.exe</SignToolPath>
+      <SignToolPath Condition="!Exists($(SignToolPath))">signtool.exe</SignToolPath> <!-- fallback to use PATH environment -->  
+    </PropertyGroup>
+    <ItemGroup>
+      <FilesToSign Include="@(IntermediateAssembly)" />
+      <FilesToSign Include="@(IntermediateRefAssembly)" />
+      <FilesToSign Include="@(IntermediateSatelliteAssembliesWithTargetPath)" />
+      <FilesToSignFiltered Include="@(FilesToSign)" Condition="Exists(%(FilesToSign.Identity))" />
+    </ItemGroup>
+    <Exec Condition="'@(FilesToSignFiltered->Count())' > 0" Command="&quot;$(SignToolPath)&quot; sign /v /fd SHA1 /f &quot;$(CertificatePath)&quot; /p &quot;$(CertificatePassword)&quot; /tr http://timestamp.digicert.com /td SHA1 &quot;%(FilesToSignFiltered.Identity)&quot;"
+          WorkingDirectory="$(ProjectDir)" EchoOff="true" />
+    <Exec Condition="'@(FilesToSignFiltered->Count())' > 0" Command="&quot;$(SignToolPath)&quot; sign /v /as /d &quot;Authorization Summary&quot; /fd SHA256 /f &quot;$(CertificatePath)&quot; /p &quot;$(CertificatePassword)&quot; /tr http://timestamp.digicert.com /td SHA256 &quot;%(FilesToSignFiltered.Identity)&quot;"
+          WorkingDirectory="$(ProjectDir)" EchoOff="true" />
+  </Target>
+
 </Project>

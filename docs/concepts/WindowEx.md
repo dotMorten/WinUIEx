@@ -4,6 +4,7 @@ Make your window class inherit from `WinUIEx.WindowEx` instead of `Window` and y
  - Set Title in XAML
  - Set custom TitleBar content in XAML
  - Width and Height get/set properties
+ - Minimum Width and Height get/set properties
  - Set TaskBarIcon
  - Several Convenience properties for controlling if the window can be maximized, minimized, resized, should show in task bar and switchers, change presenter,  make Window always on top, etc.
  - Easy shortcuts for showing Message Dialogs

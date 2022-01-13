@@ -80,7 +80,7 @@ namespace WinUIEx.Messaging
             {
                 var args = new WindowMessageEventArgs(hWnd, uMsg, wParam.Value, lParam);
                 handler.Invoke(this, args);
-                if (args.Result != 0)
+                if (args.Handled)
                     return new Windows.Win32.Foundation.LRESULT((int)args.Result);
             }
             return Windows.Win32.PInvoke.DefSubclassProc(hWnd, uMsg, wParam, lParam);

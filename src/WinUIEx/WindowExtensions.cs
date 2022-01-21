@@ -150,6 +150,19 @@ namespace WinUIEx
             => window.GetAppWindow().MoveAndResize(new Windows.Graphics.RectInt32((int)x, (int)y, (int)width, (int)height)); // TODO: Adjust for dpi
             //=> HwndExtensions.SetWindowPositionAndSize(window.GetWindowHandle(), x, y, width, height);
 
+
+   
+        public static void Move(this Microsoft.UI.Xaml.Window window, double x, double y) 
+            => HwndExtensions.MoveToPoint(window.GetWindowHandle(), x, y);
+
+        public static void MoveToSelectedPosition(this Microsoft.UI.Xaml.Window window, HwndExtensions.Positions position)
+            => HwndExtensions.MoveToPosition(window.GetWindowHandle(), position);
+
+
+        public static void CenterOnPoint(this Microsoft.UI.Xaml.Window window, double x, double y, double? width = null, double? height = null)
+    => HwndExtensions.CenterOnPoint(window.GetWindowHandle(),x, y, width, height);
+
+
         /// <summary>
         /// Sets the width and height of the window in device-independent pixels.
         /// </summary>

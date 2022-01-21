@@ -115,6 +115,115 @@ namespace WinUIEx
             SetWindowPosOrThrow(new HWND(hwnd), new HWND(), left, top, w, h, SET_WINDOW_POS_FLAGS.SWP_SHOWWINDOW);
         }
 
+
+            public static void MoveToPoint(IntPtr hwnd, double x, double y)
+        {
+            PInvoke.GetWindowRect(new HWND(hwnd), out RECT windowRect);
+            var w = windowRect.right - windowRect.left;
+            var h = windowRect.bottom - windowRect.top;
+            var left = x;
+            var top = y;
+            SetWindowPosOrThrow(new HWND(hwnd), new HWND(), (int)left, (int)top, w, h, SET_WINDOW_POS_FLAGS.SWP_SHOWWINDOW);
+        }
+
+        public static void CenterOnPoint(IntPtr hwnd, double x, double y, double? width = null, double? height = null)
+        {
+            var dpi = PInvoke.GetDpiForWindow(new HWND(hwnd));
+            PInvoke.GetWindowRect(new HWND(hwnd), out RECT windowRect);
+            var scalingFactor = dpi / 96d;
+            var w = width.HasValue ? (int)(width * scalingFactor) : windowRect.right - windowRect.left;
+            var h = height.HasValue ? (int)(height * scalingFactor) : windowRect.bottom - windowRect.top;
+            var cx = x;
+            var cy = y;
+            var left = cx - (w / 2);
+            var top = cy - (h / 2);
+            SetWindowPosOrThrow(new HWND(hwnd), new HWND(), (int)left, (int)top, w, h, SET_WINDOW_POS_FLAGS.SWP_SHOWWINDOW);
+        }
+
+        /// <summary>
+        /// The positions MoveToPosition can move to
+        /// </summary>
+        public enum Positions
+        {
+            TopLeft,
+            TopCenter,
+            TopRight,
+            MiddleLeft,
+            MiddleCenter,
+            MiddleRight,
+            BottomLeft,
+            BottomCenter,
+            BottomRight
+
+        }
+
+        public static void MoveToPosition(IntPtr hwnd, Positions position)
+        {
+            var hwndDesktop = PInvoke.MonitorFromWindow(new(hwnd), MONITOR_FROM_FLAGS.MONITOR_DEFAULTTONEAREST);
+            MONITORINFO info = new MONITORINFO();
+            info.cbSize = 40;
+            PInvoke.GetMonitorInfo(hwndDesktop, ref info);
+            var dpi = PInvoke.GetDpiForWindow(new HWND(hwnd));
+            PInvoke.GetWindowRect(new HWND(hwnd), out RECT windowRect);
+            var scalingFactor = dpi / 96d;
+
+            int w = windowRect.right - windowRect.left;
+            int h = windowRect.bottom - windowRect.top;
+            var cx = (info.rcMonitor.left + info.rcMonitor.right) / 2;
+            var cy = (info.rcMonitor.bottom + info.rcMonitor.top) / 2;
+            double left; double top;
+
+            switch (position)
+            {
+                case Positions.TopLeft:
+                    left = 0;
+                    top = 0; 
+                    break;
+                case Positions.TopCenter:
+                    left = cx - (w/2);
+                    top = 0; 
+                    break;
+                case Positions.TopRight:
+                    left = info.rcMonitor.right - w;
+                    top = 0; 
+                    break;
+                case Positions.MiddleLeft:
+                    left = 0;
+                    top = cy - (h/2);
+                    break;
+                case Positions.MiddleCenter:
+                    left = cx - (w / 2);
+                    top = cy - (h / 2);
+                    break;
+                case Positions.MiddleRight:
+                    left= info.rcMonitor.right - w;
+                    top = cy - (h / 2);
+                    break;
+                case Positions.BottomLeft:
+                    left = 0;
+                    top =  info.rcMonitor.bottom -h ;
+                    break;
+                case Positions.BottomCenter:
+                    left= cx - (w / 2);
+                    top =  info.rcMonitor.bottom -h ;
+                    break ;
+                case Positions.BottomRight:
+                    left = info.rcMonitor.right - w;
+                    top =  info.rcMonitor.bottom -h ;
+                    break;
+                default:
+                    left = windowRect.left;
+                    top= windowRect.top;
+                    break;
+            }
+            SetWindowPosOrThrow(new HWND(hwnd), new HWND(), (int)left, (int)top, w, h, SET_WINDOW_POS_FLAGS.SWP_SHOWWINDOW);
+
+
+        }
+
+
+
+
         /// <summary>
         /// Sets the icon for the window, using the specified icon ID.
         /// </summary>

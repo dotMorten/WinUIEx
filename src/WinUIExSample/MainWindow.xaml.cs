@@ -170,5 +170,30 @@ namespace WinUIExSample
         {
             Log(e.Message.ToString());
         }
+
+        private void MoveToPoint_Click(object sender, RoutedEventArgs e)
+        {
+            this.Move(x_box.Value, y_box.Value);
+        }
+
+        private void CentreOnPoint_Click(object sender, RoutedEventArgs e)
+        {
+            this.CenterOnPoint(x_box.Value, y_box.Value);
+        }
+
+        //private void moveWindowRadioButtons_Checked(object sender, RoutedEventArgs e)
+        //{
+        //    var rb = sender as RadioButton;
+        //    HwndExtensions.Positions position = (HwndExtensions.Positions)Enum.Parse(typeof(HwndExtensions.Positions), rb.Content.ToString());          
+        //    this.MoveToSelectedPosition(position);
+
+        //}
+
+        private void moveWindowButton_Clicked(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+            HwndExtensions.Positions position = (HwndExtensions.Positions)Enum.Parse(typeof(HwndExtensions.Positions), button.Content.ToString());
+            this.MoveToSelectedPosition(position);
+        }
     }
 }

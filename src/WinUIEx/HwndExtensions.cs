@@ -115,8 +115,13 @@ namespace WinUIEx
             SetWindowPosOrThrow(new HWND(hwnd), new HWND(), left, top, w, h, SET_WINDOW_POS_FLAGS.SWP_SHOWWINDOW);
         }
 
-
-            public static void MoveToPoint(IntPtr hwnd, double x, double y)
+        /// <summary>
+        /// Moves the window to the specified coordinates
+        /// </summary>
+        /// <param name="hwnd">Window handle</param>
+        /// <param name="x">Left side of the window</param>
+        /// <param name="y">Top side of the window</param>
+        public static void MoveToPoint(IntPtr hwnd, double x, double y)
         {
             PInvoke.GetWindowRect(new HWND(hwnd), out RECT windowRect);
             var w = windowRect.right - windowRect.left;
@@ -126,6 +131,14 @@ namespace WinUIEx
             SetWindowPosOrThrow(new HWND(hwnd), new HWND(), (int)left, (int)top, w, h, SET_WINDOW_POS_FLAGS.SWP_SHOWWINDOW);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="hwnd"></param>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
         public static void CenterOnPoint(IntPtr hwnd, double x, double y, double? width = null, double? height = null)
         {
             var dpi = PInvoke.GetDpiForWindow(new HWND(hwnd));
@@ -141,7 +154,7 @@ namespace WinUIEx
         }
 
         /// <summary>
-        /// The positions MoveToPosition can move to
+        /// The edge positions MoveToPosition can move to
         /// </summary>
         public enum Positions
         {
@@ -157,6 +170,11 @@ namespace WinUIEx
 
         }
 
+        /// <summary>
+        /// Moves the window to the specified enum edge position on the current monitor.
+        /// </summary>
+        /// <param name="hwnd">The window handle</param>
+        /// <param name="position">The enum edge position from Positions</param>
         public static void MoveToPosition(IntPtr hwnd, Positions position)
         {
             var hwndDesktop = PInvoke.MonitorFromWindow(new(hwnd), MONITOR_FROM_FLAGS.MONITOR_DEFAULTTONEAREST);
@@ -217,8 +235,6 @@ namespace WinUIEx
                     break;
             }
             SetWindowPosOrThrow(new HWND(hwnd), new HWND(), (int)left, (int)top, w, h, SET_WINDOW_POS_FLAGS.SWP_SHOWWINDOW);
-
-
         }
 
 

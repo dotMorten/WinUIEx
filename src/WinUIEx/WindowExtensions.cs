@@ -151,14 +151,30 @@ namespace WinUIEx
             //=> HwndExtensions.SetWindowPositionAndSize(window.GetWindowHandle(), x, y, width, height);
 
 
-   
+        /// <summary>
+        /// Positions the window without resizing. Window will be below and right of the specified coordinates.
+        /// </summary>
+        /// <param name="window">The window to be moved</param>
+        /// <param name="x">Left side of the window</param>
+        /// <param name="y">Top side of the window</param>
         public static void Move(this Microsoft.UI.Xaml.Window window, double x, double y) 
             => HwndExtensions.MoveToPoint(window.GetWindowHandle(), x, y);
 
-        public static void MoveToSelectedPosition(this Microsoft.UI.Xaml.Window window, HwndExtensions.Positions position)
+        /// <summary>
+        /// Moves the window to the enum specified edge of the screen
+        /// </summary>
+        /// <param name="window">The window that is to be moved</param>
+        /// <param name="position">the enum for the position</param>
+        public static void MoveToPosition(this Microsoft.UI.Xaml.Window window, HwndExtensions.Positions position)
             => HwndExtensions.MoveToPosition(window.GetWindowHandle(), position);
 
 
+        /// <summary>
+        /// Positions the window without resizing, Window will be centred around the point.
+        /// </summary>
+        /// <param name="window">The window to be moved</param>
+        /// <param name="x">Left side of the window</param>
+        /// <param name="y">Top side of the window</param>
         public static void CenterOnPoint(this Microsoft.UI.Xaml.Window window, double x, double y, double? width = null, double? height = null)
     => HwndExtensions.CenterOnPoint(window.GetWindowHandle(),x, y, width, height);
 

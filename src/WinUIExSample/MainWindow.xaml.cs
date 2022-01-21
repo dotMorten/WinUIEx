@@ -193,7 +193,7 @@ namespace WinUIExSample
         {
             var button = sender as Button;
             HwndExtensions.Positions position = (HwndExtensions.Positions)Enum.Parse(typeof(HwndExtensions.Positions), button.Content.ToString());
-            this.MoveToSelectedPosition(position);
+            this.MoveToPosition(position);
         }
     }
 }

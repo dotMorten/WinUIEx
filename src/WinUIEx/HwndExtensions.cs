@@ -153,29 +153,15 @@ namespace WinUIEx
             SetWindowPosOrThrow(new HWND(hwnd), new HWND(), (int)left, (int)top, w, h, SET_WINDOW_POS_FLAGS.SWP_SHOWWINDOW);
         }
 
-        /// <summary>
-        /// The edge positions MoveToPosition can move to
-        /// </summary>
-        public enum Positions
-        {
-            TopLeft,
-            TopCenter,
-            TopRight,
-            MiddleLeft,
-            MiddleCenter,
-            MiddleRight,
-            BottomLeft,
-            BottomCenter,
-            BottomRight
 
-        }
+
 
         /// <summary>
         /// Moves the window to the specified enum edge position on the current monitor.
         /// </summary>
         /// <param name="hwnd">The window handle</param>
         /// <param name="position">The enum edge position from Positions</param>
-        public static void MoveToPosition(IntPtr hwnd, Positions position)
+        public static void MoveTo(IntPtr hwnd, Placement position, double xOffset = 0, double yOffset = 0)
         {
             var hwndDesktop = PInvoke.MonitorFromWindow(new(hwnd), MONITOR_FROM_FLAGS.MONITOR_DEFAULTTONEAREST);
             MONITORINFO info = new MONITORINFO();
@@ -193,51 +179,49 @@ namespace WinUIEx
 
             switch (position)
             {
-                case Positions.TopLeft:
+                case Placement.TopLeft:
                     left = 0;
-                    top = 0; 
+                    top = 0;
                     break;
-                case Positions.TopCenter:
-                    left = cx - (w/2);
-                    top = 0; 
+                case Placement.TopCenter:
+                    left = cx - (w / 2);
+                    top = 0;
                     break;
-                case Positions.TopRight:
+                case Placement.TopRight:
                     left = info.rcMonitor.right - w;
-                    top = 0; 
+                    top = 0;
                     break;
-                case Positions.MiddleLeft:
+                case Placement.MiddleLeft:
                     left = 0;
-                    top = cy - (h/2);
+                    top = cy - (h / 2);
                     break;
-                case Positions.MiddleCenter:
+                case Placement.MiddleCenter:
                     left = cx - (w / 2);
                     top = cy - (h / 2);
                     break;
-                case Positions.MiddleRight:
-                    left= info.rcMonitor.right - w;
+                case Placement.MiddleRight:
+                    left = info.rcMonitor.right - w;
                     top = cy - (h / 2);
                     break;
-                case Positions.BottomLeft:
+                case Placement.BottomLeft:
                     left = 0;
-                    top =  info.rcMonitor.bottom -h ;
+                    top = info.rcMonitor.bottom - h;
                     break;
-                case Positions.BottomCenter:
-                    left= cx - (w / 2);
-                    top =  info.rcMonitor.bottom -h ;
-                    break ;
-                case Positions.BottomRight:
+                case Placement.BottomCenter:
+                    left = cx - (w / 2);
+                    top = info.rcMonitor.bottom - h;
+                    break;
+                case Placement.BottomRight:
                     left = info.rcMonitor.right - w;
-                    top =  info.rcMonitor.bottom -h ;
+                    top = info.rcMonitor.bottom - h;
                     break;
                 default:
                     left = windowRect.left;
-                    top= windowRect.top;
+                    top = windowRect.top;
                     break;
             }
-            SetWindowPosOrThrow(new HWND(hwnd), new HWND(), (int)left, (int)top, w, h, SET_WINDOW_POS_FLAGS.SWP_SHOWWINDOW);
+            SetWindowPosOrThrow(new HWND(hwnd), new HWND(), (int)(left + xOffset), (int)(top + yOffset), w, h, SET_WINDOW_POS_FLAGS.SWP_SHOWWINDOW);
         }
-
-
 
 
         /// <summary>

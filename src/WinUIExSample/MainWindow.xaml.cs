@@ -165,7 +165,11 @@ namespace WinUIExSample
                 monitor.WindowMessageReceived -= WindowMessageReceived;
         }
 
-
+        private void SanitizeXY()
+        {
+            x_box.Value = (Double.IsNaN(x_box.Value))? 0 : x_box.Value;
+            y_box.Value = (Double.IsNaN(y_box.Value))? 0 : y_box.Value;
+        }
         private void WindowMessageReceived(object sender, WindowMessageEventArgs e)
         {
             Log(e.Message.ToString());
@@ -173,27 +177,22 @@ namespace WinUIExSample
 
         private void MoveToPoint_Click(object sender, RoutedEventArgs e)
         {
-            this.Move(x_box.Value, y_box.Value);
+            SanitizeXY();
+            this.MoveTo(x_box.Value, y_box.Value);
         }
 
         private void CentreOnPoint_Click(object sender, RoutedEventArgs e)
         {
+            SanitizeXY();
             this.CenterOnPoint(x_box.Value, y_box.Value);
         }
-
-        //private void moveWindowRadioButtons_Checked(object sender, RoutedEventArgs e)
-        //{
-        //    var rb = sender as RadioButton;
-        //    HwndExtensions.Positions position = (HwndExtensions.Positions)Enum.Parse(typeof(HwndExtensions.Positions), rb.Content.ToString());          
-        //    this.MoveToSelectedPosition(position);
-
-        //}
 
         private void moveWindowButton_Clicked(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
-            HwndExtensions.Positions position = (HwndExtensions.Positions)Enum.Parse(typeof(HwndExtensions.Positions), button.Content.ToString());
-            this.MoveToPosition(position);
+            SanitizeXY();
+            Placement position = (Placement)Enum.Parse(typeof(Placement), button.Content.ToString());
+            this.MoveTo(position, x_box.Value, y_box.Value);
         }
     }
 }

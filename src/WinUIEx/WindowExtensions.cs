@@ -157,16 +157,27 @@ namespace WinUIEx
         /// <param name="window">The window to be moved</param>
         /// <param name="x">Left side of the window</param>
         /// <param name="y">Top side of the window</param>
-        public static void Move(this Microsoft.UI.Xaml.Window window, double x, double y) 
-            => HwndExtensions.MoveToPoint(window.GetWindowHandle(), x, y);
+        public static void MoveTo(this Microsoft.UI.Xaml.Window window, double x, double y) 
+            => HwndExtensions.MoveTo(window.GetWindowHandle(), Placement.TopLeft, x, y);
 
         /// <summary>
         /// Moves the window to the enum specified edge of the screen
         /// </summary>
         /// <param name="window">The window that is to be moved</param>
         /// <param name="position">the enum for the position</param>
-        public static void MoveToPosition(this Microsoft.UI.Xaml.Window window, HwndExtensions.Positions position)
-            => HwndExtensions.MoveToPosition(window.GetWindowHandle(), position);
+        public static void MoveTo(this Microsoft.UI.Xaml.Window window, Placement position)
+            => HwndExtensions.MoveTo(window.GetWindowHandle(), position);
+
+
+        /// <summary>
+        /// Moves Window to the enum specified edge of the screen, adjusted by xy co-ordinanates.  
+        /// </summary>
+        /// <param name="window"></param>
+        /// <param name="relativeTo">The Placement enum the window will be moved relative to</param>
+        /// <param name="xOffset">Positive values move right, negative values move left</param>
+        /// <param name="yOffset">Positive values move down, negative values move up</param>
+        public static void MoveTo(this Microsoft.UI.Xaml.Window window, Placement relativeTo, double xOffset = 0, double yOffset = 0)
+            => HwndExtensions.MoveTo(window.GetWindowHandle(), relativeTo, xOffset,yOffset );
 
 
         /// <summary>

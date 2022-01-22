@@ -346,6 +346,8 @@ namespace WinUIEx
             set => AppWindow.IsShownInSwitchers = value;
         }
 
+
+
         /// <summary>
         /// Gets or sets a value indicating whether this window is shown in task switchers.
         /// </summary>
@@ -437,6 +439,18 @@ namespace WinUIEx
                     Height = value;
             }
         }
+
+        private bool _IsForcedTowardsCenter = false;
+        /// <summary>
+        /// A bool to set whether offsets are forced away from the specified edge 
+        /// </summary>
+        public bool IsForcedTowardsCenter
+        {
+            get => _IsForcedTowardsCenter;
+            set => _IsForcedTowardsCenter = value;
+        }
+
+
 
         /// <summary>
         /// Raised if the window position changes.

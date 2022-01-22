@@ -166,8 +166,7 @@ namespace WinUIEx
         /// <param name="window">The window that is to be moved</param>
         /// <param name="position">the enum for the position</param>
         public static void MoveTo(this Microsoft.UI.Xaml.Window window, Placement position)
-            => HwndExtensions.MoveTo(window.GetWindowHandle(), position);
-
+            => HwndExtensions.MoveTo(window.GetWindowHandle(), position, 0, 0, false);
 
         /// <summary>
         /// Moves Window to the enum specified edge of the screen, adjusted by xy co-ordinanates.  
@@ -176,9 +175,20 @@ namespace WinUIEx
         /// <param name="relativeTo">The Placement enum the window will be moved relative to</param>
         /// <param name="xOffset">Positive values move right, negative values move left</param>
         /// <param name="yOffset">Positive values move down, negative values move up</param>
-        public static void MoveTo(this Microsoft.UI.Xaml.Window window, Placement relativeTo, double xOffset = 0, double yOffset = 0)
+        public static void MoveTo(this Microsoft.UI.Xaml.Window window, Placement relativeTo, double xOffset, double yOffset)
             => HwndExtensions.MoveTo(window.GetWindowHandle(), relativeTo, xOffset,yOffset );
 
+
+        /// <summary>
+        /// Moves Window to the enum specified edge of the screen  
+        /// </summary>
+        /// <param name="window"></param>
+        /// <param name="relativeTo">The Placement enum the window will be moved relative to</param>
+        /// <param name="xOffset">The x-axis value to move away from the edge</param>
+        /// <param name="yOffset">The y-axis value to move away from the edge </param>
+        /// <param name="forceTowardsCenter">Forces the window away from edge and towards the center by absolute XY values</param>
+        public static void MoveTo(this Microsoft.UI.Xaml.Window window, Placement relativeTo, double xOffset, double yOffset, bool forceTowardsCenter)
+            => HwndExtensions.MoveTo(window.GetWindowHandle(), relativeTo, xOffset, yOffset, forceTowardsCenter);
 
         /// <summary>
         /// Positions the window without resizing, Window will be centred around the point.
@@ -309,5 +319,6 @@ namespace WinUIEx
             appWindow.TitleBar.ButtonPressedBackgroundColor = color;
             appWindow.TitleBar.InactiveBackgroundColor = color;
         }
+
     }
 }

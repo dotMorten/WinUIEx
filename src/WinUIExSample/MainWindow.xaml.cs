@@ -192,7 +192,7 @@ namespace WinUIExSample
             var button = sender as Button;
             SanitizeXY();
             Placement position = (Placement)Enum.Parse(typeof(Placement), button.Content.ToString());
-            this.MoveTo(position, x_box.Value, y_box.Value);
+            this.MoveTo(position, x_box.Value, y_box.Value, IsForcedTowardsCenter);
         }
     }
 }

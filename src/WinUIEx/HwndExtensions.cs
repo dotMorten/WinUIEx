@@ -161,7 +161,8 @@ namespace WinUIEx
         /// </summary>
         /// <param name="hwnd">The window handle</param>
         /// <param name="position">The enum edge position from Positions</param>
-        public static void MoveTo(IntPtr hwnd, Placement position, double xOffset = 0, double yOffset = 0)
+        /// <param name="forceTowardsCenter">Forces the window away from edge and towards the center by absolute XY values</param>
+        public static void MoveTo(IntPtr hwnd, Placement position, double xOffset, double yOffset, bool forceTowardsCenter = false)
         {
             var hwndDesktop = PInvoke.MonitorFromWindow(new(hwnd), MONITOR_FROM_FLAGS.MONITOR_DEFAULTTONEAREST);
             MONITORINFO info = new MONITORINFO();
@@ -219,6 +220,51 @@ namespace WinUIEx
                     left = windowRect.left;
                     top = windowRect.top;
                     break;
+            }
+
+            if (forceTowardsCenter)
+            {
+                switch (position)
+                {
+                    case Placement.TopLeft:
+                        xOffset = +xOffset;
+                        yOffset = +yOffset;
+                        break;
+                    case Placement.TopCenter:
+                        xOffset = 0;
+                        yOffset = +yOffset;
+                        break;
+                    case Placement.TopRight:
+                        xOffset = -xOffset;
+                        yOffset = +yOffset;
+                        break;
+                    case Placement.MiddleLeft:
+                        xOffset = +xOffset;
+                        yOffset = 0;
+                        break;
+                    case Placement.MiddleCenter:
+                        xOffset = 0;
+                        yOffset = 0;
+                        break;
+                    case Placement.MiddleRight:
+                        xOffset = -xOffset;
+                        yOffset = 0;
+                        break;
+                    case Placement.BottomLeft:
+                        xOffset = +xOffset;
+                        yOffset = -yOffset;
+                        break;
+                    case Placement.BottomCenter:
+                        xOffset = 0;
+                        yOffset = -yOffset;
+                        break;
+                    case Placement.BottomRight:
+                        xOffset = -xOffset;
+                        yOffset = -yOffset;
+                        break;
+                    default:
+                        break;
+                }
             }
             SetWindowPosOrThrow(new HWND(hwnd), new HWND(), (int)(left + xOffset), (int)(top + yOffset), w, h, SET_WINDOW_POS_FLAGS.SWP_SHOWWINDOW);
         }

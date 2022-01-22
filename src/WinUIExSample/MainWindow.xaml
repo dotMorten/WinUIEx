@@ -35,6 +35,8 @@
                     <ComboBoxItem>Compact</ComboBoxItem>
                     <ComboBoxItem>Fullscren</ComboBoxItem>
                 </ComboBox>
+                <ToggleSwitch Header="Force Towards Center" IsOn="{x:Bind IsForcedTowardsCenter, Mode=TwoWay}"/>
+
             </StackPanel>
         </ScrollViewer>
         <ScrollViewer Grid.Column="1">

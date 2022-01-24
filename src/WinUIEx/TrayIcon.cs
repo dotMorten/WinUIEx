@@ -19,6 +19,8 @@ namespace WinUIEx
         /// <summary>
         /// Initializes a new instance of the tray icon
         /// </summary>
+        /// <param name="icon">The icon to display in the tray.</param>
+        /// <param name="tooltip">A string that specifies the text for a standard tooltip. It can have a maximum of 127 characters.</param>
         public TrayIcon(Icon icon, string? tooltip = null)
         {
             messageSink = new WindowMessageSink();
@@ -100,7 +102,7 @@ namespace WinUIEx
         }
 
         /// <summary>
-        /// Gets or sets a string that specifies the text for a standard tooltip. It can have a maximum of 127 characters.
+        /// Gets a string that specifies the text for a standard tooltip.
         /// </summary>
         public string? Tooltip { get; }
 

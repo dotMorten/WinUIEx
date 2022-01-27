@@ -102,6 +102,7 @@
                         Click="moveWindowButton_Clicked"
                         Content="BottomRight" />
                 </Grid>
+                <TextBlock Foreground="Gray"  HorizontalAlignment="Center">If above pressed, adjust by the below XY values</TextBlock>
                 <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
                     <TextBlock VerticalAlignment="Center" Text="X: " />
                     <NumberBox

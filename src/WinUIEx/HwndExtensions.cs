@@ -116,23 +116,7 @@ namespace WinUIEx
         }
 
         /// <summary>
-        /// Moves the window to the specified coordinates
-        /// </summary>
-        /// <param name="hwnd">Window handle</param>
-        /// <param name="x">Left side of the window</param>
-        /// <param name="y">Top side of the window</param>
-        public static void MoveToPoint(IntPtr hwnd, double x, double y)
-        {
-            PInvoke.GetWindowRect(new HWND(hwnd), out RECT windowRect);
-            var w = windowRect.right - windowRect.left;
-            var h = windowRect.bottom - windowRect.top;
-            var left = x;
-            var top = y;
-            SetWindowPosOrThrow(new HWND(hwnd), new HWND(), (int)left, (int)top, w, h, SET_WINDOW_POS_FLAGS.SWP_SHOWWINDOW);
-        }
-
-        /// <summary>
-        /// 
+        /// Centers the window on a specified point
         /// </summary>
         /// <param name="hwnd"></param>
         /// <param name="x"></param>
@@ -152,9 +136,6 @@ namespace WinUIEx
             var top = cy - (h / 2);
             SetWindowPosOrThrow(new HWND(hwnd), new HWND(), (int)left, (int)top, w, h, SET_WINDOW_POS_FLAGS.SWP_SHOWWINDOW);
         }
-
-
-
 
         /// <summary>
         /// Moves the window to the specified enum edge position on the current monitor.

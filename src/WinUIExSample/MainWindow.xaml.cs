@@ -194,5 +194,15 @@ namespace WinUIExSample
             Placement position = (Placement)Enum.Parse(typeof(Placement), button.Content.ToString());
             this.MoveTo(position, x_box.Value, y_box.Value, IsForcedTowardsCenter);
         }
+
+        private bool _IsForcedTowardsCenter = false;
+        /// <summary>
+        /// A bool to set whether offsets are forced away from the specified edge 
+        /// </summary>
+        public bool IsForcedTowardsCenter
+        {
+            get => _IsForcedTowardsCenter;
+            set => _IsForcedTowardsCenter = value;
+        }
     }
 }

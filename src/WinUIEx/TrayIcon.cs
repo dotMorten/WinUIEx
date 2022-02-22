@@ -19,9 +19,26 @@ namespace WinUIEx
         /// <summary>
         /// Initializes a new instance of the tray icon
         /// </summary>
-        public TrayIcon(Icon icon)
+        /// <param name="icon">The icon to display in the tray.</param>
+        /// <param name="tooltip">A string that specifies the text for a standard tooltip. It can have a maximum of 127 characters.</param>
+        public TrayIcon(Icon icon, string? tooltip = null)
         {
             messageSink = new WindowMessageSink();
+            Tooltip = tooltip;
+            uint flags = 0;
+            __ushort_128 tip = default;
+            if (!string.IsNullOrEmpty(Tooltip))
+            {
+                flags += 0x00000004;
+                tip = new __ushort_128();
+                int i = 0;
+                foreach (char c in Tooltip)
+                {
+                    tip[i++] = (ushort)c;
+                    if (i >= 127) break;
+                }
+                tip[i++] = (ushort)'\0';
+            }
             if (Environment.Is64BitProcess)
             {
                 iconData64 = new NOTIFYICONDATAW64()
@@ -33,6 +50,8 @@ namespace WinUIEx
                     dwState = 0x01, //Hidden
                     dwStateMask = 0x01, // hidden
                     Anonymous = new NOTIFYICONDATAW64._Anonymous_e__Union() { uVersion = 0x00 },
+                    szTip = tip,
+                    uFlags = flags
                 };
             }
             else
@@ -46,6 +65,8 @@ namespace WinUIEx
                     dwState = 0x01, //Hidden
                     dwStateMask = 0x01, // hidden
                     Anonymous = new NOTIFYICONDATAW32._Anonymous_e__Union() { uVersion = 0x00 },
+                    szTip = tip,
+                    uFlags = flags
                 };
             }
 
@@ -79,6 +100,11 @@ namespace WinUIEx
                 var status = PInvoke.Shell_NotifyIcon((uint)NotifyCommand.Modify, iconData32);
             }
         }
+
+        /// <summary>
+        /// Gets a string that specifies the text for a standard tooltip.
+        /// </summary>
+        public string? Tooltip { get; }
 
         private void OnBalloonToolTipChanged(bool obj)
         {

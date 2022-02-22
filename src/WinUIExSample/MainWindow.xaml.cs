@@ -86,7 +86,7 @@ namespace WinUIExSample
             if (tray is null)
             {
                 var icon = Icon.FromFile("Images/WindowIcon.ico");
-                tray = new TrayIcon(icon);
+                tray = new TrayIcon(icon, "WinUIEx Tray Icon");
                 tray.TrayIconLeftMouseDown += (s, e) => this.BringToFront();
             }
             else
@@ -100,7 +100,7 @@ namespace WinUIExSample
         {
             tray?.Dispose();
             var icon = Icon.FromFile("Images/WindowIcon.ico");
-            tray = new TrayIcon(icon);
+            tray = new TrayIcon(icon, "WinUIEx Tray Icon - Click to restore");
             tray.TrayIconLeftMouseDown += (s, e) =>
             {
                 this.Show();

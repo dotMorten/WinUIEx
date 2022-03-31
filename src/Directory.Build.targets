@@ -12,7 +12,7 @@
     <Authors>Morten Nielsen - https://xaml.dev</Authors>
     <Company>Morten Nielsen - https://xaml.dev</Company>
     <PackageIcon>logo.png</PackageIcon>
-    <Version>1.1.0</Version>
+    <Version>1.2.0</Version>
   </PropertyGroup>
 
   <ItemGroup Condition="'$(PackageId)'!=''">

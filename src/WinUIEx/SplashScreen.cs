@@ -1,8 +1,4 @@
-﻿#if EXPERIMENTAL
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System;
 using System.Threading.Tasks;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
@@ -50,7 +46,8 @@ namespace WinUIEx
 
         private async void Content_Loaded(object sender, RoutedEventArgs e)
         {
-            this.SetIsAlwaysOnTop(true);
+            if (IsAlwaysOnTop)
+                this.SetIsAlwaysOnTop(true);
             double h = Height;
             double w = Width;
             if (Content is FrameworkElement f)
@@ -93,10 +90,7 @@ namespace WinUIEx
         /// Override to display loading progress or delay loading of main window
         /// </summary>
         /// <returns></returns>
-        protected virtual Task OnLoading()
-        {
-            return Task.CompletedTask;
-        }
+        protected virtual Task OnLoading() => Task.CompletedTask;
 
         /// <summary>
         /// Gets or sets the width of the splash screen. Set to NaN to size for content
@@ -118,4 +112,3 @@ namespace WinUIEx
         public event EventHandler<Window?>? Completed;
     }
 }
-#endif

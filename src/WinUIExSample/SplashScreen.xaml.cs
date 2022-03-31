@@ -38,19 +38,19 @@ namespace WinUIExSample
         {
             status.Text = "Loading 20%...";
             progress.Value += 20;
-            await Task.Delay(1000);
+            await Task.Delay(200);
             status.Text = "Loading 40%...";
             progress.Value += 20;
-            await Task.Delay(1000);
+            await Task.Delay(200);
             status.Text = "Loading 60%...";
             progress.Value += 20;
-            await Task.Delay(1000);
+            await Task.Delay(200);
             status.Text = "Loading 80%...";
             progress.Value += 20;
-            await Task.Delay(1000);
+            await Task.Delay(200);
             status.Text = "Finishing up...";
             progress.Value += 20;
-            await Task.Delay(1000);
+            await Task.Delay(200);
         }
     }
 }

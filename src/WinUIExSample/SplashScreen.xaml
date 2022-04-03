@@ -9,19 +9,16 @@
     mc:Ignorable="d">
 
     <Grid>
-        <Grid.Background>
-            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                <LinearGradientBrush.GradientStops>
-                    <GradientStop Color="#55909090" Offset="0" />
-                    <GradientStop Color="Transparent" Offset="1" />
-                </LinearGradientBrush.GradientStops>
-            </LinearGradientBrush>
-        </Grid.Background>
-        <Image Source="ms-appx:///Images/logo.png" Stretch="None" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity=".5" />
+        <Image Source="ms-appx:///Images/logo.png" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="1"
+               Width="200"
+               />
         <StackPanel VerticalAlignment="Bottom">
-        <TextBlock x:Name="status" Text="Loading..." HorizontalAlignment="Center" />
-        <ProgressBar x:Name="progress" Minimum="0" Maximum="100" HorizontalAlignment="Stretch" 
-                     Height="20"
+            <TextBlock Text="WinUI EX Sample App" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,25"
+                       Foreground="#215A9D" FontWeight="Black"
+                       Style="{StaticResource TitleTextBlockStyle}"  />    
+            <TextBlock x:Name="status" Text="Loading..." HorizontalAlignment="Center" />
+            <ProgressBar x:Name="progress" Minimum="0" Maximum="100" HorizontalAlignment="Stretch" 
+                     Height="20" Margin="10,3"
                      />
         </StackPanel>
     </Grid>

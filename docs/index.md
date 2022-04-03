@@ -15,6 +15,7 @@ A set of extension methods and classes to fill some gaps in WinUI 3, mostly arou
   - [Extended `WindowEx` Window class](concepts/WindowEx.md)
   - [UI Test Tooling for easy UI Testing](concepts/UITests.md)
   - [Tray Icon support](concepts/TrayIcon.md)
+  - [Splash screen](concepts/Splashscreen.md)
 
 And more to come...
 

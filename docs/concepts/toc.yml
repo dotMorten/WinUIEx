@@ -8,6 +8,8 @@
   href: TrayIcon.md
 - name: Window Message Monitor
   href: WindowMessageMonitor.md
+- name: Splash Screen
+  href: Splashscreen.md
 - name: UI Testing
   href: UITests.md
 - name: Object Model Diagram

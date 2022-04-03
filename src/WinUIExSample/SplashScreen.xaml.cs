@@ -36,21 +36,12 @@ namespace WinUIExSample
 
         protected override async Task OnLoading()
         {
-            status.Text = "Loading 20%...";
-            progress.Value += 20;
-            await Task.Delay(200);
-            status.Text = "Loading 40%...";
-            progress.Value += 20;
-            await Task.Delay(200);
-            status.Text = "Loading 60%...";
-            progress.Value += 20;
-            await Task.Delay(200);
-            status.Text = "Loading 80%...";
-            progress.Value += 20;
-            await Task.Delay(200);
-            status.Text = "Finishing up...";
-            progress.Value += 20;
-            await Task.Delay(200);
+            for (int i = 0; i < 100; i+=5)
+            {
+                status.Text = $"Loading {i}%...";
+                progress.Value = i;
+                await Task.Delay(50);
+            }
         }
     }
 }

@@ -11,7 +11,7 @@ Before:
 After:
 ```xml
 <winuiex:SplashScreen
-    xmlns:local="using:WinUIExSample" ...>
+    xmlns:winuiex="using:WinUIEx" ...>
 
 </winuiex:SplashScreen>
 ```

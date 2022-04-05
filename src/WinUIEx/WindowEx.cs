@@ -184,7 +184,8 @@ namespace WinUIEx
             get { return titleBarContainer.Content as UIElement; }
             set
             {
-                AppWindow.TitleBar.ResetToDefault();
+                if (Microsoft.UI.Windowing.AppWindowTitleBar.IsCustomizationSupported())
+                    AppWindow.TitleBar.ResetToDefault();
                 titleBarContainer.Content = value;
                 if (value is null)
                 {

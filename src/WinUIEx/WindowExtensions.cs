@@ -263,11 +263,14 @@ namespace WinUIEx
         public static void SetTitleBarBackgroundColors(this Microsoft.UI.Xaml.Window window, Windows.UI.Color color)
         {
             var appWindow = window.GetAppWindow();
-            appWindow.TitleBar.ButtonBackgroundColor = color;
-            appWindow.TitleBar.BackgroundColor = color;
-            appWindow.TitleBar.ButtonInactiveBackgroundColor = color;
-            appWindow.TitleBar.ButtonPressedBackgroundColor = color;
-            appWindow.TitleBar.InactiveBackgroundColor = color;
+            if (AppWindowTitleBar.IsCustomizationSupported())
+            {
+                appWindow.TitleBar.ButtonBackgroundColor = color;
+                appWindow.TitleBar.BackgroundColor = color;
+                appWindow.TitleBar.ButtonInactiveBackgroundColor = color;
+                appWindow.TitleBar.ButtonPressedBackgroundColor = color;
+                appWindow.TitleBar.InactiveBackgroundColor = color;
+            }
         }
     }
 }

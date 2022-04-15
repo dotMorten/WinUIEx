@@ -23,7 +23,7 @@ namespace WinUIEx
         /// <remarks>
         /// <para><see href = "https://docs.microsoft.com/windows/win32/api//winuser/nf-winuser-getdpiforwindow">Learn more about this API from docs.microsoft.com</see>.</para>
         /// </remarks>
-        public static uint GetDpiForWindow(this Microsoft.UI.Xaml.Window window) => (uint?)(window.Content?.XamlRoot.RasterizationScale * 96f) ?? HwndExtensions.GetDpiForWindow(window.GetWindowHandle());
+        public static uint GetDpiForWindow(this Microsoft.UI.Xaml.Window window) => (uint?)(window.Content?.XamlRoot?.RasterizationScale * 96f) ?? HwndExtensions.GetDpiForWindow(window.GetWindowHandle());
 
         /// <summary>Brings the thread that created the specified window into the foreground and activates the window.</summary>
         /// <param name="window">

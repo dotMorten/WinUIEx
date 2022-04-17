@@ -1,13 +1,14 @@
 ## Extended Window type
 
 Make your window class inherit from `WinUIEx.WindowEx` instead of `Window` and you get new features like:
- - Set Title in XAML
- - Set custom TitleBar content in XAML
- - Width and Height get/set properties
- - Minimum Width and Height get/set properties
- - Set TaskBarIcon
+ - Set Title in XAML.
+ - Set custom TitleBar content in XAML.
+ - Width and Height get/set properties, and correctly adjusting for system DPI.
+ - Minimum Width and Height get/set properties.
+ - Set TaskBarIcon.
  - Several Convenience properties for controlling if the window can be maximized, minimized, resized, should show in task bar and switchers, change presenter,  make Window always on top, etc.
- - Easy shortcuts for showing Message Dialogs
+ - Easy shortcuts for showing Message Dialogs.
+ - Automatically handles DPI changes and resizes correctly.
 
 ## Usage
 
@@ -26,7 +27,7 @@ And in `MainWindow.xaml` change
 ```
 to
 ```xml
-<winex:WindowEx xmlns:winex="using:WinUIEx"   ...>
+<winex:WindowEx xmlns:winex="using:WinUIEx" Width="1024" Height="768"  ...>
 ```
 
 ## Object Model

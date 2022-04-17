@@ -10,11 +10,6 @@
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <PackageReleaseNotes>
-        - Improved handling of DPI changes to maintain window size across multiple monitors.
-        - Fix crash on Windows 10.
-        - Window sizes are now all in device independent units for easier high-dpi handling.
-    </PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup Label="PackageInfo">
@@ -22,7 +17,11 @@
     <PackageTags>WinUI</PackageTags>
     <PackageId>WinUIEx</PackageId>
     <Product>WinUI Extensions</Product>
-    <PackageReleaseNotes>Added Windows Message Monitor. Added MinWidth and MinHeight properties to WindowEX class.</PackageReleaseNotes>
+    <PackageReleaseNotes>
+        - Improved handling of DPI changes to maintain window size across multiple monitors.
+        - Fix crash on Windows 10.
+        - Window sizes are now all in device independent units for easier high-dpi handling.
+    </PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>

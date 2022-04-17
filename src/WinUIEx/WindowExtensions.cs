@@ -23,7 +23,7 @@ namespace WinUIEx
         /// <remarks>
         /// <para><see href = "https://docs.microsoft.com/windows/win32/api//winuser/nf-winuser-getdpiforwindow">Learn more about this API from docs.microsoft.com</see>.</para>
         /// </remarks>
-        public static uint GetDpiForWindow(this Microsoft.UI.Xaml.Window window) => (uint?)(window.Content?.XamlRoot?.RasterizationScale * 96f) ?? HwndExtensions.GetDpiForWindow(window.GetWindowHandle());
+        public static uint GetDpiForWindow(this Microsoft.UI.Xaml.Window window) => HwndExtensions.GetDpiForWindow(window.GetWindowHandle());
 
         /// <summary>Brings the thread that created the specified window into the foreground and activates the window.</summary>
         /// <param name="window">
@@ -142,13 +142,15 @@ namespace WinUIEx
         /// Positions and resizes the window
         /// </summary>
         /// <param name="window">Window</param>
-        /// <param name="x">Left side of the window in device independent pixels</param>
-        /// <param name="y">Top  side of the window in device independent pixels</param>
+        /// <param name="x">Left side of the window</param>
+        /// <param name="y">Top side of the window</param>
         /// <param name="width">Width of the window in device independent pixels, or <c>null</c> if keeping the current size</param>
         /// <param name="height">Height of the window in device independent pixels, or <c>null</c> if keeping the current size</param>
         public static void MoveAndResize(this Microsoft.UI.Xaml.Window window, double x, double y, double width, double height)
-            => window.GetAppWindow().MoveAndResize(new Windows.Graphics.RectInt32((int)x, (int)y, (int)width, (int)height)); // TODO: Adjust for dpi
-            //=> HwndExtensions.SetWindowPositionAndSize(window.GetWindowHandle(), x, y, width, height);
+        {
+            var scale = HwndExtensions.GetDpiForWindow(window.GetWindowHandle()) / 96f;
+            window.GetAppWindow().MoveAndResize(new Windows.Graphics.RectInt32((int)x, (int)y, (int)(width * scale), (int)(height * scale)));
+        }
 
         /// <summary>
         /// Sets the width and height of the window in device-independent pixels.
@@ -157,7 +159,10 @@ namespace WinUIEx
         /// <param name="width">Width of the window in device-independent units.</param>
         /// <param name="height">Height of the window in device-independent units.</param>
         public static void SetWindowSize(this Microsoft.UI.Xaml.Window window, double width, double height)
-            => window.GetAppWindow().Resize(new Windows.Graphics.SizeInt32((int)width, (int)height));
+        {
+            var scale = HwndExtensions.GetDpiForWindow(window.GetWindowHandle()) / 96f;
+            window.GetAppWindow().Resize(new Windows.Graphics.SizeInt32((int)(width * scale), (int)(height * scale)));
+        }
 
         /// <summary>
         /// Sets the window presenter kind used.

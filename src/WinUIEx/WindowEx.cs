@@ -26,6 +26,7 @@ namespace WinUIEx
         private readonly ContentControl windowArea;
         private readonly WindowMessageMonitor mon;
         private readonly Microsoft.UI.Windowing.OverlappedPresenter overlappedPresenter;
+        private uint currentDpi;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="WindowEx"/> class.
@@ -34,6 +35,7 @@ namespace WinUIEx
         {
             overlappedPresenter = Microsoft.UI.Windowing.OverlappedPresenter.Create();
             AppWindow.SetPresenter(overlappedPresenter);
+            currentDpi = this.GetDpiForWindow();
 
             var rootContent = new Grid();
             rootContent.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Auto), MinHeight = 0 });
@@ -79,7 +81,26 @@ namespace WinUIEx
                         rect2->ptMinTrackSize.y = Math.Max((int)MinHeight, 39);
                     }
                     break;
+                case WindowsMessages.WM_DPICHANGED:
+                    {
+                        var newDpi = this.GetDpiForWindow();
+                        if (newDpi != currentDpi)
+                        {
+                            var oldDpi = currentDpi;
+                            currentDpi = newDpi;
+                            OnDpiChanged(oldDpi, newDpi);
+                        }
+                        break;
+                    }
             }
+        }
+
+        private void OnDpiChanged(uint oldDpi, uint newDpi)
+        {
+            var oldScale = oldDpi / 96f;
+            var currentSize = AppWindow.Size;
+            this.SetWindowSize((int)(currentSize.Width / oldScale), (int)(currentSize.Height / oldScale));
+            currentDpi = newDpi;
         }
 
         private struct MINMAXINFO
@@ -387,10 +408,10 @@ namespace WinUIEx
         /// </summary>
         public double Width
         {
-            get { return AppWindow.Size.Width; }
+            get { return AppWindow.Size.Width / (currentDpi / 96d); }
             set
             {
-                this.SetWindowSize(value, AppWindow.Size.Height);
+                this.SetWindowSize(value, Height);
             }
         }
 
@@ -399,10 +420,10 @@ namespace WinUIEx
         /// </summary>
         public double Height
         {
-            get { return AppWindow.Size.Height; }
+            get { return AppWindow.Size.Height / (currentDpi / 96d); }
             set
             {
-                this.SetWindowSize(AppWindow.Size.Width, value);
+                this.SetWindowSize(Width, value);
             }
         }
 

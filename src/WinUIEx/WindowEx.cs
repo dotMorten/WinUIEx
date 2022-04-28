@@ -77,8 +77,8 @@ namespace WinUIEx
                     {
                         // Restrict min-size
                         MINMAXINFO* rect2 = (MINMAXINFO*)e.Message.LParam;
-                        rect2->ptMinTrackSize.x = Math.Max((int)MinWidth, 139);
-                        rect2->ptMinTrackSize.y = Math.Max((int)MinHeight, 39);
+                        rect2->ptMinTrackSize.x = (int)(Math.Max(MinWidth * (currentDpi / 96f), rect2->ptMinTrackSize.x));
+                        rect2->ptMinTrackSize.y = (int)(Math.Max(MinHeight * (currentDpi / 96f), rect2->ptMinTrackSize.y));
                     }
                     break;
                 case WindowsMessages.WM_DPICHANGED:
@@ -427,7 +427,7 @@ namespace WinUIEx
             }
         }
 
-        private double _minWidth = 139;
+        private double _minWidth = 136;
 
         /// <summary>
         /// Gets or sets the minimum width of this window

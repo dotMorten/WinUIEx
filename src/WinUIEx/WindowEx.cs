@@ -369,7 +369,7 @@ namespace WinUIEx
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether this window is shown in task switchers.
+        /// Gets or sets a value indicating whether this window is always on top.
         /// </summary>
         public bool IsAlwaysOnTop
         {

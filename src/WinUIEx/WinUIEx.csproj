@@ -18,9 +18,7 @@
     <PackageId>WinUIEx</PackageId>
     <Product>WinUI Extensions</Product>
     <PackageReleaseNotes>
-        - Improved handling of DPI changes to maintain window size across multiple monitors.
-        - Fix crash on Windows 10.
-        - Window sizes are now all in device independent units for easier high-dpi handling.
+        - Added WebAuthenticator API to simplify OAuth workflows with your external browser
     </PackageReleaseNotes>
   </PropertyGroup>
 

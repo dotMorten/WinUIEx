@@ -10,6 +10,8 @@
   href: WindowMessageMonitor.md
 - name: Splash Screen
   href: Splashscreen.md
+- name: Web Authenticator
+  href: WebAuthenticator.md
 - name: UI Testing
   href: UITests.md
 - name: Object Model Diagram

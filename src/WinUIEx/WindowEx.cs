@@ -18,7 +18,7 @@ namespace WinUIEx
     /// A custom WinUI Window with more convenience methods
     /// </summary>
     [ContentProperty(Name = "WindowContent")]
-    public class WindowEx : Window
+    public partial class WindowEx : Window
     {
         private readonly Grid titleBarArea;
         private readonly Image iconArea;

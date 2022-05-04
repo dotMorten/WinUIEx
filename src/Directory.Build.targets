@@ -13,6 +13,8 @@
     <Company>Morten Nielsen - https://xaml.dev</Company>
     <PackageIcon>logo.png</PackageIcon>
     <Version>1.4.0</Version>
+    <WinAppSDKVersion>1.0.1</WinAppSDKVersion>
+    <DefineConstants Condition="$([MSBuild]::VersionGreaterThanOrEquals('$(WinAppSDKVersion)','1.1-a'))">$(DefineConstants);WINAPPSDK_1_1_OR_NEWER</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup Condition="'$(PackageId)'!=''">

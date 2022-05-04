@@ -26,7 +26,6 @@ namespace WinUIEx
         private readonly ContentControl windowArea;
         private readonly WindowMessageMonitor mon;
         private readonly Microsoft.UI.Windowing.OverlappedPresenter overlappedPresenter;
-        private uint currentDpi;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="WindowEx"/> class.
@@ -35,8 +34,7 @@ namespace WinUIEx
         {
             overlappedPresenter = Microsoft.UI.Windowing.OverlappedPresenter.Create();
             AppWindow.SetPresenter(overlappedPresenter);
-            currentDpi = this.GetDpiForWindow();
-
+            
             var rootContent = new Grid();
             rootContent.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Auto), MinHeight = 0 });
             rootContent.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Star) });
@@ -77,30 +75,20 @@ namespace WinUIEx
                     {
                         // Restrict min-size
                         MINMAXINFO* rect2 = (MINMAXINFO*)e.Message.LParam;
+                        var currentDpi = this.GetDpiForWindow();
                         rect2->ptMinTrackSize.x = (int)(Math.Max(MinWidth * (currentDpi / 96f), rect2->ptMinTrackSize.x));
                         rect2->ptMinTrackSize.y = (int)(Math.Max(MinHeight * (currentDpi / 96f), rect2->ptMinTrackSize.y));
                     }
                     break;
                 case WindowsMessages.WM_DPICHANGED:
                     {
-                        var newDpi = this.GetDpiForWindow();
-                        if (newDpi != currentDpi)
-                        {
-                            var oldDpi = currentDpi;
-                            currentDpi = newDpi;
-                            OnDpiChanged(oldDpi, newDpi);
-                        }
+                        // Resize to account for DPI change
+                        var suggestedRect = (Windows.Win32.Foundation.RECT*)e.Message.LParam;
+                        bool result = Windows.Win32.PInvoke.SetWindowPos(new Windows.Win32.Foundation.HWND(this.GetWindowHandle()), new Windows.Win32.Foundation.HWND(), suggestedRect->left, suggestedRect->top,
+                            suggestedRect->right - suggestedRect->left, suggestedRect->bottom - suggestedRect->top, Windows.Win32.UI.WindowsAndMessaging.SET_WINDOW_POS_FLAGS.SWP_NOZORDER | Windows.Win32.UI.WindowsAndMessaging.SET_WINDOW_POS_FLAGS.SWP_NOACTIVATE);
                         break;
                     }
             }
-        }
-
-        private void OnDpiChanged(uint oldDpi, uint newDpi)
-        {
-            var oldScale = oldDpi / 96f;
-            var currentSize = AppWindow.Size;
-            this.SetWindowSize((int)(currentSize.Width / oldScale), (int)(currentSize.Height / oldScale));
-            currentDpi = newDpi;
         }
 
         private struct MINMAXINFO
@@ -408,7 +396,7 @@ namespace WinUIEx
         /// </summary>
         public double Width
         {
-            get { return AppWindow.Size.Width / (currentDpi / 96d); }
+            get { return AppWindow.Size.Width / (this.GetDpiForWindow() / 96d); }
             set
             {
                 this.SetWindowSize(value, Height);
@@ -420,7 +408,7 @@ namespace WinUIEx
         /// </summary>
         public double Height
         {
-            get { return AppWindow.Size.Height / (currentDpi / 96d); }
+            get { return AppWindow.Size.Height / (this.GetDpiForWindow() / 96d); }
             set
             {
                 this.SetWindowSize(Width, value);

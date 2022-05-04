@@ -18,7 +18,7 @@
     <PackageId>WinUIEx</PackageId>
     <Product>WinUI Extensions</Product>
     <PackageReleaseNotes>
-        - Added WebAuthenticator API to simplify OAuth workflows with your external browser
+        - Addresses an issue with window resizing when moving across monitors with different scaling (Issue #37).
     </PackageReleaseNotes>
   </PropertyGroup>
 

@@ -45,7 +45,7 @@ namespace WinUIEx
         /// </summary>
         public Backdrop Backdrop
         {
-            get { return m_Backdrop; }
+            get => m_Backdrop;
             set
             {
                 if (m_Backdrop != value)
@@ -58,7 +58,9 @@ namespace WinUIEx
 
         private void InitBackdrop()
         {
-            if (m_Backdrop == Backdrop.Default)
+            if (m_Backdrop == Backdrop.Default ||
+                Backdrop == Backdrop.Acrylic && !DesktopAcrylicController.IsSupported() ||
+                Backdrop == Backdrop.Mica && !MicaController.IsSupported())
             {
                 CleanUpBackdrop();
                 return;
@@ -93,14 +95,14 @@ namespace WinUIEx
                 currentController.Dispose();
                 currentController = null;
             }
-            if(Backdrop == Backdrop.Acrylic && DesktopAcrylicController.IsSupported())
+            if(Backdrop == Backdrop.Acrylic)
             {
                 var m_acrylicController = new DesktopAcrylicController();
                 m_acrylicController.AddSystemBackdropTarget(this.As<Microsoft.UI.Composition.ICompositionSupportsSystemBackdrop>());
                 m_acrylicController.SetSystemBackdropConfiguration(Configuration);
                 currentController = m_acrylicController;
             }
-            else if(Backdrop == Backdrop.Mica && MicaController.IsSupported())
+            else if(Backdrop == Backdrop.Mica)
             {
                 var m_micaController = new MicaController();
                 m_micaController.SetSystemBackdropConfiguration(Configuration);

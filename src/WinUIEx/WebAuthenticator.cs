@@ -153,7 +153,13 @@ namespace WinUIEx
             UriBuilder b = new UriBuilder(authorizeUri);
 
             var query = System.Web.HttpUtility.ParseQueryString(authorizeUri.Query);
-            query["state"] = $"appInstanceId={Microsoft.Windows.AppLifecycle.AppInstance.GetCurrent().Key}&signinId={g}";
+            var state = $"appInstanceId={Microsoft.Windows.AppLifecycle.AppInstance.GetCurrent().Key}&signinId={g}";
+            if(query["state"] is string oldstate && !string.IsNullOrEmpty(oldstate))
+            {
+                // Encode the state parameter
+                state += "&state=" + System.Web.HttpUtility.UrlEncode(oldstate);
+            }
+            query["state"] = state;
             b.Query = query.ToString();
             authorizeUri = b.Uri;
 

@@ -18,7 +18,7 @@
     <PackageId>WinUIEx</PackageId>
     <Product>WinUI Extensions</Product>
     <PackageReleaseNotes>
-        - Addresses an issue with window resizing when moving across monitors with different scaling (Issue #37).
+        - Preserve the state parameter in the WebAuthenticator.
     </PackageReleaseNotes>
   </PropertyGroup>
 

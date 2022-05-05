@@ -23,6 +23,15 @@ namespace WinUIEx
             var query = System.Web.HttpUtility.ParseQueryString(str);
             foreach (string key in query.Keys)
             {
+                if(key == "state")
+                {
+                    var values = System.Web.HttpUtility.ParseQueryString(query[key] ?? string.Empty);
+                    if(values["state"] is string state)
+                    {
+                        Properties[key] = state;
+                    }
+                    continue;
+                }
                 Properties[key] = query[key] ?? String.Empty;
             }
         }

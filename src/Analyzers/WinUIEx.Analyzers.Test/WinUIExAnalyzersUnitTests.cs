@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.CodeAnalysis.Testing;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Threading.Tasks;
 using VerifyCS = WinUIEx.Analyzers.Test.CSharpCodeFixVerifier<
     WinUIEx.Analyzers.WinUIExAnalyzersAnalyzer,
@@ -66,8 +67,8 @@ namespace App1
         }
     }
 }";
-
-            await VerifyCS.VerifyAnalyzerAsync(test, new Microsoft.CodeAnalysis.Testing.DiagnosticResult("WinUIEX1", Microsoft.CodeAnalysis.DiagnosticSeverity.Warning));
+            var expected = DiagnosticResult.CompilerWarning("WinUIEx01").WithSpan(16, 13, 16, 125).WithArguments("AddSystemBackdropTarget", "MicaController.IsSupported()");
+            await VerifyCS.VerifyAnalyzerAsync(test, expected);
         }
 
         [TestMethod]
@@ -82,6 +83,7 @@ namespace App1
     {
         public void Test2(AppWindow appWindow, Windows.UI.Color color)
         {
+if(false) {
             if (AppWindowTitleBar.IsCustomizationSupported()) 
             {
                 appWindow.TitleBar.ButtonBackgroundColor = color;
@@ -89,12 +91,24 @@ namespace App1
                 appWindow.TitleBar.ButtonInactiveBackgroundColor = color;
                 appWindow.TitleBar.ButtonPressedBackgroundColor = color;
                 appWindow.TitleBar.InactiveBackgroundColor = color;
-            }
+            }}
         }
     }
 }";
             
             await VerifyCS.VerifyAnalyzerAsync(test);
+        }
+
+
+        [System.Runtime.Versioning.SupportedOSPlatform("ios14.0")]
+        private void Test()
+        {
+
+        }
+        public void Test2()
+        {
+            if (System.OperatingSystem.IsIOSVersionAtLeast(14))
+                Test();
         }
 
         [TestMethod]
@@ -117,53 +131,13 @@ namespace App1
         }
     }
 }";
-
             await VerifyCS.VerifyAnalyzerAsync(test,
-                new Microsoft.CodeAnalysis.Testing.DiagnosticResult("WinUIEX1", Microsoft.CodeAnalysis.DiagnosticSeverity.Warning),
-                new Microsoft.CodeAnalysis.Testing.DiagnosticResult("WinUIEX1", Microsoft.CodeAnalysis.DiagnosticSeverity.Warning),
-                new Microsoft.CodeAnalysis.Testing.DiagnosticResult("WinUIEX1", Microsoft.CodeAnalysis.DiagnosticSeverity.Warning),
-                new Microsoft.CodeAnalysis.Testing.DiagnosticResult("WinUIEX1", Microsoft.CodeAnalysis.DiagnosticSeverity.Warning),
-                new Microsoft.CodeAnalysis.Testing.DiagnosticResult("WinUIEX1", Microsoft.CodeAnalysis.DiagnosticSeverity.Warning)
+                DiagnosticResult.CompilerWarning("WinUIEx01").WithSpan(10, 13, 10, 53).WithArguments("ButtonBackgroundColor", "AppWindowTitleBar.IsCustomizationSupported()"),
+                DiagnosticResult.CompilerWarning("WinUIEx01").WithSpan(11, 13, 11, 47).WithArguments("BackgroundColor", "AppWindowTitleBar.IsCustomizationSupported()"),
+                DiagnosticResult.CompilerWarning("WinUIEx01").WithSpan(12, 13, 12, 61).WithArguments("ButtonInactiveBackgroundColor", "AppWindowTitleBar.IsCustomizationSupported()"),
+                DiagnosticResult.CompilerWarning("WinUIEx01").WithSpan(13, 13, 13, 60).WithArguments("ButtonPressedBackgroundColor", "AppWindowTitleBar.IsCustomizationSupported()"),
+                DiagnosticResult.CompilerWarning("WinUIEx01").WithSpan(14, 13, 14, 55).WithArguments("InactiveBackgroundColor", "AppWindowTitleBar.IsCustomizationSupported()")
                 );
         }
-
-        /*
-        //Diagnostic and CodeFix both triggered and checked for
-        [TestMethod]
-        public async Task TestMethod3()
-        {
-            var test = @"
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-    using System.Diagnostics;
-
-    namespace ConsoleApplication1
-    {
-        class {|#0:TypeName|}
-        {   
-        }
-    }";
-
-            var fixtest = @"
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-    using System.Diagnostics;
-
-    namespace ConsoleApplication1
-    {
-        class TYPENAME
-        {   
-        }
-    }";
-
-            var expected = VerifyCS.Diagnostic("WinUIExAnalyzers").WithLocation(0).WithArguments("TypeName");
-            await VerifyCS.VerifyCodeFixAsync(test, expected, fixtest);
-        }*/
     }
 }

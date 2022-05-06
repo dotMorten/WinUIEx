@@ -18,13 +18,13 @@ namespace WinUIEx.Analyzers
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class WinUIExAnalyzersAnalyzer : DiagnosticAnalyzer
     {
-        public const string DiagnosticId = "WinUIExAnalyzers";
+        public const string DiagnosticId = "WinUIEx";
 
-        // You can change these strings in the Resources.resx file. If you do not want your analyzer to be localize-able, you can use regular strings for Title and MessageFormat.
-        // See https://github.com/dotnet/roslyn/blob/main/docs/analyzers/Localizing%20Analyzers.md for more on localization
         private const string Category = "Interoperability";
 
-        private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(DiagnosticId, "Support Guard", "API call must be guarded by IsSupported check", Category, DiagnosticSeverity.Warning, isEnabledByDefault: true, description: "API call must be guarded by IsSupported check");
+        private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(DiagnosticId + "01",
+            "Support Guard", "This call site is reachable on all Windows platforms. '{0}' must be guarded by '{1}'.", Category,
+            DiagnosticSeverity.Warning, isEnabledByDefault: true, description: "This API isn't available on all versions of Windows and should be guarded.", null);
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics { get { return ImmutableArray.Create(Rule); } }
         private static ISymbol? GetOperationSymbol(IOperation operation)
@@ -36,6 +36,39 @@ namespace WinUIEx.Analyzers
                 IMemberReferenceOperation mOperation => mOperation.Member,
                 _ => null,
             };
+
+        public class ApiType
+        {
+            public string MemberName { get; set; }
+            public ISymbol Member { get; set; }
+            public string GuardCheck { get; set; }
+            public SymbolKind Kind { get; set; }
+            public string HelpLink { get; set; }
+            public DiagnosticDescriptor Rule { get; set; }
+            public ISymbol Guard { get; set; }
+        }
+        private static readonly List<ApiType> ApiList = new List<ApiType> {
+            new ApiType() {
+                Kind = SymbolKind.NamedType, GuardCheck = "Microsoft.UI.Windowing.AppWindowTitleBar.IsCustomizationSupported",
+                MemberName = "Microsoft.UI.Windowing.AppWindowTitleBar",
+                Rule = new DiagnosticDescriptor(DiagnosticId + "01", "Support Guard", "This call site is reachable on all Windows platforms. '{0}' must be guarded by 'AppWindowTitleBar.IsCustomizationSupported()'.", Category,
+                    DiagnosticSeverity.Warning, isEnabledByDefault: true, description: "This API isn't available on all versions of Windows and should be guarded.", "https://docs.microsoft.com/en-us/windows/windows-app-sdk/api/winrt/microsoft.ui.windowing.appwindowtitlebar#remarks")
+                },
+            new ApiType() {
+                Kind = SymbolKind.Method, GuardCheck = "Microsoft.UI.Composition.SystemBackdrops.MicaController.IsSupported",
+                MemberName = "Microsoft.UI.Composition.SystemBackdrops.MicaController.AddSystemBackdropTarget(Microsoft.UI.Composition.ICompositionSupportsSystemBackdrop)",
+                Rule = new DiagnosticDescriptor(DiagnosticId + "01", "Support Guard", "This call site is reachable on all Windows platforms. '{0}' must be guarded by 'MicaController.IsSupported()'.", Category,
+                    DiagnosticSeverity.Warning, isEnabledByDefault: true, description: "This API isn't available on all versions of Windows and should be guarded.", "https://docs.microsoft.com/en-us/windows/winui/api/microsoft.ui.composition.systembackdrops.micacontroller.issupported")
+            },
+            new ApiType() {
+                Kind = SymbolKind.Method,
+                GuardCheck = "Microsoft.UI.Composition.SystemBackdrops.DesktopAcrylicController.IsSupported",
+                MemberName = "Microsoft.UI.Composition.SystemBackdrops.DesktopAcrylicController.AddSystemBackdropTarget(Microsoft.UI.Composition.ICompositionSupportsSystemBackdrop)",
+                Rule = new DiagnosticDescriptor(DiagnosticId + "01", "Support Guard", "This call site is reachable on all Windows platforms. '{0}' must be guarded by 'DesktopAcrylicController.IsSupported()'.", Category,
+                    DiagnosticSeverity.Warning, isEnabledByDefault: true, description: "This API isn't available on all versions of Windows and should be guarded.", "https://docs.microsoft.com/en-us/windows/winui/api/microsoft.ui.composition.systembackdrops.desktopacryliccontroller.issupported")
+            },
+        };
+
         // Do not warn if platform specific enum/field value is used in conditional check, like: 'if (value == FooEnum.WindowsOnlyValue)'
         private static bool IsWithinConditionalOperation(IFieldReferenceOperation pOperation) =>
             pOperation.ConstantValue.HasValue &&
@@ -50,6 +83,51 @@ namespace WinUIEx.Analyzers
         {
             context.EnableConcurrentExecution();
             context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.Analyze | GeneratedCodeAnalysisFlags.ReportDiagnostics);
+
+            context.RegisterCompilationStartAction(context =>
+            {
+                Dictionary<string, ISymbol> guards = new Dictionary<string, ISymbol>();
+                foreach (var type in ApiList)
+                {
+                    if (guards.ContainsKey(type.GuardCheck))
+                        type.Guard = guards[type.GuardCheck];
+                    else
+                    {
+                        var guardType = context.Compilation.GetTypeByMetadataName(type.GuardCheck.Substring(0, type.GuardCheck.LastIndexOf(".")));
+                        if (guardType != null)
+                        {
+                            var member = guardType.GetMembers(type.GuardCheck.Substring(type.GuardCheck.LastIndexOf('.') + 1)).FirstOrDefault();
+                            if (member != null)
+                            {
+                                type.Guard = member;
+                                guards[type.GuardCheck] = member;
+                            }
+                        }
+                    }
+                    var method = type.MemberName;
+                    if (method.Contains('('))
+                        method = method.Substring(0, method.IndexOf('('));
+                    var typeName = type.Kind == SymbolKind.NamedType ? method : method.Substring(0, method.LastIndexOf("."));
+                    var methodType = context.Compilation.GetTypeByMetadataName(typeName);
+                    if (methodType != null)
+                    {
+                        if (type.Kind == SymbolKind.NamedType)
+                            type.Member = methodType;
+                        else
+                        {
+                            var member = methodType.GetMembers().Where(t => t.ToString() == type.MemberName).FirstOrDefault();
+                            if (member != null)
+                            {
+                                type.Member = member;
+                            }
+                        }
+                    }
+
+
+                    context.RegisterOperationBlockStartAction(context => AnalyzeOperationBlock(context));
+                }
+            });
+
             context.RegisterOperationAction(context =>
             {
                 AnalyzeOperation(context.Operation, context);
@@ -82,58 +160,38 @@ namespace WinUIEx.Analyzers
                     }
                 }
             });*/
-            //context.RegisterCodeFix(
-            //    CodeAction.Create(
-            //        title: Title,
-            //        createChangedDocument: c => AddBracesAsync(context.Document, diagnostic, root),
-            //        equivalenceKey: title),
-            //    diagnostic);
         }
+
+        private void AnalyzeOperationBlock(OperationBlockStartAnalysisContext context)
+        {
+            //https://github.com/dotnet/roslyn-analyzers/blob/e898a9d806d66adf687e2e3eb3d0180ca8a2167a/src/NetAnalyzers/Core/Microsoft.NetCore.Analyzers/InteropServices/PlatformCompatibilityAnalyzer.cs#L286
+            context.RegisterOperationBlockEndAction(context =>
+            {
+                //context.GetControlFlowGraph()
+            });
+        }
+
+
         private static void AnalyzeOperation(IOperation operation, OperationAnalysisContext context)
         {
-            //if (operation.Parent is IArgumentOperation argumentOperation && UsedInCreatingNotSupportedException(argumentOperation, notSupportedExceptionType))
-            //{
-            //    return;
-            //}
-
             var symbol = GetOperationSymbol(operation);
-            var name = symbol.ToString();
-            switch(name)
+            if(ApiList.Where(a=> SymbolEqualityComparer.Default.Equals(a.Member, symbol) ||
+                a.Member.Kind == SymbolKind.NamedType && SymbolEqualityComparer.Default.Equals(symbol.ContainingType, a.Member) && !SymbolEqualityComparer.Default.Equals(symbol, a.Guard)).FirstOrDefault() is ApiType guardedApi)
             {
-                case "Microsoft.UI.Windowing.AppWindowTitleBar.ButtonBackgroundColor":
-                    context.ReportDiagnostic(operation.CreateDiagnostic(Rule));
-                    //context.ReportDiagnostic(operation.CreateDiagnostic(new DiagnosticDescriptor("WinUIEX1", "Not guarded", "fmt", "category", DiagnosticSeverity.Warning, true)));
-                    return;
-                default:
-                    break;
-            }
-            if (symbol == null || symbol is ITypeSymbol type && type.SpecialType != SpecialType.None)
-            {
-                return;
-            }
-            if (symbol is IPropertySymbol property)
-            {
-
-            }
-            else if (symbol is IMethodSymbol method)
-            {
-                //CheckTypeArguments(method.TypeArguments);
+                if (!IsGuarded(context, operation, symbol, guardedApi))
+                    context.ReportDiagnostic(operation.CreateDiagnostic(guardedApi.Rule, symbol.Name, guardedApi.Guard.ToDisplayString(SymbolDisplayFormat.CSharpShortErrorMessageFormat)));
             }
         }
 
-            private static void AnalyzeSymbol(SymbolAnalysisContext context)
+        private static bool IsGuarded(OperationAnalysisContext context, IOperation operation, ISymbol symbol, ApiType guardedType)
         {
-            // TODO: Replace the following code with your own analysis, generating Diagnostic objects for any issues you find
-            var namedTypeSymbol = (INamedTypeSymbol)context.Symbol;
+            //var graph = context.GetControlFlowGraph();
+            
+            return false; //TODO
+            // see
+            // https://github.com/dotnet/roslyn-analyzers/blob/e898a9d806d66adf687e2e3eb3d0180ca8a2167a/src/NetAnalyzers/Core/Microsoft.NetCore.Analyzers/InteropServices/PlatformCompatibilityAnalyzer.cs#L419
+            // https://github.com/dotnet/roslyn-analyzers/blob/e898a9d806d66adf687e2e3eb3d0180ca8a2167a/src/NetAnalyzers/Core/Microsoft.NetCore.Analyzers/InteropServices/PlatformCompatibilityAnalyzer.cs#L159
 
-            // Find just those named type symbols with names containing lowercase letters.
-            if (namedTypeSymbol.Name.ToCharArray().Any(char.IsLower))
-            {
-                // For all such symbols, produce a diagnostic.
-                var diagnostic = Diagnostic.Create(Rule, namedTypeSymbol.Locations[0], namedTypeSymbol.Name);
-
-                context.ReportDiagnostic(diagnostic);
-            }
         }
     }
 }

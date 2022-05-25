@@ -1,10 +1,7 @@
-﻿#if WINAPPSDK_1_1_OR_NEWER
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 using WinRT;
 using Microsoft.UI.Composition.SystemBackdrops;
 using Microsoft.UI.Xaml;
-
-#warning Experimental and needs more testing and api review. Requires at least WindowsAppSDK v1.1.0-preview3
 
 namespace WinUIEx
 {
@@ -51,7 +48,8 @@ namespace WinUIEx
                 if (m_Backdrop != value)
                 {
                     m_Backdrop = value;
-                    InitBackdrop();
+                    if (this.Visible)
+                        InitBackdrop();
                 }
             }
         }
@@ -113,7 +111,6 @@ namespace WinUIEx
         private void CleanUpBackdrop()
         {
             currentController?.Dispose();
-            //TODO: Stop m_dispatcherQueueController
         }
 
         private void EnsureDispatcherQueueController()
@@ -152,8 +149,5 @@ namespace WinUIEx
 
         [DllImport("CoreMessaging.dll")]
         private static extern int CreateDispatcherQueueController([In] DispatcherQueueOptions options, [In, Out, MarshalAs(UnmanagedType.IUnknown)] ref object dispatcherQueueController);
-
-
     }
 }
-#endif

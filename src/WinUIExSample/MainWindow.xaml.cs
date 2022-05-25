@@ -104,7 +104,7 @@ namespace WinUIExSample
             tray.TrayIconLeftMouseDown += (s, e) =>
             {
                 this.Show();
-                tray.Dispose();
+                ((TrayIcon)s).Dispose();
                 tray = null;
             };
             this.Hide();
@@ -169,6 +169,16 @@ namespace WinUIExSample
         private void WindowMessageReceived(object sender, WindowMessageEventArgs e)
         {
             Log(e.Message.ToString());
+        }
+
+        private void Backdrop_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            switch(((ComboBox)sender).SelectedIndex)
+            {
+                case 1: this.Backdrop = Backdrop.Acrylic; break;
+                case 2: this.Backdrop = Backdrop.Mica; break;
+                default: this.Backdrop = Backdrop.Default; break;
+            }
         }
     }
 }

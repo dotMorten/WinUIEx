@@ -27,7 +27,9 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.WindowsAppSDK" Version="$(WinAppSDKVersion)" />
+      <PackageReference Include="Microsoft.WindowsAppSDK" >
+          <Version>$(WinAppSDKVersion)</Version>
+      </PackageReference>
     <None Include="README.md" Pack="true" PackagePath="\" />
   </ItemGroup>
   	

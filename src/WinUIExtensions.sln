@@ -49,6 +49,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "concepts", "concepts", "{0B
 		..\docs\concepts\toc.yml = ..\docs\concepts\toc.yml
 		..\docs\concepts\TrayIcon.md = ..\docs\concepts\TrayIcon.md
 		..\docs\concepts\UITests.md = ..\docs\concepts\UITests.md
+		..\docs\concepts\WebAuthenticator.md = ..\docs\concepts\WebAuthenticator.md
 		..\docs\concepts\WindowEx.md = ..\docs\concepts\WindowEx.md
 		..\docs\concepts\WindowExtensions.md = ..\docs\concepts\WindowExtensions.md
 		..\docs\concepts\WindowMessageMonitor.md = ..\docs\concepts\WindowMessageMonitor.md

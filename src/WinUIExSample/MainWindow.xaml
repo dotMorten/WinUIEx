@@ -10,6 +10,7 @@
     Title="WinUI EX Test App"
     Width="1024" Height="768"
     MinWidth="500" MinHeight="250"
+    Backdrop="Mica"
     mc:Ignorable="d">
     
     <!--<winex:WindowEx.TitleBarIcon>
@@ -22,20 +23,25 @@
 
     <Grid ColumnDefinitions="Auto,Auto,*" Margin="20">
         <ScrollViewer>
-        <StackPanel>
-            <ToggleSwitch Header="Can Minimize" IsOn="{x:Bind IsMinimizable, Mode=TwoWay}" />
-            <ToggleSwitch Header="Can Maximize" IsOn="{x:Bind IsMaximizable, Mode=TwoWay}" />
-            <ToggleSwitch Header="Can Resize" IsOn="{x:Bind IsResizable, Mode=TwoWay}" />
-            <ToggleSwitch Header="Is Titlebar Visible" IsOn="{x:Bind IsTitleBarVisible, Mode=TwoWay}" />
-            <ToggleSwitch Header="Always On Top" IsOn="{x:Bind IsAlwaysOnTop, Mode=TwoWay}" />
-            <ToggleSwitch Header="Set Custom Titlebar" Toggled="CustomTitleBar_Toggled" />
-            <ToggleSwitch Header="Subscribe To Window Messages" Toggled="WMMessages_Toggled" />
-            <ComboBox Header="Presenter" SelectedIndex="0" SelectionChanged="Presenter_SelectionChanged">
-                <ComboBoxItem>Overlapped</ComboBoxItem>
-                <ComboBoxItem>Compact</ComboBoxItem>
-                <ComboBoxItem>Fullscren</ComboBoxItem>
-            </ComboBox>
-        </StackPanel>
+            <StackPanel>
+                <ToggleSwitch Header="Can Minimize" IsOn="{x:Bind IsMinimizable, Mode=TwoWay}" />
+                <ToggleSwitch Header="Can Maximize" IsOn="{x:Bind IsMaximizable, Mode=TwoWay}" />
+                <ToggleSwitch Header="Can Resize" IsOn="{x:Bind IsResizable, Mode=TwoWay}" />
+                <ToggleSwitch Header="Is Titlebar Visible" IsOn="{x:Bind IsTitleBarVisible, Mode=TwoWay}" />
+                <ToggleSwitch Header="Always On Top" IsOn="{x:Bind IsAlwaysOnTop, Mode=TwoWay}" />
+                <ToggleSwitch Header="Set Custom Titlebar" Toggled="CustomTitleBar_Toggled" />
+                <ToggleSwitch Header="Subscribe To Window Messages" Toggled="WMMessages_Toggled" />
+                <ComboBox Header="Presenter" SelectedIndex="0" SelectionChanged="Presenter_SelectionChanged">
+                    <ComboBoxItem>Overlapped</ComboBoxItem>
+                    <ComboBoxItem>Compact</ComboBoxItem>
+                    <ComboBoxItem>Fullscren</ComboBoxItem>
+                </ComboBox>
+                <ComboBox Header="Backdrop" SelectedIndex="2" SelectionChanged="Backdrop_SelectionChanged">
+                    <ComboBoxItem>Default</ComboBoxItem>
+                    <ComboBoxItem>Acrylic</ComboBoxItem>
+                    <ComboBoxItem>Mica</ComboBoxItem>
+                </ComboBox>
+            </StackPanel>
         </ScrollViewer>
         <StackPanel Grid.Column="1">
             <StackPanel.Resources>

@@ -62,9 +62,16 @@ namespace WinUIEx
             rootContent.Children.Add(windowArea);
 
             this.Content = rootContent;
+            rootContent.Loaded += RootContent_Loaded;
             AppWindow.Changed += AppWindow_Changed;
             mon = new WindowMessageMonitor(this);
             mon.WindowMessageReceived += OnWindowMessage;
+        }
+
+        private void RootContent_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (Backdrop != Backdrop.Default)
+                InitBackdrop();
         }
 
         private unsafe void OnWindowMessage(object? sender, Messaging.WindowMessageEventArgs e)

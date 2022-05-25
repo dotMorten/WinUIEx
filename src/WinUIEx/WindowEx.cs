@@ -10,6 +10,7 @@ using Microsoft.UI.Xaml.Automation.Peers;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Markup;
 using Microsoft.UI.Xaml.Media;
+using Windows.Storage;
 using WinUIEx.Messaging;
 
 namespace WinUIEx
@@ -62,9 +63,12 @@ namespace WinUIEx
             rootContent.Children.Add(windowArea);
 
             this.Content = rootContent;
+            rootContent.Loaded += RootContent_Loaded;
             AppWindow.Changed += AppWindow_Changed;
             mon = new WindowMessageMonitor(this);
             mon.WindowMessageReceived += OnWindowMessage;
+            this.Closed += WindowEx_Closed;
+            this.Activated += WindowEx_Activated;
         }
 
         private unsafe void OnWindowMessage(object? sender, Messaging.WindowMessageEventArgs e)
@@ -459,5 +463,93 @@ namespace WinUIEx
         /// <seealso cref="Presenter"/>
         /// <seealso cref="PresenterKind"/>
         public event EventHandler? PresenterChanged;
+
+        public WindowPersistence Persistence { get; set; }
+
+        private void WindowEx_Activated(object sender, WindowActivatedEventArgs args)
+        {
+            LoadPersistance();
+        }
+
+        private void WindowEx_Closed(object sender, WindowEventArgs args)
+        {
+            if(Persistence != null)
+            {
+                // Store monitor info - we won't restore on original screen if original monitor layout has changed
+                using var data = new System.IO.MemoryStream();
+                using var sw = new System.IO.BinaryWriter(data);
+                var monitors = MonitorInfo.GetDisplayMonitors();
+                sw.Write(monitors.Count);
+                foreach (var monitor in monitors)
+                {
+                    sw.Write(monitor.Name);
+                    sw.Write(monitor.RectMonitor.Left);
+                    sw.Write(monitor.RectMonitor.Top);
+                    sw.Write(monitor.RectMonitor.Right);
+                    sw.Write(monitor.RectMonitor.Bottom);
+                }
+                sw.Write(this.Width);
+                sw.Write(this.Height);
+                sw.Write(AppWindow.Position.X);
+                sw.Write(AppWindow.Position.Y);
+                sw.Flush();
+                var winuiExSettings = ApplicationData.Current?.LocalSettings?.CreateContainer("WinUIEx", ApplicationDataCreateDisposition.Always);
+                if (winuiExSettings != null)
+                    winuiExSettings.Values[$"WindowPersistance_{Persistence.PersistanceId}"] = Convert.ToBase64String(data.ToArray());
+            }
+        }
+        private bool isLoaded = false;
+        private void LoadPersistance()
+        {
+            if (Persistence != null && !isLoaded)
+            {
+                try
+                {
+                    byte[]? data = null;
+                    var winuiExSettings = ApplicationData.Current?.LocalSettings?.CreateContainer("WinUIEx", ApplicationDataCreateDisposition.Existing);
+                    if (winuiExSettings is not null && winuiExSettings.Values.ContainsKey($"WindowPersistance_{Persistence.PersistanceId}"))
+                    {
+                        var base64 = winuiExSettings.Values[$"WindowPersistance_{Persistence.PersistanceId}"] as string;
+                        data = Convert.FromBase64String(base64);
+                    }
+                    if (data is null)
+                        return;
+                    System.IO.BinaryReader br = new System.IO.BinaryReader(new System.IO.MemoryStream(data));
+                    int monitorCount = br.ReadInt32();
+                    for (int i = 0; i < monitorCount; i++)
+                    {
+                        string name = br.ReadString();
+                        double left = br.ReadDouble();
+                        double top = br.ReadDouble();
+                        double right = br.ReadDouble();
+                        double bottom = br.ReadDouble();
+                    }
+                    double width = br.ReadDouble();
+                    double height = br.ReadDouble();
+                    int x = br.ReadInt32();
+                    int y = br.ReadInt32();
+
+                    this.MoveAndResize(x, y, width, height);
+                    isLoaded = true;
+                }
+                catch { }
+            }
+        }
+    }
+    public class WindowPersistence
+    {
+        public WindowPersistence(string persistanceId)
+        {
+            //var settings = ApplicationData.Current.LocalSettings;
+            if (string.IsNullOrEmpty(persistanceId ?? throw new ArgumentNullException(nameof(persistanceId))))
+                throw new ArgumentException("persistanceId cannot be empty", nameof(persistanceId));
+            PersistanceId = persistanceId;
+            
+        }
+        public string PersistanceId { get; }
+        public bool RestoreSize { get; set; } = true;
+        public bool RestoreLocation { get; set; } = true;
+        public bool PersistMonitor { get; set; } = true;
+        
     }
 }

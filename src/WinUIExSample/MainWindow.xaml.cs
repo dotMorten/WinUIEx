@@ -32,6 +32,7 @@ namespace WinUIExSample
         public MainWindow()
         {
             this.InitializeComponent();
+            this.Persistence = new WindowPersistence("MainWindow");
             this.PresenterChanged += (s, e) => Log("PresenterChanged");
             this.PositionChanged += (s, e) => Log("PositionChanged");
             this.SetTitleBarBackgroundColors(Microsoft.UI.Colors.CornflowerBlue);

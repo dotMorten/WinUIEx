@@ -13,7 +13,7 @@
     <Company>Morten Nielsen - https://xaml.dev</Company>
     <PackageIcon>logo.png</PackageIcon>
     <Version>1.5.0</Version>
-    <WinAppSDKVersion>1.1.0-preview3</WinAppSDKVersion>
+    <WinAppSDKVersion>1.1.0</WinAppSDKVersion>
   </PropertyGroup>
 
   <ItemGroup Condition="'$(PackageId)'!=''">

@@ -18,7 +18,8 @@
     <PackageId>WinUIEx</PackageId>
     <Product>WinUI Extensions</Product>
     <PackageReleaseNotes>
-        - Preserve the state parameter in the WebAuthenticator.
+        - Added Mica and Acrylic Backdrop properties to WindowEx.
+        - Upgraded Windows App SDK dependency to v1.1.0.
     </PackageReleaseNotes>
   </PropertyGroup>
 

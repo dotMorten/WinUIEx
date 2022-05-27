@@ -16,10 +16,6 @@
         <BitmapImage UriSource="ms-appx:///Images/WindowIcon.gif" DecodePixelHeight="32" />
     </winex:WindowEx.TitleBarIcon>-->
 
-    <!--<winex:WindowEx.TitleBar>
-        <TextBlock Text="WinUI Window Extensions" VerticalAlignment="Center" />
-    </winex:WindowEx.TitleBar>-->
-
     <Grid ColumnDefinitions="Auto,Auto,*" Margin="20">
         <ScrollViewer>
         <StackPanel>
@@ -28,7 +24,6 @@
             <ToggleSwitch Header="Can Resize" IsOn="{x:Bind IsResizable, Mode=TwoWay}" />
             <ToggleSwitch Header="Is Titlebar Visible" IsOn="{x:Bind IsTitleBarVisible, Mode=TwoWay}" />
             <ToggleSwitch Header="Always On Top" IsOn="{x:Bind IsAlwaysOnTop, Mode=TwoWay}" />
-            <ToggleSwitch Header="Set Custom Titlebar" Toggled="CustomTitleBar_Toggled" />
             <ToggleSwitch Header="Subscribe To Window Messages" Toggled="WMMessages_Toggled" />
             <ComboBox Header="Presenter" SelectedIndex="0" SelectionChanged="Presenter_SelectionChanged">
                 <ComboBoxItem>Overlapped</ComboBoxItem>
@@ -52,8 +47,6 @@
             <Button Content="Restore" Click="RestoreWindow_Click" />
             <Button Content="Minimize + Restore (2 second delay)" Click="MinimizeWindow_Click" />
             <Button Content="Hide + Restore (2 second delay)" Click="HideWindow_Click" />
-            <Button Content="Toggle Tray Icon" Click="ToggleTrayIcon_Click" />
-            <Button Content="Minimime to tray (click tray to reopen)" Click="MinimizeTrayIcon_Click" />
             <Button Content="Bring to front (2 second delay)" Click="BringToFront_Click" />
             <Button Content="Show dialog" Click="ShowDialog_Click" />
         </StackPanel>

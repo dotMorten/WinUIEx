@@ -8,6 +8,7 @@ namespace WinUIEx
     /// <summary>
     /// Creates and manages a tray icon in the task bar
     /// </summary>
+    [Obsolete("TrayIcon APIs has been obsoleted, and will be removed in a future release")]
     public class TrayIcon : IDisposable
     {
         private WindowMessageSink messageSink;

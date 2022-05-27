@@ -28,19 +28,21 @@ namespace WinUIExSample
     {
         private readonly Queue<string> windowEvents = new Queue<string>();
         private readonly WindowMessageMonitor monitor;
-        
+
         public MainWindow()
         {
             this.InitializeComponent();
             this.PresenterChanged += (s, e) => Log("PresenterChanged");
             this.PositionChanged += (s, e) => Log("PositionChanged");
             this.SetTitleBarBackgroundColors(Microsoft.UI.Colors.CornflowerBlue);
-           
+
             monitor = new WindowMessageMonitor(this);
             var monitors = MonitorInfo.GetDisplayMonitors();
             foreach (var monitor in monitors.Reverse())
                 Log("  - " + monitor.ToString());
             Log($"{monitors.Count} monitors detected");
+            if (!Microsoft.UI.Composition.SystemBackdrops.MicaController.IsSupported())
+                backdropSelector.SelectedIndex = 0; // Backdrops doesn't work on Windows 10.
         }
 
         private void Log(string message)

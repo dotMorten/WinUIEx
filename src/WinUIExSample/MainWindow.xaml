@@ -31,10 +31,10 @@
                     <ComboBoxItem>Compact</ComboBoxItem>
                     <ComboBoxItem>Fullscren</ComboBoxItem>
                 </ComboBox>
-                <ComboBox Header="Backdrop" SelectedIndex="2" SelectionChanged="Backdrop_SelectionChanged">
+                <ComboBox x:Name="backdropSelector" Header="Backdrop" SelectedIndex="2" SelectionChanged="Backdrop_SelectionChanged">
                     <ComboBoxItem>Default</ComboBoxItem>
-                    <ComboBoxItem>Acrylic</ComboBoxItem>
-                    <ComboBoxItem>Mica</ComboBoxItem>
+                    <ComboBoxItem>Acrylic (Windows 11 only)</ComboBoxItem>
+                    <ComboBoxItem>Mica (Windows 11 only)</ComboBoxItem>
                 </ComboBox>
             </StackPanel>
         </ScrollViewer>

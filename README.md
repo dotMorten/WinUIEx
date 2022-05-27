@@ -18,7 +18,6 @@ A set of extension methods and classes to fill some gaps in WinUI 3, mostly arou
   - [Splash Screens](docs/concepts/Splashscreen.md)
   - [OAuth Web Authentication](docs/concepts/WebAuthenticator.md)
   - [UI Test Tooling for easy UI Testing](docs/concepts/UITests.md)
-  - [Tray Icon support](docs/concepts/TrayIcon.md)
 
 
 And more to come...

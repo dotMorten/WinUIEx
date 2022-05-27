@@ -4,8 +4,6 @@
   href: WindowExtensions.md
 - name: HWND Extension Methods
   href: HwndExtensions.md
-- name: Tray Icon
-  href: TrayIcon.md
 - name: Window Message Monitor
   href: WindowMessageMonitor.md
 - name: Splash Screen

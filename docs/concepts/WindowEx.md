@@ -2,7 +2,6 @@
 
 Make your window class inherit from `WinUIEx.WindowEx` instead of `Window` and you get new features like:
  - Set Title in XAML.
- - Set custom TitleBar content in XAML.
  - Width and Height get/set properties, and correctly adjusting for system DPI.
  - Minimum Width and Height get/set properties.
  - Set TaskBarIcon.
@@ -31,6 +30,5 @@ to
 ```
 
 ## Object Model
-
-![image](https://user-images.githubusercontent.com/1378165/145076790-1c09c2cb-e2b8-4485-ac89-2b27b0ae1aae.png)
+![image](https://user-images.githubusercontent.com/1378165/170792197-0cfd9c54-6682-4b82-98fd-9f4e069db599.png)
 

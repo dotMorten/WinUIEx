@@ -219,6 +219,7 @@ namespace WinUIEx
         /// Gets or sets the title bar content 
         /// </summary>
         /// <value>The title bar content.</value>
+        [Obsolete("TitleBar has been obsoleted, and will be removed in a future release. Use the SetTitleBar method and ExtendsContentIntoTitleBar property instead.")]
         public UIElement? TitleBar
         {
             get { return titleBarContainer.Content as UIElement; }

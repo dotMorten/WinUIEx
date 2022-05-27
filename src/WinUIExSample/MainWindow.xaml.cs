@@ -79,61 +79,10 @@ namespace WinUIExSample
             this.Restore();
         }
 
-        private TrayIcon tray;
-
-        private void ToggleTrayIcon_Click(object sender, RoutedEventArgs e)
-        {
-            if (tray is null)
-            {
-                var icon = Icon.FromFile("Images/WindowIcon.ico");
-                tray = new TrayIcon(icon, "WinUIEx Tray Icon");
-                tray.TrayIconLeftMouseDown += (s, e) => this.BringToFront();
-            }
-            else
-            {
-                tray.Dispose();
-                tray = null;
-            }
-        }
-
-        private void MinimizeTrayIcon_Click(object sender, RoutedEventArgs e)
-        {
-            tray?.Dispose();
-            var icon = Icon.FromFile("Images/WindowIcon.ico");
-            tray = new TrayIcon(icon, "WinUIEx Tray Icon - Click to restore");
-            tray.TrayIconLeftMouseDown += (s, e) =>
-            {
-                this.Show();
-                ((TrayIcon)s).Dispose();
-                tray = null;
-            };
-            this.Hide();
-        }
-
         private async void BringToFront_Click(object sender, RoutedEventArgs e)
         {
             await Task.Delay(2000);
             this.BringToFront();
-        }
-
-        private void CustomTitleBar_Toggled(object sender, RoutedEventArgs e)
-        {
-            if (((ToggleSwitch)sender).IsOn)
-            {
-#if EXPERIMENTAL
-                StackPanel stackPanel = new StackPanel() { Orientation = Orientation.Horizontal };
-                stackPanel.Children.Add(new TextBlock() { Text = Title, FontSize = 24, Foreground = new SolidColorBrush(Microsoft.UI.Colors.Red) });
-                stackPanel.Children.Add(new TextBox() { PlaceholderText = "Search", Width = 150, Margin = new Thickness(50,0,20,0), VerticalAlignment = VerticalAlignment.Center } );
-                stackPanel.Children.Add(new Button() { Content = "OK", VerticalAlignment = VerticalAlignment.Center });
-                TitleBar = stackPanel;
-#else
-                TitleBar = new TextBlock() { Text = Title, FontSize = 24, Foreground = new SolidColorBrush(Microsoft.UI.Colors.Red) };
-#endif
-            }
-            else
-            {
-                TitleBar = null;
-            }
         }
 
         private void Presenter_SelectionChanged(object sender, SelectionChangedEventArgs e)

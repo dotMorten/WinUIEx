@@ -20,6 +20,8 @@
     <PackageReleaseNotes>
         - Added Mica and Acrylic Backdrop properties to WindowEx.
         - Upgraded Windows App SDK dependency to v1.1.0.
+		- Deprecated: `WindowEx.TitleBar`. Use `Window.SetTitleBar` and `Window.ExtendsIntoTitleBar`.
+		- Deprecated: `TrayIcon`.
     </PackageReleaseNotes>
   </PropertyGroup>
 

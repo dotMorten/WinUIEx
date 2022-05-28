@@ -18,8 +18,9 @@
     <PackageId>WinUIEx</PackageId>
     <Product>WinUI Extensions</Product>
     <PackageReleaseNotes>
-        - Preserve the state parameter in the WebAuthenticator.
-    </PackageReleaseNotes>
+		- Deprecated: `WindowEx.TitleBar`. Use `Window.SetTitleBar` and `Window.ExtendsIntoTitleBar`.
+		- Deprecated: `TrayIcon`.
+	</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>

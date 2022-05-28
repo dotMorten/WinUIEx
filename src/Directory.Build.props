@@ -1,5 +1,10 @@
 <Project>
 
+  <PropertyGroup>
+    <WinAppSDKVersion>1.0.1</WinAppSDKVersion>
+    <DefineConstants Condition="$([MSBuild]::VersionGreaterThanOrEquals('$(WinAppSDKVersion)','1.1-a'))">$(DefineConstants);WINAPPSDK_1_1_OR_NEWER</DefineConstants>
+  </PropertyGroup>
+
   <PropertyGroup Label="PackageInfo" Condition="'$(PackageId)'!=''">
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://dotmorten.github.io/WinUIEx</PackageProjectUrl>
@@ -12,9 +17,7 @@
     <Authors>Morten Nielsen - https://xaml.dev</Authors>
     <Company>Morten Nielsen - https://xaml.dev</Company>
     <PackageIcon>logo.png</PackageIcon>
-    <Version>1.4.2</Version>
-    <WinAppSDKVersion>1.0.1</WinAppSDKVersion>
-    <DefineConstants Condition="$([MSBuild]::VersionGreaterThanOrEquals('$(WinAppSDKVersion)','1.1-a'))">$(DefineConstants);WINAPPSDK_1_1_OR_NEWER</DefineConstants>
+    <Version>1.4.3</Version>
   </PropertyGroup>
 
   <ItemGroup Condition="'$(PackageId)'!=''">

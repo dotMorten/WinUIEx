@@ -1,16 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
 using System.Threading.Tasks;
-using Microsoft.UI.Input;
 using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Automation.Peers;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Markup;
-using Microsoft.UI.Xaml.Media;
-using WinUIEx.Messaging;
 
 namespace WinUIEx
 {
@@ -49,9 +42,6 @@ namespace WinUIEx
             titleBarContainer = new ContentControl() { VerticalAlignment = VerticalAlignment.Stretch, VerticalContentAlignment = VerticalAlignment.Stretch };
             Grid.SetColumn(titleBarContainer, 1);
             titleBarArea.Children.Add(titleBarContainer);
-#if EXPERIMENTAL
-            titleBarContainer.SizeChanged += (s,e) => UpdateDragRectangles();
-#endif
 
             windowArea = new ContentControl()
             {
@@ -175,69 +165,21 @@ namespace WinUIEx
             }
         }
 
-#if EXPERIMENTAL
-        private void UpdateDragRectangles()
+        /// <summary>
+        /// Gets or sets a unique ID used for saving and restoring window size and position
+        /// across sessions.
+        /// </summary>
+        /// <remarks>
+        /// The ID must be set before the window activates. The window size and position
+        /// will only be restored if the monitor layout hasn't changed between application settings.
+        /// The property uses ApplicationData storage, and therefore is currently only functional for
+        /// packaged applications.
+        /// </remarks>
+        public string? PersistenceId
         {
-            if (base.ExtendsContentIntoTitleBar)
-            {
-                var ri = AppWindow.TitleBar.RightInset;
-                var li = AppWindow.TitleBar.LeftInset;
-                var _width = AppWindow.Size.Width;
-                var _height = AppWindow.Size.Height;
-                List<Windows.Foundation.Rect> bounds = new List<Windows.Foundation.Rect>();
-                if (TitleBar is not null)
-                {
-                    var transform = TitleBar.TransformToVisual((UIElement)Content);
-                    foreach (var elm in GetInteractiveUIElement(TitleBar))
-                    {
-                        if (elm.ActualSize.X > 0 && elm.ActualSize.Y > 0)
-                        {
-                            var bound = transform.TransformBounds(new Windows.Foundation.Rect(elm.ActualOffset.X, elm.ActualOffset.Y, elm.ActualSize.X, elm.ActualSize.Y));
-                            bounds.Add(bound);
-                        }
-                    }
-                }
-                double start = 0;
-                var height = TitleBar?.ActualSize.Y ?? 0;
-                if (height == 0) return;
-                List<Windows.Graphics.RectInt32> rects = new List<Windows.Graphics.RectInt32>(1);
-                foreach (var bound in bounds)
-                {
-                    if (bound.X > start)
-                    {
-                        var w = bound.Width;
-                        if (w + bound.X > _width)
-                            w = _width - bound.X;
-                        if (w > 0)
-                        {
-                            rects.Add(new Windows.Graphics.RectInt32((int)start, 0, (int)(bound.X - start), (int)height));
-                            start = bound.X + w;
-                        }
-                    }
-                }
-                if(start < _width)
-                    rects.Add(new Windows.Graphics.RectInt32((int)start, 0, (int)(_width - start), (int)height));
-                AppWindow.TitleBar.SetDragRectangles(rects.ToArray());
-            }
-
+            get => _manager.PersistenceId;
+            set => _manager.PersistenceId = value;
         }
-        private static IEnumerable<FrameworkElement> GetInteractiveUIElement(UIElement element)
-        {
-            if (element is Panel panel)
-            {
-                foreach (var child in panel.Children)
-                {
-                    foreach (var ce in GetInteractiveUIElement(child))
-                        yield return ce;
-                }
-            }
-            else if (element is FrameworkElement fe && fe.IsHitTestVisible)
-            {
-                if (element is Microsoft.UI.Xaml.Controls.Primitives.ButtonBase || element is TextBox)
-                    yield return fe;
-            }
-        }
-#endif
 
         /// <summary>
         /// Gets or sets the Window content 

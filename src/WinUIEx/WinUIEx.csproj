@@ -18,8 +18,7 @@
     <PackageId>WinUIEx</PackageId>
     <Product>WinUI Extensions</Product>
     <PackageReleaseNotes>
-		- Deprecated: `WindowEx.TitleBar`. Use `Window.SetTitleBar` and `Window.ExtendsIntoTitleBar`.
-		- Deprecated: `TrayIcon`.
+		- Added `WindowEx.PersistenceId` to allow persisting window size and position across sessions.
 	</PackageReleaseNotes>
   </PropertyGroup>
 

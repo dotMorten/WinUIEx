@@ -24,8 +24,8 @@ namespace WinUIEx
         private readonly Image iconArea;
         private readonly ContentControl titleBarContainer;
         private readonly ContentControl windowArea;
-        private readonly WindowMessageMonitor mon;
         private readonly Microsoft.UI.Windowing.OverlappedPresenter overlappedPresenter;
+        private readonly WindowManager _manager;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="WindowEx"/> class.
@@ -63,43 +63,7 @@ namespace WinUIEx
 
             this.Content = rootContent;
             AppWindow.Changed += AppWindow_Changed;
-            mon = new WindowMessageMonitor(this);
-            mon.WindowMessageReceived += OnWindowMessage;
-        }
-
-        private unsafe void OnWindowMessage(object? sender, Messaging.WindowMessageEventArgs e)
-        {
-            switch(e.MessageType)
-            {
-                case WindowsMessages.WM_GETMINMAXINFO:
-                    {
-                        // Restrict min-size
-                        MINMAXINFO* rect2 = (MINMAXINFO*)e.Message.LParam;
-                        var currentDpi = this.GetDpiForWindow();
-                        rect2->ptMinTrackSize.x = (int)(Math.Max(MinWidth * (currentDpi / 96f), rect2->ptMinTrackSize.x));
-                        rect2->ptMinTrackSize.y = (int)(Math.Max(MinHeight * (currentDpi / 96f), rect2->ptMinTrackSize.y));
-                    }
-                    break;
-                case WindowsMessages.WM_DPICHANGED:
-                    {
-                        // Resize to account for DPI change
-                        var suggestedRect = (Windows.Win32.Foundation.RECT*)e.Message.LParam;
-                        bool result = Windows.Win32.PInvoke.SetWindowPos(new Windows.Win32.Foundation.HWND(this.GetWindowHandle()), new Windows.Win32.Foundation.HWND(), suggestedRect->left, suggestedRect->top,
-                            suggestedRect->right - suggestedRect->left, suggestedRect->bottom - suggestedRect->top, Windows.Win32.UI.WindowsAndMessaging.SET_WINDOW_POS_FLAGS.SWP_NOZORDER | Windows.Win32.UI.WindowsAndMessaging.SET_WINDOW_POS_FLAGS.SWP_NOACTIVATE);
-                        break;
-                    }
-            }
-        }
-
-        private struct MINMAXINFO
-        {
-#pragma warning disable CS0649
-            public Windows.Win32.Foundation.POINT ptReserved;
-            public Windows.Win32.Foundation.POINT ptMaxSize;
-            public Windows.Win32.Foundation.POINT ptMaxPosition;
-            public Windows.Win32.Foundation.POINT ptMinTrackSize;
-            public Windows.Win32.Foundation.POINT ptMaxTrackSize;
-#pragma warning restore CS0649
+            _manager = new WindowManager(this);
         }
 
         private void AppWindow_Changed(Microsoft.UI.Windowing.AppWindow sender, Microsoft.UI.Windowing.AppWindowChangedEventArgs args)
@@ -397,11 +361,8 @@ namespace WinUIEx
         /// </summary>
         public double Width
         {
-            get { return AppWindow.Size.Width / (this.GetDpiForWindow() / 96d); }
-            set
-            {
-                this.SetWindowSize(value, Height);
-            }
+            get => _manager.Width;
+            set => _manager.Width = value;
         }
 
         /// <summary>
@@ -409,14 +370,9 @@ namespace WinUIEx
         /// </summary>
         public double Height
         {
-            get { return AppWindow.Size.Height / (this.GetDpiForWindow() / 96d); }
-            set
-            {
-                this.SetWindowSize(Width, value);
-            }
+            get => _manager.Height;
+            set => _manager.Height = value;
         }
-
-        private double _minWidth = 136;
 
         /// <summary>
         /// Gets or sets the minimum width of this window
@@ -424,16 +380,9 @@ namespace WinUIEx
         /// <remarks>A window is currently set to a minimum of 139 pixels.</remarks>
         public double MinWidth
         {
-            get => _minWidth; 
-            set
-            {
-                _minWidth = value;
-                if (Width < value)
-                    Width = value;
-            }
+            get => _manager.MinWidth;
+            set => _manager.MinWidth = value;
         }
-
-        private double _minHeight = 39;
 
         /// <summary>
         /// Gets or sets the minimum height of this window
@@ -441,12 +390,8 @@ namespace WinUIEx
         /// <remarks>A window is currently set to a minimum of 39 pixels.</remarks>
         public double MinHeight
         {
-            get => _minHeight;
-            set {
-                _minHeight = value;
-                if (Height < value)
-                    Height = value;
-            }
+            get => _manager.MinHeight;
+            set => _manager.MinHeight = value;
         }
 
         /// <summary>

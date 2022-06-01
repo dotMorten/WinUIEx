@@ -10,4 +10,4 @@ A set of extension methods and classes to fill some gaps in WinUI 3, mostly arou
   - [Extended `WindowEx` Window class](https://dotmorten.github.io/WinUIEx/concepts/WindowEx.html)
   - [Windows Message Monitor](https://dotmorten.github.io/WinUIEx/concepts/WindowMessageMonitor.html)
   - [UI Test Tooling for easy UI Testing](https://dotmorten.github.io/WinUIEx/concepts/UITests.html)
-  - [Tray Icon support](https://dotmorten.github.io/WinUIEx/concepts/TrayIcon.html)
+  - [OAuth Web Authenticator](https://dotmorten.github.io/WinUIEx/concepts/WebAuthenticator.html)

@@ -18,6 +18,7 @@
     <PackageId>WinUIEx</PackageId>
     <Product>WinUI Extensions</Product>
     <PackageReleaseNotes>
+		- Added `WindowEx.PersistenceId` to allow persisting window size and position across sessions.
         - Added Mica and Acrylic Backdrop properties to WindowEx.
         - Upgraded Windows App SDK dependency to v1.1.0.
     </PackageReleaseNotes>

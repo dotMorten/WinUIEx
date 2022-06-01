@@ -24,7 +24,7 @@ jobs:
         DOCFXVERSION: 2.58
 
     - name: Install .NET OMD Generator
-      run: dotnet tool install --tool-path .tools/omd dotMorten.OmdGenerator --version 1.3.1
+      run: dotnet tool install --tool-path .tools/omd dotMorten.OmdGenerator --version 1.4.0
     
     - name: Generate OMD
       run: |

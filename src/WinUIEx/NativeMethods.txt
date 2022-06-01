@@ -39,3 +39,5 @@ MONITORINFOEXW
 SetWindowSubclass
 RemoveWindowSubclass
 DefSubclassProc 
+GetWindowPlacement
+SetWindowPlacement

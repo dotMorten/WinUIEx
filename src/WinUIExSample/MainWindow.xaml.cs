@@ -35,7 +35,7 @@ namespace WinUIExSample
             this.PresenterChanged += (s, e) => Log("PresenterChanged");
             this.PositionChanged += (s, e) => Log("PositionChanged");
             this.SetTitleBarBackgroundColors(Microsoft.UI.Colors.CornflowerBlue);
-
+            PersistenceId = "MainWindow";
             monitor = new WindowMessageMonitor(this);
             var monitors = MonitorInfo.GetDisplayMonitors();
             foreach (var monitor in monitors.Reverse())

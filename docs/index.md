@@ -30,6 +30,5 @@ See here for details: https://github.com/sponsors/dotMorten
 
 Read the [Overview](concepts/index.md) notes
 
-
-![image](https://user-images.githubusercontent.com/1378165/108465563-1e2d8700-7237-11eb-8eb4-736644606a64.png)
+![image](https://user-images.githubusercontent.com/1378165/171925868-5783b70d-3942-4911-8c77-86df696a7b97.png)
 

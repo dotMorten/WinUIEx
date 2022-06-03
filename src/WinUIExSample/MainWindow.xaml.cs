@@ -28,7 +28,7 @@ namespace WinUIExSample
     {
         private readonly Queue<string> windowEvents = new Queue<string>();
         private readonly WindowMessageMonitor monitor;
-        
+
         public MainWindow()
         {
             this.InitializeComponent();
@@ -41,6 +41,8 @@ namespace WinUIExSample
             foreach (var monitor in monitors.Reverse())
                 Log("  - " + monitor.ToString());
             Log($"{monitors.Count} monitors detected");
+            if (!Microsoft.UI.Composition.SystemBackdrops.MicaController.IsSupported())
+                backdropSelector.SelectedIndex = 0; // Backdrops doesn't work on Windows 10.
         }
 
         private void Log(string message)
@@ -118,6 +120,16 @@ namespace WinUIExSample
         private void WindowMessageReceived(object sender, WindowMessageEventArgs e)
         {
             Log(e.Message.ToString());
+        }
+
+        private void Backdrop_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            switch(((ComboBox)sender).SelectedIndex)
+            {
+                case 1: this.Backdrop = Backdrop.Acrylic; break;
+                case 2: this.Backdrop = Backdrop.Mica; break;
+                default: this.Backdrop = Backdrop.Default; break;
+            }
         }
     }
 }

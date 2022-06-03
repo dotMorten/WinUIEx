@@ -52,8 +52,15 @@ namespace WinUIEx
             rootContent.Children.Add(windowArea);
 
             this.Content = rootContent;
+            rootContent.Loaded += RootContent_Loaded;
             AppWindow.Changed += AppWindow_Changed;
             _manager = new WindowManager(this);
+        }
+
+        private void RootContent_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (Backdrop != Backdrop.Default)
+                InitBackdrop();
         }
 
         private void AppWindow_Changed(Microsoft.UI.Windowing.AppWindow sender, Microsoft.UI.Windowing.AppWindowChangedEventArgs args)
@@ -89,19 +96,43 @@ namespace WinUIEx
         /// <param name="cancelCommandIndex">The index of the command you want to use as the cancel command. This is the command that fires when users press the ESC key.</param>
         /// <param name="title">The title to display on the dialog, if any.</param>
         /// <returns>An object that represents the asynchronous operation.</returns>
-        public Task<Windows.UI.Popups.IUICommand> ShowMessageDialogAsync(string content, IList<Windows.UI.Popups.IUICommand>? commands, uint defaultCommandIndex = 0, uint cancelCommandIndex = 1, string title = "")
+        public async Task<Windows.UI.Popups.IUICommand> ShowMessageDialogAsync(string content, IList<Windows.UI.Popups.IUICommand>? commands, uint defaultCommandIndex = 0, uint cancelCommandIndex = 1, string title = "")
         {
-            var dialog = this.CreateMessageDialog(content, title);
+            if (commands != null && commands.Count > 3)
+                throw new InvalidOperationException("A maximum of 3 commands can be specified");
+
+            Windows.UI.Popups.IUICommand defaultCommand = new Windows.UI.Popups.UICommand("OK");
+            Windows.UI.Popups.IUICommand? secondaryCommand = null;
+            Windows.UI.Popups.IUICommand? cancelCommand = null;
             if (commands != null)
             {
-                foreach (var command in commands)
-                    dialog.Commands.Add(command);
-                if (commands.Count > defaultCommandIndex)
-                    dialog.DefaultCommandIndex = defaultCommandIndex;
-                if (commands.Count > cancelCommandIndex && cancelCommandIndex != defaultCommandIndex)
-                    dialog.CancelCommandIndex = cancelCommandIndex;
+                defaultCommand = commands.Count > defaultCommandIndex ? commands[(int)defaultCommandIndex] : commands.FirstOrDefault() ?? defaultCommand;
+                cancelCommand = commands.Count > cancelCommandIndex ? commands[(int)cancelCommandIndex] : null;
+                secondaryCommand = commands.Where(c => c != defaultCommand && c != cancelCommand).FirstOrDefault();
             }
-            return dialog.ShowAsync().AsTask();
+            var dialog = new ContentDialog() { XamlRoot = Content.XamlRoot };
+            dialog.Content = new TextBlock() { Text = content };
+            dialog.Title = title;
+            dialog.PrimaryButtonText = defaultCommand.Label;
+            if (secondaryCommand != null)
+            {
+                dialog.SecondaryButtonText = secondaryCommand.Label;
+            }
+            if (cancelCommand != null)
+            {
+                dialog.CloseButtonText = cancelCommand.Label;
+            }
+            var result = await dialog.ShowAsync();
+            switch (result)
+            {
+                case ContentDialogResult.Primary:
+                    return defaultCommand;
+                case ContentDialogResult.Secondary:
+                    return secondaryCommand!;
+                case ContentDialogResult.None:
+                default:
+                    return cancelCommand ?? new Windows.UI.Popups.UICommand();
+            }
         }
 
         /// <summary>

@@ -1,40 +1,26 @@
-﻿using System.Runtime.InteropServices;
-using WinRT;
-using Microsoft.UI.Composition.SystemBackdrops;
+﻿using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
+using System;
+using System.Runtime.InteropServices;
+using Windows.Storage;
+using WinUIEx.Messaging;
+using Windows.Win32.UI.WindowsAndMessaging;
+using Microsoft.UI.Composition.SystemBackdrops;
+using WinRT;
 
 namespace WinUIEx
 {
     /// <summary>
-    /// The backdrop type to apply to a <see cref="WindowEx"/> window.
+    /// Manages Window size, and ensures window correctly resizes during DPI changes to keep consistent
+    /// DPI-independent sizing.
     /// </summary>
-    /// <seealso cref="WindowEx.Backdrop"/>
-    public enum Backdrop
+    internal partial class WindowManager : IDisposable
     {
-        /// <summary>
-        /// No backdrop applied
-        /// </summary>
-        Default,
-
-        /// <summary>
-        /// Acrylic semi-transparent backdrop
-        /// </summary>
-        Acrylic,
-
-        /// <summary>
-        /// Mica backdrop
-        /// </summary>
-        Mica
-    }
-
-    public partial class WindowEx
-    {
-        object m_dispatcherQueueController = null;
-        ISystemBackdropController? currentController;
-
-        SystemBackdropConfiguration Configuration;
-       
-        private Backdrop m_Backdrop;
+        private object m_dispatcherQueueController = null;
+        private ISystemBackdropController? currentController;
+        private SystemBackdropConfiguration BackdropConfiguration;
+        private Backdrop m_backdrop;
+        private Backdrop m_currentBackdrop = Backdrop.Default;
 
         /// <summary>
         /// Gets or sets the system backdrop of the window.
@@ -42,13 +28,13 @@ namespace WinUIEx
         /// </summary>
         public Backdrop Backdrop
         {
-            get => m_Backdrop;
+            get => m_backdrop;
             set
             {
-                if (m_Backdrop != value)
+                if (m_backdrop != value)
                 {
-                    m_Backdrop = value;
-                    if (this.Visible)
+                    m_backdrop = value;
+                    if (_window.Visible)
                         InitBackdrop();
                 }
             }
@@ -56,7 +42,8 @@ namespace WinUIEx
 
         private void InitBackdrop()
         {
-            if (m_Backdrop == Backdrop.Default ||
+            if (m_currentBackdrop == m_backdrop) return;
+            if (m_backdrop == Backdrop.Default ||
                 Backdrop == Backdrop.Acrylic && !DesktopAcrylicController.IsSupported() ||
                 Backdrop == Backdrop.Mica && !MicaController.IsSupported())
             {
@@ -64,53 +51,53 @@ namespace WinUIEx
                 return;
             }
 
-            if (Configuration is null)
+            if (BackdropConfiguration is null)
             {
                 EnsureDispatcherQueueController();
-                Configuration = new SystemBackdropConfiguration();
-                this.Activated += (s, args) =>
-                {
-                    if (Configuration != null)
-                        Configuration.IsInputActive = args.WindowActivationState != Microsoft.UI.Xaml.WindowActivationState.Deactivated;
-                };
+                BackdropConfiguration = new SystemBackdropConfiguration();
 
-                var rootElement = windowArea as Microsoft.UI.Xaml.FrameworkElement;
+                var rootElement = _window.Content as FrameworkElement;
                 if (rootElement is not null)
                 {
+                    // This should probably be weak in the rare event the root content changes
+                    // Unfortunately there's no good event to detect changes though.
                     rootElement.ActualThemeChanged += (s, e) =>
                     {
-                        if (Configuration != null)
-                            Configuration.Theme = ConvertToSystemBackdropTheme(rootElement.ActualTheme);
+                        if (BackdropConfiguration != null)
+                            BackdropConfiguration.Theme = ConvertToSystemBackdropTheme(rootElement.ActualTheme);
                     };
 
                     // Initial state.
-                    Configuration.Theme = ConvertToSystemBackdropTheme(rootElement.ActualTheme);
+                    BackdropConfiguration.Theme = ConvertToSystemBackdropTheme(rootElement.ActualTheme);
                 }
-                this.Closed += (s,e) => CleanUpBackdrop();
             }
-            if(currentController != null)
+            if (currentController != null)
             {
                 currentController.Dispose();
                 currentController = null;
             }
-            if(Backdrop == Backdrop.Acrylic)
+            if (Backdrop == Backdrop.Acrylic)
             {
                 var m_acrylicController = new DesktopAcrylicController();
-                m_acrylicController.AddSystemBackdropTarget(this.As<Microsoft.UI.Composition.ICompositionSupportsSystemBackdrop>());
-                m_acrylicController.SetSystemBackdropConfiguration(Configuration);
+                m_acrylicController.AddSystemBackdropTarget(_window.As<Microsoft.UI.Composition.ICompositionSupportsSystemBackdrop>());
+                m_acrylicController.SetSystemBackdropConfiguration(BackdropConfiguration);
                 currentController = m_acrylicController;
             }
-            else if(Backdrop == Backdrop.Mica)
+            else if (Backdrop == Backdrop.Mica)
             {
                 var m_micaController = new MicaController();
-                m_micaController.SetSystemBackdropConfiguration(Configuration);
-                m_micaController.AddSystemBackdropTarget(this.As<Microsoft.UI.Composition.ICompositionSupportsSystemBackdrop>());
+                m_micaController.SetSystemBackdropConfiguration(BackdropConfiguration);
+                m_micaController.AddSystemBackdropTarget(_window.As<Microsoft.UI.Composition.ICompositionSupportsSystemBackdrop>());
                 currentController = m_micaController;
             }
+            m_currentBackdrop = m_backdrop;
         }
+
         private void CleanUpBackdrop()
         {
             currentController?.Dispose();
+            currentController = null;
+            m_currentBackdrop = Backdrop.Default;
         }
 
         private void EnsureDispatcherQueueController()
@@ -149,5 +136,6 @@ namespace WinUIEx
 
         [DllImport("CoreMessaging.dll")]
         private static extern int CreateDispatcherQueueController([In] DispatcherQueueOptions options, [In, Out, MarshalAs(UnmanagedType.IUnknown)] ref object dispatcherQueueController);
+
     }
 }

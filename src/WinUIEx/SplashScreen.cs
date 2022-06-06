@@ -12,36 +12,47 @@ namespace WinUIEx
     public class SplashScreen : Window
     {
         private Window? _window;
-        private Type? _windowType;        
+        private Type? _windowType;
+        private readonly WindowManager _manager;
 
         /// <summary>
         /// Creates and activates a new splashscreen, and opens the specified window once complete.
         /// </summary>
         /// <param name="window">Window to open once splash screen is complete</param>
-        public SplashScreen(Window window)
+        public SplashScreen(Window window) : this()
         {
             _window = window ?? throw new ArgumentNullException(nameof(window));
-            this.Activated += SplashScreen_Activated;
-            this.DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Normal, () =>
-            {
-                this.Activate();
-            });
         }
 
         /// <summary>
         /// Creates and activates a new splashscreen, and creates and opens the specified window type once complete.
         /// </summary>
         /// <param name="window">Type of window to create. Must have an empty constructor</param>
-        public SplashScreen(Type window)
+        public SplashScreen(Type window) : this()
         {
             if (!window.IsSubclassOf(typeof(Window)) && window != typeof(Window))
                 throw new ArgumentException("Type must be a Window");
             _windowType = window ?? throw new ArgumentNullException(nameof(window));
+        }
+
+        private SplashScreen()
+        {
             this.Activated += SplashScreen_Activated;
             this.DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Normal, () =>
             {
                 this.Activate();
             });
+            _manager = new WindowManager(this);
+        }
+
+        /// <summary>
+        /// Gets or sets the system backdrop of the window.
+        /// Note: Windows 10 doesn't support these, so will fall back to default backdrop.
+        /// </summary>
+        public Backdrop Backdrop
+        {
+            get => _manager.Backdrop;
+            set => _manager.Backdrop = value;
         }
 
         private async void Content_Loaded(object sender, RoutedEventArgs e)

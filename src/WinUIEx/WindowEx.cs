@@ -53,15 +53,8 @@ namespace WinUIEx
             rootContent.Children.Add(windowArea);
 
             this.Content = rootContent;
-            rootContent.Loaded += RootContent_Loaded;
             AppWindow.Changed += AppWindow_Changed;
             _manager = new WindowManager(this);
-        }
-
-        private void RootContent_Loaded(object sender, RoutedEventArgs e)
-        {
-            if (Backdrop != Backdrop.Default)
-                InitBackdrop();
         }
 
         private void AppWindow_Changed(Microsoft.UI.Windowing.AppWindow sender, Microsoft.UI.Windowing.AppWindowChangedEventArgs args)
@@ -366,6 +359,16 @@ namespace WinUIEx
         {
             get => _manager.MinHeight;
             set => _manager.MinHeight = value;
+        }
+
+        /// <summary>
+        /// Gets or sets the system backdrop of the window.
+        /// Note: Windows 10 doesn't support these, so will fall back to default backdrop.
+        /// </summary>
+        public Backdrop Backdrop
+        {
+            get => _manager.Backdrop;
+            set => _manager.Backdrop = value;
         }
 
         /// <summary>

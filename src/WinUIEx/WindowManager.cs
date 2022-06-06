@@ -12,7 +12,7 @@ namespace WinUIEx
     /// Manages Window size, and ensures window correctly resizes during DPI changes to keep consistent
     /// DPI-independent sizing.
     /// </summary>
-    internal class WindowManager : IDisposable
+    internal partial class WindowManager : IDisposable
     {
         private readonly WindowMessageMonitor _monitor;
         private readonly Window _window;
@@ -38,10 +38,18 @@ namespace WinUIEx
             _window.DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.High, () =>
             {
                 LoadPersistence();
+                InitBackdrop();
             });
+            if (BackdropConfiguration != null)
+                BackdropConfiguration.IsInputActive = args.WindowActivationState != WindowActivationState.Deactivated;
+
         }
 
-        private void Window_Closed(object sender, WindowEventArgs args) => SavePersistence();
+        private void Window_Closed(object sender, WindowEventArgs args)
+        {
+            SavePersistence();
+            CleanUpBackdrop();
+        }
 
         /// <summary>
         /// Finalizer

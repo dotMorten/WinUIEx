@@ -16,9 +16,9 @@ namespace WinUIEx
     /// </summary>
     internal partial class WindowManager : IDisposable
     {
-        private object m_dispatcherQueueController = null;
+        private object? m_dispatcherQueueController = null;
         private ISystemBackdropController? currentController;
-        private SystemBackdropConfiguration BackdropConfiguration;
+        private SystemBackdropConfiguration? BackdropConfiguration;
         private Backdrop m_backdrop;
         private Backdrop m_currentBackdrop = Backdrop.Default;
 

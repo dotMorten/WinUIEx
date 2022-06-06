@@ -5,6 +5,7 @@ using System.Runtime.InteropServices;
 using Windows.Storage;
 using WinUIEx.Messaging;
 using Windows.Win32.UI.WindowsAndMessaging;
+using Microsoft.UI;
 
 namespace WinUIEx
 {
@@ -16,7 +17,6 @@ namespace WinUIEx
     {
         private readonly WindowMessageMonitor _monitor;
         private readonly Window _window;
-        private readonly AppWindow _appWindow;
         
         public WindowManager(Window window) : this(window, new WindowMessageMonitor(window))
         {
@@ -25,11 +25,11 @@ namespace WinUIEx
         public WindowManager(Window window, WindowMessageMonitor monitor)
         {
             _window = window ?? throw new ArgumentNullException(nameof(window));
-            _appWindow = window.GetAppWindow();
             _monitor = monitor;
             _monitor.WindowMessageReceived += OnWindowMessage;
             _window.Activated += Window_Activated;
             _window.Closed += Window_Closed;
+            AppWindow.Changed += AppWindow_Changed;
         }
 
         private void Window_Activated(object sender, WindowActivatedEventArgs args)
@@ -69,12 +69,18 @@ namespace WinUIEx
         }
 
         /// <summary>
+        /// Gets a reference to the AppWindow for the app
+        /// </summary>
+        public Microsoft.UI.Windowing.AppWindow AppWindow => _window.GetAppWindow();
+
+
+        /// <summary>
         /// Gets or sets the width of the window.
         /// </summary>
         /// <value>The window width in device independent pixels.</value>
         public double Width
         {
-            get => _appWindow.Size.Width / (_window.GetDpiForWindow() / 96d);
+            get => AppWindow.Size.Width / (_window.GetDpiForWindow() / 96d);
             set => _window.SetWindowSize(value, Height);
         }
 
@@ -84,7 +90,7 @@ namespace WinUIEx
         /// <value>The window height in device independent pixels.</value>
         public double Height
         {
-            get => _appWindow.Size.Height / (_window.GetDpiForWindow() / 96d);
+            get => AppWindow.Size.Height / (_window.GetDpiForWindow() / 96d);
             set => _window.SetWindowSize(Width, value);
         }
 
@@ -259,5 +265,32 @@ namespace WinUIEx
             }
         }
         #endregion
+
+
+
+        private void AppWindow_Changed(Microsoft.UI.Windowing.AppWindow sender, Microsoft.UI.Windowing.AppWindowChangedEventArgs args)
+        {
+            if (args.DidPositionChange)
+                PositionChanged?.Invoke(this, sender.Position);
+            if (args.DidPresenterChange)
+                PresenterChanged?.Invoke(this, sender.Presenter);
+            if(args.DidZOrderChange)
+                ZOrderChanged?.Invoke(this, new ZOrderInfo() { IsZOrderAtTop = args.IsZOrderAtTop, IsZOrderAtBottom = args.IsZOrderAtBottom, ZOrderBelowWindowId = args.ZOrderBelowWindowId });
+        }
+
+        /// <summary>
+        /// Raised if the window position changes.
+        /// </summary>
+        public event EventHandler<Windows.Graphics.PointInt32>? PositionChanged;
+
+        /// <summary>
+        /// Raised if the presenter for the window changes.
+        /// </summary>
+        public event EventHandler<AppWindowPresenter>? PresenterChanged;
+
+        /// <summary>
+        /// Raised if the Z order of the window changes.
+        /// </summary>
+        public event EventHandler<ZOrderInfo>? ZOrderChanged;
     }
 }

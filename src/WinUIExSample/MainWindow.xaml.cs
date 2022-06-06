@@ -6,6 +6,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Microsoft.UI.Dispatching;
+using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -15,6 +16,7 @@ using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Graphics;
 using Windows.UI.Notifications;
 using WinUIEx;
 using WinUIEx.Messaging;
@@ -32,8 +34,6 @@ namespace WinUIExSample
         public MainWindow()
         {
             this.InitializeComponent();
-            this.PresenterChanged += (s, e) => Log("PresenterChanged");
-            this.PositionChanged += (s, e) => Log("PositionChanged");
             this.SetTitleBarBackgroundColors(Microsoft.UI.Colors.CornflowerBlue);
             PersistenceId = "MainWindow";
             monitor = new WindowMessageMonitor(this);
@@ -45,6 +45,14 @@ namespace WinUIExSample
                 backdropSelector.SelectedIndex = 0; // Backdrops doesn't work on Windows 10.
         }
 
+        protected override void OnPositionChanged(PointInt32 position) => Log($"Position Changed: {position.X},{position.Y}");
+
+        protected override void OnPresenterChanged(AppWindowPresenter newPresenter) => Log($"Presenter Changed: {newPresenter.Kind}");
+        protected override bool OnSizeChanged(Size size)
+        {
+            Log($"Size Changed: {size.Width} x {size.Height}");
+            return base.OnSizeChanged(size);
+        }
         private void Log(string message)
         {
             if (!DispatcherQueue.HasThreadAccess)
@@ -58,7 +66,8 @@ namespace WinUIExSample
             windowEvents.Enqueue(message);
             if (windowEvents.Count > 100)
                 windowEvents.Dequeue();
-            WindowEventLog.Text = string.Join('\n', windowEvents.Reverse());
+            if (WindowEventLog != null)
+                WindowEventLog.Text = string.Join('\n', windowEvents.Reverse());
         }
 
         private void Center_Click(object sender, RoutedEventArgs e) => this.CenterOnScreen();

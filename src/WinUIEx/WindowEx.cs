@@ -26,8 +26,14 @@ namespace WinUIEx
         /// </summary>
         public WindowEx()
         {
+            _manager = new WindowManager(this);
             overlappedPresenter = Microsoft.UI.Windowing.OverlappedPresenter.Create();
             AppWindow.SetPresenter(overlappedPresenter);
+
+            _manager.PresenterChanged += (s, e) => { OnPresenterChanged(Presenter); PresenterChanged?.Invoke(this, e); };
+            _manager.PositionChanged += (s, e) => { OnPositionChanged(e); PositionChanged?.Invoke(this, e); };
+            _manager.ZOrderChanged += (s, e) => { OnZOrderChanged(e); ZOrderChanged?.Invoke(this, e); };
+            SizeChanged += (s, e) => { OnSizeChanged(e); };
             
             var rootContent = new Grid();
             rootContent.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Auto), MinHeight = 0 });
@@ -53,24 +59,6 @@ namespace WinUIEx
             rootContent.Children.Add(windowArea);
 
             this.Content = rootContent;
-            AppWindow.Changed += AppWindow_Changed;
-            _manager = new WindowManager(this);
-        }
-
-        private void AppWindow_Changed(Microsoft.UI.Windowing.AppWindow sender, Microsoft.UI.Windowing.AppWindowChangedEventArgs args)
-        {
-            if (args.DidPositionChange)
-                PositionChanged?.Invoke(this, EventArgs.Empty);
-            if(args.DidSizeChange)
-            {
-#if EXPERIMENTAL
-                UpdateDragRectangles();
-#endif
-            }
-            if(args.DidPresenterChange)
-            {
-                PresenterChanged?.Invoke(this, EventArgs.Empty);
-            }
         }
 
         /// <summary>
@@ -132,7 +120,7 @@ namespace WinUIEx
         /// <summary>
         /// Gets a reference to the AppWindow for the app
         /// </summary>
-        public Microsoft.UI.Windowing.AppWindow AppWindow => this.GetAppWindow();
+        public Microsoft.UI.Windowing.AppWindow AppWindow => _manager.AppWindow;
 
         /// <summary>
         /// Brings the window to the front
@@ -298,7 +286,7 @@ namespace WinUIEx
         }
 
         /// <summary>
-        /// Gets or sets the presenter for the current window
+        /// Gets the presenter for the current window
         /// </summary>
         /// <seealso cref="PresenterKind"/>
         /// <seealso cref="PresenterChanged"/>
@@ -371,16 +359,73 @@ namespace WinUIEx
             set => _manager.Backdrop = value;
         }
 
+        #region Window events and corresponding virtual methods
+
         /// <summary>
         /// Raised if the window position changes.
         /// </summary>
-        public event EventHandler? PositionChanged;
+        /// <seealso cref="Microsoft.UI.Windowing.AppWindow.Position"/>
+        public event EventHandler<Windows.Graphics.PointInt32>? PositionChanged;
 
         /// <summary>
-        /// Raised if the presenter for the window changes.
+        /// Called when the window position changed.
+        /// </summary>
+        /// <param name="position">The current position of the window in screen coordinates.</param>
+        /// <seealso cref="Microsoft.UI.Windowing.AppWindow.Position"/>
+        protected virtual void OnPositionChanged(Windows.Graphics.PointInt32 position)
+        {
+        }
+
+        /// <summary>
+        /// Raised if the presenter for the window changed.
         /// </summary>
         /// <seealso cref="Presenter"/>
         /// <seealso cref="PresenterKind"/>
-        public event EventHandler? PresenterChanged;
+        public event EventHandler<Microsoft.UI.Windowing.AppWindowPresenter>? PresenterChanged;
+
+        /// <summary>
+        /// Called when the presenter for the window changed.
+        /// </summary>
+        /// <param name="newPresenter">The new presenter.</param>
+        /// <seealso cref="Presenter"/>
+        /// <seealso cref="PresenterKind"/>
+        /// <seealso cref="Microsoft.UI.Windowing.AppWindow.Presenter"/>
+        protected virtual void OnPresenterChanged(Microsoft.UI.Windowing.AppWindowPresenter newPresenter)
+        {
+        }
+
+        /// <summary>
+        /// Raised if the Z order of the window changed.
+        /// </summary>
+        public event EventHandler<ZOrderInfo>? ZOrderChanged;
+
+        /// <summary>
+        /// Called when the Z order of the window changed.
+        /// </summary>
+        /// <param name="info">Object describing the current new ZOrder of the window</param>
+        protected virtual void OnZOrderChanged(ZOrderInfo info)
+        {
+        }
+
+        private void OnSizeChanged(WindowSizeChangedEventArgs e)
+        {
+            var dpi = this.GetDpiForWindow();
+            var result = OnSizeChanged(new Windows.Foundation.Size(e.Size.Width / dpi * 96, e.Size.Height / dpi * 96));
+            if (result)
+                e.Handled = true;
+        }
+
+        /// <summary>
+        /// Called when the size of the window changes.
+        /// </summary>
+        /// <param name="newSize">The new size of the window in device independent units.</param>
+        /// <returns>True if the resize event should be marked handled.</returns>
+        /// <remarks>
+        /// While this event is equivalent to the <see cref="Window.SizeChanged"/> event,
+        /// the units provided here are in device independent units and not screen pixels.
+        /// </remarks>
+        protected virtual bool OnSizeChanged(Windows.Foundation.Size newSize) => false;
+
+        #endregion Window events and corresponding virtual methods
     }
 }

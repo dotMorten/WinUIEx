@@ -147,7 +147,7 @@ namespace WinUIEx
                     {
                         // Resize to account for DPI change
                         var suggestedRect = (Windows.Win32.Foundation.RECT*)e.Message.LParam;
-                        bool result = Windows.Win32.PInvoke.SetWindowPos(new Windows.Win32.Foundation.HWND(_window.GetWindowHandle()), new Windows.Win32.Foundation.HWND(), suggestedRect->left, suggestedRect->top,
+                        e.Handled = Windows.Win32.PInvoke.SetWindowPos(new Windows.Win32.Foundation.HWND(_window.GetWindowHandle()), new Windows.Win32.Foundation.HWND(), suggestedRect->left, suggestedRect->top,
                             suggestedRect->right - suggestedRect->left, suggestedRect->bottom - suggestedRect->top, Windows.Win32.UI.WindowsAndMessaging.SET_WINDOW_POS_FLAGS.SWP_NOZORDER | Windows.Win32.UI.WindowsAndMessaging.SET_WINDOW_POS_FLAGS.SWP_NOACTIVATE);
                         break;
                     }

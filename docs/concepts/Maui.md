@@ -1,4 +1,4 @@
-## Using with .NET MAUI
+## Using WinUIEx with .NET MAUI
 
 ### Include WinUIEx package in Windows target
 

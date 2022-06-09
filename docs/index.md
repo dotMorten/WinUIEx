@@ -17,7 +17,12 @@ A set of extension methods and classes to fill some gaps in WinUI 3, mostly arou
   - [Splash screen](concepts/Splashscreen.md)
   - [OAuth Web Authenticator](concepts/WebAuthenticator.md)
 
+
 And more to come...
+
+### Conceptual Docs
+
+Read the [Conceptual docs here](concepts/index.md)
 
 ## Sponsoring
 

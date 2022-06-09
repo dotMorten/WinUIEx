@@ -45,6 +45,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "concepts", "concepts", "{0B
 	ProjectSection(SolutionItems) = preProject
 		..\docs\concepts\HwndExtensions.md = ..\docs\concepts\HwndExtensions.md
 		..\docs\concepts\index.md = ..\docs\concepts\index.md
+		..\docs\concepts\Maui.md = ..\docs\concepts\Maui.md
 		..\docs\concepts\Splashscreen.md = ..\docs\concepts\Splashscreen.md
 		..\docs\concepts\toc.yml = ..\docs\concepts\toc.yml
 		..\docs\concepts\TrayIcon.md = ..\docs\concepts\TrayIcon.md

@@ -359,6 +359,15 @@ namespace WinUIEx
             set => _manager.Backdrop = value;
         }
 
+
+        /// <summary>
+        /// Gets the active Backdrop controller
+        /// </summary>
+        /// <seealso cref="Backdrop"/>
+        /// <seealso cref="Microsoft.UI.Composition.SystemBackdrops.DesktopAcrylicController"/>
+        /// <seealso cref="Microsoft.UI.Composition.SystemBackdrops.MicaController"/>
+        public Microsoft.UI.Composition.SystemBackdrops.ISystemBackdropController? ActiveBackdropController => _manager.ActiveBackdropController;
+
         #region Window events and corresponding virtual methods
 
         /// <summary>

@@ -40,6 +40,8 @@ namespace WinUIEx
             }
         }
 
+        public ISystemBackdropController? ActiveBackdropController => currentController;
+
         private void InitBackdrop()
         {
             if (m_currentBackdrop == m_backdrop) return;

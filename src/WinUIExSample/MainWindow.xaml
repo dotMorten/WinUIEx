@@ -11,13 +11,18 @@
     Width="1024" Height="768"
     MinWidth="500" MinHeight="250"
     Backdrop="Mica"
-    mc:Ignorable="d">
+    mc:Ignorable="d" >
     
     <!--<winex:WindowEx.TitleBarIcon>
         <BitmapImage UriSource="ms-appx:///Images/WindowIcon.gif" DecodePixelHeight="32" />
     </winex:WindowEx.TitleBarIcon>-->
 
-    <Grid ColumnDefinitions="Auto,Auto,*" Margin="20">
+    <Grid Padding="20">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
         <ScrollViewer>
             <StackPanel>
                 <ToggleSwitch Header="Can Minimize" IsOn="{x:Bind IsMinimizable, Mode=TwoWay}" />
@@ -31,35 +36,46 @@
                     <ComboBoxItem>Compact</ComboBoxItem>
                     <ComboBoxItem>Fullscren</ComboBoxItem>
                 </ComboBox>
-                <ComboBox x:Name="backdropSelector" Header="Backdrop" SelectedIndex="2" SelectionChanged="Backdrop_SelectionChanged">
+                <ComboBox x:Name="backdropSelector" Header="Backdrop" SelectedIndex="2" SelectionChanged="Backdrop_SelectionChanged" Margin="0,5,0,0">
                     <ComboBoxItem>Default</ComboBoxItem>
                     <ComboBoxItem>Acrylic (Windows 11 only)</ComboBoxItem>
                     <ComboBoxItem>Mica (Windows 11 only)</ComboBoxItem>
                 </ComboBox>
+                <ComboBox x:Name="themeSelector" Header="Theme" SelectedIndex="0" SelectionChanged="Theme_SelectionChanged" Margin="0,5,0,0">
+                    <ComboBoxItem>Default</ComboBoxItem>
+                    <ComboBoxItem>Dark</ComboBoxItem>
+                    <ComboBoxItem>Light</ComboBoxItem>
+                </ComboBox>
             </StackPanel>
         </ScrollViewer>
-        <StackPanel Grid.Column="1">
-            <StackPanel.Resources>
-                <Style TargetType="Button">
-                    <Setter Property="HorizontalAlignment" Value="Stretch" />
-                    <Setter Property="Margin" Value="5" />
-                </Style>
-            </StackPanel.Resources>
-            <TextBox Header="Title:" Text="{x:Bind Title, Mode=TwoWay}" />
-            <Slider Header="Minimum Width" Maximum="1024" Minimum="136" Value="{x:Bind MinWidth, Mode=TwoWay}" />
-            <Slider Header="Minimum Height" Maximum="768" Minimum="39" Value="{x:Bind MinHeight, Mode=TwoWay}" />
-            <Button Content="Center On Screen" Click="Center_Click" />
-            <Button Content="Maximize" Click="MaximizeWindow_Click" />
-            <Button Content="Restore" Click="RestoreWindow_Click" />
-            <Button Content="Minimize + Restore (2 second delay)" Click="MinimizeWindow_Click" />
-            <Button Content="Hide + Restore (2 second delay)" Click="HideWindow_Click" />
-            <Button Content="Bring to front (2 second delay)" Click="BringToFront_Click" />
-            <Button Content="Show dialog" Click="ShowDialog_Click" />
-        </StackPanel>
-        <Grid Grid.Column="2" RowDefinitions="Auto,*" >
+        <ScrollViewer Grid.Column="1" Padding="5,0">
+            <StackPanel >
+                <StackPanel.Resources>
+                    <Style TargetType="Button">
+                        <Setter Property="HorizontalAlignment" Value="Stretch" />
+                        <Setter Property="Margin" Value="5" />
+                    </Style>
+                </StackPanel.Resources>
+                <TextBox Header="Title:" Text="{x:Bind Title, Mode=TwoWay}" />
+                <Slider Header="Minimum Width" Maximum="1024" Minimum="136" Value="{x:Bind MinWidth, Mode=TwoWay}" />
+                <Slider Header="Minimum Height" Maximum="768" Minimum="39" Value="{x:Bind MinHeight, Mode=TwoWay}" />
+                <Button Content="Center On Screen" Click="Center_Click" />
+                <Button Content="Maximize" Click="MaximizeWindow_Click" />
+                <Button Content="Restore" Click="RestoreWindow_Click" />
+                <Button Content="Minimize + Restore (2 second delay)" Click="MinimizeWindow_Click" />
+                <Button Content="Hide + Restore (2 second delay)" Click="HideWindow_Click" />
+                <Button Content="Bring to front (2 second delay)" Click="BringToFront_Click" />
+                <Button Content="Show dialog" Click="ShowDialog_Click" />
+                
+            </StackPanel>
+        </ScrollViewer>
+        <Grid Grid.Column="2" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
             <TextBlock Text="Log" />
             <TextBox IsReadOnly="True" AcceptsReturn="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" x:Name="WindowEventLog" Grid.Row="1" />
         </Grid>
-        
     </Grid>
 </winex:WindowEx>

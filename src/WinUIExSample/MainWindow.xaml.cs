@@ -140,5 +140,17 @@ namespace WinUIExSample
                 default: this.Backdrop = Backdrop.Default; break;
             }
         }
+
+        private void Theme_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ElementTheme theme;
+            switch (((ComboBox)sender).SelectedIndex)
+            {
+                case 1: theme = ElementTheme.Dark; break;
+                case 2: theme = ElementTheme.Light; break;
+                default: theme = ElementTheme.Default; break;
+            }
+            (Content as FrameworkElement).RequestedTheme = theme;
+        }
     }
 }

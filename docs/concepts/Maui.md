@@ -1,4 +1,4 @@
-## Using with .NET MAUI
+## Using WinUIEx with .NET MAUI
 
 ### Include WinUIEx package in Windows target
 
@@ -64,17 +64,17 @@ using WinUIEx;
 
 public partial class MainPage : ContentPage
 {
-	public MainPage()
-	{
-		InitializeComponent();
+    public MainPage()
+    {
+        InitializeComponent();
     }
 
     private void OnMaximizeClicked(object sender, EventArgs e)
     {
 #if WINDOWS
         var window = this.Window.Handler.PlatformView as Microsoft.UI.Xaml.Window;
-		window.Maximize(); // Use WinUIEx Extension method to maximize window
+        window.Maximize(); // Use WinUIEx Extension method to maximize window
 #endif
-	}
+    }
 }
 ```

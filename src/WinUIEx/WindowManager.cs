@@ -48,7 +48,6 @@ namespace WinUIEx
         private void Window_Closed(object sender, WindowEventArgs args)
         {
             SavePersistence();
-            CleanUpBackdrop();
         }
 
         /// <summary>

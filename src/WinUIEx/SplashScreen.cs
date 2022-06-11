@@ -49,7 +49,7 @@ namespace WinUIEx
         /// Gets or sets the system backdrop of the window.
         /// Note: Windows 10 doesn't support these, so will fall back to default backdrop.
         /// </summary>
-        public Backdrop Backdrop
+        public BackdropSettings BackdropSettings
         {
             get => _manager.Backdrop;
             set => _manager.Backdrop = value;

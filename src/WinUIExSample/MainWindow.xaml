@@ -10,8 +10,10 @@
     Title="WinUI EX Test App"
     Width="1024" Height="768"
     MinWidth="500" MinHeight="250"
-    Backdrop="Mica"
     mc:Ignorable="d" >
+    <winex:WindowEx.BackdropSettings>
+        <winex:BackdropSettings Kind="Mica" LuminosityOpacity=".75" TintOpacity="0" TintColor="White" />
+    </winex:WindowEx.BackdropSettings>
     
     <!--<winex:WindowEx.TitleBarIcon>
         <BitmapImage UriSource="ms-appx:///Images/WindowIcon.gif" DecodePixelHeight="32" />
@@ -66,7 +68,17 @@
                 <Button Content="Hide + Restore (2 second delay)" Click="HideWindow_Click" />
                 <Button Content="Bring to front (2 second delay)" Click="BringToFront_Click" />
                 <Button Content="Show dialog" Click="ShowDialog_Click" />
-                
+                <StackPanel x:Name="backdropControls">
+                    <TextBlock Text="Backdrop settings" FontWeight="Bold" />
+                    <StackPanel BorderBrush="Black" BorderThickness="1" Padding="10" CornerRadius="3">
+                        <Slider x:Name="lumOpacity" Header="Luminosity Opacity" Minimum="0" Maximum="1" TickFrequency=".1" StepFrequency=".01" Value="{x:Bind BackdropSettings.LuminosityOpacity, Mode=TwoWay}" />
+                        <Slider Header="TintOpacity" Minimum="0" Maximum="1" TickFrequency=".1" StepFrequency=".01" Value="{x:Bind BackdropSettings.TintOpacity, Mode=TwoWay}" />
+                        <TextBlock Text="Tint Color" Margin="0,10,0,0" />
+                        <ColorPicker x:Name="tintColorPicker" Color="{x:Bind BackdropSettings.TintColor, Mode=TwoWay}" IsAlphaEnabled="True" IsAlphaSliderVisible="False" 
+                                    IsAlphaTextInputVisible="False" IsColorChannelTextInputVisible="False" MaxWidth="150"
+                                    IsColorPreviewVisible="True" IsColorSpectrumVisible="False" IsColorSliderVisible="False" />                            
+                    </StackPanel>
+                </StackPanel>
             </StackPanel>
         </ScrollViewer>
         <Grid Grid.Column="2" >

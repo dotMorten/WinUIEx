@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -59,6 +61,7 @@ namespace WinUIEx
             rootContent.Children.Add(windowArea);
 
             this.Content = rootContent;
+            rootContent.ActualThemeChanged += (s, e) => OnThemeChanged(rootContent.ActualTheme);
         }
 
         /// <summary>
@@ -353,12 +356,33 @@ namespace WinUIEx
         /// Gets or sets the system backdrop of the window.
         /// Note: Windows 10 doesn't support these, so will fall back to default backdrop.
         /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("Use BackdropSettings property")]
         public Backdrop Backdrop
+        {
+            get => BackdropSettings?.Kind ?? Backdrop.Default;
+            set
+            {
+                if(BackdropSettings != null)
+                {
+                    BackdropSettings.Kind = value;
+                }
+                else if(BackdropSettings is null && value != Backdrop.Default)
+                {
+                    BackdropSettings = new BackdropSettings() { Kind = value };
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the backdrop configuration settings.
+        /// Note: Windows 10 doesn't support these, so will fall back to default backdrop.
+        /// </summary>
+        public BackdropSettings? BackdropSettings
         {
             get => _manager.Backdrop;
             set => _manager.Backdrop = value;
         }
-
 
         /// <summary>
         /// Gets the active Backdrop controller
@@ -434,6 +458,30 @@ namespace WinUIEx
         /// the units provided here are in device independent units and not screen pixels.
         /// </remarks>
         protected virtual bool OnSizeChanged(Windows.Foundation.Size newSize) => false;
+
+        /// <summary>
+        /// Called when the actual theme changes
+        /// </summary>
+        /// <param name="theme">The new theme</param>
+        /// <seealso cref="FrameworkElement.ActualTheme"/>
+        /// <seealso cref="ActualTheme"/>
+        protected virtual void OnThemeChanged(ElementTheme theme)
+        {            
+        }
+
+        /// <summary>
+        /// The actual theme for the window
+        /// </summary>
+        /// <seealso cref="OnThemeChanged(ElementTheme)"/>
+        public ElementTheme ActualTheme => windowArea.ActualTheme;
+
+        private void UpdateBackground()
+        {
+            // _manager.BackdropTintColor = _manager.BackdropTintColor;
+            // var brush = _manager.ActiveBackdropController is null ? null : new Microsoft.UI.Xaml.Media.SolidColorBrush(BackgroundTint);
+            // if (Content is Panel panel) panel.Background = brush;
+            // else if (Content is Control control) control.Background = brush;
+        }
 
         #endregion Window events and corresponding virtual methods
     }

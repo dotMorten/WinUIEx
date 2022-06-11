@@ -36,6 +36,8 @@ namespace WinUIExSample
 
         protected override async Task OnLoading()
         {
+            if (System.Diagnostics.Debugger.IsAttached)
+                this.IsAlwaysOnTop = false;
             for (int i = 0; i < 100; i+=5)
             {
                 status.Text = $"Loading {i}%...";

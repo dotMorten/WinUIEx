@@ -6,7 +6,10 @@
     xmlns:winuiex="using:WinUIEx"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d" Backdrop="Acrylic">
+    mc:Ignorable="d">
+    <winuiex:SplashScreen.BackdropSettings>
+        <winuiex:BackdropSettings Kind="Acrylic" />
+    </winuiex:SplashScreen.BackdropSettings>
 
     <Grid>
         <Image Source="ms-appx:///Images/logo.png" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="1"

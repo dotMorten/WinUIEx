@@ -28,7 +28,7 @@ namespace WinUIExSample
     /// </summary>
     public sealed partial class MainWindow : WindowEx
     {
-        private readonly Queue<string> windowEvents = new Queue<string>();
+        private readonly Queue<string> windowEvents = new Queue<string>(101);
         private readonly WindowMessageMonitor monitor;
 
         public MainWindow()
@@ -53,6 +53,8 @@ namespace WinUIExSample
             Log($"Size Changed: {size.Width} x {size.Height}");
             return base.OnSizeChanged(size);
         }
+        protected override void OnThemeChanged(ElementTheme theme) => Log($"Theme Changed: {theme}");
+
         private void Log(string message)
         {
             if (!DispatcherQueue.HasThreadAccess)
@@ -125,7 +127,6 @@ namespace WinUIExSample
                 monitor.WindowMessageReceived -= WindowMessageReceived;
         }
 
-
         private void WindowMessageReceived(object sender, WindowMessageEventArgs e)
         {
             Log(e.Message.ToString());
@@ -135,9 +136,16 @@ namespace WinUIExSample
         {
             switch(((ComboBox)sender).SelectedIndex)
             {
-                case 1: this.Backdrop = Backdrop.Acrylic; break;
-                case 2: this.Backdrop = Backdrop.Mica; break;
-                default: this.Backdrop = Backdrop.Default; break;
+                case 1: this.BackdropSettings.Kind = Backdrop.Acrylic; break;
+                case 2: this.BackdropSettings.Kind = Backdrop.Mica; break;
+                default: this.BackdropSettings.Kind = Backdrop.Default; break;
+            }
+            if (backdropControls != null)
+            {
+                if (this.ActiveBackdropController != null)
+                    backdropControls.Visibility = Visibility.Visible;
+                else
+                    backdropControls.Visibility = Visibility.Collapsed;
             }
         }
 

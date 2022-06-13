@@ -55,27 +55,9 @@ namespace WinUIEx
             {
                 InitBackdrop();
             }
-            if (ActiveBackdropController is MicaController micaController)
+            else if (ActiveBackdropController != null)
             {
-                if (e.PropertyName == nameof(BackdropSettings.TintOpacity) && !double.IsNaN(Backdrop.TintOpacity))
-                    micaController.TintOpacity = (float)Backdrop.TintOpacity;
-                if (e.PropertyName == nameof(BackdropSettings.LuminosityOpacity) && !double.IsNaN(Backdrop.LuminosityOpacity))
-                    micaController.LuminosityOpacity = (float)Backdrop.LuminosityOpacity;
-                if (e.PropertyName == nameof(BackdropSettings.TintColor) && !IsEmpty(Backdrop.TintColor))
-                    micaController.TintColor = Backdrop.TintColor;
-                if (e.PropertyName == nameof(BackdropSettings.FallbackColor) && !IsEmpty(Backdrop.FallbackColor))
-                    micaController.FallbackColor = Backdrop.FallbackColor;
-            }
-            else if (ActiveBackdropController is DesktopAcrylicController acrylicController)
-            {
-                if (e.PropertyName == nameof(BackdropSettings.TintOpacity) && !double.IsNaN(Backdrop.TintOpacity))
-                    acrylicController.TintOpacity = (float)Backdrop.TintOpacity;
-                if (e.PropertyName == nameof(BackdropSettings.LuminosityOpacity) && !double.IsNaN(Backdrop.LuminosityOpacity))
-                    acrylicController.LuminosityOpacity = (float)Backdrop.LuminosityOpacity;
-                if (e.PropertyName == nameof(BackdropSettings.TintColor) && !IsEmpty(Backdrop.TintColor))
-                    acrylicController.TintColor = Backdrop.TintColor;
-                if (e.PropertyName == nameof(BackdropSettings.FallbackColor) && !IsEmpty(Backdrop.FallbackColor))
-                    acrylicController.FallbackColor = Backdrop.FallbackColor;
+                UpdateController(ActiveBackdropController);
             }
         }
 
@@ -104,13 +86,14 @@ namespace WinUIEx
                 if (rootElement is not null)
                 {
                     // This should probably be weak in the rare event the root content changes
-                    // Unfortunately there's no good event to detect changes though.
+                    // Unfortunately there's no good event to detect changes though.                    
                     rootElement.ActualThemeChanged += (s, e) =>
                     {
                         if (BackdropConfiguration != null)
-                            BackdropConfiguration.Theme = ConvertToSystemBackdropTheme(rootElement.ActualTheme);
-                        (currentController as MicaController)?.SetSystemBackdropConfiguration(BackdropConfiguration);
-                        (currentController as DesktopAcrylicController)?.SetSystemBackdropConfiguration(BackdropConfiguration);
+                        {
+                             BackdropConfiguration.Theme = ConvertToSystemBackdropTheme(rootElement.ActualTheme);
+                            UpdateController(ActiveBackdropController);
+                        }
                     };
 
                     // Initial state.
@@ -124,35 +107,50 @@ namespace WinUIEx
             }
             if (kind == WinUIEx.Backdrop.Acrylic)
             {
-                var m_acrylicController = new DesktopAcrylicController();
-                if (!double.IsNaN(Backdrop.TintOpacity))
-                    m_acrylicController.TintOpacity = (float)Backdrop.TintOpacity;
-                if (!double.IsNaN(Backdrop.LuminosityOpacity))
-                    m_acrylicController.LuminosityOpacity = (float)Backdrop.LuminosityOpacity;
-                if (!IsEmpty(Backdrop.TintColor))
-                    m_acrylicController.TintColor = Backdrop.TintColor;
-                if (!IsEmpty(Backdrop.FallbackColor))
-                    m_acrylicController.FallbackColor = Backdrop.FallbackColor;
-                m_acrylicController.AddSystemBackdropTarget(_window.As<Microsoft.UI.Composition.ICompositionSupportsSystemBackdrop>());
-                m_acrylicController.SetSystemBackdropConfiguration(BackdropConfiguration);
-                currentController = m_acrylicController;
+                var acrylicController = new DesktopAcrylicController();
+                UpdateController(acrylicController);
+                acrylicController.AddSystemBackdropTarget(_window.As<Microsoft.UI.Composition.ICompositionSupportsSystemBackdrop>());
+                acrylicController.SetSystemBackdropConfiguration(BackdropConfiguration);
+                currentController = acrylicController;
             }
             else if (kind == WinUIEx.Backdrop.Mica)
             {
-                var m_micaController = new MicaController();
-                if (!double.IsNaN(Backdrop.TintOpacity))
-                    m_micaController.TintOpacity = (float)Backdrop.TintOpacity;
-                if (!double.IsNaN(Backdrop.LuminosityOpacity))
-                    m_micaController.LuminosityOpacity = (float)Backdrop.LuminosityOpacity;
-                if (!IsEmpty(Backdrop.TintColor))
-                    m_micaController.TintColor = Backdrop.TintColor;
-                if (!IsEmpty(Backdrop.FallbackColor))
-                    m_micaController.FallbackColor = Backdrop.FallbackColor;
-                m_micaController.SetSystemBackdropConfiguration(BackdropConfiguration);
-                m_micaController.AddSystemBackdropTarget(_window.As<Microsoft.UI.Composition.ICompositionSupportsSystemBackdrop>());
-                currentController = m_micaController;
+                var micaController = new MicaController();
+                UpdateController(micaController);
+                micaController.SetSystemBackdropConfiguration(BackdropConfiguration);
+                micaController.AddSystemBackdropTarget(_window.As<Microsoft.UI.Composition.ICompositionSupportsSystemBackdrop>());
+                currentController = micaController;
             }
             m_currentBackdrop = kind;
+        }
+
+        private void UpdateController(ISystemBackdropController? controller)
+        {
+            if (Backdrop is null)
+                return;
+            bool isDark = BackdropConfiguration?.Theme == SystemBackdropTheme.Dark;
+            if (controller is MicaController mica)
+            {
+                if (!double.IsNaN(isDark ? Backdrop.DarkTintOpacity : Backdrop.LightTintOpacity))
+                    mica.TintOpacity = (float)(isDark ? Backdrop.DarkTintOpacity : Backdrop.LightTintOpacity);
+                if (!double.IsNaN(isDark ? Backdrop.DarkLuminosityOpacity : Backdrop.LightLuminosityOpacity))
+                    mica.LuminosityOpacity = (float)(isDark ? Backdrop.DarkLuminosityOpacity : Backdrop.LightLuminosityOpacity);
+                if (!IsEmpty(isDark ? Backdrop.DarkTintColor : Backdrop.LightTintColor))
+                    mica.TintColor = isDark ? Backdrop.DarkTintColor : Backdrop.LightTintColor;
+                if (!IsEmpty(isDark?Backdrop.DarkFallbackColor : Backdrop.LightFallbackColor))
+                    mica.FallbackColor = isDark ? Backdrop.DarkFallbackColor : Backdrop.LightFallbackColor;
+            }
+            else if(controller is DesktopAcrylicController acrylic)
+            {
+                if (!double.IsNaN(isDark ? Backdrop.DarkTintOpacity : Backdrop.LightTintOpacity))
+                    acrylic.TintOpacity = (float)(isDark ? Backdrop.DarkTintOpacity : Backdrop.LightTintOpacity);
+                if (!double.IsNaN(isDark ? Backdrop.DarkLuminosityOpacity : Backdrop.LightLuminosityOpacity))
+                    acrylic.LuminosityOpacity = (float)(isDark ? Backdrop.DarkLuminosityOpacity : Backdrop.LightLuminosityOpacity);
+                if (!IsEmpty(isDark ? Backdrop.DarkTintColor : Backdrop.LightTintColor))
+                    acrylic.TintColor = isDark ? Backdrop.DarkTintColor : Backdrop.LightTintColor;
+                if (!IsEmpty(isDark ? Backdrop.DarkFallbackColor : Backdrop.LightFallbackColor))
+                    acrylic.FallbackColor = isDark ? Backdrop.DarkFallbackColor : Backdrop.LightFallbackColor;
+            }
         }
 
         private void CleanUpBackdrop()

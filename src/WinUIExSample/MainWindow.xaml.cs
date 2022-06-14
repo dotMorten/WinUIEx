@@ -9,15 +9,8 @@ using Microsoft.UI.Dispatching;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Navigation;
 using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.Graphics;
-using Windows.UI.Notifications;
 using WinUIEx;
 using WinUIEx.Messaging;
 
@@ -28,8 +21,10 @@ namespace WinUIExSample
     /// </summary>
     public sealed partial class MainWindow : WindowEx
     {
-        private readonly Queue<string> windowEvents = new Queue<string>();
+        private readonly Queue<string> windowEvents = new Queue<string>(101);
         private readonly WindowMessageMonitor monitor;
+        private AcrylicSystemBackdrop acrylicBackdrop = new AcrylicSystemBackdrop();
+        private MicaSystemBackdrop micaBackdrop;
 
         public MainWindow()
         {
@@ -41,6 +36,7 @@ namespace WinUIExSample
             foreach (var monitor in monitors.Reverse())
                 Log("  - " + monitor.ToString());
             Log($"{monitors.Count} monitors detected");
+            micaBackdrop = this.Backdrop as MicaSystemBackdrop;
             if (!Microsoft.UI.Composition.SystemBackdrops.MicaController.IsSupported())
                 backdropSelector.SelectedIndex = 0; // Backdrops doesn't work on Windows 10.
         }
@@ -53,6 +49,9 @@ namespace WinUIExSample
             Log($"Size Changed: {size.Width} x {size.Height}");
             return base.OnSizeChanged(size);
         }
+
+        //protected override void OnThemeChanged(ElementTheme theme) => Log($"Theme Changed: {theme}");
+
         private void Log(string message)
         {
             if (!DispatcherQueue.HasThreadAccess)
@@ -125,7 +124,6 @@ namespace WinUIExSample
                 monitor.WindowMessageReceived -= WindowMessageReceived;
         }
 
-
         private void WindowMessageReceived(object sender, WindowMessageEventArgs e)
         {
             Log(e.Message.ToString());
@@ -133,11 +131,12 @@ namespace WinUIExSample
 
         private void Backdrop_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            switch(((ComboBox)sender).SelectedIndex)
+            if (micaBackdrop is null) return; // Still loading
+            switch (((ComboBox)sender).SelectedIndex)
             {
-                case 1: this.Backdrop = Backdrop.Acrylic; break;
-                case 2: this.Backdrop = Backdrop.Mica; break;
-                default: this.Backdrop = Backdrop.Default; break;
+                case 1: this.Backdrop = acrylicBackdrop; break;
+                case 2: this.Backdrop = micaBackdrop; break;
+                default: this.Backdrop = null; break;
             }
         }
 

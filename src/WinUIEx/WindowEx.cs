@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -59,6 +61,7 @@ namespace WinUIEx
             rootContent.Children.Add(windowArea);
 
             this.Content = rootContent;
+            //rootContent.ActualThemeChanged += (s, e) => OnThemeChanged(rootContent.ActualTheme);
         }
 
         /// <summary>
@@ -350,23 +353,16 @@ namespace WinUIEx
         }
 
         /// <summary>
-        /// Gets or sets the system backdrop of the window.
+        /// Gets or sets the system backdrop for the window.
         /// Note: Windows 10 doesn't support these, so will fall back to default backdrop.
         /// </summary>
-        public Backdrop Backdrop
+        /// <seealso cref="MicaSystemBackdrop"/>
+        /// <seealso cref="AcrylicSystemBackdrop"/>
+        public SystemBackdrop Backdrop
         {
             get => _manager.Backdrop;
             set => _manager.Backdrop = value;
         }
-
-
-        /// <summary>
-        /// Gets the active Backdrop controller
-        /// </summary>
-        /// <seealso cref="Backdrop"/>
-        /// <seealso cref="Microsoft.UI.Composition.SystemBackdrops.DesktopAcrylicController"/>
-        /// <seealso cref="Microsoft.UI.Composition.SystemBackdrops.MicaController"/>
-        public Microsoft.UI.Composition.SystemBackdrops.ISystemBackdropController? ActiveBackdropController => _manager.ActiveBackdropController;
 
         #region Window events and corresponding virtual methods
 
@@ -435,6 +431,23 @@ namespace WinUIEx
         /// </remarks>
         protected virtual bool OnSizeChanged(Windows.Foundation.Size newSize) => false;
 
+/*
+        /// <summary>
+        /// Called when the actual theme changes
+        /// </summary>
+        /// <param name="theme">The new theme</param>
+        /// <seealso cref="FrameworkElement.ActualTheme"/>
+        /// <seealso cref="ActualTheme"/>
+        protected virtual void OnThemeChanged(ElementTheme theme)
+        {            
+        }
+
+        /// <summary>
+        /// The actual theme for the window
+        /// </summary>
+        /// <seealso cref="OnThemeChanged(ElementTheme)"/>
+        public ElementTheme ActualTheme => windowArea.ActualTheme;
+*/
         #endregion Window events and corresponding virtual methods
     }
 }

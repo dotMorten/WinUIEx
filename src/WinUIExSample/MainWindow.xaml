@@ -10,12 +10,11 @@
     Title="WinUI EX Test App"
     Width="1024" Height="768"
     MinWidth="500" MinHeight="250"
-    Backdrop="Mica"
     mc:Ignorable="d" >
-    
-    <!--<winex:WindowEx.TitleBarIcon>
-        <BitmapImage UriSource="ms-appx:///Images/WindowIcon.gif" DecodePixelHeight="32" />
-    </winex:WindowEx.TitleBarIcon>-->
+    <winex:WindowEx.Backdrop>
+        <winex:MicaSystemBackdrop DarkLuminosityOpacity=".75" DarkTintOpacity="0" DarkTintColor="Black" 
+                                  LightLuminosityOpacity=".75" LightTintOpacity="0" LightTintColor="White" />
+    </winex:WindowEx.Backdrop>
 
     <Grid Padding="20">
         <Grid.ColumnDefinitions>
@@ -66,7 +65,6 @@
                 <Button Content="Hide + Restore (2 second delay)" Click="HideWindow_Click" />
                 <Button Content="Bring to front (2 second delay)" Click="BringToFront_Click" />
                 <Button Content="Show dialog" Click="ShowDialog_Click" />
-                
             </StackPanel>
         </ScrollViewer>
         <Grid Grid.Column="2" >

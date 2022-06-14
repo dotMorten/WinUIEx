@@ -12,6 +12,7 @@
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
     <PackageReadmeFile>README.md</PackageReadmeFile>
+    <LangVersion>10</LangVersion>
   </PropertyGroup>
 
   <PropertyGroup Label="PackageInfo">
@@ -20,6 +21,7 @@
     <PackageId>WinUIEx</PackageId>
     <Product>WinUI Extensions</Product>
     <PackageReleaseNotes>
+        - Breaking: Rewrite of Backdrop APIs for more control and better handling of theme changes.
         - Added Backdrop support to SplashScreen.
         - Added WindowEx.ZOrderChanged event.
         - Added new virtual members to WindowEx to react to position, presenter and zorder changes with a simple override.

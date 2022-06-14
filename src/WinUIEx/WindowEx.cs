@@ -354,6 +354,7 @@ namespace WinUIEx
 
         /// <summary>
         /// Gets or sets the system backdrop for the window.
+        /// Note: Windows 10 doesn't support these, so will fall back to default backdrop.
         /// </summary>
         /// <seealso cref="MicaSystemBackdrop"/>
         /// <seealso cref="AcrylicSystemBackdrop"/>

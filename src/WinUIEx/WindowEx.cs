@@ -61,7 +61,7 @@ namespace WinUIEx
             rootContent.Children.Add(windowArea);
 
             this.Content = rootContent;
-            rootContent.ActualThemeChanged += (s, e) => OnThemeChanged(rootContent.ActualTheme);
+            //rootContent.ActualThemeChanged += (s, e) => OnThemeChanged(rootContent.ActualTheme);
         }
 
         /// <summary>
@@ -430,6 +430,7 @@ namespace WinUIEx
         /// </remarks>
         protected virtual bool OnSizeChanged(Windows.Foundation.Size newSize) => false;
 
+/*
         /// <summary>
         /// Called when the actual theme changes
         /// </summary>
@@ -445,15 +446,7 @@ namespace WinUIEx
         /// </summary>
         /// <seealso cref="OnThemeChanged(ElementTheme)"/>
         public ElementTheme ActualTheme => windowArea.ActualTheme;
-
-        private void UpdateBackground()
-        {
-            // _manager.BackdropTintColor = _manager.BackdropTintColor;
-            // var brush = _manager.ActiveBackdropController is null ? null : new Microsoft.UI.Xaml.Media.SolidColorBrush(BackgroundTint);
-            // if (Content is Panel panel) panel.Background = brush;
-            // else if (Content is Control control) control.Background = brush;
-        }
-
+*/
         #endregion Window events and corresponding virtual methods
     }
 }

@@ -49,7 +49,8 @@ namespace WinUIExSample
             Log($"Size Changed: {size.Width} x {size.Height}");
             return base.OnSizeChanged(size);
         }
-        protected override void OnThemeChanged(ElementTheme theme) => Log($"Theme Changed: {theme}");
+
+        //protected override void OnThemeChanged(ElementTheme theme) => Log($"Theme Changed: {theme}");
 
         private void Log(string message)
         {

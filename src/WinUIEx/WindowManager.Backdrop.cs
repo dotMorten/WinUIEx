@@ -70,7 +70,7 @@ namespace WinUIEx
                 if (rootElement is not null)
                 {
                     // This should probably be weak in the rare event the root content changes
-                    // Unfortunately there's no good event to detect changes though.                    
+                    // Unfortunately there's no good event to detect changes though.
                     rootElement.ActualThemeChanged += (s, e) =>
                     {
                         if (BackdropConfiguration != null && currentController != null)

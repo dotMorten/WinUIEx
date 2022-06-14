@@ -72,7 +72,6 @@ namespace WinUIEx
         /// </summary>
         public Microsoft.UI.Windowing.AppWindow AppWindow => _window.GetAppWindow();
 
-
         /// <summary>
         /// Gets or sets the width of the window.
         /// </summary>

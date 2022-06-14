@@ -353,44 +353,15 @@ namespace WinUIEx
         }
 
         /// <summary>
-        /// Gets or sets the system backdrop of the window.
-        /// Note: Windows 10 doesn't support these, so will fall back to default backdrop.
+        /// Gets or sets the system backdrop for the window.
         /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("Use BackdropSettings property")]
-        public Backdrop Backdrop
-        {
-            get => BackdropSettings?.Kind ?? Backdrop.Default;
-            set
-            {
-                if(BackdropSettings != null)
-                {
-                    BackdropSettings.Kind = value;
-                }
-                else if(BackdropSettings is null && value != Backdrop.Default)
-                {
-                    BackdropSettings = new BackdropSettings() { Kind = value };
-                }
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the backdrop configuration settings.
-        /// Note: Windows 10 doesn't support these, so will fall back to default backdrop.
-        /// </summary>
-        public BackdropSettings? BackdropSettings
+        /// <seealso cref="MicaSystemBackdrop"/>
+        /// <seealso cref="AcrylicSystemBackdrop"/>
+        public SystemBackdrop Backdrop
         {
             get => _manager.Backdrop;
             set => _manager.Backdrop = value;
         }
-
-        /// <summary>
-        /// Gets the active Backdrop controller
-        /// </summary>
-        /// <seealso cref="Backdrop"/>
-        /// <seealso cref="Microsoft.UI.Composition.SystemBackdrops.DesktopAcrylicController"/>
-        /// <seealso cref="Microsoft.UI.Composition.SystemBackdrops.MicaController"/>
-        public Microsoft.UI.Composition.SystemBackdrops.ISystemBackdropController? ActiveBackdropController => _manager.ActiveBackdropController;
 
         #region Window events and corresponding virtual methods
 

@@ -21,60 +21,44 @@ namespace WinUIEx
         private object? m_dispatcherQueueController = null;
         private ISystemBackdropController? currentController;
         private SystemBackdropConfiguration? BackdropConfiguration;
-        private BackdropSettings? m_backdrop;
-        private Backdrop m_currentBackdrop = WinUIEx.Backdrop.Default;
+        private SystemBackdrop m_backdrop;
 
-        /// <summary>
-        /// Gets or sets the system backdrop of the window.
-        /// Note: Windows 10 doesn't support these, so will fall back to default backdrop.
-        /// </summary>
-        public BackdropSettings? Backdrop
+        public SystemBackdrop Backdrop
         {
             get => m_backdrop;
             set
             {
                 if (m_backdrop != value)
                 {
-                    if(m_backdrop != null)
-                        ((INotifyPropertyChanged)m_backdrop).PropertyChanged -= Backdrop_PropertyChanged;
+                    if (m_backdrop != null)
+                        m_backdrop.IsDirty -= Backdrop_IsDirty;
                     m_backdrop = value;
-                    if (m_backdrop != null) 
-                        ((INotifyPropertyChanged)m_backdrop).PropertyChanged += Backdrop_PropertyChanged;
-                    if (_window.Visible)
+                    if (m_backdrop != null)
+                        m_backdrop.IsDirty += Backdrop_IsDirty;
+                    if (m_backdrop is null || _window.Visible)
                         InitBackdrop();
                 }
             }
         }
+
         private static bool IsEmpty(Windows.UI.Color c) => c.A == 0 && c.R == 0 && c.G == 0 && c.B == 0;
 
-        private void Backdrop_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        private void Backdrop_IsDirty(object? sender, EventArgs e)
         {
-            if (Backdrop is null)
-                return;
-            if(e.PropertyName == nameof(BackdropSettings.Kind))
-            {
-                InitBackdrop();
-            }
-            else if (ActiveBackdropController != null)
-            {
-                UpdateController(ActiveBackdropController);
-            }
+            if (currentController != null && BackdropConfiguration != null)
+                m_backdrop.UpdateController(currentController, BackdropConfiguration.Theme);
         }
 
         public ISystemBackdropController? ActiveBackdropController => currentController;
 
         private void InitBackdrop()
         {
-            var kind = (m_backdrop?.Kind ?? WinUIEx.Backdrop.Default);
-            if (m_currentBackdrop == kind) return;
-            if (kind == WinUIEx.Backdrop.Default ||
-                kind == WinUIEx.Backdrop.Acrylic && !DesktopAcrylicController.IsSupported() ||
-                kind == WinUIEx.Backdrop.Mica && !MicaController.IsSupported())
+            if(m_backdrop is null || !m_backdrop.IsSupported)
             {
                 CleanUpBackdrop();
                 return;
             }
-            if (Backdrop is null)
+            if (m_backdrop is null)
                 return;
 
             if (BackdropConfiguration is null)
@@ -89,10 +73,10 @@ namespace WinUIEx
                     // Unfortunately there's no good event to detect changes though.                    
                     rootElement.ActualThemeChanged += (s, e) =>
                     {
-                        if (BackdropConfiguration != null)
+                        if (BackdropConfiguration != null && currentController != null)
                         {
-                             BackdropConfiguration.Theme = ConvertToSystemBackdropTheme(rootElement.ActualTheme);
-                            UpdateController(ActiveBackdropController);
+                            BackdropConfiguration.Theme = ConvertToSystemBackdropTheme(s.ActualTheme);
+                            m_backdrop.UpdateController(currentController, BackdropConfiguration.Theme);
                         }
                     };
 
@@ -105,52 +89,10 @@ namespace WinUIEx
                 currentController.Dispose();
                 currentController = null;
             }
-            if (kind == WinUIEx.Backdrop.Acrylic)
-            {
-                var acrylicController = new DesktopAcrylicController();
-                UpdateController(acrylicController);
-                acrylicController.AddSystemBackdropTarget(_window.As<Microsoft.UI.Composition.ICompositionSupportsSystemBackdrop>());
-                acrylicController.SetSystemBackdropConfiguration(BackdropConfiguration);
-                currentController = acrylicController;
-            }
-            else if (kind == WinUIEx.Backdrop.Mica)
-            {
-                var micaController = new MicaController();
-                UpdateController(micaController);
-                micaController.SetSystemBackdropConfiguration(BackdropConfiguration);
-                micaController.AddSystemBackdropTarget(_window.As<Microsoft.UI.Composition.ICompositionSupportsSystemBackdrop>());
-                currentController = micaController;
-            }
-            m_currentBackdrop = kind;
-        }
-
-        private void UpdateController(ISystemBackdropController? controller)
-        {
-            if (Backdrop is null)
-                return;
-            bool isDark = BackdropConfiguration?.Theme == SystemBackdropTheme.Dark;
-            if (controller is MicaController mica)
-            {
-                if (!double.IsNaN(isDark ? Backdrop.DarkTintOpacity : Backdrop.LightTintOpacity))
-                    mica.TintOpacity = (float)(isDark ? Backdrop.DarkTintOpacity : Backdrop.LightTintOpacity);
-                if (!double.IsNaN(isDark ? Backdrop.DarkLuminosityOpacity : Backdrop.LightLuminosityOpacity))
-                    mica.LuminosityOpacity = (float)(isDark ? Backdrop.DarkLuminosityOpacity : Backdrop.LightLuminosityOpacity);
-                if (!IsEmpty(isDark ? Backdrop.DarkTintColor : Backdrop.LightTintColor))
-                    mica.TintColor = isDark ? Backdrop.DarkTintColor : Backdrop.LightTintColor;
-                if (!IsEmpty(isDark?Backdrop.DarkFallbackColor : Backdrop.LightFallbackColor))
-                    mica.FallbackColor = isDark ? Backdrop.DarkFallbackColor : Backdrop.LightFallbackColor;
-            }
-            else if(controller is DesktopAcrylicController acrylic)
-            {
-                if (!double.IsNaN(isDark ? Backdrop.DarkTintOpacity : Backdrop.LightTintOpacity))
-                    acrylic.TintOpacity = (float)(isDark ? Backdrop.DarkTintOpacity : Backdrop.LightTintOpacity);
-                if (!double.IsNaN(isDark ? Backdrop.DarkLuminosityOpacity : Backdrop.LightLuminosityOpacity))
-                    acrylic.LuminosityOpacity = (float)(isDark ? Backdrop.DarkLuminosityOpacity : Backdrop.LightLuminosityOpacity);
-                if (!IsEmpty(isDark ? Backdrop.DarkTintColor : Backdrop.LightTintColor))
-                    acrylic.TintColor = isDark ? Backdrop.DarkTintColor : Backdrop.LightTintColor;
-                if (!IsEmpty(isDark ? Backdrop.DarkFallbackColor : Backdrop.LightFallbackColor))
-                    acrylic.FallbackColor = isDark ? Backdrop.DarkFallbackColor : Backdrop.LightFallbackColor;
-            }
+            var controller = m_backdrop.CreateController();
+            m_backdrop.UpdateController(controller, BackdropConfiguration.Theme);
+            m_backdrop.ApplyController(controller, _window.As<Microsoft.UI.Composition.ICompositionSupportsSystemBackdrop>(), BackdropConfiguration);
+            currentController = controller;
         }
 
         private void CleanUpBackdrop()
@@ -159,7 +101,6 @@ namespace WinUIEx
             (currentController as DesktopAcrylicController)?.RemoveAllSystemBackdropTargets();
             currentController?.Dispose();
             currentController = null;
-            m_currentBackdrop = WinUIEx.Backdrop.Default;
         }
 
         private void EnsureDispatcherQueueController()

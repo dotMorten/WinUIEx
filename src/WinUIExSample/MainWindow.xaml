@@ -12,8 +12,8 @@
     MinWidth="500" MinHeight="250"
     mc:Ignorable="d" >
     <winex:WindowEx.Backdrop>
-        <winex:MicaSystemBackdrop DarkLuminosityOpacity=".75" DarkTintOpacity="0" DarkTintColor="Black" 
-                                  LightLuminosityOpacity=".75" LightTintOpacity="0" LightTintColor="White" />
+        <winex:MicaSystemBackdrop DarkLuminosityOpacity=".75" DarkTintOpacity="0" DarkTintColor="Black"  DarkFallbackColor="#333"
+                                  LightLuminosityOpacity=".75" LightTintOpacity="0" LightTintColor="White" LightFallbackColor="#eee" />
     </winex:WindowEx.Backdrop>
 
     <Grid Padding="20">

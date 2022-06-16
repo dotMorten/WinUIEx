@@ -37,8 +37,14 @@ namespace WinUIExSample
                 Log("  - " + monitor.ToString());
             Log($"{monitors.Count} monitors detected");
             micaBackdrop = this.Backdrop as MicaSystemBackdrop;
-            if (!Microsoft.UI.Composition.SystemBackdrops.MicaController.IsSupported())
-                backdropSelector.SelectedIndex = 0; // Backdrops doesn't work on Windows 10.
+            acrylicBackdrop.DarkFallbackColor = micaBackdrop.DarkFallbackColor;
+            acrylicBackdrop.DarkLuminosityOpacity = micaBackdrop.DarkLuminosityOpacity;
+            acrylicBackdrop.DarkTintColor = micaBackdrop.DarkTintColor;
+            acrylicBackdrop.DarkTintOpacity = micaBackdrop.DarkTintOpacity;
+            acrylicBackdrop.LightFallbackColor = micaBackdrop.LightFallbackColor;
+            acrylicBackdrop.LightLuminosityOpacity = micaBackdrop.LightLuminosityOpacity;
+            acrylicBackdrop.LightTintColor = micaBackdrop.LightTintColor;
+            acrylicBackdrop.LightTintOpacity = micaBackdrop.LightTintOpacity;
         }
 
         protected override void OnPositionChanged(PointInt32 position) => Log($"Position Changed: {position.X},{position.Y}");

@@ -21,12 +21,7 @@
     <PackageId>WinUIEx</PackageId>
     <Product>WinUI Extensions</Product>
     <PackageReleaseNotes>
-        - Breaking: Rewrite of Backdrop APIs for more control and better handling of theme changes.
-        - Added Backdrop support to SplashScreen.
-        - Added WindowEx.ZOrderChanged event.
-        - Added new virtual members to WindowEx to react to position, presenter and zorder changes with a simple override.
-        - Improved DPI changed handling.
-        - Fixed a bug in persistance restore when restoring window position to a screen with a different DPI.
+        - Use fallback color for backdrop if the backdrop isn't supported.
     </PackageReleaseNotes>
   </PropertyGroup>
 

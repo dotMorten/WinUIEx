@@ -33,9 +33,10 @@ namespace WinUIEx
                     if (m_backdrop != null)
                         m_backdrop.IsDirty -= Backdrop_IsDirty;
                     m_backdrop = value;
+                    CleanUpBackdrop();
                     if (m_backdrop != null)
                         m_backdrop.IsDirty += Backdrop_IsDirty;
-                    if (m_backdrop is null || _window.Visible)
+                    if (m_backdrop is not null && _window.Visible)
                         InitBackdrop();
                 }
             }
@@ -45,21 +46,54 @@ namespace WinUIEx
 
         private void Backdrop_IsDirty(object? sender, EventArgs e)
         {
-            if (currentController != null && BackdropConfiguration != null)
+            if (currentController != null && BackdropConfiguration != null && m_backdrop != null)
                 m_backdrop.UpdateController(currentController, BackdropConfiguration.Theme);
         }
 
         public ISystemBackdropController? ActiveBackdropController => currentController;
 
+        private Microsoft.UI.Xaml.Media.SolidColorBrush? _fallbackBackdrop;
+
         private void InitBackdrop()
         {
-            if(m_backdrop is null || !m_backdrop.IsSupported)
+            if(m_backdrop is null)
             {
                 CleanUpBackdrop();
                 return;
             }
-            if (m_backdrop is null)
+            if (!m_backdrop.IsSupported)
+            {
+                var rootElement = _window.Content as FrameworkElement;
+                if (rootElement is not null)
+                {
+                    // Initial state.
+                    _fallbackBackdrop = new Microsoft.UI.Xaml.Media.SolidColorBrush(rootElement.ActualTheme == ElementTheme.Dark ? m_backdrop.DarkFallbackColor : m_backdrop.LightFallbackColor);
+                    if (rootElement is Microsoft.UI.Xaml.Controls.Control control && control.Background is null)
+                    {
+                        control.Background = _fallbackBackdrop;
+                    }
+                    else if (rootElement is Microsoft.UI.Xaml.Controls.Panel panel && panel.Background is null)
+                    {
+                        panel.Background = _fallbackBackdrop;
+                    }
+                    else
+                    {
+                        _fallbackBackdrop = null;
+                        return;
+                    }
+                    // This should probably be weak in the rare event the root content changes
+                    // Unfortunately there's no good event to detect changes though.
+                    rootElement.ActualThemeChanged += (s, e) =>
+                    {
+                        bool isDark = s.ActualTheme == ElementTheme.Dark;
+                        if (_fallbackBackdrop != null && m_backdrop != null)
+                        {
+                            _fallbackBackdrop.Color = isDark ? m_backdrop.DarkFallbackColor : m_backdrop.LightFallbackColor;
+                        }
+                    };
+                }
                 return;
+            }
 
             if (BackdropConfiguration is null)
             {
@@ -101,6 +135,19 @@ namespace WinUIEx
             (currentController as DesktopAcrylicController)?.RemoveAllSystemBackdropTargets();
             currentController?.Dispose();
             currentController = null;
+            if (_fallbackBackdrop is not null)
+            {
+                var rootElement = _window.Content as FrameworkElement;
+                if (_window.Content is Microsoft.UI.Xaml.Controls.Control control && control.Background == _fallbackBackdrop)
+                {
+                    control.Background = null;
+                }
+                else if (_window.Content is Microsoft.UI.Xaml.Controls.Panel panel && panel.Background == _fallbackBackdrop)
+                {
+                    panel.Background = null;
+                }
+                _fallbackBackdrop = null;
+            }
         }
 
         private void EnsureDispatcherQueueController()

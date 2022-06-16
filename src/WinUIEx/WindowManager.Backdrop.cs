@@ -21,9 +21,9 @@ namespace WinUIEx
         private object? m_dispatcherQueueController = null;
         private ISystemBackdropController? currentController;
         private SystemBackdropConfiguration? BackdropConfiguration;
-        private SystemBackdrop m_backdrop;
+        private SystemBackdrop? m_backdrop;
 
-        public SystemBackdrop Backdrop
+        public SystemBackdrop? Backdrop
         {
             get => m_backdrop;
             set

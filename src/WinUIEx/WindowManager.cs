@@ -134,6 +134,8 @@ namespace WinUIEx
             {
                 case WindowsMessages.WM_GETMINMAXINFO:
                     {
+                        if (_restoringPersistance)
+                            break;
                         // Restrict min-size
                         MINMAXINFO* rect2 = (MINMAXINFO*)e.Message.LParam;
                         var currentDpi = _window.GetDpiForWindow();
@@ -143,10 +145,8 @@ namespace WinUIEx
                     break;
                 case WindowsMessages.WM_DPICHANGED:
                     {
-                        // Resize to account for DPI change
-                        var suggestedRect = (Windows.Win32.Foundation.RECT*)e.Message.LParam;
-                        e.Handled = Windows.Win32.PInvoke.SetWindowPos(new Windows.Win32.Foundation.HWND(_window.GetWindowHandle()), new Windows.Win32.Foundation.HWND(), suggestedRect->left, suggestedRect->top,
-                            suggestedRect->right - suggestedRect->left, suggestedRect->bottom - suggestedRect->top, Windows.Win32.UI.WindowsAndMessaging.SET_WINDOW_POS_FLAGS.SWP_NOZORDER | Windows.Win32.UI.WindowsAndMessaging.SET_WINDOW_POS_FLAGS.SWP_NOACTIVATE);
+                        if (_restoringPersistance)
+                            e.Handled = true; // Don't let WinUI resize the window due to a dpi change caused by restoring window position - we got this.
                         break;
                     }
             }
@@ -176,6 +176,8 @@ namespace WinUIEx
         /// packaged applications.
         /// </remarks>
         public string? PersistenceId { get; set; }
+
+        private bool _restoringPersistance; // Flag used to avoid WinUI DPI adjustment
 
         private void LoadPersistence()
         {
@@ -223,7 +225,9 @@ namespace WinUIEx
                         retobj.showCmd = SHOW_WINDOW_CMD.SW_MAXIMIZE;
                     else if (retobj.showCmd != SHOW_WINDOW_CMD.SW_MAXIMIZE)
                         retobj.showCmd = SHOW_WINDOW_CMD.SW_NORMAL;
+                    _restoringPersistance = true;
                     Windows.Win32.PInvoke.SetWindowPlacement(new Windows.Win32.Foundation.HWND(_window.GetWindowHandle()), in retobj);
+                    _restoringPersistance = false;
                 }
                 catch { }
             }
@@ -263,8 +267,6 @@ namespace WinUIEx
             }
         }
         #endregion
-
-
 
         private void AppWindow_Changed(Microsoft.UI.Windowing.AppWindow sender, Microsoft.UI.Windowing.AppWindowChangedEventArgs args)
         {

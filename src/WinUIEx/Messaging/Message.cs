@@ -50,19 +50,18 @@ namespace WinUIEx.Messaging
             switch ((WindowsMessages)MessageId)
             {
                 case WindowsMessages.WM_SIZING:
-                    string side = "";
-                    switch (WParam)
+                    string side = WParam switch
                     {
-                        case 1: side = "Left"; break;
-                        case 2: side = "Right"; break;
-                        case 3: side = "Top"; break;
-                        case 4: side = "Top-Left"; break;
-                        case 5: side = "Top-Right"; break;
-                        case 6: side = "Bottom"; break;
-                        case 7: side = "Bottom-Left"; break;
-                        case 8: side = "Bottom-Right"; break;
-                        default: side = WParam.ToString(); break;
-                    }
+                        1 => "Left",
+                        2 => "Right",
+                        3 => "Top",
+                        4 => "Top-Left",
+                        5 => "Top-Right",
+                        6 => "Bottom",
+                        7 => "Bottom-Left",
+                        8 => "Bottom-Right",
+                        _ => WParam.ToString(),
+                    };
                     var rect = Marshal.PtrToStructure<Windows.Win32.Foundation.RECT>((IntPtr)LParam);
 
                     return $"WM_SIZING: Side: {side} Rect: {rect.left},{rect.top},{rect.right},{rect.bottom}";

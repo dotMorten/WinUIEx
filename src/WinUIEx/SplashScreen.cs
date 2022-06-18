@@ -59,6 +59,8 @@ namespace WinUIEx
         {
             if (IsAlwaysOnTop)
                 this.SetIsAlwaysOnTop(true);
+            else
+                WindowExtensions.SetForegroundWindow(this);
             double h = Height;
             double w = Width;
             if (Content is FrameworkElement f)
@@ -115,7 +117,7 @@ namespace WinUIEx
         /// <summary>
         /// Gets or sets a value indicating whether the splash screen should be top-most
         /// </summary>
-        public bool IsAlwaysOnTop { get; set; } = true;
+        public bool IsAlwaysOnTop { get; set; } = false;
 
         /// <summary>
         /// Raised once the splash screen has completed <see cref="OnLoading"/>.

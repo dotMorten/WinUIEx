@@ -10,6 +10,7 @@ using Windows.Win32;
 using Windows.Foundation.Metadata;
 using Windows.Win32.UI.WindowsAndMessaging;
 using Windows.Win32.Foundation;
+using System.IO;
 
 namespace WinUIEx
 {
@@ -44,6 +45,18 @@ namespace WinUIEx
         /// <returns>Icon</returns>
         public static Icon FromFile(string filename)
         {
+            if (!File.Exists(filename))
+            {
+#if NET6_0_OR_GREATER
+                var filename2 = Path.Combine(new FileInfo(System.Environment.ProcessPath!).Directory?.FullName, filename);
+#else
+                using var process = System.Diagnostics.Process.GetCurrentProcess()!;
+                var filename2 = Path.Combine(new FileInfo(process.MainModule!.FileName!).Directory!.FullName, filename);
+#endif
+                if (!File.Exists(filename2))
+                    throw new FileNotFoundException(filename);
+                filename = filename2;
+            }
             var handle = PInvoke.LoadImage(null, filename, GDI_IMAGE_TYPE.IMAGE_ICON, 16, 16, Windows.Win32.UI.Controls.IMAGE_FLAGS.LR_LOADFROMFILE);
             ThrowIfInvalid(handle);
             return new Icon(handle);

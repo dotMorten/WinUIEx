@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
@@ -74,11 +76,24 @@ namespace WinUIEx
             if (activatedEventArgs.Kind == Microsoft.Windows.AppLifecycle.ExtendedActivationKind.Protocol &&
                 activatedEventArgs.Data is IProtocolActivatedEventArgs protocolArgs)
             {
-                var vals = System.Web.HttpUtility.ParseQueryString(protocolArgs.Uri.Query);
-                if (vals["state"] is string state)
-                {
-                    return System.Web.HttpUtility.ParseQueryString(state);
-                }
+                return GetState(protocolArgs);
+            }
+            return null;
+        }
+
+        private static NameValueCollection? GetState(IProtocolActivatedEventArgs protocolArgs)
+        {
+            var vals = System.Web.HttpUtility.ParseQueryString(protocolArgs.Uri.Query);
+            if (vals["state"] is string state)
+            {
+                var vals2 = System.Web.HttpUtility.ParseQueryString(state);
+                // Some services doesn't like & encoded state parameters, and breaks them out separately.
+                // In that case copy over the important values
+                if (vals.AllKeys.Contains("appInstanceId") && !vals2.AllKeys.Contains("appInstanceId"))
+                    vals2.Add("appInstanceId", vals["appInstanceId"]);
+                if (vals.AllKeys.Contains("signinId") && !vals2.AllKeys.Contains("signinId"))
+                    vals2.Add("signinId", vals["signinId"]);
+                return vals2;
             }
             return null;
         }
@@ -116,14 +131,10 @@ namespace WinUIEx
             {
                 if (e.Data is IProtocolActivatedEventArgs protocolArgs)
                 {
-                    var vals = System.Web.HttpUtility.ParseQueryString(protocolArgs.Uri.Query);
-                    if (vals["state"] is string state)
+                    var vals = GetState(protocolArgs);
+                    if (vals is not null && vals["signinId"] is string signinId)
                     {
-                        vals = System.Web.HttpUtility.ParseQueryString(state);
-                        if (vals["signinId"] is string signinId)
-                        {
-                            ResumeSignin(protocolArgs.Uri, signinId);
-                        }
+                        ResumeSignin(protocolArgs.Uri, signinId);
                     }
                 }
             }

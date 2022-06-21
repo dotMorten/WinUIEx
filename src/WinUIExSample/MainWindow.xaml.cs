@@ -157,5 +157,20 @@ namespace WinUIExSample
             }
             (Content as FrameworkElement).RequestedTheme = theme;
         }
+
+        private async void DoOAuth_Click(object sender, RoutedEventArgs e)
+        {
+            string clientId = "VxIw33TIRCi1Tbk6pjh2i";
+            string clientSecret = "eEkUe5e9gUpO6KOYdL5pKTi683LADpi5_izZdHCI8Mndy32B";
+            string state = DateTime.Now.Ticks.ToString();
+            string callbackUri = "winuiex://";
+            string authorizeUri = $"https://www.oauth.com/playground/auth-dialog.html?response_type=code&client_id={clientId}&redirect_uri={Uri.EscapeDataString(callbackUri)}&scope=photo+offline_access";// &state={state}";
+
+            // login: nice-ferret@example.com
+            // password: Black-Capybara-83
+            _ = base.ShowMessageDialogAsync("Login: nice-ferret@example.com\npassword: Black-Capybara-83", "Enter credentials in browser");
+            var result = await WebAuthenticator.AuthenticateAsync(new Uri(authorizeUri), new Uri(callbackUri));
+            Log("Logged in. Code returned: " + result.Properties["code"]);
+        }
     }
 }

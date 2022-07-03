@@ -10,8 +10,9 @@ namespace winrt::WinUIEx::MediaPlayer::implementation
 
         Windows::Foundation::Uri Source();
         void Source(Windows::Foundation::Uri value);
-        void Play();
-        void Pause();
+        winrt::Windows::Media::Playback::MediaPlayer MediaPlayer();
+        bool AutoPlay();
+        void AutoPlay(bool value);
 
     private:
         void CreateSwapChain();
@@ -20,6 +21,7 @@ namespace winrt::WinUIEx::MediaPlayer::implementation
         winrt::com_ptr<IDXGISwapChain1> m_swapchain;
         winrt::Microsoft::UI::Xaml::Controls::SwapChainPanel m_swapchainpanel { nullptr };
         Windows::Foundation::Uri m_source { nullptr };
+        bool m_autoplay{ false };
     };
 }
 

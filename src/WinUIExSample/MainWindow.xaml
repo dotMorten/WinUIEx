@@ -68,7 +68,7 @@
                 <Button Content="Show dialog" Click="ShowDialog_Click" />
                 <Button Content="Test OAuth" Click="DoOAuth_Click" />
                 <Grid>
-                    <player:MediaPlayerElement Source="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" />
+                    <player:MediaPlayerElement x:Name="mediaPlayer" AutoPlay="true" Source="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" />
                 </Grid>
             </StackPanel>
         </ScrollViewer>

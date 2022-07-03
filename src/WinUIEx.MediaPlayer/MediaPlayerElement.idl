@@ -4,8 +4,14 @@ namespace WinUIEx.MediaPlayer
     runtimeclass MediaPlayerElement : Microsoft.UI.Xaml.Controls.ContentControl
     {
         MediaPlayerElement();
-        void Play();
-        void Pause();
         Windows.Foundation.Uri Source;
+        // bool AreTransportControlsEnabled;
+        Boolean AutoPlay;
+        // bool IsFullWindow;
+        Windows.Media.Playback.MediaPlayer MediaPlayer { get; };
+        // ImageSource PosterSource;
+        // Stretch Stretch;
+        // MediaTransportControls TransportControls;
+        // void SetMediaPlayer(MediaPlayer mediaPlayer);
     }
 }

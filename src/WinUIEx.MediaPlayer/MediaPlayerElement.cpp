@@ -31,6 +31,11 @@ namespace winrt::WinUIEx::MediaPlayer::implementation
         CreateSwapChain();
     }
 
+    winrt::Windows::Media::Playback::MediaPlayer MediaPlayerElement::MediaPlayer()
+    {
+        return m_player;
+    }
+
     Windows::Foundation::Uri MediaPlayerElement::Source()
     {
         return m_source;
@@ -40,17 +45,19 @@ namespace winrt::WinUIEx::MediaPlayer::implementation
     {
         m_source = value;
         m_player.SetUriSource(value);
-        Play();
+        if (m_autoplay)
+           m_player.Play();
     }
 
-    void MediaPlayerElement::Play()
+
+    bool MediaPlayerElement::AutoPlay()
     {
-        m_player.Play();
+        return m_autoplay;
     }
 
-    void MediaPlayerElement::Pause()
+    void MediaPlayerElement::AutoPlay(bool value)
     {
-        m_player.Pause();
+        m_autoplay = value;
     }
 
     void MediaPlayerElement::CreateSwapChain()

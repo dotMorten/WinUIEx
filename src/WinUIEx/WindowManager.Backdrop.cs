@@ -16,7 +16,7 @@ namespace WinUIEx
     /// Manages Window size, and ensures window correctly resizes during DPI changes to keep consistent
     /// DPI-independent sizing.
     /// </summary>
-    internal partial class WindowManager : IDisposable
+    public partial class WindowManager : IDisposable
     {
         private object? m_dispatcherQueueController = null;
         private ISystemBackdropController? currentController;

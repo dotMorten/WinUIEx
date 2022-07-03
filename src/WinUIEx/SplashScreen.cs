@@ -42,7 +42,7 @@ namespace WinUIEx
             {
                 this.Activate();
             });
-            _manager = new WindowManager(this);
+            _manager = WindowManager.Get(this);
         }
 
         /// <summary>

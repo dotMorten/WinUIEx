@@ -6,30 +6,72 @@ using Windows.Storage;
 using WinUIEx.Messaging;
 using Windows.Win32.UI.WindowsAndMessaging;
 using Microsoft.UI;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace WinUIEx
 {
     /// <summary>
-    /// Manages Window size, and ensures window correctly resizes during DPI changes to keep consistent
-    /// DPI-independent sizing.
+    /// Manages Window sizes, persists location and size across application sessions, simplifies backdrop configurations etc.
+    /// Use this class instead of <see cref="WindowEx"/> if you just want to extend an existing window with functionality,
+    /// without having to change the baseclass.
     /// </summary>
-    internal partial class WindowManager : IDisposable
+    public partial class WindowManager : IDisposable
     {
         private readonly WindowMessageMonitor _monitor;
         private readonly Window _window;
-        
-        public WindowManager(Window window) : this(window, new WindowMessageMonitor(window))
+        private OverlappedPresenter overlappedPresenter;
+        private readonly static Dictionary<IntPtr, WeakReference<WindowManager>> managers = new Dictionary<IntPtr, WeakReference<WindowManager>>();
+
+        private static bool TryGetWindowManager(Window window, [MaybeNullWhen(false)] out WindowManager manager)
+        {
+            if (window is null)
+                throw new ArgumentNullException();
+            var handle = window.GetWindowHandle();
+            if (managers.TryGetValue(handle, out var weakHandle) && weakHandle.TryGetTarget(out manager))
+            {
+                if (!manager._isDisposed)
+                    return true;
+            }
+            manager = null;
+            return false;
+        }
+
+        /// <summary>
+        /// Gets (or creates) a window manager for the specific window.
+        /// </summary>
+        /// <param name="window"></param>
+        /// <returns></returns>
+        public static WindowManager Get(Window window)
+        {
+            if (TryGetWindowManager(window, out var manager))
+                return manager;
+            else
+                return new WindowManager(window);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WindowManager"/> class.
+        /// </summary>
+        /// <param name="window"></param>
+        private WindowManager(Window window) : this(window, new WindowMessageMonitor(window))
         {
         }
 
-        public WindowManager(Window window, WindowMessageMonitor monitor)
+        private WindowManager(Window window, WindowMessageMonitor monitor)
         {
+            if(TryGetWindowManager(window, out var oldmonitor))
+            {
+                throw new InvalidOperationException("Only one window manager can be attached to a window");
+            }
             _window = window ?? throw new ArgumentNullException(nameof(window));
             _monitor = monitor;
             _monitor.WindowMessageReceived += OnWindowMessage;
             _window.Activated += Window_Activated;
             _window.Closed += Window_Closed;
             AppWindow.Changed += AppWindow_Changed;
+
+            overlappedPresenter = AppWindow.Presenter as OverlappedPresenter ?? Microsoft.UI.Windowing.OverlappedPresenter.Create();
         }
 
         private void Window_Activated(object sender, WindowActivatedEventArgs args)
@@ -42,7 +84,6 @@ namespace WinUIEx
             });
             if (BackdropConfiguration != null)
                 BackdropConfiguration.IsInputActive = args.WindowActivationState != WindowActivationState.Deactivated;
-
         }
 
         private void Window_Closed(object sender, WindowEventArgs args)
@@ -55,6 +96,8 @@ namespace WinUIEx
         /// </summary>
         ~WindowManager() => Dispose(false);
 
+        private bool _isDisposed;
+
         /// <inheritdoc />
         public void Dispose() => Dispose(true);
 
@@ -62,9 +105,16 @@ namespace WinUIEx
         {
             if (disposing)
             {
+                var handle = _window.GetWindowHandle();
+                if (managers.ContainsKey(handle))
+                    managers.Remove(handle);
+                AppWindow.Changed -= AppWindow_Changed;
+                _window.Activated -= Window_Activated;
+                _window.Closed -= Window_Closed;
                 _monitor.WindowMessageReceived -= OnWindowMessage;
                 _monitor.Dispose();
             }
+            _isDisposed = true;
         }
 
         /// <summary>
@@ -130,6 +180,9 @@ namespace WinUIEx
 
         private unsafe void OnWindowMessage(object? sender, Messaging.WindowMessageEventArgs e)
         {
+            WindowMessageReceived?.Invoke(this, e);
+            if (e.Handled)
+                return;
             switch (e.MessageType)
             {
                 case WindowsMessages.WM_GETMINMAXINFO:
@@ -151,6 +204,11 @@ namespace WinUIEx
                     }
             }
         }
+
+        /// <summary>
+        /// Event raised when a windows message is received.
+        /// </summary>
+        public event EventHandler<WindowMessageEventArgs>? WindowMessageReceived;
 
         private struct MINMAXINFO
         {
@@ -273,9 +331,84 @@ namespace WinUIEx
             if (args.DidPositionChange)
                 PositionChanged?.Invoke(this, sender.Position);
             if (args.DidPresenterChange)
+            {
+                if(AppWindow.Presenter is OverlappedPresenter op && op != overlappedPresenter)
+                {
+                    overlappedPresenter = op;
+                    _IsTitleBarVisible = op.HasTitleBar;
+                }
                 PresenterChanged?.Invoke(this, sender.Presenter);
+            }
             if(args.DidZOrderChange)
                 ZOrderChanged?.Invoke(this, new ZOrderInfo() { IsZOrderAtTop = args.IsZOrderAtTop, IsZOrderAtBottom = args.IsZOrderAtBottom, ZOrderBelowWindowId = args.ZOrderBelowWindowId });
+        }
+
+        private bool _IsTitleBarVisible = true;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the default title bar is visible or not.
+        /// </summary>
+        public bool IsTitleBarVisible
+        {
+            get { return _IsTitleBarVisible; }
+            set
+            {
+                _IsTitleBarVisible = value;
+                overlappedPresenter.SetBorderAndTitleBar(true, value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the minimize button is visible
+        /// </summary>
+        public bool IsMinimizable
+        {
+            get => overlappedPresenter.IsMinimizable;
+            set => overlappedPresenter.IsMinimizable = value;
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the maximimze button is visible
+        /// </summary>
+        public bool IsMaximizable
+        {
+            get => overlappedPresenter.IsMaximizable;
+            set => overlappedPresenter.IsMaximizable = value;
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the window can be resized.
+        /// </summary>
+        public bool IsResizable
+        {
+            get => overlappedPresenter.IsResizable;
+            set => overlappedPresenter.IsResizable = value;
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this window is always on top.
+        /// </summary>
+        public bool IsAlwaysOnTop
+        {
+            get => overlappedPresenter.IsAlwaysOnTop;
+            set => overlappedPresenter.IsAlwaysOnTop = value;
+        }
+
+        /// <summary>
+        /// Gets or sets the presenter kind for the current window
+        /// </summary>
+        /// <seealso cref="AppWindow.Presenter"/>
+        /// <seealso cref="PresenterChanged"/>
+        public Microsoft.UI.Windowing.AppWindowPresenterKind PresenterKind
+        {
+            get => AppWindow.Presenter.Kind;
+            set
+            {
+                if (value is Microsoft.UI.Windowing.AppWindowPresenterKind.Overlapped)
+                    AppWindow.SetPresenter(overlappedPresenter);
+                else
+                    AppWindow.SetPresenter(value);
+            }
         }
 
         /// <summary>

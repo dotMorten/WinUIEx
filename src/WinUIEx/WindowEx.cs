@@ -20,7 +20,6 @@ namespace WinUIEx
         private readonly Image iconArea;
         private readonly ContentControl titleBarContainer;
         private readonly ContentControl windowArea;
-        private readonly Microsoft.UI.Windowing.OverlappedPresenter overlappedPresenter;
         private readonly WindowManager _manager;
 
         /// <summary>
@@ -28,10 +27,8 @@ namespace WinUIEx
         /// </summary>
         public WindowEx()
         {
-            _manager = new WindowManager(this);
-            overlappedPresenter = Microsoft.UI.Windowing.OverlappedPresenter.Create();
-            AppWindow.SetPresenter(overlappedPresenter);
-
+            _manager = WindowManager.Get(this);
+            
             _manager.PresenterChanged += (s, e) => { OnPresenterChanged(Presenter); PresenterChanged?.Invoke(this, e); };
             _manager.PositionChanged += (s, e) => { OnPositionChanged(e); PositionChanged?.Invoke(this, e); };
             _manager.ZOrderChanged += (s, e) => { OnZOrderChanged(e); ZOrderChanged?.Invoke(this, e); };
@@ -208,19 +205,13 @@ namespace WinUIEx
           
         }
         
-        private bool _IsTitleBarVisible = true;
-
         /// <summary>
         /// Gets or sets a value indicating whether the default title bar is visible or not.
         /// </summary>
         public bool IsTitleBarVisible
         {
-            get { return _IsTitleBarVisible; }
-            set
-            {
-                _IsTitleBarVisible = value;
-                overlappedPresenter.SetBorderAndTitleBar(true /* Crash if you ever set this to false */, value);
-            }
+            get => _manager.IsTitleBarVisible;
+            set => _manager.IsTitleBarVisible = value;
         }
                 
         /// <summary>
@@ -228,8 +219,8 @@ namespace WinUIEx
         /// </summary>
         public bool IsMinimizable
         {
-            get => overlappedPresenter.IsMinimizable;
-            set => overlappedPresenter.IsMinimizable = value;
+            get => _manager.IsMinimizable;
+            set => _manager.IsMinimizable = value;
         }
 
         /// <summary>
@@ -237,8 +228,8 @@ namespace WinUIEx
         /// </summary>
         public bool IsMaximizable
         {
-            get => overlappedPresenter.IsMaximizable;
-            set => overlappedPresenter.IsMaximizable = value;
+            get => _manager.IsMaximizable;
+            set => _manager.IsMaximizable = value;
         }
 
         /// <summary>
@@ -246,37 +237,28 @@ namespace WinUIEx
         /// </summary>
         public bool IsResizable
         {
-            get => overlappedPresenter.IsResizable;
-            set => overlappedPresenter.IsResizable = value;
+            get => _manager.IsResizable;
+            set => _manager.IsResizable = value;
         }
 
         /*
-         * These are currently throwing
-        /// <summary>
-        /// Gets or sets a value indicating whether the window has a border or not.
-        /// </summary>
-        public bool HasBorder
-        {
-            get => overlappedPresenter.HasBorder;
-            set => overlappedPresenter.SetBorderAndTitleBar(value, overlappedPresenter.HasTitleBar);
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the window is modal or not.
-        /// </summary>
-        public bool IsModal
-        {
-            get => overlappedPresenter.IsModal;
-            set => overlappedPresenter.IsModal = value;
-        }*/
+        * These are currently throwing
+       /// <summary>
+       /// Gets or sets a value indicating whether the window is modal or not.
+       /// </summary>
+       public bool IsModal
+       {
+           get => overlappedPresenter.IsModal;
+           set => overlappedPresenter.IsModal = value;
+       }*/
 
         /// <summary>
         /// Gets or sets a value indicating whether this window is shown in task switchers.
         /// </summary>
         public bool IsShownInSwitchers
         {
-            get => AppWindow.IsShownInSwitchers;
-            set => AppWindow.IsShownInSwitchers = value;
+            get => _manager.AppWindow.IsShownInSwitchers;
+            set => _manager.AppWindow.IsShownInSwitchers = value;
         }
 
         /// <summary>
@@ -284,8 +266,8 @@ namespace WinUIEx
         /// </summary>
         public bool IsAlwaysOnTop
         {
-            get => overlappedPresenter.IsAlwaysOnTop;
-            set => overlappedPresenter.IsAlwaysOnTop = value;
+            get => _manager.IsAlwaysOnTop;
+            set => _manager.IsAlwaysOnTop = value;
         }
 
         /// <summary>
@@ -295,7 +277,7 @@ namespace WinUIEx
         /// <seealso cref="PresenterChanged"/>
         public Microsoft.UI.Windowing.AppWindowPresenter Presenter
         {
-            get => AppWindow.Presenter;
+            get => _manager.AppWindow.Presenter;
         }
 
         /// <summary>
@@ -305,13 +287,8 @@ namespace WinUIEx
         /// <seealso cref="PresenterChanged"/>
         public Microsoft.UI.Windowing.AppWindowPresenterKind PresenterKind
         {
-            get => AppWindow.Presenter.Kind;
-            set {
-                if (value is Microsoft.UI.Windowing.AppWindowPresenterKind.Overlapped)
-                    AppWindow.SetPresenter(overlappedPresenter);
-                else
-                    AppWindow.SetPresenter(value);
-            }
+            get => _manager.PresenterKind;
+            set => _manager.PresenterKind = value;
         }
 
         /// <summary>
@@ -358,7 +335,7 @@ namespace WinUIEx
         /// </summary>
         /// <seealso cref="MicaSystemBackdrop"/>
         /// <seealso cref="AcrylicSystemBackdrop"/>
-        public SystemBackdrop Backdrop
+        public SystemBackdrop? Backdrop
         {
             get => _manager.Backdrop;
             set => _manager.Backdrop = value;

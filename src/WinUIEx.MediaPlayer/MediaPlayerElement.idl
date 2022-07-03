@@ -1,0 +1,11 @@
+namespace WinUIEx.MediaPlayer
+{
+    [default_interface]
+    runtimeclass MediaPlayerElement : Microsoft.UI.Xaml.Controls.ContentControl
+    {
+        MediaPlayerElement();
+        void Play();
+        void Pause();
+        Windows.Foundation.Uri Source;
+    }
+}

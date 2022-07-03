@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:winex="using:WinUIEx"
+    xmlns:player="using:WinUIEx.MediaPlayer"
     TaskBarIcon="Images/WindowIcon.ico"
     Title="WinUI EX Test App"
     Width="1024" Height="768"
@@ -66,6 +67,9 @@
                 <Button Content="Bring to front (2 second delay)" Click="BringToFront_Click" />
                 <Button Content="Show dialog" Click="ShowDialog_Click" />
                 <Button Content="Test OAuth" Click="DoOAuth_Click" />
+                <Grid>
+                    <player:MediaPlayerElement Source="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" />
+                </Grid>
             </StackPanel>
         </ScrollViewer>
         <Grid Grid.Column="2" >

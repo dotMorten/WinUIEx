@@ -73,7 +73,6 @@ namespace winrt::WinUIEx::MediaPlayer::implementation
         }
     };
 
-
     winrt::Windows::Media::Playback::MediaPlayer MediaPlayerElement::MediaPlayer()
     {
         return m_player;
@@ -119,7 +118,6 @@ namespace winrt::WinUIEx::MediaPlayer::implementation
         ));
 
         DXGI_SWAP_CHAIN_DESC1 swapChainDesc = { 0 };
-        //TODO: Avoid size=0, and use ActualWidth/ActualHeight
         swapChainDesc.Width = (UINT)m_swapchainpanel.ActualWidth();
         if (swapChainDesc.Width == 0)
             swapChainDesc.Width = 1;
@@ -132,7 +130,7 @@ namespace winrt::WinUIEx::MediaPlayer::implementation
         swapChainDesc.SampleDesc.Quality = 0;
         swapChainDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
         swapChainDesc.BufferCount = 2;
-        swapChainDesc.Scaling = DXGI_SCALING_STRETCH;
+            swapChainDesc.Scaling = DXGI_SCALING_STRETCH;
         swapChainDesc.SwapEffect = DXGI_SWAP_EFFECT_FLIP_SEQUENTIAL;
         swapChainDesc.AlphaMode = DXGI_ALPHA_MODE_PREMULTIPLIED;
         swapChainDesc.Flags = 0;

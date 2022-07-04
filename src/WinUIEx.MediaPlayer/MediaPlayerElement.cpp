@@ -4,13 +4,11 @@
 #include "MediaPlayerElement.g.cpp"
 #endif
 
-// To learn more about WinUI, the WinUI project structure,
-// and more about our project templates, see: http://aka.ms/winui-project-info.
-
 namespace winrt::WinUIEx::MediaPlayer::implementation
 {
     MediaPlayerElement::MediaPlayerElement()
     {
+        DefaultStyleKey(winrt::box_value(L"WinUIEx.MediaPlayer.MediaPlayerElement"));
         m_swapchainpanel = winrt::Microsoft::UI::Xaml::Controls::SwapChainPanel();
         m_swapchainpanel.Width(640); //TODO
         m_swapchainpanel.Height(400); //TODO
@@ -36,19 +34,30 @@ namespace winrt::WinUIEx::MediaPlayer::implementation
         return m_player;
     }
 
-    Windows::Foundation::Uri MediaPlayerElement::Source()
-    {
-        return m_source;
-    }
+    Microsoft::UI::Xaml::DependencyProperty MediaPlayerElement::m_sourceProperty =
+        Microsoft::UI::Xaml::DependencyProperty::Register(
+            L"Source",
+            winrt::xaml_typename<Windows::Foundation::Uri>(),
+            winrt::xaml_typename<WinUIEx::MediaPlayer::MediaPlayerElement>(),
+            Microsoft::UI::Xaml::PropertyMetadata{ nullptr, Microsoft::UI::Xaml::PropertyChangedCallback{ &MediaPlayerElement::OnSourceChanged } }
+    );
 
-    void MediaPlayerElement::Source(Windows::Foundation::Uri value)
+    void MediaPlayerElement::OnSourceChanged(Microsoft::UI::Xaml::DependencyObject const& d, Microsoft::UI::Xaml::DependencyPropertyChangedEventArgs const& /* e */)
     {
-        m_source = value;
-        m_player.SetUriSource(value);
-        if (m_autoplay)
-           m_player.Play();
+        if (WinUIEx::MediaPlayer::MediaPlayerElement theControl{ d.try_as<WinUIEx::MediaPlayer::MediaPlayerElement>() })
+        {
+            theControl.MediaPlayer().SetUriSource(theControl.Source());
+            if (theControl.AutoPlay())
+            {
+                theControl.MediaPlayer().Play();
+            }
+            //WinUIEx::MediaPlayer::MediaPlayerElement::implementation::MediaPlayerElement* ptr{ winrt::get_self<WinUIEx::MediaPlayer::MediaPlayerElement::implementation::MediaPlayerElement>(theControl) };
+            // Call members of the implementation type via ptr.
+            //ptr->m_player.SetUriSource(ptr->Source);
+            //if (ptr->AutoPlay())
+            //    ptr->m_player.Play();
+        }
     }
-
 
     bool MediaPlayerElement::AutoPlay()
     {

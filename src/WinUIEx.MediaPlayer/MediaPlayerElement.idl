@@ -8,12 +8,19 @@ namespace WinUIEx.MediaPlayer
         static Microsoft.UI.Xaml.DependencyProperty SourceProperty { get; };
         Windows.Foundation.Uri Source;
         
-        // bool AreTransportControlsEnabled;
         Boolean AutoPlay;
-        // bool IsFullWindow;
+        static Microsoft.UI.Xaml.DependencyProperty AutoPlayProperty{ get; };
+
         Windows.Media.Playback.MediaPlayer MediaPlayer { get; };
-        // ImageSource PosterSource;
-        // Stretch Stretch;
+
+        Microsoft.UI.Xaml.Media.ImageSource PosterSource;
+        static Microsoft.UI.Xaml.DependencyProperty PosterSourceProperty{ get; };
+
+        Microsoft.UI.Xaml.Media.Stretch Stretch;
+        static Microsoft.UI.Xaml.DependencyProperty StretchProperty{ get; };
+
+        // bool IsFullWindow;
+        // bool AreTransportControlsEnabled;
         // MediaTransportControls TransportControls;
         // void SetMediaPlayer(MediaPlayer mediaPlayer);
     }

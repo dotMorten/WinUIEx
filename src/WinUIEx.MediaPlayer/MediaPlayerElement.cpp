@@ -13,6 +13,8 @@ namespace winrt::WinUIEx::MediaPlayer::implementation
         m_player.SetSurfaceSize(Windows::Foundation::Size{ 640, 480 }); //TODO: Handle surface size changes
         m_player.IsVideoFrameServerEnabled(true);
         m_player.VideoFrameAvailable([this](auto&...) {
+            if (!m_swapchain)
+                return;
             winrt::com_ptr<IDXGISurface> surface;
             winrt::check_hresult(m_swapchain->GetBuffer(0, IID_IDXGISurface, surface.put_void()));
             winrt::com_ptr<::IInspectable> isurface{ nullptr };
@@ -23,6 +25,37 @@ namespace winrt::WinUIEx::MediaPlayer::implementation
             winrt::check_hresult(m_swapchain->Present1(1, 0, &presentParam));
         });
     }
+
+    // Dependency property initializers
+    Microsoft::UI::Xaml::DependencyProperty MediaPlayerElement::m_sourceProperty =
+        Microsoft::UI::Xaml::DependencyProperty::Register(
+            L"Source",
+            winrt::xaml_typename<Windows::Foundation::Uri>(),
+            winrt::xaml_typename<WinUIEx::MediaPlayer::MediaPlayerElement>(),
+            Microsoft::UI::Xaml::PropertyMetadata{ nullptr, Microsoft::UI::Xaml::PropertyChangedCallback{ &MediaPlayerElement::OnSourceChanged } }
+    );
+    Microsoft::UI::Xaml::DependencyProperty MediaPlayerElement::m_posterSourceProperty =
+        Microsoft::UI::Xaml::DependencyProperty::Register(
+            L"PosterSource",
+            winrt::xaml_typename<Microsoft::UI::Xaml::Media::ImageSource>(),
+            winrt::xaml_typename<WinUIEx::MediaPlayer::MediaPlayerElement>(),
+            Microsoft::UI::Xaml::PropertyMetadata{ nullptr }
+    );
+    Microsoft::UI::Xaml::DependencyProperty MediaPlayerElement::m_autoPlayProperty =
+        Microsoft::UI::Xaml::DependencyProperty::Register(
+            L"AutoPlay",
+            winrt::xaml_typename<Microsoft::UI::Xaml::Media::ImageSource>(),
+            winrt::xaml_typename<WinUIEx::MediaPlayer::MediaPlayerElement>(),
+            Microsoft::UI::Xaml::PropertyMetadata{  box_value(true) }
+    );
+
+    Microsoft::UI::Xaml::DependencyProperty MediaPlayerElement::m_stretchProperty =
+        Microsoft::UI::Xaml::DependencyProperty::Register(
+            L"Stretch",
+            winrt::xaml_typename<Microsoft::UI::Xaml::Media::Stretch>(),
+            winrt::xaml_typename<WinUIEx::MediaPlayer::MediaPlayerElement>(),
+            Microsoft::UI::Xaml::PropertyMetadata{ box_value(Microsoft::UI::Xaml::Media::Stretch::Uniform) }
+    );
 
     void MediaPlayerElement::OnApplyTemplate()
     {
@@ -46,14 +79,6 @@ namespace winrt::WinUIEx::MediaPlayer::implementation
         return m_player;
     }
 
-    Microsoft::UI::Xaml::DependencyProperty MediaPlayerElement::m_sourceProperty =
-        Microsoft::UI::Xaml::DependencyProperty::Register(
-            L"Source",
-            winrt::xaml_typename<Windows::Foundation::Uri>(),
-            winrt::xaml_typename<WinUIEx::MediaPlayer::MediaPlayerElement>(),
-            Microsoft::UI::Xaml::PropertyMetadata{ nullptr, Microsoft::UI::Xaml::PropertyChangedCallback{ &MediaPlayerElement::OnSourceChanged } }
-    );
-
     void MediaPlayerElement::OnSourceChanged(Microsoft::UI::Xaml::DependencyObject const& d, Microsoft::UI::Xaml::DependencyPropertyChangedEventArgs const& /* e */)
     {
         if (WinUIEx::MediaPlayer::MediaPlayerElement theControl{ d.try_as<WinUIEx::MediaPlayer::MediaPlayerElement>() })
@@ -64,16 +89,6 @@ namespace winrt::WinUIEx::MediaPlayer::implementation
                 theControl.MediaPlayer().Play();
             }
         }
-    }
-
-    bool MediaPlayerElement::AutoPlay()
-    {
-        return m_autoplay;
-    }
-
-    void MediaPlayerElement::AutoPlay(bool value)
-    {
-        m_autoplay = value;
     }
 
     void MediaPlayerElement::CreateSwapChain()

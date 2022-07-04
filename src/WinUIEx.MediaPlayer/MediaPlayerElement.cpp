@@ -9,21 +9,7 @@ namespace winrt::WinUIEx::MediaPlayer::implementation
     MediaPlayerElement::MediaPlayerElement()
     {
         DefaultStyleKey(winrt::box_value(L"WinUIEx.MediaPlayer.MediaPlayerElement"));
-        m_player = winrt::Windows::Media::Playback::MediaPlayer();
-        m_player.SetSurfaceSize(Windows::Foundation::Size{ 640, 480 }); //TODO: Handle surface size changes
-        m_player.IsVideoFrameServerEnabled(true);
-        m_player.VideoFrameAvailable([this](auto&...) {
-            if (!m_swapchain)
-                return;
-            winrt::com_ptr<IDXGISurface> surface;
-            winrt::check_hresult(m_swapchain->GetBuffer(0, IID_IDXGISurface, surface.put_void()));
-            winrt::com_ptr<::IInspectable> isurface{ nullptr };
-            winrt::check_hresult(::CreateDirect3D11SurfaceFromDXGISurface(surface.get(), isurface.put()));
-            auto d3dSurface = isurface.as<winrt::Windows::Graphics::DirectX::Direct3D11::IDirect3DSurface>();
-            m_player.CopyFrameToVideoSurface(d3dSurface);
-            DXGI_PRESENT_PARAMETERS presentParam = { 0, nullptr, nullptr, nullptr };
-            winrt::check_hresult(m_swapchain->Present1(1, 0, &presentParam));
-        });
+        SetMediaPlayer(winrt::Windows::Media::Playback::MediaPlayer());
     }
 
     // Dependency property initializers
@@ -66,6 +52,7 @@ namespace winrt::WinUIEx::MediaPlayer::implementation
             {
                 m_swapchainpanel = panel;
                 panel.SizeChanged([this](auto&...) {
+                    m_player.SetSurfaceSize(Windows::Foundation::Size{ (float)ActualWidth(), (float)ActualHeight() });
                     CreateSwapChain();
                 });
                 CreateSwapChain();
@@ -76,6 +63,37 @@ namespace winrt::WinUIEx::MediaPlayer::implementation
     winrt::Windows::Media::Playback::MediaPlayer MediaPlayerElement::MediaPlayer()
     {
         return m_player;
+    }
+
+    void MediaPlayerElement::SetMediaPlayer(winrt::Windows::Media::Playback::MediaPlayer mediaPlayer)
+    {
+        if (!mediaPlayer)
+        {
+            throw winrt::hresult_invalid_argument(L"Media Player cannot be null.");
+        }
+        if (m_player)
+        {
+            m_player.Close();
+            m_player.Source(nullptr);
+        }
+        m_player = mediaPlayer;
+        if(Source())
+           m_player.SetUriSource(Source());
+        if(ActualHeight() > 0 && ActualWidth() > 0)
+          m_player.SetSurfaceSize(Windows::Foundation::Size{ (float)ActualWidth(), (float)ActualHeight() });
+        m_player.IsVideoFrameServerEnabled(true);
+        m_player.VideoFrameAvailable([this](auto&...) {
+            if (!m_swapchain)
+                return;
+            winrt::com_ptr<IDXGISurface> surface;
+            winrt::check_hresult(m_swapchain->GetBuffer(0, IID_IDXGISurface, surface.put_void()));
+            winrt::com_ptr<::IInspectable> isurface{ nullptr };
+            winrt::check_hresult(::CreateDirect3D11SurfaceFromDXGISurface(surface.get(), isurface.put()));
+            auto d3dSurface = isurface.as<winrt::Windows::Graphics::DirectX::Direct3D11::IDirect3DSurface>();
+            m_player.CopyFrameToVideoSurface(d3dSurface);
+            DXGI_PRESENT_PARAMETERS presentParam = { 0, nullptr, nullptr, nullptr };
+            winrt::check_hresult(m_swapchain->Present1(1, 0, &presentParam));
+            });
     }
 
     void MediaPlayerElement::OnSourceChanged(Microsoft::UI::Xaml::DependencyObject const& d, Microsoft::UI::Xaml::DependencyPropertyChangedEventArgs const& /* e */)

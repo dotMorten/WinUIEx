@@ -51,6 +51,7 @@ namespace winrt::WinUIEx::MediaPlayer::implementation
 
         //
         winrt::Windows::Media::Playback::MediaPlayer MediaPlayer();
+        void SetMediaPlayer(winrt::Windows::Media::Playback::MediaPlayer mediaPlayer);
 
         void OnApplyTemplate();
 

@@ -12,6 +12,7 @@ namespace WinUIEx.MediaPlayer
         static Microsoft.UI.Xaml.DependencyProperty AutoPlayProperty{ get; };
 
         Windows.Media.Playback.MediaPlayer MediaPlayer { get; };
+        void SetMediaPlayer(Windows.Media.Playback.MediaPlayer mediaPlayer);
 
         Microsoft.UI.Xaml.Media.ImageSource PosterSource;
         static Microsoft.UI.Xaml.DependencyProperty PosterSourceProperty{ get; };
@@ -22,6 +23,5 @@ namespace WinUIEx.MediaPlayer
         // bool IsFullWindow;
         // bool AreTransportControlsEnabled;
         // MediaTransportControls TransportControls;
-        // void SetMediaPlayer(MediaPlayer mediaPlayer);
     }
 }

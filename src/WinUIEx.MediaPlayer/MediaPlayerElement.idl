@@ -1,7 +1,7 @@
 namespace WinUIEx.MediaPlayer
 {
     [default_interface]
-    runtimeclass MediaPlayerElement : Microsoft.UI.Xaml.Controls.ContentControl
+    runtimeclass MediaPlayerElement : Microsoft.UI.Xaml.Controls.Control
     {
         MediaPlayerElement();
 

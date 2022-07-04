@@ -3,7 +3,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:WinUIEx.MediaPlayer">
 
-    <!--<Style TargetType="local:MediaPlayerElement" >
+
+    <Style TargetType="local:MediaPlayerElement" >
         <Setter Property="HorizontalAlignment" Value="Stretch"/>
         <Setter Property="VerticalAlignment" Value="Stretch"/>
         <Setter Property="IsTabStop" Value="False"/>
@@ -12,14 +13,14 @@
                 <ControlTemplate TargetType="local:MediaPlayerElement">
                     <Grid x:Name="LayoutRoot">
                         <Border Background="Transparent"/>
-                        <Image x:Name="PosterImage" Source="{TemplateBinding PosterSource}" Stretch="{TemplateBinding Stretch}" Visibility="Collapsed"/>
+                        <!--<Image x:Name="PosterImage" Source="{TemplateBinding PosterSource}" Stretch="{TemplateBinding Stretch}" Visibility="Collapsed"/>-->
                         <SwapChainPanel x:Name="MediaPlayerPresenter" />
-                        <MediaPlayerPresenter x:Name="MediaPlayerPresenter" IsFullWindow="{TemplateBinding IsFullWindow}" MediaPlayer="{TemplateBinding MediaPlayer}" Stretch="{TemplateBinding Stretch}"/>
-                        <ContentPresenter x:Name="TransportControlsPresenter" Visibility="{TemplateBinding AreTransportControlsEnabled}"/>
+                        <!--<MediaPlayerPresenter x:Name="MediaPlayerPresenter" IsFullWindow="{TemplateBinding IsFullWindow}" MediaPlayer="{TemplateBinding MediaPlayer}" Stretch="{TemplateBinding Stretch}"/>-->
+                        <!--<ContentPresenter x:Name="TransportControlsPresenter" Visibility="{TemplateBinding AreTransportControlsEnabled}"/>-->
                         <Grid x:Name="TimedTextSourcePresenter"/>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-    </Style>-->
+    </Style>
 </ResourceDictionary>

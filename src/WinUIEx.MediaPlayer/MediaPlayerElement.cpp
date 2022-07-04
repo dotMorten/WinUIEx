@@ -9,10 +9,6 @@ namespace winrt::WinUIEx::MediaPlayer::implementation
     MediaPlayerElement::MediaPlayerElement()
     {
         DefaultStyleKey(winrt::box_value(L"WinUIEx.MediaPlayer.MediaPlayerElement"));
-        m_swapchainpanel = winrt::Microsoft::UI::Xaml::Controls::SwapChainPanel();
-        m_swapchainpanel.Width(640); //TODO
-        m_swapchainpanel.Height(400); //TODO
-        Content(m_swapchainpanel); // TODO: Use default style key instead
         m_player = winrt::Windows::Media::Playback::MediaPlayer();
         m_player.SetSurfaceSize(Windows::Foundation::Size{ 640, 480 }); //TODO: Handle surface size changes
         m_player.IsVideoFrameServerEnabled(true);
@@ -26,8 +22,24 @@ namespace winrt::WinUIEx::MediaPlayer::implementation
             DXGI_PRESENT_PARAMETERS presentParam = { 0, nullptr, nullptr, nullptr };
             winrt::check_hresult(m_swapchain->Present1(1, 0, &presentParam));
         });
-        CreateSwapChain();
     }
+
+    void MediaPlayerElement::OnApplyTemplate()
+    {
+        __super::OnApplyTemplate();
+        if (auto panel{ GetTemplateChild(L"MediaPlayerPresenter").try_as<winrt::Microsoft::UI::Xaml::Controls::SwapChainPanel>() })
+        {
+            if (panel)
+            {
+                m_swapchainpanel = panel;
+                panel.SizeChanged([this](auto&...) {
+                    CreateSwapChain();
+                });
+                CreateSwapChain();
+            }
+        }
+    };
+
 
     winrt::Windows::Media::Playback::MediaPlayer MediaPlayerElement::MediaPlayer()
     {
@@ -51,11 +63,6 @@ namespace winrt::WinUIEx::MediaPlayer::implementation
             {
                 theControl.MediaPlayer().Play();
             }
-            //WinUIEx::MediaPlayer::MediaPlayerElement::implementation::MediaPlayerElement* ptr{ winrt::get_self<WinUIEx::MediaPlayer::MediaPlayerElement::implementation::MediaPlayerElement>(theControl) };
-            // Call members of the implementation type via ptr.
-            //ptr->m_player.SetUriSource(ptr->Source);
-            //if (ptr->AutoPlay())
-            //    ptr->m_player.Play();
         }
     }
 
@@ -98,8 +105,12 @@ namespace winrt::WinUIEx::MediaPlayer::implementation
 
         DXGI_SWAP_CHAIN_DESC1 swapChainDesc = { 0 };
         //TODO: Avoid size=0, and use ActualWidth/ActualHeight
-        swapChainDesc.Width = (UINT)m_swapchainpanel.Width();
-        swapChainDesc.Height = (UINT)m_swapchainpanel.Height();
+        swapChainDesc.Width = (UINT)m_swapchainpanel.ActualWidth();
+        if (swapChainDesc.Width == 0)
+            swapChainDesc.Width = 1;
+        swapChainDesc.Height = (UINT)m_swapchainpanel.ActualHeight();
+        if (swapChainDesc.Height == 0)
+            swapChainDesc.Height = 1;
         swapChainDesc.Format = DXGI_FORMAT_B8G8R8A8_UNORM;
         swapChainDesc.Stereo = false;
         swapChainDesc.SampleDesc.Count = 1;

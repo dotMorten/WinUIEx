@@ -23,6 +23,8 @@ namespace winrt::WinUIEx::MediaPlayer::implementation
         bool AutoPlay();
         void AutoPlay(bool value);
 
+        void OnApplyTemplate();
+
     private:
         Windows::Foundation::Uri m_source{ nullptr };
         static Microsoft::UI::Xaml::DependencyProperty m_sourceProperty;

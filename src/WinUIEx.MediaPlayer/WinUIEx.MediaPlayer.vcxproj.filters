@@ -8,6 +8,9 @@
     <Filter Include="Generated Files">
       <UniqueIdentifier>{926ab91d-31b4-48c3-b9a4-e681349f27f0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Themes">
+      <UniqueIdentifier>{4ed06007-ffdf-499b-9a52-e366990381ba}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -25,6 +28,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Themes\Generic.xaml" />
+    <Page Include="Themes\Generic.xaml">
+      <Filter>Themes</Filter>
+    </Page>
   </ItemGroup>
 </Project>

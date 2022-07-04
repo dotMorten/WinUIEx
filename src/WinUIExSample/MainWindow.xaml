@@ -67,9 +67,10 @@
                 <Button Content="Bring to front (2 second delay)" Click="BringToFront_Click" />
                 <Button Content="Show dialog" Click="ShowDialog_Click" />
                 <Button Content="Test OAuth" Click="DoOAuth_Click" />
-                <Grid>
-                    <player:MediaPlayerElement x:Name="mediaPlayer" AutoPlay="true" Source="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" />
-                </Grid>
+                <player:MediaPlayerElement MinHeight="400" MinWidth="500"
+                       x:Name="mediaPlayer" AutoPlay="true" 
+                       Source="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" />
+
             </StackPanel>
         </ScrollViewer>
         <Grid Grid.Column="2" >

@@ -15,8 +15,10 @@
 
 #include <winrt/Windows.Media.Playback.h>
 #include <Microsoft.UI.Xaml.media.dxinterop.h>
-//#include <DXGI1_2.h>
 #include <Dxgi1_3.h>
 #include <D3D11.h>
 #include <D2d1_1.h>
 #include <windows.graphics.directx.direct3d11.interop.h>
+
+
+#include "MediaPlayerElement.h"

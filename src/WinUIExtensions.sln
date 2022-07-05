@@ -38,6 +38,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{8D51A09F-8
 		..\docs\docfx.json = ..\docs\docfx.json
 		..\docs\favicon.ico = ..\docs\favicon.ico
 		..\docs\index.md = ..\docs\index.md
+		..\README.md = ..\README.md
 		..\docs\toc.yml = ..\docs\toc.yml
 	EndProjectSection
 EndProject
@@ -53,6 +54,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "concepts", "concepts", "{0B
 		..\docs\concepts\WebAuthenticator.md = ..\docs\concepts\WebAuthenticator.md
 		..\docs\concepts\WindowEx.md = ..\docs\concepts\WindowEx.md
 		..\docs\concepts\WindowExtensions.md = ..\docs\concepts\WindowExtensions.md
+		..\docs\concepts\WindowManager.md = ..\docs\concepts\WindowManager.md
 		..\docs\concepts\WindowMessageMonitor.md = ..\docs\concepts\WindowMessageMonitor.md
 	EndProjectSection
 EndProject

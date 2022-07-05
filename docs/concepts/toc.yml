@@ -2,6 +2,8 @@
   href: WindowEx.md
 - name: Window Extension Methods
   href: WindowExtensions.md
+- name: Window Manager
+  href: WindowManager.md
 - name: HWND Extension Methods
   href: HwndExtensions.md
 - name: Window Message Monitor

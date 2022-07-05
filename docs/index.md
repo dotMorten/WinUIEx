@@ -13,6 +13,7 @@ A set of extension methods and classes to fill some gaps in WinUI 3, mostly arou
   - [Window Extension methods](concepts/WindowExtensions.md)
   - [HWND Window Handle Extensions methods](concepts/HwndExtensions.md)
   - [Extended `WindowEx` Window class](concepts/WindowEx.md)
+  - [Window Manager](concepts/WindowManager.md)
   - [UI Test Tooling for easy UI Testing](concepts/UITests.md)
   - [Splash screen](concepts/Splashscreen.md)
   - [OAuth Web Authenticator](concepts/WebAuthenticator.md)

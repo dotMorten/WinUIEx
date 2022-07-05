@@ -21,6 +21,16 @@
         </ResourceDictionary>
     </ResourceDictionary.ThemeDictionaries>
 
+    <Style TargetType="local:MediaPlayerPresenter" >
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="local:MediaPlayerPresenter">
+                    <SwapChainPanel x:Name="MediaSwapChain" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
     <Style TargetType="local:MediaPlayerElement" >
         <Setter Property="HorizontalAlignment" Value="Stretch"/>
         <Setter Property="VerticalAlignment" Value="Stretch"/>
@@ -30,9 +40,8 @@
                 <ControlTemplate TargetType="local:MediaPlayerElement">
                     <Grid x:Name="LayoutRoot">
                         <Border Background="Transparent"/>
-                        <Image x:Name="PosterImage" Source="{TemplateBinding PosterSource}" Visibility="Collapsed"/> <!--Stretch="{TemplateBinding Stretch}"  -->
-                        <SwapChainPanel x:Name="MediaPlayerPresenter" />
-                        <!--<MediaPlayerPresenter x:Name="MediaPlayerPresenter" IsFullWindow="{TemplateBinding IsFullWindow}" MediaPlayer="{TemplateBinding MediaPlayer}" Stretch="{TemplateBinding Stretch}"/>-->
+                        <Image x:Name="PosterImage" Source="{TemplateBinding PosterSource}" Visibility="Collapsed" Stretch="{TemplateBinding Stretch}"/>
+                        <local:MediaPlayerPresenter x:Name="MediaPlayerPresenter" IsFullWindow="{TemplateBinding IsFullWindow}" MediaPlayer="{TemplateBinding MediaPlayer}" Stretch="{TemplateBinding Stretch}"/>
                         <ContentPresenter x:Name="TransportControlsPresenter" Visibility="{TemplateBinding AreTransportControlsEnabled}"/>
                         <Grid x:Name="TimedTextSourcePresenter"/>
                     </Grid>

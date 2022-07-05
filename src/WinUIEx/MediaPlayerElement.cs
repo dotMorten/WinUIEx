@@ -1,5 +1,6 @@
 ﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Media;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -19,11 +20,6 @@ namespace WinUIEx
     /// </summary>
     public class MediaPlayerElement : Control
     {
-        private SwapChainPanel? swapchainPanel;
-        private MediaPlayer m_player;
-        private Windows.Win32.Graphics.Dxgi.IDXGISwapChain1? m_swapchain;
-        private Windows.Win32.Graphics.Direct3D11.ID3D11Device? m_d3dDevice;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="MediaPlayerElement"/> class.
         /// </summary>
@@ -32,7 +28,10 @@ namespace WinUIEx
             DefaultStyleKey = typeof(MediaPlayerElement);
             SetMediaPlayer(new Windows.Media.Playback.MediaPlayer());
             TransportControls = new MediaTransportControls();
+            Unloaded += OnUnloaded;
         }
+
+        private void OnUnloaded(object sender, RoutedEventArgs e) => MediaPlayer?.Pause();
 
         /// <summary>
         /// Sets the MediaPlayer instance used to render media.
@@ -45,28 +44,31 @@ namespace WinUIEx
         /// of the <see cref="MediaPlayerElement"/>.</para>
         /// <para>Use the <see cref="MediaPlayerElement.MediaPlayer"/> property to get the current instance of <see cref="Windows.Media.Playback.MediaPlayer"/>.</para>
         /// </remarks>
-        [MemberNotNull(nameof(m_player))]
         public void SetMediaPlayer(MediaPlayer mediaPlayer)
         {
             if (mediaPlayer is null)
             {
                 throw new ArgumentNullException(nameof(mediaPlayer));
             }
-            if (m_player is not null)
+            SetValue(MediaPlayerProperty, mediaPlayer);
+        }
+        private void OnMediaPlayerPropertyChanged(DependencyPropertyChangedEventArgs e)
+        {
+            if (e.OldValue is MediaPlayer oldPlayer)
             {
-                m_player.VideoFrameAvailable -= MediaPlayer_VideoFrameAvailable;
-                m_player.PlaybackSession.PlaybackStateChanged -= PlaybackSession_PlaybackStateChanged;
-                m_player.Dispose();
+                oldPlayer.PlaybackSession.PlaybackStateChanged -= PlaybackSession_PlaybackStateChanged;
+                oldPlayer.Dispose();
             }
-            m_player = mediaPlayer;
-            if (Source is not null)
-                m_player.SetUriSource(Source);
-            if (ActualHeight > 0 && ActualWidth > 0)
-                m_player.SetSurfaceSize(new Windows.Foundation.Size(ActualWidth, ActualHeight));
-            m_player.IsVideoFrameServerEnabled = true;
-            m_player.VideoFrameAvailable += MediaPlayer_VideoFrameAvailable;
-            m_player.PlaybackSession.PositionChanged += PlaybackSession_PositionChanged;
-            m_player.PlaybackSession.PlaybackStateChanged += PlaybackSession_PlaybackStateChanged;
+            if (e.NewValue is MediaPlayer newPlayer)
+            {
+                if (Source is not null)
+                    newPlayer.SetUriSource(Source);
+                if (ActualHeight > 0 && ActualWidth > 0)
+                    newPlayer.SetSurfaceSize(new Windows.Foundation.Size(ActualWidth, ActualHeight));
+                newPlayer.IsVideoFrameServerEnabled = true;
+                newPlayer.PlaybackSession.PositionChanged += PlaybackSession_PositionChanged;
+                newPlayer.PlaybackSession.PlaybackStateChanged += PlaybackSession_PlaybackStateChanged;
+            }
         }
 
         private void PlaybackSession_PositionChanged(MediaPlaybackSession sender, object args)
@@ -84,25 +86,16 @@ namespace WinUIEx
         /// instance. Changing the <see cref="Windows.Media.Playback.MediaPlayer"/> can cause non-trivial side effects because it can change 
         /// other properties of the <see cref="MediaPlayerElement"/>.
         /// </remarks>
-        public MediaPlayer MediaPlayer => m_player;
-
-        private unsafe void MediaPlayer_VideoFrameAvailable(MediaPlayer sender, object args)
+        public MediaPlayer? MediaPlayer
         {
-            if (m_swapchain is null)
-                return;
-            swapchainPanel?.DispatcherQueue?.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Normal, () =>
-            {
-                Guid g = IID_IDXGISurface;
-                m_swapchain.GetBuffer(0, &g, out var surfaceobj);
-                var surface = surfaceobj.As<Windows.Win32.Graphics.Dxgi.IDXGISurface>();
-                Windows.Win32.PInvoke.CreateDirect3D11SurfaceFromDXGISurface(surface, out var isurface);
-                var d3dSurface = WinRT.MarshalInterface<Windows.Graphics.DirectX.Direct3D11.IDirect3DSurface>.FromAbi(Marshal.GetIUnknownForObject(isurface));
-                m_player.CopyFrameToVideoSurface(d3dSurface);
-                Windows.Win32.Graphics.Dxgi.DXGI_PRESENT_PARAMETERS presentParam = new Windows.Win32.Graphics.Dxgi.DXGI_PRESENT_PARAMETERS(); // { 0, nullptr, nullptr, nullptr };
-                presentParam.DirtyRectsCount = 0;
-                m_swapchain.Present1(1, 0, &presentParam);
-            });
+            get { return (MediaPlayer)GetValue(MediaPlayerProperty); }
         }
+
+        /// <summary>
+        /// Identifies the <see cref="MediaPlayer"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty MediaPlayerProperty =
+            DependencyProperty.Register(nameof(MediaPlayer), typeof(MediaPlayer), typeof(MediaPlayerElement), new PropertyMetadata(null, (s, e) => ((MediaPlayerElement)s).OnMediaPlayerPropertyChanged(e)));
 
         private MediaTransportControls? _mediaTransportControls;
 
@@ -123,7 +116,21 @@ namespace WinUIEx
             }
         }
 
-        private static readonly Guid IID_IDXGISurface = new Guid("cafcb56c-6ac3-4889-bf47-9e23bbd260ec");
+        /// <summary>
+        /// Gets or sets a value that specifies if the <see cref="MediaPlayerElement"/> is rendering in full window mode.
+        /// </summary>
+        /// <value>true if the <see cref="MediaPlayerElement"/> is in full window mode; otherwise, false. The default is false.</value>
+        public bool IsFullWindow
+        {
+            get { return (bool)GetValue(IsFullWindowProperty); }
+            set { SetValue(IsFullWindowProperty, value); }
+        }
+
+        /// <summary>
+        /// Identifies the <see cref="IsFullWindow"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty IsFullWindowProperty =
+            DependencyProperty.Register(nameof(IsFullWindow), typeof(bool), typeof(MediaPlayerElement), new PropertyMetadata(false));
 
         /// <summary>
         /// Gets or sets a media source on the <see cref="MediaPlayerElement"/>.
@@ -143,9 +150,9 @@ namespace WinUIEx
 
         private void OnSourcePropertyChanged(DependencyPropertyChangedEventArgs e)
         {
-            m_player.SetUriSource(Source);
+            MediaPlayer?.SetUriSource(Source);
             if (AutoPlay)
-                m_player.Play();
+                MediaPlayer?.Play();
         }
 
         /// <summary>
@@ -211,113 +218,16 @@ namespace WinUIEx
         /// Identifies the <see cref="Stretch"/> dependency property.
         /// </summary>
         public static readonly DependencyProperty StretchProperty =
-            DependencyProperty.Register(nameof(Stretch), typeof(Microsoft.UI.Xaml.Media.Stretch), typeof(MediaPlayer), new PropertyMetadata(Microsoft.UI.Xaml.Media.Stretch.Uniform));
+            DependencyProperty.Register(nameof(Stretch), typeof(Microsoft.UI.Xaml.Media.Stretch), typeof(MediaPlayerElement), new PropertyMetadata(Microsoft.UI.Xaml.Media.Stretch.Uniform));
 
         /// <inheritdoc />
         protected override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
-            if (swapchainPanel != null)
-            {
-                swapchainPanel.SizeChanged -= SwapchainPanel_SizeChanged;
-                swapchainPanel = null;
-            }
-            swapchainPanel = GetTemplateChild("MediaPlayerPresenter") as SwapChainPanel;
-            if (swapchainPanel != null)
-            {
-                swapchainPanel.SizeChanged += SwapchainPanel_SizeChanged;
-                CreateSwapChain();
-            }
             if (GetTemplateChild("TransportControlsPresenter") is ContentPresenter presenter)
             {
                 presenter.Content = TransportControls;
             }
         }
-
-        private void SwapchainPanel_SizeChanged(object sender, Microsoft.UI.Xaml.SizeChangedEventArgs e)
-        {
-            CreateSwapChain();
-            if (ActualHeight > 0 && ActualWidth > 0)
-                m_player.SetSurfaceSize(new Windows.Foundation.Size(ActualWidth, ActualHeight));
-        }
-
-        /// <summary>
-        /// Finalizer
-        /// </summary>
-        ~MediaPlayerElement()
-        {
-            if (m_swapchain != null)
-                Marshal.ReleaseComObject(m_swapchain);
-            if (m_d3dDevice != null)
-                Marshal.ReleaseComObject(m_d3dDevice);
-        }
-        private unsafe void CreateSwapChain()
-        {
-            if (swapchainPanel is null || swapchainPanel.ActualWidth == 0 || swapchainPanel.ActualHeight == 0)
-                return;
-            if (m_swapchain != null)
-                Marshal.ReleaseComObject(m_swapchain);
-            if (m_d3dDevice != null)
-                Marshal.ReleaseComObject(m_d3dDevice);
-            var featureLevels = new ReadOnlySpan<Windows.Win32.Graphics.Direct3D11.D3D_FEATURE_LEVEL>(new Windows.Win32.Graphics.Direct3D11.D3D_FEATURE_LEVEL[] {
-                Windows.Win32.Graphics.Direct3D11.D3D_FEATURE_LEVEL.D3D_FEATURE_LEVEL_11_0,
-                Windows.Win32.Graphics.Direct3D11.D3D_FEATURE_LEVEL.D3D_FEATURE_LEVEL_10_1,
-                Windows.Win32.Graphics.Direct3D11.D3D_FEATURE_LEVEL.D3D_FEATURE_LEVEL_10_0,
-                Windows.Win32.Graphics.Direct3D11.D3D_FEATURE_LEVEL.D3D_FEATURE_LEVEL_9_3,
-                Windows.Win32.Graphics.Direct3D11.D3D_FEATURE_LEVEL.D3D_FEATURE_LEVEL_9_2,
-                Windows.Win32.Graphics.Direct3D11.D3D_FEATURE_LEVEL.D3D_FEATURE_LEVEL_9_1,
-                });
-
-            var flags = Windows.Win32.Graphics.Direct3D11.D3D11_CREATE_DEVICE_FLAG.D3D11_CREATE_DEVICE_BGRA_SUPPORT;
-#if DEBUG
-            flags = flags | Windows.Win32.Graphics.Direct3D11.D3D11_CREATE_DEVICE_FLAG.D3D11_CREATE_DEVICE_DEBUG;
-#endif
-            var hresult = Windows.Win32.PInvoke.D3D11CreateDevice(
-                null,
-                Windows.Win32.Graphics.Direct3D11.D3D_DRIVER_TYPE.D3D_DRIVER_TYPE_HARDWARE, null,
-                flags,
-                featureLevels, 7, out m_d3dDevice, null, out Windows.Win32.Graphics.Direct3D11.ID3D11DeviceContext context);
-
-            var swapChainDesc = new Windows.Win32.Graphics.Dxgi.DXGI_SWAP_CHAIN_DESC1()
-            {
-                Width = (uint)Math.Max(1, swapchainPanel.ActualWidth),
-                Height = (uint)Math.Max(1, swapchainPanel.ActualHeight),
-                Format = Windows.Win32.Graphics.Dxgi.DXGI_FORMAT.DXGI_FORMAT_B8G8R8A8_UNORM,
-                Stereo = new Windows.Win32.Foundation.BOOL(false),
-                SampleDesc = new Windows.Win32.Graphics.Dxgi.DXGI_SAMPLE_DESC()
-                {
-                    Count = 1,
-                    Quality = 0
-                },
-                BufferUsage = 0x00000020, //DXGI_USAGE_RENDER_TARGET_OUTPUT
-                BufferCount = 2,
-                Scaling = 0, //DXGI_SCALING_STRETCH
-                SwapEffect = Windows.Win32.Graphics.Dxgi.DXGI_SWAP_EFFECT.DXGI_SWAP_EFFECT_FLIP_SEQUENTIAL,
-                AlphaMode = Windows.Win32.Graphics.Dxgi.DXGI_ALPHA_MODE.DXGI_ALPHA_MODE_PREMULTIPLIED,
-                Flags = 0
-            };
-
-            var dxgiDevice = m_d3dDevice.As<Windows.Win32.Graphics.Dxgi.IDXGIDevice>();
-            dxgiDevice.GetAdapter(out var dxgiAdapter);
-
-            var g = IID_IDXGIFactory2_Guid;
-            dxgiAdapter.GetParent(&g, out var parent);
-            var dxgiFactory = (Windows.Win32.Graphics.Dxgi.IDXGIFactory2)parent;
-            dxgiFactory.CreateSwapChainForComposition(m_d3dDevice, &swapChainDesc, null, out var swapchain);
-            m_swapchain = swapchain;
-
-            g = new Guid("cafcb56c-6ac3-4889-bf47-9e23bbd260ec"); // IID_IDXGISurface;
-            m_swapchain.GetBuffer(0, &g, out var surfaceobj);
-            var panelNative = swapchainPanel.As<ISwapChainPanelNative>();
-            panelNative.SetSwapChain(swapchain);
-            
-        }
-
-        [Guid("63aad0b8-7c24-40ff-85a8-640d944cc325"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown), ComImport()]
-        internal interface ISwapChainPanelNative
-        {
-            void SetSwapChain(Windows.Win32.Graphics.Dxgi.IDXGISwapChain swapChain);
-        }
-        private static readonly Guid IID_IDXGIFactory2_Guid =new Guid("50c83a1c-e072-4c48-87b0-3630fa36a6d0");
     }
 }

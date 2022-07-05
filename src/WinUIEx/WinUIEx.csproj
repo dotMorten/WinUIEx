@@ -21,6 +21,7 @@
     <PackageId>WinUIEx</PackageId>
     <Product>WinUI Extensions</Product>
     <PackageReleaseNotes>
+        - Added `MediaPlayerElement` control for video and audio playback.
     </PackageReleaseNotes>
   </PropertyGroup>
 

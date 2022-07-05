@@ -2,9 +2,10 @@
 
 ### Helpers:
   - [Window Extension methods](WindowExtensions.md)
-  - [Window Manager](WindowManager.md)
   - [HWND Window Handle Extensions methods](HwndExtensions.md)
   - [Extended `WindowEx` Window class](WindowEx.md)
+  - [Window Manager](WindowManager.md)
+  - [MediaPlayerElement](MediaPlayer.md)
   - [Window Message Monitor](WindowMessageMonitor.md)
   - [UI Test Tooling for easy UI Testing](UITests.md)
   - [Web Authenticator](WebAuthenticator.md)

@@ -65,7 +65,8 @@
                 <Button Content="Hide + Restore (2 second delay)" Click="HideWindow_Click" />
                 <Button Content="Bring to front (2 second delay)" Click="BringToFront_Click" />
                 <Button Content="Show dialog" Click="ShowDialog_Click" />
-                <Button Content="Test OAuth" Click="DoOAuth_Click" />
+                <Button Content="Test OAuth (protocol)" Click="DoOAuth_Click" />
+                <Button Content="Test OAuth (httplistener)" Click="DoOAuthHttp_Click" />
             </StackPanel>
         </ScrollViewer>
         <Grid Grid.Column="2" >

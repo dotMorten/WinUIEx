@@ -152,14 +152,6 @@ namespace WinUIEx
 
         private async Task<WebAuthenticatorResult> Authenticate(Uri authorizeUri, Uri callbackUri)
         {
-            if (global::Windows.ApplicationModel.Package.Current is null)
-            {
-                throw new InvalidOperationException("The WebAuthenticator requires a packaged app with an AppxManifest");
-            }
-            if (!IsUriProtocolDeclared(callbackUri.Scheme))
-            {
-                throw new InvalidOperationException($"The URI Scheme {callbackUri.Scheme} is not declared in AppxManifest.xml");
-            }
             var g = Guid.NewGuid();
             UriBuilder b = new UriBuilder(authorizeUri);
 
@@ -174,15 +166,68 @@ namespace WinUIEx
             b.Query = query.ToString();
             authorizeUri = b.Uri;
 
-            var tcs = new TaskCompletionSource<Uri>();
+            if (callbackUri.Host.ToLower() == "localhost")
+            {
+                return await AwaitHttpCallback(authorizeUri, callbackUri, CancellationToken.None); ;
+            }
+            else
+            {
+                if (global::Windows.ApplicationModel.Package.Current is null)
+                {
+                    throw new InvalidOperationException("Protocol launch with the WebAuthenticator requires a packaged app with an AppxManifest");
+                }
+                if (!IsUriProtocolDeclared(callbackUri.Scheme))
+                    throw new InvalidOperationException($"The URI Scheme {callbackUri.Scheme} is not declared in AppxManifest.xml");
+                LaunchBrowser(authorizeUri);
+                var tcs = new TaskCompletionSource<Uri>();
+                tasks.Add(g.ToString(), tcs);
+                var uri = await tcs.Task.ConfigureAwait(false);
+                return new WebAuthenticatorResult(uri);
+            }
+        }
+
+        private void LaunchBrowser(Uri authorizeUri)
+        {
             var process = new System.Diagnostics.Process();
             process.StartInfo.FileName = "rundll32.exe";
             process.StartInfo.Arguments = "url.dll,FileProtocolHandler " + authorizeUri.ToString();
             process.StartInfo.UseShellExecute = true;
             process.Start();
-            tasks.Add(g.ToString(), tcs);
-            var uri = await tcs.Task.ConfigureAwait(false);
-            return new WebAuthenticatorResult(uri);
+        }
+
+        System.Net.HttpListener? currentListener;
+        private async Task<WebAuthenticatorResult> AwaitHttpCallback(Uri authorizeUri, Uri callbackUri, CancellationToken cancellation)
+        {
+            if(currentListener is not null)
+            {
+                currentListener.Abort();
+                currentListener = null;
+            }
+            var listener = new System.Net.HttpListener();
+            string prefix = callbackUri.OriginalString;
+            if (!prefix.EndsWith('/'))
+            {
+                prefix += "/";
+            }
+            listener.Prefixes.Add(prefix);
+            cancellation.Register(() => listener.Abort());
+            listener.Start();
+            LaunchBrowser(authorizeUri);
+            var context = await listener.GetContextAsync();
+            var request = context.Request;
+            var response = context.Response;
+            // Construct a response.
+            string responseString = "<HTML><BODY>Sign in complete. You can now close this window</BODY></HTML>";
+            byte[] buffer = System.Text.Encoding.UTF8.GetBytes(responseString);
+            // Get a response stream and write the response to it.
+            response.ContentLength64 = buffer.Length;
+            System.IO.Stream output = response.OutputStream;
+            output.Write(buffer, 0, buffer.Length);
+            // You must close the output stream.
+            output.Close();
+            listener.Stop();
+            currentListener = null;
+            return new WebAuthenticatorResult(request.Url);
         }
     }
 }

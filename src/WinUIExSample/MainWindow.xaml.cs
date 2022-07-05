@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
@@ -158,12 +159,22 @@ namespace WinUIExSample
             (Content as FrameworkElement).RequestedTheme = theme;
         }
 
-        private async void DoOAuth_Click(object sender, RoutedEventArgs e)
+        private async void DoOAuth_Click(object sender, RoutedEventArgs e) => OAUthSignin("winuiex://");
+        private async void DoOAuthHttp_Click(object sender, RoutedEventArgs e)
+        {
+            var l = new System.Net.Sockets.TcpListener(IPAddress.Loopback, 0);
+            l.Start();
+            int port = ((IPEndPoint)l.LocalEndpoint).Port;
+            l.Stop();
+
+            OAUthSignin($"http://localhost:{port}");
+        }
+
+        private async void OAUthSignin(string callbackUri)
         {
             string clientId = "VxIw33TIRCi1Tbk6pjh2i";
-            string clientSecret = "eEkUe5e9gUpO6KOYdL5pKTi683LADpi5_izZdHCI8Mndy32B";
+            // string clientSecret = "eEkUe5e9gUpO6KOYdL5pKTi683LADpi5_izZdHCI8Mndy32B";
             string state = DateTime.Now.Ticks.ToString();
-            string callbackUri = "winuiex://";
             string authorizeUri = $"https://www.oauth.com/playground/auth-dialog.html?response_type=code&client_id={clientId}&redirect_uri={Uri.EscapeDataString(callbackUri)}&scope=photo+offline_access";// &state={state}";
 
             // login: nice-ferret@example.com

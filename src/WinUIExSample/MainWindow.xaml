@@ -67,7 +67,7 @@
                 <Button Content="Bring to front (2 second delay)" Click="BringToFront_Click" />
                 <Button Content="Show dialog" Click="ShowDialog_Click" />
                 <Button Content="Test OAuth" Click="DoOAuth_Click" />
-                <winex:MediaPlayerElement MinHeight="400" MinWidth="500" Source="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+                <winex:MediaPlayerElement Height="281" MinWidth="500" Source="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
                                           AreTransportControlsEnabled="True"
                                           />
                 <!--<player:MediaPlayerElement MinHeight="400" MinWidth="500"

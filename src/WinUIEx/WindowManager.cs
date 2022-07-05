@@ -72,6 +72,7 @@ namespace WinUIEx
             AppWindow.Changed += AppWindow_Changed;
 
             overlappedPresenter = AppWindow.Presenter as OverlappedPresenter ?? Microsoft.UI.Windowing.OverlappedPresenter.Create();
+            managers[window.GetWindowHandle()] = new WeakReference<WindowManager>(this);
         }
 
         private void Window_Activated(object sender, WindowActivatedEventArgs args)

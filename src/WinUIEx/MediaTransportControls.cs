@@ -105,7 +105,10 @@ namespace WinUIEx
                 if (ProgressSlider != null)
                 {
                     progressValueChanging = true;
-                    ProgressSlider.Value = (ProgressSlider.Maximum - ProgressSlider.Minimum) * (sender.Position / sender.NaturalDuration) + ProgressSlider.Minimum;
+                    if (sender.NaturalDuration == TimeSpan.Zero)
+                        ProgressSlider.Value = ProgressSlider.Minimum;
+                    else
+                        ProgressSlider.Value = (ProgressSlider.Maximum - ProgressSlider.Minimum) * (sender.Position / sender.NaturalDuration) + ProgressSlider.Minimum;
                     progressValueChanging = false;
                 }
             });

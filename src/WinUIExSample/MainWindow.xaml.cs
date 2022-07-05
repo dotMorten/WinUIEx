@@ -173,10 +173,11 @@ namespace WinUIExSample
             Log("Logged in. Code returned: " + result.Properties["code"]);
         }
 
+        private MediaWindow? mediaWindow;
         private void OpenMedia_Click(object sender, RoutedEventArgs e)
         {
-            var media = new MediaWindow();
-            media.Show();
+            mediaWindow = mediaWindow ?? new MediaWindow();
+            mediaWindow.Show();
         }
     }
 }

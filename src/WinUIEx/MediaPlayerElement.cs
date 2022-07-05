@@ -20,6 +20,10 @@ namespace WinUIEx
     /// </summary>
     public class MediaPlayerElement : Control
     {
+        private MediaTransportControls? _mediaTransportControls;
+        private MediaPlayerPresenter? _playerPresenter;
+        private UIElement? _posterImage;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="MediaPlayerElement"/> class.
         /// </summary>
@@ -63,11 +67,9 @@ namespace WinUIEx
             {
                 if (Source is not null)
                     newPlayer.SetUriSource(Source);
-                if (ActualHeight > 0 && ActualWidth > 0)
-                    newPlayer.SetSurfaceSize(new Windows.Foundation.Size(ActualWidth, ActualHeight));
-                newPlayer.IsVideoFrameServerEnabled = true;
                 newPlayer.PlaybackSession.PositionChanged += PlaybackSession_PositionChanged;
                 newPlayer.PlaybackSession.PlaybackStateChanged += PlaybackSession_PlaybackStateChanged;
+                newPlayer.AutoPlay = AutoPlay;
             }
         }
 
@@ -75,7 +77,41 @@ namespace WinUIEx
             => TransportControls?.OnPositionChanged(sender);
 
         private void PlaybackSession_PlaybackStateChanged(MediaPlaybackSession sender, object args)
-            => TransportControls?.OnPlaybackStateChanged(sender);
+        {
+            var state = sender.PlaybackState;
+            DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Normal, () =>
+            {
+                UpdatePosterVisibility();
+            });
+            TransportControls?.OnPlaybackStateChanged(sender);
+        }
+
+        private void UpdatePosterVisibility()
+        {
+            bool showPosterSource = false;
+            if (Source is null)
+                showPosterSource = true;
+            else if (MediaPlayer?.PlaybackSession.NaturalVideoWidth == 0) // Audio only
+                showPosterSource = true;
+            //todo: Show poster if streaming to another device
+            else
+            {
+                var state = MediaPlayer?.PlaybackSession.PlaybackState ?? MediaPlaybackState.None;
+                switch (state)
+                {
+                    case MediaPlaybackState.Opening:
+                    case MediaPlaybackState.None:
+                        showPosterSource = true;
+                        break;
+                    default: break;
+
+                }
+            }
+            if (_posterImage is not null)
+                _posterImage.Visibility = showPosterSource ? Visibility.Visible : Visibility.Collapsed;
+            if (_playerPresenter is not null)
+                _playerPresenter.Visibility = showPosterSource ? Visibility.Collapsed : Visibility.Visible;
+        }
 
         /// <summary>
         /// Gets the MediaPlayer instance used to render media.
@@ -96,8 +132,6 @@ namespace WinUIEx
         /// </summary>
         public static readonly DependencyProperty MediaPlayerProperty =
             DependencyProperty.Register(nameof(MediaPlayer), typeof(MediaPlayer), typeof(MediaPlayerElement), new PropertyMetadata(null, (s, e) => ((MediaPlayerElement)s).OnMediaPlayerPropertyChanged(e)));
-
-        private MediaTransportControls? _mediaTransportControls;
 
         /// <summary>
         /// Gets or sets the transport controls for the media.
@@ -148,18 +182,26 @@ namespace WinUIEx
         public static readonly DependencyProperty SourceProperty =
             DependencyProperty.Register(nameof(Source), typeof(Uri), typeof(MediaPlayerElement), new PropertyMetadata(null, (s,e) => ((MediaPlayerElement)s).OnSourcePropertyChanged(e)));
 
-        private void OnSourcePropertyChanged(DependencyPropertyChangedEventArgs e)
-        {
-            MediaPlayer?.SetUriSource(Source);
-            if (AutoPlay)
-                MediaPlayer?.Play();
-        }
+        private void OnSourcePropertyChanged(DependencyPropertyChangedEventArgs e) => MediaPlayer?.SetUriSource(Source);
 
         /// <summary>
         /// Gets or sets the image source that is used for a placeholder image during <see cref="MediaPlayerElement"/> loading transition states.
         /// </summary>
         /// <value>An image source for a transition <see cref="Microsoft.UI.Xaml.Media.ImageBrush"/> that is applied to the <see cref="MediaPlayerElement"/> content area.</value>
-        /// //TODO: Remarks https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.controls.mediaplayerelement.postersource?view=winrt-22621
+        /// <remarks>
+        /// <para>A PosterSource is an image, such as a album cover or movie poster, that is displayed in place of video.
+        /// It provides your <see cref="MediaPlayerElement"/> with a visual representation before the media is loaded,
+        /// or when the media is audio only.</para>
+        /// <para>The PosterSource is displayed in the following situations:
+        /// <list type="bullet">
+        ///   <item>When a valid source is not set. For example, Source is not set, Source is set to <c>Null</c>, or the source is
+        ///   invalid (as is the case when a <see cref="MediaPlayer.MediaFailed"/> event fires).</item>
+        ///   <item>While media is loading. For example, a valid source is set, but the <see cref="MediaPlayer.MediaOpened"/> event has not fired yet.</item>
+        ///   <item>While media is streaming to another device.</item>
+        ///   <item>When the media is audio only.</item>
+        /// </list>
+        /// </para>
+        /// </remarks>
         public Microsoft.UI.Xaml.Media.ImageSource PosterSource
         {
             get { return (Microsoft.UI.Xaml.Media.ImageSource)GetValue(PosterSourceProperty); }
@@ -202,7 +244,13 @@ namespace WinUIEx
         /// Identifies the <see cref="AutoPlay"/> dependency property.
         /// </summary>
         public static readonly DependencyProperty AutoPlayProperty =
-            DependencyProperty.Register(nameof(AutoPlay), typeof(bool), typeof(MediaPlayerElement), new PropertyMetadata(true));
+            DependencyProperty.Register(nameof(AutoPlay), typeof(bool), typeof(MediaPlayerElement), new PropertyMetadata(true, (s,e) => ((MediaPlayerElement)s).OnAutoPlayPropertyChanged()));
+
+        private void OnAutoPlayPropertyChanged()
+        {
+            if (MediaPlayer != null)
+                MediaPlayer.AutoPlay = AutoPlay;
+        }
 
         /// <summary>
         /// Gets or sets a value that describes how an <see cref="MediaPlayerElement"/> should be stretched to fill the destination rectangle.
@@ -228,6 +276,16 @@ namespace WinUIEx
             {
                 presenter.Content = TransportControls;
             }
+            if (GetTemplateChild("MediaPlayerPresenter") is MediaPlayerPresenter playerPresenter)
+            {
+                _playerPresenter = playerPresenter;
+            }
+            if (GetTemplateChild("PosterImage") is UIElement posterImage)
+            {
+                _posterImage = posterImage;
+                UpdatePosterVisibility();
+            }
+            
         }
     }
 }

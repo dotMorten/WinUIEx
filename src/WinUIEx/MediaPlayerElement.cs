@@ -2,11 +2,13 @@
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Foundation;
 using Windows.Media.Playback;
 using WinRT;
 
@@ -26,11 +28,10 @@ namespace WinUIEx
         /// Initializes a new instance of the <see cref="MediaPlayerElement"/> class.
         /// </summary>
         public MediaPlayerElement()
-
         {
             DefaultStyleKey = typeof(MediaPlayerElement);
-            _mediaTransportControls = new MediaTransportControls();
             SetMediaPlayer(new Windows.Media.Playback.MediaPlayer());
+            TransportControls = new MediaTransportControls();
         }
 
         /// <summary>
@@ -44,6 +45,7 @@ namespace WinUIEx
         /// of the <see cref="MediaPlayerElement"/>.</para>
         /// <para>Use the <see cref="MediaPlayerElement.MediaPlayer"/> property to get the current instance of <see cref="Windows.Media.Playback.MediaPlayer"/>.</para>
         /// </remarks>
+        [MemberNotNull(nameof(m_player))]
         public void SetMediaPlayer(MediaPlayer mediaPlayer)
         {
             if (mediaPlayer is null)
@@ -53,6 +55,7 @@ namespace WinUIEx
             if (m_player is not null)
             {
                 m_player.VideoFrameAvailable -= MediaPlayer_VideoFrameAvailable;
+                m_player.PlaybackSession.PlaybackStateChanged -= PlaybackSession_PlaybackStateChanged;
                 m_player.Dispose();
             }
             m_player = mediaPlayer;
@@ -62,8 +65,25 @@ namespace WinUIEx
                 m_player.SetSurfaceSize(new Windows.Foundation.Size(ActualWidth, ActualHeight));
             m_player.IsVideoFrameServerEnabled = true;
             m_player.VideoFrameAvailable += MediaPlayer_VideoFrameAvailable;
+            m_player.PlaybackSession.PositionChanged += PlaybackSession_PositionChanged;
+            m_player.PlaybackSession.PlaybackStateChanged += PlaybackSession_PlaybackStateChanged;
         }
 
+        private void PlaybackSession_PositionChanged(MediaPlaybackSession sender, object args)
+            => TransportControls?.OnPositionChanged(sender);
+
+        private void PlaybackSession_PlaybackStateChanged(MediaPlaybackSession sender, object args)
+            => TransportControls?.OnPlaybackStateChanged(sender);
+
+        /// <summary>
+        /// Gets the MediaPlayer instance used to render media.
+        /// </summary>
+        /// <value>The <see cref="Windows.Media.Playback.MediaPlayer"/> instance used to render media.</value>
+        /// <remarks>
+        /// You can use the <see cref="SetMediaPlayer"/> method to change the underlying <see cref="Windows.Media.Playback.MediaPlayer"/>
+        /// instance. Changing the <see cref="Windows.Media.Playback.MediaPlayer"/> can cause non-trivial side effects because it can change 
+        /// other properties of the <see cref="MediaPlayerElement"/>.
+        /// </remarks>
         public MediaPlayer MediaPlayer => m_player;
 
         private unsafe void MediaPlayer_VideoFrameAvailable(MediaPlayer sender, object args)
@@ -84,13 +104,13 @@ namespace WinUIEx
             });
         }
 
-        private MediaTransportControls _mediaTransportControls;
+        private MediaTransportControls? _mediaTransportControls;
 
         /// <summary>
         /// Gets or sets the transport controls for the media.
         /// </summary>
         /// <value>The transport controls for the media.</value>
-        public MediaTransportControls TransportControls
+        public MediaTransportControls? TransportControls
         {
             get { return _mediaTransportControls; }
             set
@@ -220,6 +240,10 @@ namespace WinUIEx
             if (ActualHeight > 0 && ActualWidth > 0)
                 m_player.SetSurfaceSize(new Windows.Foundation.Size(ActualWidth, ActualHeight));
         }
+
+        /// <summary>
+        /// Finalizer
+        /// </summary>
         ~MediaPlayerElement()
         {
             if (m_swapchain != null)
@@ -243,7 +267,7 @@ namespace WinUIEx
                 Windows.Win32.Graphics.Direct3D11.D3D_FEATURE_LEVEL.D3D_FEATURE_LEVEL_9_2,
                 Windows.Win32.Graphics.Direct3D11.D3D_FEATURE_LEVEL.D3D_FEATURE_LEVEL_9_1,
                 });
-            //Windows.Win32.Graphics.Direct3D11.ID3D11Device
+
             var flags = Windows.Win32.Graphics.Direct3D11.D3D11_CREATE_DEVICE_FLAG.D3D11_CREATE_DEVICE_BGRA_SUPPORT;
 #if DEBUG
             flags = flags | Windows.Win32.Graphics.Direct3D11.D3D11_CREATE_DEVICE_FLAG.D3D11_CREATE_DEVICE_DEBUG;
@@ -273,7 +297,6 @@ namespace WinUIEx
                 Flags = 0
             };
 
-            //var dxgiDevice = m_d3dDevice as Windows.Win32.Graphics.Dxgi.IDXGIDevice;
             var dxgiDevice = m_d3dDevice.As<Windows.Win32.Graphics.Dxgi.IDXGIDevice>();
             dxgiDevice.GetAdapter(out var dxgiAdapter);
 
@@ -285,16 +308,6 @@ namespace WinUIEx
 
             g = new Guid("cafcb56c-6ac3-4889-bf47-9e23bbd260ec"); // IID_IDXGISurface;
             m_swapchain.GetBuffer(0, &g, out var surfaceobj);
-            //var iunknown = Marshal.GetIUnknownForObject(swapchainPanel);
-            //IUnknown
-            //var guid = new Guid("63aad0b8-7c24-40ff-85a8-640d944cc325");
-            //var co = new ComObject(swapchainPanel);
-            //var pn0 = co.QueryInterface<Windows.Win32.System.WinRT.ISwapChainPanelNative>(guid);
-            //g = ISwapChainPanelNative_Guid;
-            //Marshal.QueryInterface(iunknown, ref g, out IntPtr ppv);
-            //var pna = Activator.CreateInstance(typeof(Windows.Win32.System.WinRT.ISwapChainPanelNative), ppv);
-            //var pp = Marshal.GetObjectForIUnknown(ppv);
-            //var pn = (ISwapChainPanelNative)pp;
             var panelNative = swapchainPanel.As<ISwapChainPanelNative>();
             panelNative.SetSwapChain(swapchain);
             
@@ -306,6 +319,5 @@ namespace WinUIEx
             void SetSwapChain(Windows.Win32.Graphics.Dxgi.IDXGISwapChain swapChain);
         }
         private static readonly Guid IID_IDXGIFactory2_Guid =new Guid("50c83a1c-e072-4c48-87b0-3630fa36a6d0");
-        //private static readonly Guid ISwapChainPanelNative_Guid = new Guid("63aad0b8-7c24-40ff-85a8-640d944cc325");
     }
 }

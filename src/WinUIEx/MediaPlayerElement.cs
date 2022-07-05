@@ -69,9 +69,19 @@ namespace WinUIEx
                     newPlayer.SetUriSource(Source);
                 newPlayer.PlaybackSession.PositionChanged += PlaybackSession_PositionChanged;
                 newPlayer.PlaybackSession.PlaybackStateChanged += PlaybackSession_PlaybackStateChanged;
+                newPlayer.VolumeChanged += MediaPlayer_VolumeChanged;
+                newPlayer.IsMutedChanged += MediaPlayer_IsMutedChanged;
                 newPlayer.AutoPlay = AutoPlay;
             }
         }
+
+        private void MediaPlayer_VolumeChanged(MediaPlayer sender, object args)
+        {   
+            TransportControls?.OnVolumeChanged(sender.Volume);
+        }
+
+        private void MediaPlayer_IsMutedChanged(MediaPlayer sender, object args)
+            => TransportControls?.OnMuteChanged(sender.IsMuted);
 
         private void PlaybackSession_PositionChanged(MediaPlaybackSession sender, object args)
             => TransportControls?.OnPositionChanged(sender);
@@ -153,7 +163,7 @@ namespace WinUIEx
         /// <summary>
         /// Gets or sets a value that specifies if the <see cref="MediaPlayerElement"/> is rendering in full window mode.
         /// </summary>
-        /// <value>true if the <see cref="MediaPlayerElement"/> is in full window mode; otherwise, false. The default is false.</value>
+        /// <value><c>true</c> if the <see cref="MediaPlayerElement"/> is in full window mode; otherwise, <c>false</c>. The default is <c>false</c>.</value>
         public bool IsFullWindow
         {
             get { return (bool)GetValue(IsFullWindowProperty); }
@@ -217,7 +227,7 @@ namespace WinUIEx
         /// <summary>
         /// Gets or sets a value that determines whether the standard transport controls are enabled.
         /// </summary>
-        /// <value>true if the standard transport controls are enabled; otherwise, false. The default is false.</value>
+        /// <value><c>true</c> if the standard transport controls are enabled; otherwise, <c>false</c>. The default is <c>false</c>.</value>
         public bool AreTransportControlsEnabled
         {
             get { return (bool)GetValue(AreTransportControlsEnabledProperty); }
@@ -285,7 +295,6 @@ namespace WinUIEx
                 _posterImage = posterImage;
                 UpdatePosterVisibility();
             }
-            
         }
     }
 }

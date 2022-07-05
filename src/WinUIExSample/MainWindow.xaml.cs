@@ -176,8 +176,17 @@ namespace WinUIExSample
         private MediaWindow? mediaWindow;
         private void OpenMedia_Click(object sender, RoutedEventArgs e)
         {
-            mediaWindow = mediaWindow ?? new MediaWindow();
-            mediaWindow.Show();
+            if (mediaWindow is not null)
+            {
+                mediaWindow.BringToFront();
+            }
+            else
+            {
+
+                mediaWindow = new MediaWindow();
+                mediaWindow.Show();
+                mediaWindow.Closed += (s, e) => mediaWindow = null;
+            }
         }
     }
 }

@@ -11,19 +11,27 @@
     Width="1024" Height="768"
     MinWidth="500" MinHeight="250"
     mc:Ignorable="d">
-
-    <Grid ColumnDefinitions="Auto,*, Auto" Margin="20" RequestedTheme="Dark">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
         <winex:MediaPlayerElement x:Name="player"
+            PosterSource="ms-appx:///Images/logo.png"
             Source="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
             AreTransportControlsEnabled="True" Grid.Column="1"
             />
-        <StackPanel>
+        <StackPanel Margin="20">
             <ToggleSwitch Header="AutoPlay" IsOn="{x:Bind player.AutoPlay, Mode=TwoWay}" />
             <ToggleSwitch Header="Transport Controls" IsOn="{x:Bind player.AreTransportControlsEnabled, Mode=TwoWay}" />
             <ToggleSwitch Header="Automatic show/hide controls" IsOn="{x:Bind player.TransportControls.ShowAndHideAutomatically, Mode=TwoWay}" />
+            <ToggleSwitch Header="Compact Mode" IsOn="{x:Bind player.TransportControls.IsCompact, Mode=TwoWay}" />
         </StackPanel>
-        <StackPanel Grid.Column="2">
-            <Button Content="Load Source" Click="Button_Click" />
+        <StackPanel Grid.Column="2" Margin="20">
+            <Button Content="Load Source" Click="LoadSourceButton_Click" HorizontalAlignment="Stretch" />
+            <Button Content="Show Controls" Click="ShowTransportControls_Click" HorizontalAlignment="Stretch" />
+            <Button Content="Hide Controls" Click="HideTransportControls_Click" HorizontalAlignment="Stretch" />
         </StackPanel>
     </Grid>
 </winex:WindowEx>

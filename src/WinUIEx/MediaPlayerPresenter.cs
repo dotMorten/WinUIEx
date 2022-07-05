@@ -66,7 +66,7 @@ namespace WinUIEx
         {
             CreateSwapChain();
             if (ActualHeight > 0 && ActualWidth > 0 && swapchainPanel?.XamlRoot != null)
-                MediaPlayer.SetSurfaceSize(new Windows.Foundation.Size(ActualWidth * swapchainPanel.XamlRoot.RasterizationScale, ActualHeight * swapchainPanel.XamlRoot.RasterizationScale));
+                MediaPlayer.SetSurfaceSize(new Size(ActualWidth, ActualHeight));
         }
 
         private unsafe void MediaPlayer_VideoFrameAvailable(MediaPlayer sender, object args)
@@ -116,8 +116,8 @@ namespace WinUIEx
 
             var swapChainDesc = new Windows.Win32.Graphics.Dxgi.DXGI_SWAP_CHAIN_DESC1()
             {
-                Width = (uint)Math.Max(1, swapchainPanel.ActualWidth * swapchainPanel.XamlRoot.RasterizationScale),
-                Height = (uint)Math.Max(1, swapchainPanel.ActualHeight * swapchainPanel.XamlRoot.RasterizationScale),
+                Width = (uint)Math.Max(1, swapchainPanel.ActualWidth),
+                Height = (uint)Math.Max(1, swapchainPanel.ActualHeight),
                 Format = Windows.Win32.Graphics.Dxgi.DXGI_FORMAT.DXGI_FORMAT_B8G8R8A8_UNORM,
                 Stereo = new Windows.Win32.Foundation.BOOL(false),
                 SampleDesc = new Windows.Win32.Graphics.Dxgi.DXGI_SAMPLE_DESC()

@@ -21,9 +21,6 @@
     <PackageId>WinUIEx</PackageId>
     <Product>WinUI Extensions</Product>
     <PackageReleaseNotes>
-        - Use fallback color for backdrop if the backdrop isn't supported.
-        - New `WindowManager` class that allows you to get all the WindowEx features on existing window classes.
-        - WebAuthenticator fixes.
     </PackageReleaseNotes>
   </PropertyGroup>
 

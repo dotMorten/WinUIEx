@@ -10,6 +10,8 @@
   href: WindowMessageMonitor.md
 - name: Splash Screen
   href: Splashscreen.md
+- name: Media Player
+  href: MediaPlayer.md
 - name: Web Authenticator
   href: WebAuthenticator.md
 - name: UI Testing

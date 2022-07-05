@@ -35,6 +35,12 @@
                 Clicked="OnFullScreenClicked"
                 HorizontalOptions="Center" />
 
+            <Button 
+                Text="Perform oauth siging"
+                SemanticProperties.Hint="OAuth Test"
+                Clicked="OnOAuthClicked"
+                HorizontalOptions="Center" />
+
         </VerticalStackLayout>
     </ScrollView>
  

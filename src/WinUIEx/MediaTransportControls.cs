@@ -83,6 +83,33 @@ namespace WinUIEx
                         player.IsMuted = !player.IsMuted;
                 };
             }
+            if (GetTemplateChild("StopButton") is ButtonBase stopButton)
+            {
+                stopButton.Click += (s, e) =>
+                {
+                    var player = GetMediaPlayer();
+                    if (player is not null)
+                    {
+                        player.Pause();
+                        player.Position = TimeSpan.Zero;
+                    }
+                };
+                stopButton.Visibility = IsStopButtonVisible ? Visibility.Visible : Visibility.Collapsed;
+            }
+
+            if (GetTemplateChild("SkipBackwardButton") is ButtonBase skipBackwardButton)
+            {
+                skipBackwardButton.Click += (s, e) =>
+                {
+                    var player = GetMediaPlayer();
+                    if (player is not null)
+                    {
+                        // TODO
+                    }
+                };
+                skipBackwardButton.Visibility = IsSkipBackwardButtonVisible ? Visibility.Visible : Visibility.Collapsed;
+            }
+            
             VolumeSlider = GetTemplateChild("VolumeSlider") as Slider;
             if(VolumeSlider is not null)
             {
@@ -266,6 +293,64 @@ namespace WinUIEx
             DependencyProperty.Register(nameof(IsCompact), typeof(bool), typeof(MediaTransportControls), new PropertyMetadata(false, (s, e) => ((MediaTransportControls)s).OnIsCompactPropertyChanged()));
 
         private void OnIsCompactPropertyChanged() => VisualStateManager.GoToState(this, IsCompact ? "CompactMode" : "NormalMode", true);
+
+        /// <summary>
+        /// Gets or sets a value that indicates whether the stop button is shown.
+        /// </summary>
+        /// <value><c>true</c> to show the stop button. <c>false</c> to hide the stop button. The default is <c>false</c>.</value>
+        public bool IsStopButtonVisible
+        {
+            get { return (bool)GetValue(IsStopButtonVisibleProperty); }
+            set { SetValue(IsStopButtonVisibleProperty, value); }
+        }
+
+        /// <summary>
+        /// Identifies the <see cref="IsStopButtonVisible"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty IsStopButtonVisibleProperty =
+            DependencyProperty.Register(nameof(IsStopButtonVisible), typeof(bool), typeof(MediaTransportControls), new PropertyMetadata(false, (s,e) => ((MediaTransportControls)s).ToggleButtonVisibility("StopButton",(bool)e.NewValue)));
+
+        /// <summary>
+        /// Gets or sets a value that indicates whether a user can stop the media playback.
+        /// </summary>
+        /// <value><c>true</c> to allow the user to stop playback; otherwise, <c>false</c>. The default is <c>false</c>.</value>
+        public bool IsStopEnabled
+        {
+            get { return (bool)GetValue(IsStopEnabledProperty); }
+            set { SetValue(IsStopEnabledProperty, value); }
+        }
+
+        /// <summary>
+        /// Identifies the <cref="IsStopEnabled" /> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty IsStopEnabledProperty =
+            DependencyProperty.Register(nameof(IsStopEnabled), typeof(bool), typeof(MediaTransportControls), new PropertyMetadata(false));
+
+
+
+        /// <summary>
+        /// Gets or sets a value that indicates whether a user can skip backward in the media.
+        /// </summary>
+        /// <value><c>true</c> to allow the user to skip backward; otherwise, <c>false</c>. The default is <c>false</c>.</value>
+        public bool IsSkipBackwardButtonVisible
+        {
+            get { return (bool)GetValue(IsSkipBackwardButtonVisibleProperty); }
+            set { SetValue(IsSkipBackwardButtonVisibleProperty, value); }
+        }
+
+        /// <summary>
+        /// Identifies the <cref="IsSkipBackwardButtonVisible" /> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty IsSkipBackwardButtonVisibleProperty =
+            DependencyProperty.Register(nameof(IsSkipBackwardButtonVisible), typeof(bool), typeof(MediaTransportControls), new PropertyMetadata(false, (s, e) => ((MediaTransportControls)s).ToggleButtonVisibility("SkipBackwardButton", (bool)e.NewValue)));
+
+        private void ToggleButtonVisibility(string elementName, bool isVisible)
+        {
+            if (GetTemplateChild(elementName) is UIElement element)
+            {
+                element.Visibility = isVisible ? Visibility.Visible : Visibility.Collapsed;
+            }
+        }
 
         /// <summary>
         /// Hides the transport controls if they're shown.

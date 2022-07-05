@@ -238,7 +238,16 @@ namespace WinUIEx
         /// Identifies the <see cref="AreTransportControlsEnabled"/> dependency property.
         /// </summary>
         public static readonly DependencyProperty AreTransportControlsEnabledProperty =
-            DependencyProperty.Register(nameof(AreTransportControlsEnabled), typeof(bool), typeof(MediaPlayerElement), new PropertyMetadata(false));
+            DependencyProperty.Register(nameof(AreTransportControlsEnabled), typeof(bool), typeof(MediaPlayerElement), 
+                new PropertyMetadata(false, (s,e) => ((MediaPlayerElement)s).AreTransportControlsEnabledPropertyChanged()));
+
+        private void AreTransportControlsEnabledPropertyChanged()
+        {
+            if (GetTemplateChild("TransportControlsPresenter") is UIElement element)
+            {
+                element.Visibility = AreTransportControlsEnabled ? Visibility.Visible : Visibility.Collapsed;
+            }
+        }
 
         /// <summary>
         /// Gets or sets a value that indicates whether media will begin playback automatically when the <see cref="Source"/> property is set.
@@ -285,6 +294,7 @@ namespace WinUIEx
             if (GetTemplateChild("TransportControlsPresenter") is ContentPresenter presenter)
             {
                 presenter.Content = TransportControls;
+                presenter.Visibility = AreTransportControlsEnabled ? Visibility.Visible : Visibility.Collapsed;
             }
             if (GetTemplateChild("MediaPlayerPresenter") is MediaPlayerPresenter playerPresenter)
             {

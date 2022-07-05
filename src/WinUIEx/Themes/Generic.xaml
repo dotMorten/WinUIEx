@@ -42,7 +42,7 @@
                         <Border Background="Transparent"/>
                         <Image x:Name="PosterImage" Source="{TemplateBinding PosterSource}" Visibility="Collapsed" Stretch="{TemplateBinding Stretch}"/>
                         <local:MediaPlayerPresenter x:Name="MediaPlayerPresenter" IsFullWindow="{TemplateBinding IsFullWindow}" MediaPlayer="{TemplateBinding MediaPlayer}" Stretch="{TemplateBinding Stretch}"/>
-                        <ContentPresenter x:Name="TransportControlsPresenter" Visibility="{TemplateBinding AreTransportControlsEnabled}"/>
+                        <ContentPresenter x:Name="TransportControlsPresenter" />
                         <Grid x:Name="TimedTextSourcePresenter"/>
                     </Grid>
                 </ControlTemplate>
@@ -725,7 +725,7 @@
                           Width ='0'
                           Margin='0,0' />
                                             <AppBarButton x:Name='StopButton'
-                          Icon='Stop'
+                          Icon='Stop' IsEnabled="{TemplateBinding IsStopEnabled}"
                           Style='{StaticResource AppBarButtonStyle}'
                           local:MediaTransportControlsHelper.DropoutOrder='7'
                           Visibility='Collapsed'/>

@@ -23,6 +23,8 @@ namespace WinUIExMauiSample
                          {
                              var manager = WinUIEx.WindowManager.Get(window);
                              manager.PersistenceId = "MainWindowPersistanceId";
+                             manager.MinWidth = 640;
+                             manager.MinHeight = 480;
                          });
                      });
                  })

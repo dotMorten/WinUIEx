@@ -5,7 +5,7 @@
 Add WinUIEx to the Windows build target by adding a package reference in the `.csproj` file:
 ```xml
   <ItemGroup>
-    <PackageReference Include="WinUIEx" Version="1.5.0" Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'" />
+    <PackageReference Include="WinUIEx" Version="1.6.0" Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'" />
   </ItemGroup>
 ```
 

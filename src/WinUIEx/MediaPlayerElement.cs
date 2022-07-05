@@ -70,7 +70,7 @@ namespace WinUIEx
         {
             if (m_swapchain is null)
                 return;
-            swapchainPanel?.DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Normal, () =>
+            swapchainPanel?.DispatcherQueue?.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Normal, () =>
             {
                 Guid g = IID_IDXGISurface;
                 m_swapchain.GetBuffer(0, &g, out var surfaceobj);

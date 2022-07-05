@@ -96,6 +96,14 @@ namespace WinUIEx
                 };
                 stopButton.Visibility = IsStopButtonVisible ? Visibility.Visible : Visibility.Collapsed;
             }
+            if (GetTemplateChild("ZoomButton") is ButtonBase zoomButton)
+            {
+                zoomButton.Click += (s, e) =>
+                {
+                    // TODO
+                };
+                zoomButton.Visibility = IsZoomButtonVisible ? Visibility.Visible : Visibility.Collapsed;
+            }
 
             if (GetTemplateChild("SkipBackwardButton") is ButtonBase skipBackwardButton)
             {
@@ -210,6 +218,30 @@ namespace WinUIEx
             });
         }
 
+        internal void OnMediaFailed(MediaPlayerFailedEventArgs args)
+        {
+            DispatcherQueue?.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Normal, () =>
+            {
+                VisualStateManager.GoToState(this, "Error", true);
+                if(GetTemplateChild("ErrorTextBlock") is TextBlock ErrorTextBlock)
+                {
+                    string msg = args.ErrorMessage;
+                    if(string.IsNullOrEmpty(msg))
+                    {
+                        msg = args.Error switch
+                        {
+                             MediaPlayerError.NetworkError => "Network error",
+                             MediaPlayerError.Aborted => "Aborted",
+                             MediaPlayerError.DecodingError=> "Decoding error",
+                             MediaPlayerError.SourceNotSupported => "Source not supported",
+                            _ => "Unknown error"
+                        };
+                    }
+                    ErrorTextBlock.Text = msg;
+                }
+            });
+        }
+
         private void ProgressSlider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
         {
             if (progressValueChanging || ProgressSlider is null) return;
@@ -321,12 +353,10 @@ namespace WinUIEx
         }
 
         /// <summary>
-        /// Identifies the <cref="IsStopEnabled" /> dependency property.
+        /// Identifies the <see cref="IsStopEnabled" /> dependency property.
         /// </summary>
         public static readonly DependencyProperty IsStopEnabledProperty =
             DependencyProperty.Register(nameof(IsStopEnabled), typeof(bool), typeof(MediaTransportControls), new PropertyMetadata(false));
-
-
 
         /// <summary>
         /// Gets or sets a value that indicates whether a user can skip backward in the media.
@@ -339,10 +369,68 @@ namespace WinUIEx
         }
 
         /// <summary>
-        /// Identifies the <cref="IsSkipBackwardButtonVisible" /> dependency property.
+        /// Identifies the <see cref="IsSkipBackwardButtonVisible" /> dependency property.
         /// </summary>
         public static readonly DependencyProperty IsSkipBackwardButtonVisibleProperty =
             DependencyProperty.Register(nameof(IsSkipBackwardButtonVisible), typeof(bool), typeof(MediaTransportControls), new PropertyMetadata(false, (s, e) => ((MediaTransportControls)s).ToggleButtonVisibility("SkipBackwardButton", (bool)e.NewValue)));
+
+        // TODO:
+        //FastPlayFallbackBehaviour
+        //IsCompactOverlayButtonVisible
+        //IsCompactOverlayEnabled
+        //IsFastForwardButtonVisible
+        //IsFastForwardEnabled
+        //IsFastRewindButtonVisible
+        //IsFastRewindEnabled
+        //IsFullWindowButtonVisible
+        //IsFullWindowEnabled
+        //IsNextTrackButtonVisible
+        //IsPlaybackRateButtonVisible
+        //IsPlaybackRateEnabled
+        //IsPreviousTrackButtonVisible
+        //IsRepeatButtonVisible
+        //IsRepeatEnabled
+        //IsSeekBarVisible
+        //IsSeekEnabled
+        //IsSkipBackwardEnabled
+        //IsSkipForwardButtonVisible
+        //IsSkipForwardEnabled
+        //IsVolumeButtonVisible
+        //IsVolumeEnabled
+
+        /// <summary>
+        /// Gets or sets a value that indicates whether a user can zoom the media.
+        /// </summary>
+        /// <value><c>true</c> to show the zoom button. <c>false</c> to hide the zoom button. The default is <c>true</c>.</value>
+        public bool IsZoomButtonVisible
+        {
+            get { return (bool)GetValue(IsZoomButtonVisibleProperty); }
+            set { SetValue(IsZoomButtonVisibleProperty, value); }
+        }
+
+        /// <summary>
+        /// Identifies the <see cref="IsZoomButtonVisible" /> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty IsZoomButtonVisibleProperty =
+            DependencyProperty.Register(nameof(IsZoomButtonVisible), typeof(bool), typeof(MediaTransportControls), new PropertyMetadata(true, (s, e) => ((MediaTransportControls)s).ToggleButtonVisibility("ZoomButton", (bool)e.NewValue)));
+
+        /// <summary>
+        /// Gets or sets a value that indicates whether a user can zoom the media.
+        /// </summary>
+        /// <value><c>true</c> to allow the user to zoom; otherwise, <c>false</c>. The default is <c>true</c>.</value>
+        public bool IsZoomEnabled
+        {
+            get { return (bool)GetValue(IsZoomEnabledProperty); }
+            set { SetValue(IsZoomEnabledProperty, value); }
+        }
+
+        /// <summary>
+        /// Identifies the <see cref="IsZoomEnabled" /> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty IsZoomEnabledProperty =
+            DependencyProperty.Register(nameof(IsZoomEnabled), typeof(bool), typeof(MediaTransportControls), new PropertyMetadata(true));
+
+
 
         private void ToggleButtonVisibility(string elementName, bool isVisible)
         {
@@ -361,5 +449,6 @@ namespace WinUIEx
         /// Shows the tranport controls if they're hidden.
         /// </summary>
         public void Show() => VisualStateManager.GoToState(this, "ControlPanelFadeIn", true);
+
     }
 }

@@ -61,7 +61,10 @@ namespace WinUIEx
             if (e.OldValue is MediaPlayer oldPlayer)
             {
                 oldPlayer.PlaybackSession.PlaybackStateChanged -= PlaybackSession_PlaybackStateChanged;
-                oldPlayer.Dispose();
+                oldPlayer.PlaybackSession.PositionChanged -= PlaybackSession_PositionChanged;
+                oldPlayer.VolumeChanged -= MediaPlayer_VolumeChanged;
+                oldPlayer.IsMutedChanged -= MediaPlayer_IsMutedChanged;
+                oldPlayer.MediaFailed -= MediaPlayer_MediaFailed;
             }
             if (e.NewValue is MediaPlayer newPlayer)
             {
@@ -71,8 +74,14 @@ namespace WinUIEx
                 newPlayer.PlaybackSession.PlaybackStateChanged += PlaybackSession_PlaybackStateChanged;
                 newPlayer.VolumeChanged += MediaPlayer_VolumeChanged;
                 newPlayer.IsMutedChanged += MediaPlayer_IsMutedChanged;
+                newPlayer.MediaFailed += MediaPlayer_MediaFailed;
                 newPlayer.AutoPlay = AutoPlay;
             }
+        }
+
+        private void MediaPlayer_MediaFailed(MediaPlayer sender, MediaPlayerFailedEventArgs args)
+        {
+            TransportControls?.OnMediaFailed(args);
         }
 
         private void MediaPlayer_VolumeChanged(MediaPlayer sender, object args)

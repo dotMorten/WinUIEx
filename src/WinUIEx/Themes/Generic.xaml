@@ -799,7 +799,7 @@
                                                 </AppBarToggleButton.Icon>
                                             </AppBarToggleButton>
                                             <AppBarButton x:Name='ZoomButton'
-                          Style='{StaticResource AppBarButtonStyle}'
+                          Style='{StaticResource AppBarButtonStyle}' IsEnabled="{TemplateBinding IsZoomEnabled}"
                           local:MediaTransportControlsHelper.DropoutOrder='9'>
                                                 <AppBarButton.Icon>
                                                     <FontIcon Glyph="&#xE799;" />

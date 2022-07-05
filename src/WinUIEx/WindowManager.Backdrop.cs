@@ -23,6 +23,12 @@ namespace WinUIEx
         private SystemBackdropConfiguration? BackdropConfiguration;
         private SystemBackdrop? m_backdrop;
 
+        /// <summary>
+        /// Gets or sets the system backdrop for the window.
+        /// Note: Windows 10 doesn't support these, so will fall back to default backdrop.
+        /// </summary>
+        /// <seealso cref="MicaSystemBackdrop"/>
+        /// <seealso cref="AcrylicSystemBackdrop"/>
         public SystemBackdrop? Backdrop
         {
             get => m_backdrop;
@@ -50,6 +56,9 @@ namespace WinUIEx
                 m_backdrop.UpdateController(currentController, BackdropConfiguration.Theme);
         }
 
+        /// <summary>
+        /// Gets the currently active window backdrop.
+        /// </summary>
         public ISystemBackdropController? ActiveBackdropController => currentController;
 
         private Microsoft.UI.Xaml.Media.SolidColorBrush? _fallbackBackdrop;

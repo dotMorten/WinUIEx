@@ -41,3 +41,9 @@ RemoveWindowSubclass
 DefSubclassProc 
 GetWindowPlacement
 SetWindowPlacement
+D3D11CreateDevice
+D3D11_SDK_VERSION
+IDXGIAdapter
+IDXGIDevice
+IDXGIFactory2
+CreateDirect3D11SurfaceFromDXGISurface

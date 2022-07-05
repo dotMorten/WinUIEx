@@ -32,7 +32,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\WinUIEx.MediaPlayer\WinUIEx.MediaPlayer.vcxproj" />
+    <!--<ProjectReference Include="..\WinUIEx.MediaPlayer\WinUIEx.MediaPlayer.vcxproj" />-->
     <ProjectReference Include="..\WinUIEx\WinUIEx.csproj" />
   </ItemGroup>
 

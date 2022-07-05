@@ -67,9 +67,12 @@
                 <Button Content="Bring to front (2 second delay)" Click="BringToFront_Click" />
                 <Button Content="Show dialog" Click="ShowDialog_Click" />
                 <Button Content="Test OAuth" Click="DoOAuth_Click" />
-                <player:MediaPlayerElement MinHeight="400" MinWidth="500"
+                <winex:MediaPlayerElement MinHeight="400" MinWidth="500" Source="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+                                          AreTransportControlsEnabled="True"
+                                          />
+                <!--<player:MediaPlayerElement MinHeight="400" MinWidth="500"
                        x:Name="mediaPlayer" AutoPlay="true" 
-                       Source="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" />
+                       Source="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" />-->
 
             </StackPanel>
         </ScrollViewer>

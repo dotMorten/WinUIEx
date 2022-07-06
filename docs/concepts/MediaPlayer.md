@@ -24,7 +24,7 @@ Also see [UWP documentation on MediaTransportControls])https://docs.microsoft.co
 and [Create custom transport controls](https://docs.microsoft.com/en-us/windows/apps/design/controls/custom-transport-controls)
 
 #### Transport Control Limitations
-There are still some outstanding limitations to this port of the MediaPlayerElement's Trasport Controls. The following buttons are not fully functional yet:
+There are still some outstanding limitations to this port of the MediaPlayerElement's Transport Controls. The following buttons are not fully functional yet:
   - `ZoomButton`
   - `FastForwardButton`
   - `RewindButton`
@@ -35,7 +35,7 @@ There are still some outstanding limitations to this port of the MediaPlayerElem
   - `RepeatButton` (will only support repeating current item)
 
 It is recommended to turn these off with the `IsVisible` properties until their features are implemented.
-If you have a need for these today, I'd highly encourage you to consider contributing to WinUIEx.
+If you have a need for these today, I'd highly encourage you to consider sponsoring or contributing to WinUIEx.
 
 
 ![image](https://user-images.githubusercontent.com/1378165/177426047-3467c800-3ea9-4eb6-b67c-51ff466ee786.png)

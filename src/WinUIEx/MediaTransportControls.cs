@@ -83,6 +83,9 @@ namespace WinUIEx
                     VolumeSlider.Value = _mediaPlayer.Volume * 100;
                 VolumeSlider.ValueChanged += VolumeSlider_ValueChanged;
             }
+            // Configure button states and clicks. 
+            // See https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.controls.mediatransportcontrols?view=winrt-22621#hiding-showing-enabling-and-disabling-buttons 
+            // for description on behavior of buttons
             InitializeButton("PlayPauseButton", true, (p) =>
             {
                 if (p.CurrentState == MediaPlayerState.Playing)

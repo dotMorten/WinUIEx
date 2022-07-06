@@ -37,6 +37,11 @@ namespace WinUIEx
             return false;
         }
 
+        static WindowManager()
+        {
+            PersitanceStorage = ApplicationData.Current?.LocalSettings?.CreateContainer("WinUIEx", ApplicationDataCreateDisposition.Always)?.Values;
+        }
+
         /// <summary>
         /// Gets (or creates) a window manager for the specific window.
         /// </summary>
@@ -231,12 +236,25 @@ namespace WinUIEx
         /// <remarks>
         /// The ID must be set before the window activates. The window size and position
         /// will only be restored if the monitor layout hasn't changed between application settings.
-        /// The property uses ApplicationData storage, and therefore is currently only functional for
-        /// packaged applications.
+        /// By default the property uses ApplicationData storage, and therefore is currently only functional for
+        /// packaged applications. If you're using an unpackaged application, you must also set the <see cref="PersitanceStorage"/>
+        /// property and manage persisting this across application settings.
         /// </remarks>
+        /// <seealso cref="PersitanceStorage"/>
         public string? PersistenceId { get; set; }
 
         private bool _restoringPersistance; // Flag used to avoid WinUI DPI adjustment
+
+        /// <summary>
+        /// Gets or sets the persistance storage for maintaining window settings across application settings.
+        /// </summary>
+        /// <remarks>
+        /// For a packaged application, this will be initialized automatically for you, and saved with the application identity.
+        /// However for an unpackaged app, you will need to set this and serialize the property to/from disk between
+        /// application sessions.
+        /// </remarks>
+        /// <seealso cref="PersistenceId"/>
+        public static IDictionary<string,object>? PersitanceStorage { get; set; }
 
         private void LoadPersistence()
         {
@@ -244,14 +262,12 @@ namespace WinUIEx
             {
                 try
                 {
-                    if (ApplicationData.Current?.LocalSettings?.Containers is null ||
-                        !ApplicationData.Current.LocalSettings.Containers.ContainsKey("WinUIEx"))
+                    if(PersitanceStorage is null)
                         return;
                     byte[]? data = null;
-                    var winuiExSettings = ApplicationData.Current.LocalSettings.CreateContainer("WinUIEx", ApplicationDataCreateDisposition.Existing);
-                    if (winuiExSettings is not null && winuiExSettings.Values.ContainsKey($"WindowPersistance_{PersistenceId}"))
+                    if (PersitanceStorage.ContainsKey($"WindowPersistance_{PersistenceId}"))
                     {
-                        var base64 = winuiExSettings.Values[$"WindowPersistance_{PersistenceId}"] as string;
+                        var base64 = PersitanceStorage[$"WindowPersistance_{PersistenceId}"] as string;
                         if(base64 != null)
                             data = Convert.FromBase64String(base64);
                     }
@@ -320,9 +336,8 @@ namespace WinUIEx
                 Marshal.FreeHGlobal(buffer);
                 sw.Write(placementData);
                 sw.Flush();
-                var winuiExSettings = ApplicationData.Current?.LocalSettings?.CreateContainer("WinUIEx", ApplicationDataCreateDisposition.Always);
-                if (winuiExSettings != null)
-                    winuiExSettings.Values[$"WindowPersistance_{PersistenceId}"] = Convert.ToBase64String(data.ToArray());
+                if (PersitanceStorage != null)
+                    PersitanceStorage[$"WindowPersistance_{PersistenceId}"] = Convert.ToBase64String(data.ToArray());
             }
         }
         #endregion

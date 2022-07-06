@@ -39,7 +39,11 @@ namespace WinUIEx
 
         static WindowManager()
         {
-            PersitanceStorage = ApplicationData.Current?.LocalSettings?.CreateContainer("WinUIEx", ApplicationDataCreateDisposition.Always)?.Values;
+            try
+            {
+                PersitanceStorage = ApplicationData.Current?.LocalSettings?.CreateContainer("WinUIEx", ApplicationDataCreateDisposition.Always)?.Values;
+            }
+            catch { } // Throws for unpackaged apps
         }
 
         /// <summary>

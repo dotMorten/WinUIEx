@@ -4,21 +4,21 @@ The `MediaPlayerElement` control is a direct port of [UWP's `MediaPlayerElement`
 For full documentation on the control, refer to the UWP documentation: https://docs.microsoft.com/en-us/uwp/api/Windows.UI.Xaml.Controls.MediaPlayerElement
 
 ```xml
-  <winex:MediaPlayerElement
-      Source="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
-      AreTransportControlsEnabled="True"  />
+<winex:MediaPlayerElement
+  Source="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+  AreTransportControlsEnabled="True"  />
 ```
 
 
 ### Configuring Media Transport Controls
 ```xml
-  <winex:MediaPlayerElement x:Name="player"
-      Source="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
-      AreTransportControlsEnabled="True"
-      <winex:MediaPlayerElement.TransportControls>
-          <winex:MediaTransportControls IsFullWindowButtonVisible="False" />
-      </winex:MediaPlayerElement.TransportControls>
-  </winex:MediaPlayerElement>
+<winex:MediaPlayerElement x:Name="player"
+  Source="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+  AreTransportControlsEnabled="True"
+  <winex:MediaPlayerElement.TransportControls>
+    <winex:MediaTransportControls IsFullWindowButtonVisible="False" />
+  </winex:MediaPlayerElement.TransportControls>
+</winex:MediaPlayerElement>
 ```
 Also see [UWP documentation on MediaTransportControls])https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.controls.mediatransportcontrols?view=winrt-22621#hiding-showing-enabling-and-disabling-buttons),
 and [Create custom transport controls](https://docs.microsoft.com/en-us/windows/apps/design/controls/custom-transport-controls)

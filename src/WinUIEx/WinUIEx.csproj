@@ -21,6 +21,8 @@
     <PackageId>WinUIEx</PackageId>
     <Product>WinUI Extensions</Product>
     <PackageReleaseNotes>
+       - Window no longer jumps when using persistence, but starts immediately at correct location (#64).
+       - Backdrop now correctly disables when window is inactive.
     </PackageReleaseNotes>
   </PropertyGroup>
 

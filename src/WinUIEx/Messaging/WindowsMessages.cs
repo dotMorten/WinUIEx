@@ -86,6 +86,12 @@ namespace WinUIEx.Messaging
         WM_ACTIVATEAPP = 0x001c,
 
         /// <summary>
+        /// Sent to a window when the window is about to be hidden or shown.
+        /// </summary>
+        /// <seealso href="https://docs.microsoft.com/en-us/windows/win32/winmsg/wm-showwindow"/>
+        WM_SHOWWINDOW = 0x018,
+
+        /// <summary>
         /// Sent to a window whose size, position, or place in the Z order is about to change as a result of a call to
         /// the SetWindowPos function or another window-management function.
         /// </summary>

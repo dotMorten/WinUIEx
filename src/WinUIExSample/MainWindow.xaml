@@ -16,7 +16,7 @@
                                   LightLuminosityOpacity=".75" LightTintOpacity="0" LightTintColor="White" LightFallbackColor="#eee" />
     </winex:WindowEx.Backdrop>
 
-    <Grid Padding="20">
+    <Grid Padding="20" x:Name="LayoutRoot">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="Auto" />

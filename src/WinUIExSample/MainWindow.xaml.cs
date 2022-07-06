@@ -155,7 +155,7 @@ namespace WinUIExSample
                 case 2: theme = ElementTheme.Light; break;
                 default: theme = ElementTheme.Default; break;
             }
-            (Content as FrameworkElement).RequestedTheme = theme;
+            LayoutRoot.RequestedTheme = theme;
         }
 
         private async void DoOAuth_Click(object sender, RoutedEventArgs e)

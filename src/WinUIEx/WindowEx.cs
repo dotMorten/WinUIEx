@@ -58,7 +58,6 @@ namespace WinUIEx
             rootContent.Children.Add(windowArea);
 
             this.Content = rootContent;
-            //rootContent.ActualThemeChanged += (s, e) => OnThemeChanged(rootContent.ActualTheme);
         }
 
         /// <summary>
@@ -200,11 +199,25 @@ namespace WinUIEx
         /// <value>The window content.</value>
         public object? WindowContent
         {
-            get { return windowArea.Content; }
-            set { windowArea.Content = value; }
-          
+            get => windowArea.Content;
+            set 
+            { 
+                if(windowArea.Content is FrameworkElement oldelm)
+                    oldelm.ActualThemeChanged -= WindowContent_ActualThemeChanged;
+                windowArea.Content = value;
+                if (windowArea.Content is FrameworkElement newelm)
+                    newelm.ActualThemeChanged += WindowContent_ActualThemeChanged;
+            }
         }
-        
+
+        private void WindowContent_ActualThemeChanged(FrameworkElement sender, object args)
+        {
+            if(this.Content is FrameworkElement elm && windowArea.Content is FrameworkElement childelm)
+            {
+                elm.RequestedTheme = childelm.RequestedTheme;
+            }
+        }
+
         /// <summary>
         /// Gets or sets a value indicating whether the default title bar is visible or not.
         /// </summary>

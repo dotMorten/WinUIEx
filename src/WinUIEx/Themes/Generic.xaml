@@ -668,7 +668,7 @@
                                     <CommandBar x:Name="MediaControlsCommandBar" Margin="0,0" Style="{StaticResource CommandBarStyle}" IsDynamicOverflowEnabled="False">
                                         <CommandBar.PrimaryCommands>
                                             <AppBarButton x:Name='VolumeMuteButton'
-                          Style='{StaticResource AppBarButtonStyle}'
+                          Style='{StaticResource AppBarButtonStyle}' IsEnabled="{TemplateBinding IsVolumeEnabled}"
                           local:MediaTransportControlsHelper.DropoutOrder='19'>
                                                 <AppBarButton.Flyout>
                                                     <Flyout x:Name="VolumeFlyout"
@@ -743,7 +743,7 @@
                           local:MediaTransportControlsHelper.DropoutOrder='3'
                           Visibility='Collapsed'/>
                                             <AppBarButton x:Name='RewindButton'
-                        Style='{StaticResource AppBarButtonStyle}'
+                        Style='{StaticResource AppBarButtonStyle}' IsEnabled="{TemplateBinding IsFastRewindEnabled}"
                         local:MediaTransportControlsHelper.DropoutOrder='1'
                         Visibility='Collapsed'>
                                                 <AppBarButton.Icon>
@@ -758,7 +758,7 @@
                                                 </AppBarButton.Icon>
                                             </AppBarButton>
                                             <AppBarButton x:Name='FastForwardButton'
-                        Style='{StaticResource AppBarButtonStyle}'
+                        Style='{StaticResource AppBarButtonStyle}' IsEnabled="{TemplateBinding IsFastForwardEnabled}"
                         local:MediaTransportControlsHelper.DropoutOrder='1'
                         Visibility='Collapsed'>
                                                 <AppBarButton.Icon>
@@ -771,7 +771,7 @@
                           local:MediaTransportControlsHelper.DropoutOrder='3'
                           Visibility='Collapsed'/>
                                             <AppBarButton x:Name='SkipForwardButton'
-                          Style='{StaticResource AppBarButtonStyle}'
+                          Style='{StaticResource AppBarButtonStyle}' IsEnabled="{TemplateBinding IsSkipForwardButtonVisible}"
                           local:MediaTransportControlsHelper.DropoutOrder='5'
                           Visibility='Collapsed'>
                                                 <AppBarButton.Icon>
@@ -779,7 +779,7 @@
                                                 </AppBarButton.Icon>
                                             </AppBarButton>
                                             <AppBarButton x:Name='PlaybackRateButton'
-                          Style='{StaticResource AppBarButtonStyle}'
+                          Style='{StaticResource AppBarButtonStyle}' IsEnabled="{TemplateBinding IsPlaybackRateEnabled}"
                           local:MediaTransportControlsHelper.DropoutOrder='10'
                           Visibility='Collapsed'>
                                                 <AppBarButton.Icon>
@@ -791,7 +791,7 @@
                           Width ='0'
                           Margin='0,0' />
                                             <AppBarToggleButton x:Name='RepeatButton'
-                          Style='{StaticResource AppBarToggleButtonStyle}'
+                          Style='{StaticResource AppBarToggleButtonStyle}' IsEnabled="{TemplateBinding IsRepeatEnabled}"
                           local:MediaTransportControlsHelper.DropoutOrder='1'
                           Visibility='Collapsed'>
                                                 <AppBarToggleButton.Icon>
@@ -813,7 +813,7 @@
                                                 </AppBarButton.Icon>
                                             </AppBarButton>
                                             <AppBarButton x:Name='CompactOverlayButton'
-                          Style='{StaticResource AppBarButtonStyle}'
+                          Style='{StaticResource AppBarButtonStyle}' IsEnabled="{TemplateBinding IsCompactOverlayEnabled}"
                           local:MediaTransportControlsHelper.DropoutOrder='24'
                           Visibility='Collapsed'>
                                                 <AppBarButton.Icon>
@@ -821,7 +821,7 @@
                                                 </AppBarButton.Icon>
                                             </AppBarButton>
                                             <AppBarButton x:Name='FullWindowButton'
-                          Style='{StaticResource AppBarButtonStyle}'
+                          Style='{StaticResource AppBarButtonStyle}' IsEnabled="{TemplateBinding IsFullWindowEnabled}"
                           local:MediaTransportControlsHelper.DropoutOrder='17'>
                                                 <AppBarButton.Icon>
                                                     <SymbolIcon x:Name="FullWindowSymbol" Symbol="FullScreen" />

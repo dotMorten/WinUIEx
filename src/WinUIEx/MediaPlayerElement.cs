@@ -1,23 +1,18 @@
 ﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Media;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.Foundation;
 using Windows.Media.Playback;
-using WinRT;
 
 namespace WinUIEx
 {
     /// <summary>
     /// Represents an object that uses a <see cref="Windows.Media.Playback.MediaPlayer"/> to render audio and video to the display.
     /// </summary>
+    /// <remarks>
+    /// <para>For info about the media formats that MediaPlayerElement supports, see <a href="https://docs.microsoft.com/en-us/windows/uwp/audio-video-camera/supported-codecs">Supported codecs</a>.</para>
+    /// <image src="https://user-images.githubusercontent.com/1378165/177468335-914b8d48-6502-454d-b3b3-7e216da24220.png" />
+    /// </remarks>
+    /// <seealso href="https://docs.microsoft.com/en-us/uwp/api/Windows.UI.Xaml.Controls.MediaPlayerElement?view=winrt-22621"/>
     public class MediaPlayerElement : Control
     {
         private MediaTransportControls? _mediaTransportControls;

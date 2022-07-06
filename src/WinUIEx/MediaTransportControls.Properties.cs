@@ -68,7 +68,7 @@ namespace WinUIEx
         /// Identifies the <see cref="IsCompactOverlayButtonVisible" /> dependency property.
         /// </summary>
         public static readonly DependencyProperty IsCompactOverlayButtonVisibleProperty =
-            DependencyProperty.Register(nameof(IsCompactOverlayButtonVisible), typeof(bool), typeof(MediaTransportControls), new PropertyMetadata(false));
+            DependencyProperty.Register(nameof(IsCompactOverlayButtonVisible), typeof(bool), typeof(MediaTransportControls), new PropertyMetadata(false, (s, e) => ((MediaTransportControls)s).ToggleButtonVisibility("CompactOverlayButton", (bool)e.NewValue)));
 
         /// <summary>
         /// Gets or sets a value that indicates whether a user can enter compact overlay mode.
@@ -100,7 +100,7 @@ namespace WinUIEx
         /// Identifies the <see cref="IsFastForwardButtonVisible" /> dependency property.
         /// </summary>
         public static readonly DependencyProperty IsFastForwardButtonVisibleProperty =
-            DependencyProperty.Register(nameof(IsFastForwardButtonVisible), typeof(bool), typeof(MediaTransportControls), new PropertyMetadata(false));
+            DependencyProperty.Register(nameof(IsFastForwardButtonVisible), typeof(bool), typeof(MediaTransportControls), new PropertyMetadata(false, (s, e) => ((MediaTransportControls)s).ToggleButtonVisibility("FastForwardButton", (bool)e.NewValue)));
 
         /// <summary>
         /// Gets or sets a value that indicates whether a user can fast forward the media.
@@ -132,7 +132,7 @@ namespace WinUIEx
         /// Identifies the <see cref="IsFastRewindButtonVisible" /> dependency property.
         /// </summary>
         public static readonly DependencyProperty IsFastRewindButtonVisibleProperty =
-            DependencyProperty.Register(nameof(IsFastRewindButtonVisible), typeof(bool), typeof(MediaTransportControls), new PropertyMetadata(false));
+            DependencyProperty.Register(nameof(IsFastRewindButtonVisible), typeof(bool), typeof(MediaTransportControls), new PropertyMetadata(false, (s, e) => ((MediaTransportControls)s).ToggleButtonVisibility("RewindButton", (bool)e.NewValue)));
 
         /// <summary>
         /// Gets or sets a value that indicates whether the rewind button is shown.
@@ -164,7 +164,7 @@ namespace WinUIEx
         /// Identifies the <see cref="IsFullWindowButtonVisible" /> dependency property.
         /// </summary>
         public static readonly DependencyProperty IsFullWindowButtonVisibleProperty =
-            DependencyProperty.Register(nameof(IsFullWindowButtonVisible), typeof(bool), typeof(MediaTransportControls), new PropertyMetadata(true));
+            DependencyProperty.Register(nameof(IsFullWindowButtonVisible), typeof(bool), typeof(MediaTransportControls), new PropertyMetadata(true, (s, e) => ((MediaTransportControls)s).ToggleButtonVisibility("FullWindowButton", (bool)e.NewValue)));
 
         /// <summary>
         /// Gets or sets a value that indicates whether a user can play the media in full-screen mode.
@@ -196,7 +196,7 @@ namespace WinUIEx
         /// Identifies the <see cref="IsNextTrackButtonVisible" /> dependency property.
         /// </summary>
         public static readonly DependencyProperty IsNextTrackButtonVisibleProperty =
-            DependencyProperty.Register(nameof(IsNextTrackButtonVisible), typeof(bool), typeof(MediaTransportControls), new PropertyMetadata(false));
+            DependencyProperty.Register(nameof(IsNextTrackButtonVisible), typeof(bool), typeof(MediaTransportControls), new PropertyMetadata(false, (s, e) => ((MediaTransportControls)s).ToggleButtonVisibility("NextTrackButton", (bool)e.NewValue)));
 
         /// <summary>
         /// Gets or sets a value that indicates whether the playback rate button is shown.
@@ -212,7 +212,7 @@ namespace WinUIEx
         /// Identifies the <see cref="IsPlaybackRateButtonVisible" /> dependency property.
         /// </summary>
         public static readonly DependencyProperty IsPlaybackRateButtonVisibleProperty =
-            DependencyProperty.Register(nameof(IsPlaybackRateButtonVisible), typeof(bool), typeof(MediaTransportControls), new PropertyMetadata(false));
+            DependencyProperty.Register(nameof(IsPlaybackRateButtonVisible), typeof(bool), typeof(MediaTransportControls), new PropertyMetadata(false, (s, e) => ((MediaTransportControls)s).ToggleButtonVisibility("PlaybackRateButton", (bool)e.NewValue)));
 
         /// <summary>
         /// Gets or sets a value that indicates whether a user can adjust the playback rate of the media.
@@ -244,7 +244,7 @@ namespace WinUIEx
         /// Identifies the <see cref="IsPreviousTrackButtonVisible" /> dependency property.
         /// </summary>
         public static readonly DependencyProperty IsPreviousTrackButtonVisibleProperty =
-            DependencyProperty.Register(nameof(IsPreviousTrackButtonVisible), typeof(bool), typeof(MediaTransportControls), new PropertyMetadata(false));
+            DependencyProperty.Register(nameof(IsPreviousTrackButtonVisible), typeof(bool), typeof(MediaTransportControls), new PropertyMetadata(false, (s, e) => ((MediaTransportControls)s).ToggleButtonVisibility("PreviousTrackButton", (bool)e.NewValue)));
 
         /// <summary>
         /// Gets or sets a value that indicates whether the repeat button is shown.
@@ -260,7 +260,7 @@ namespace WinUIEx
         /// Identifies the <see cref="IsRepeatButtonVisible" /> dependency property.
         /// </summary>
         public static readonly DependencyProperty IsRepeatButtonVisibleProperty =
-            DependencyProperty.Register(nameof(IsRepeatButtonVisible), typeof(bool), typeof(MediaTransportControls), new PropertyMetadata(false));
+            DependencyProperty.Register(nameof(IsRepeatButtonVisible), typeof(bool), typeof(MediaTransportControls), new PropertyMetadata(false, (s, e) => ((MediaTransportControls)s).ToggleButtonVisibility("RepeatButton", (bool)e.NewValue)));
 
         /// <summary>
         /// Gets or sets a value that indicates whether a user repeat the playback of the media.
@@ -292,7 +292,7 @@ namespace WinUIEx
         /// Identifies the <see cref="IsSeekBarVisible" /> dependency property.
         /// </summary>
         public static readonly DependencyProperty IsSeekBarVisibleProperty =
-            DependencyProperty.Register(nameof(IsSeekBarVisible), typeof(bool), typeof(MediaTransportControls), new PropertyMetadata(true));
+            DependencyProperty.Register(nameof(IsSeekBarVisible), typeof(bool), typeof(MediaTransportControls), new PropertyMetadata(true, (s, e) => ((MediaTransportControls)s).ToggleButtonVisibility("ProgressSlider", (bool)e.NewValue)));
 
         /// <summary>
         /// Gets or sets a value that indicates whether a user can use the seek bar to find a location in the media.
@@ -356,7 +356,7 @@ namespace WinUIEx
         /// Identifies the <see cref="IsSkipForwardButtonVisible" /> dependency property.
         /// </summary>
         public static readonly DependencyProperty IsSkipForwardButtonVisibleProperty =
-            DependencyProperty.Register(nameof(IsSkipForwardButtonVisible), typeof(bool), typeof(MediaTransportControls), new PropertyMetadata(false));
+            DependencyProperty.Register(nameof(IsSkipForwardButtonVisible), typeof(bool), typeof(MediaTransportControls), new PropertyMetadata(false, (s, e) => ((MediaTransportControls)s).ToggleButtonVisibility("SkipForwardButton", (bool)e.NewValue)));
 
         /// <summary>
         /// Gets or sets a value that indicates whether a user can skip forward in the media.
@@ -420,7 +420,7 @@ namespace WinUIEx
         /// Identifies the <see cref="IsVolumeButtonVisible" /> dependency property.
         /// </summary>
         public static readonly DependencyProperty IsVolumeButtonVisibleProperty =
-            DependencyProperty.Register(nameof(IsVolumeButtonVisible), typeof(bool), typeof(MediaTransportControls), new PropertyMetadata(true));
+            DependencyProperty.Register(nameof(IsVolumeButtonVisible), typeof(bool), typeof(MediaTransportControls), new PropertyMetadata(true, (s, e) => ((MediaTransportControls)s).ToggleButtonVisibility("VolumeMuteButton", (bool)e.NewValue)));
 
         /// <summary>
         /// Gets or sets a value that indicates whether a user can adjust the volume of the media.

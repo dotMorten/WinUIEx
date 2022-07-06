@@ -31,6 +31,17 @@ namespace WinUIEx
     /// <summary>
     /// Represents the playback controls for a media player element.
     /// </summary>
+    /// <remarks>
+    /// <para>The media transport controls let users interact with their media by providing a default playback
+    /// experience comprised of various buttons including play, pause, closed captions, and others. It has many
+    /// properties to allow for easy customization of the UI and configuration of which buttons are visible or enabled.</para>
+    /// <para>You can use the MediaTransportControls to make it easy for users to control their audio and video content.
+    /// The MediaTransportControls class is intended to be used only in conjunction with a <see cref="MediaPlayerElement"/> control.
+    /// It doesn't function as a stand-alone control. You access an instance of MediaTransportControls through the <see cref="MediaPlayerElement.TransportControls"/>
+    /// property.</para>
+    /// <image src="https://user-images.githubusercontent.com/1378165/177467868-5cabfd46-19dc-443c-921b-9fb91be47dba.png" />
+    /// </remarks>
+    /// <seealso href="https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.controls.mediatransportcontrols"/>
     public partial class MediaTransportControls : Control
     {
         private TextBlock? TimeElapsedElement;
@@ -61,7 +72,16 @@ namespace WinUIEx
             ProgressSlider = GetTemplateChild("ProgressSlider") as Slider;
             if (ProgressSlider is not null)
             {
+                ProgressSlider.Visibility = IsSeekBarVisible ? Visibility.Visible : Visibility.Collapsed;
                 ProgressSlider.ValueChanged += ProgressSlider_ValueChanged;
+            }
+            VolumeSlider = GetTemplateChild("VolumeSlider") as Slider;
+            if (VolumeSlider is not null)
+            {
+                var _mediaPlayer = GetMediaPlayer();
+                if (_mediaPlayer != null)
+                    VolumeSlider.Value = _mediaPlayer.Volume * 100;
+                VolumeSlider.ValueChanged += VolumeSlider_ValueChanged;
             }
             if (GetTemplateChild("PlayPauseButton") is ButtonBase button)
             {
@@ -74,18 +94,13 @@ namespace WinUIEx
                         _mediaPlayer?.Play();
                 };
             }
-            if (GetTemplateChild("VolumeMuteButton") is ButtonBase muteButton)
-            {
-                muteButton.Click += (s, e) =>
+            InitializeButton("VolumeMuteButton", IsVolumeButtonVisible, () =>
                 {
                     var player = GetMediaPlayer();
                     if (player is not null)
                         player.IsMuted = !player.IsMuted;
-                };
-            }
-            if (GetTemplateChild("StopButton") is ButtonBase stopButton)
-            {
-                stopButton.Click += (s, e) =>
+                });
+            InitializeButton("StopButton", IsStopButtonVisible, () =>
                 {
                     var player = GetMediaPlayer();
                     if (player is not null)
@@ -93,45 +108,34 @@ namespace WinUIEx
                         player.Pause();
                         player.Position = TimeSpan.Zero;
                     }
-                };
-                stopButton.Visibility = IsStopButtonVisible ? Visibility.Visible : Visibility.Collapsed;
-            }
-            if (GetTemplateChild("ZoomButton") is ButtonBase zoomButton)
-            {
-                zoomButton.Click += (s, e) =>
-                {
-                    // TODO
-                };
-                zoomButton.Visibility = IsZoomButtonVisible ? Visibility.Visible : Visibility.Collapsed;
-            }
-
-            if (GetTemplateChild("SkipBackwardButton") is ButtonBase skipBackwardButton)
-            {
-                skipBackwardButton.Click += (s, e) =>
-                {
-                    var player = GetMediaPlayer();
-                    if (player is not null)
-                    {
-                        // TODO
-                    }
-                };
-                skipBackwardButton.Visibility = IsSkipBackwardButtonVisible ? Visibility.Visible : Visibility.Collapsed;
-            }
-            
-            VolumeSlider = GetTemplateChild("VolumeSlider") as Slider;
-            if(VolumeSlider is not null)
-            {
-                var _mediaPlayer = GetMediaPlayer();
-                if (_mediaPlayer != null)
-                    VolumeSlider.Value = _mediaPlayer.Volume * 100;
-                VolumeSlider.ValueChanged += VolumeSlider_ValueChanged;
-            }
+                });
+            // TODO:
+            InitializeButton("ZoomButton", IsZoomButtonVisible, () => { });
+            InitializeButton("CompactOverlayButton", IsCompactOverlayButtonVisible, () => { });
+            InitializeButton("SkipBackwardButton", IsSkipBackwardButtonVisible, () => { });
+            InitializeButton("SkipForwardButton", IsSkipForwardButtonVisible, () => { });
+            InitializeButton("FastForwardButton", IsFastForwardButtonVisible, () => { });
+            InitializeButton("RewindButton", IsFastRewindEnabled, () => { });
+            InitializeButton("NextTrackButton", IsNextTrackButtonVisible, () => { });
+            InitializeButton("PreviousTrackButton", IsPreviousTrackButtonVisible, () => { });
+            InitializeButton("PlaybackRateButton", IsPlaybackRateButtonVisible, () => { });
+            InitializeButton("FullWindowButton", IsFullWindowButtonVisible, () => { });
+            InitializeButton("RepeatButton", IsRepeatButtonVisible, () => { });
+            InitializeButton("VolumeMuteButton", IsVolumeButtonVisible, () => { });
 
             VisualStateManager.GoToState(this, IsCompact ? "CompactMode" : "NormalMode", false);
             VisualStateManager.GoToState(this, GetMediaPlayer()?.IsMuted == true ? "MuteState" : "VolumeState", false);
             UpdatePlaybackState(false);
         }
-
+        private void InitializeButton(string elementName, bool isVisible, Action? onClick)
+        {
+            if (GetTemplateChild(elementName) is UIElement element)
+            {
+                element.Visibility = isVisible ? Visibility.Visible : Visibility.Collapsed;
+                if (onClick != null && element is ButtonBase button)
+                    button.Click += (s, e) => onClick();
+            }
+        }
         private Windows.Media.Playback.MediaPlayer? GetMediaPlayer()
         {
             var parent = Microsoft.UI.Xaml.Media.VisualTreeHelper.GetParent(this);

@@ -172,5 +172,21 @@ namespace WinUIExSample
             var result = await WebAuthenticator.AuthenticateAsync(new Uri(authorizeUri), new Uri(callbackUri));
             Log("Logged in. Code returned: " + result.Properties["code"]);
         }
+
+        private MediaWindow? mediaWindow;
+        private void OpenMedia_Click(object sender, RoutedEventArgs e)
+        {
+            if (mediaWindow is not null)
+            {
+                mediaWindow.BringToFront();
+            }
+            else
+            {
+
+                mediaWindow = new MediaWindow();
+                mediaWindow.Show();
+                mediaWindow.Closed += (s, e) => mediaWindow = null;
+            }
+        }
     }
 }

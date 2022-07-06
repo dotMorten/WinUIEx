@@ -84,7 +84,7 @@ namespace WinUIEx
 
         private void Window_Closed(object sender, WindowEventArgs args)
         {
-             _window.Activated -= Window_Activated; // Updating backdrop config after close will cause an access violation
+            CleanUpBackdrop();
             SavePersistence();
         }
 

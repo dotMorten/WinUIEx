@@ -22,6 +22,7 @@ namespace WinUIEx
         private readonly Window _window;
         private OverlappedPresenter overlappedPresenter;
         private readonly static Dictionary<IntPtr, WeakReference<WindowManager>> managers = new Dictionary<IntPtr, WeakReference<WindowManager>>();
+        private bool _isInitialized; // Set to true on first activation. Used to track persistance restore
 
         private static bool TryGetWindowManager(Window window, [MaybeNullWhen(false)] out WindowManager manager)
         {
@@ -77,18 +78,13 @@ namespace WinUIEx
 
         private void Window_Activated(object sender, WindowActivatedEventArgs args)
         {
-            _window.Activated -= Window_Activated;
-            _window.DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.High, () =>
-            {
-                LoadPersistence();
-                InitBackdrop();
-            });
             if (BackdropConfiguration != null)
                 BackdropConfiguration.IsInputActive = args.WindowActivationState != WindowActivationState.Deactivated;
         }
 
         private void Window_Closed(object sender, WindowEventArgs args)
         {
+            CleanUpBackdrop();
             SavePersistence();
         }
 
@@ -181,6 +177,18 @@ namespace WinUIEx
 
         private unsafe void OnWindowMessage(object? sender, Messaging.WindowMessageEventArgs e)
         {
+            if (e.MessageType == WindowsMessages.WM_SHOWWINDOW && e.Message.WParam == 1)
+            {
+                if (!_isInitialized)
+                {
+                    _isInitialized = true;
+                    LoadPersistence();
+                    _window.DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.High, () =>
+                    {
+                        InitBackdrop();
+                    });
+                }
+            }
             WindowMessageReceived?.Invoke(this, e);
             if (e.Handled)
                 return;

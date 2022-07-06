@@ -21,7 +21,10 @@
     <PackageId>WinUIEx</PackageId>
     <Product>WinUI Extensions</Product>
     <PackageReleaseNotes>
-        - Added `MediaPlayerElement` control for video and audio playback.
+       - Added `MediaPlayerElement` control for video and audio playback.
+       - Window no longer jumps when using persistence, but starts immediately at correct location (#64).
+       - Backdrop now correctly disables when window is inactive.
+       - Explicitly set `RequestedTheme` now correctly forwarded to Backdrop when using WindowEx.
     </PackageReleaseNotes>
   </PropertyGroup>
 

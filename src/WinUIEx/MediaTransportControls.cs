@@ -83,57 +83,56 @@ namespace WinUIEx
                     VolumeSlider.Value = _mediaPlayer.Volume * 100;
                 VolumeSlider.ValueChanged += VolumeSlider_ValueChanged;
             }
-            if (GetTemplateChild("PlayPauseButton") is ButtonBase button)
+            InitializeButton("PlayPauseButton", true, (p) =>
             {
-                button.Click += (s, e) =>
+                if (p.CurrentState == MediaPlayerState.Playing)
+                    p.Pause();
+                else
+                    p.Play();
+            });
+            InitializeButton("VolumeMuteButton", IsVolumeButtonVisible, null);
+            InitializeButton("AudioMuteButton", true, (p) => { p.IsMuted = !p.IsMuted; });
+            InitializeButton("StopButton", IsStopButtonVisible, (p) =>
                 {
-                    var _mediaPlayer = GetMediaPlayer();
-                    if (_mediaPlayer?.CurrentState == Windows.Media.Playback.MediaPlayerState.Playing)
-                        _mediaPlayer?.Pause();
-                    else
-                        _mediaPlayer?.Play();
-                };
-            }
-            InitializeButton("VolumeMuteButton", IsVolumeButtonVisible, () =>
-                {
-                    var player = GetMediaPlayer();
-                    if (player is not null)
-                        player.IsMuted = !player.IsMuted;
+                        p.Pause();
+                        p.Position = TimeSpan.Zero;
                 });
-            InitializeButton("StopButton", IsStopButtonVisible, () =>
-                {
-                    var player = GetMediaPlayer();
-                    if (player is not null)
-                    {
-                        player.Pause();
-                        player.Position = TimeSpan.Zero;
-                    }
-                });
+            InitializeButton("CompactOverlayButton", IsCompactOverlayButtonVisible, (p) => { IsCompact = !IsCompact; });
+            InitializeButton("SkipBackwardButton", IsSkipBackwardButtonVisible, (p) => p.Position = TimeSpan.FromSeconds(Math.Max(p.Position.TotalSeconds - 10, 0)));
+            InitializeButton("SkipForwardButton", IsSkipForwardButtonVisible, (p) => p.Position = TimeSpan.FromSeconds(Math.Min(p.Position.TotalSeconds + 30, p.NaturalDuration.TotalSeconds)));
             // TODO:
-            InitializeButton("ZoomButton", IsZoomButtonVisible, () => { });
-            InitializeButton("CompactOverlayButton", IsCompactOverlayButtonVisible, () => { });
-            InitializeButton("SkipBackwardButton", IsSkipBackwardButtonVisible, () => { });
-            InitializeButton("SkipForwardButton", IsSkipForwardButtonVisible, () => { });
-            InitializeButton("FastForwardButton", IsFastForwardButtonVisible, () => { });
-            InitializeButton("RewindButton", IsFastRewindEnabled, () => { });
-            InitializeButton("NextTrackButton", IsNextTrackButtonVisible, () => { });
-            InitializeButton("PreviousTrackButton", IsPreviousTrackButtonVisible, () => { });
-            InitializeButton("PlaybackRateButton", IsPlaybackRateButtonVisible, () => { });
-            InitializeButton("FullWindowButton", IsFullWindowButtonVisible, () => { });
-            InitializeButton("RepeatButton", IsRepeatButtonVisible, () => { });
-            InitializeButton("VolumeMuteButton", IsVolumeButtonVisible, () => { });
+            InitializeButton("ZoomButton", IsZoomButtonVisible, (p) => { });
+            InitializeButton("FastForwardButton", IsFastForwardButtonVisible, (p) => { });
+            InitializeButton("RewindButton", IsFastRewindEnabled, (p) => { });
+            InitializeButton("NextTrackButton", IsNextTrackButtonVisible, (p) => { });
+            InitializeButton("PreviousTrackButton", IsPreviousTrackButtonVisible, (p) => { });
+            InitializeButton("PlaybackRateButton", IsPlaybackRateButtonVisible, (p) => { });
+            InitializeButton("FullWindowButton", IsFullWindowButtonVisible, (p) => { });
+            InitializeButton("RepeatButton", IsRepeatButtonVisible, (p) =>
+            {
+                p.IsLoopingEnabled = !p.IsLoopingEnabled;
+                VisualStateManager.GoToState(this, p.IsLoopingEnabled ? "RepeatAllState" : "RepeatNoneState", true);
+            });
 
+            var player = GetMediaPlayer();
             VisualStateManager.GoToState(this, IsCompact ? "CompactMode" : "NormalMode", false);
-            VisualStateManager.GoToState(this, GetMediaPlayer()?.IsMuted == true ? "MuteState" : "VolumeState", false);
+            VisualStateManager.GoToState(this, player?.IsMuted == true ? "MuteState" : "VolumeState", false);
+            VisualStateManager.GoToState(this, player?.IsLoopingEnabled == true ? "RepeatAllState" : "RepeatNoneState", false);
             UpdatePlaybackState(false);
         }
-        private void InitializeButton(string elementName, bool isVisible, Action? onClick)
+
+        private void InitializeButton(string elementName, bool isVisible, Action<MediaPlayer>? onClick)
         {
             if (GetTemplateChild(elementName) is UIElement element)
             {
                 element.Visibility = isVisible ? Visibility.Visible : Visibility.Collapsed;
                 if (onClick != null && element is ButtonBase button)
-                    button.Click += (s, e) => onClick();
+                    button.Click += (s, e) =>
+                    {
+                        var player = GetMediaPlayer();
+                        if (player != null)
+                            onClick(player);
+                    };
             }
         }
         private Windows.Media.Playback.MediaPlayer? GetMediaPlayer()
@@ -183,11 +182,11 @@ namespace WinUIEx
             {
                 if (TimeElapsedElement != null)
                 {
-                    TimeElapsedElement.Text = FormatTimeSpan(sender.Position);
+                    TimeElapsedElement.Text = sender.Position.ToString("h\\:mm\\:ss");
                 }
                 if (TimeRemainingElement != null)
                 {
-                    TimeRemainingElement.Text = FormatTimeSpan(sender.NaturalDuration - sender.Position);
+                    TimeRemainingElement.Text = (sender.NaturalDuration - sender.Position).ToString("h\\:mm\\:ss");
                 }
                 if (ProgressSlider != null)
                 {
@@ -266,15 +265,6 @@ namespace WinUIEx
             {
                 mp.Volume = e.NewValue / 100;
             }
-        }
-
-        private static string FormatTimeSpan(TimeSpan ts)
-        {
-            if(ts.Hours >=1)
-            {
-                return ts.ToString("h\\:mm\\:ss");
-            }
-            return ts.ToString("m\\:ss");
         }
 
         private void InteractionTimer_Tick(object? sender, object e)

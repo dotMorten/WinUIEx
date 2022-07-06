@@ -22,16 +22,9 @@
             Source="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
             AreTransportControlsEnabled="True" Grid.Column="1"
             />
-        <StackPanel Margin="20">
-            <ToggleSwitch Header="AutoPlay" IsOn="{x:Bind player.AutoPlay, Mode=TwoWay}" />
-            <ToggleSwitch Header="Transport Controls" IsOn="{x:Bind player.AreTransportControlsEnabled, Mode=TwoWay}" />
-            <ToggleSwitch Header="Automatic show/hide controls" IsOn="{x:Bind player.TransportControls.ShowAndHideAutomatically, Mode=TwoWay}" />
-            <ToggleSwitch Header="Compact Mode" IsOn="{x:Bind player.TransportControls.IsCompact, Mode=TwoWay}" />
-            <ToggleSwitch Header="Is Stop Button Visible" IsOn="{x:Bind player.TransportControls.IsStopButtonVisible, Mode=TwoWay}" />
-            <ToggleSwitch Header="Is Stop Button Enabled" IsOn="{x:Bind player.TransportControls.IsStopEnabled, Mode=TwoWay}" />
-            <ToggleSwitch Header="Is Zoom Button Visible" IsOn="{x:Bind player.TransportControls.IsZoomButtonVisible, Mode=TwoWay}" />
-            <ToggleSwitch Header="Is Zoom Button Enabled" IsOn="{x:Bind player.TransportControls.IsZoomEnabled, Mode=TwoWay}" />
-        </StackPanel>
+        <ScrollViewer>
+            <StackPanel Margin="20" x:Name="propPanel" />
+        </ScrollViewer>
         <StackPanel Grid.Column="2" Margin="20">
             <Button Content="Load Source" Click="LoadSourceButton_Click" HorizontalAlignment="Stretch" />
             <Button Content="Load Invalid Source" Click="LoadInvalidSourceButton_Click" HorizontalAlignment="Stretch" />

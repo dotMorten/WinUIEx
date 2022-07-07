@@ -175,7 +175,8 @@ namespace WinUIExSample
             else
             {
 
-                mediaWindow = new MediaWindow();
+                mediaWindow = new MediaWindow() { Backdrop = Backdrop };
+                (mediaWindow.WindowContent as FrameworkElement).RequestedTheme = (Content as FrameworkElement).RequestedTheme;
                 mediaWindow.Show();
                 mediaWindow.Closed += (s, e) => mediaWindow = null;
             }

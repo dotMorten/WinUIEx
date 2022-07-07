@@ -26,6 +26,7 @@
        - Backdrop now correctly disables when window is inactive.
        - Explicitly set `RequestedTheme` now correctly forwarded to Backdrop when using WindowEx.
        - Improve default settings for Acrylic and Mica backdrops (#65).
+       - WebAuthenticator: Fixed an issue where some redirect URLs aren't correctly detected and a new app instance starts instead.
     </PackageReleaseNotes>
   </PropertyGroup>
 

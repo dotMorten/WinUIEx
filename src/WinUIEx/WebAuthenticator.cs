@@ -80,11 +80,29 @@ namespace WinUIEx
             }
             return null;
         }
-
+        
         private static NameValueCollection? GetState(IProtocolActivatedEventArgs protocolArgs)
         {
-            var vals = System.Web.HttpUtility.ParseQueryString(protocolArgs.Uri.Query);
-            if (vals["state"] is string state)
+            NameValueCollection? vals = null;
+            try
+            {
+                vals = System.Web.HttpUtility.ParseQueryString(protocolArgs.Uri.Query);
+            }
+            catch { }
+            try
+            {
+                if (vals is null || !(vals["state"] is string))
+                {
+                    var fragment = protocolArgs.Uri.Fragment;
+                    if (fragment.StartsWith("#"))
+                    {
+                        fragment = fragment.Substring(1);
+                    }
+                    vals = System.Web.HttpUtility.ParseQueryString(fragment);
+                }
+            }
+            catch { }
+            if (vals != null && vals["state"] is string state)
             {
                 var vals2 = System.Web.HttpUtility.ParseQueryString(state);
                 // Some services doesn't like & encoded state parameters, and breaks them out separately.

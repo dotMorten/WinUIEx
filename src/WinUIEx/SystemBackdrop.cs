@@ -55,7 +55,7 @@ namespace WinUIEx
             }
         }
 
-        private Windows.UI.Color _darkFallbackColor = Windows.UI.Color.FromArgb(0, 0, 0, 0);
+        private Windows.UI.Color _darkFallbackColor = Windows.UI.Color.FromArgb(0xff, 0x20, 0x20, 0x20);
 
         /// <summary>
         /// Gets or sets the solid color to use when system conditions prevent rendering the backdrop material.
@@ -79,7 +79,7 @@ namespace WinUIEx
             }
         }
 
-        private Windows.UI.Color _lightFallbackColor = Windows.UI.Color.FromArgb(0, 0, 0, 0);
+        private Windows.UI.Color _lightFallbackColor = Windows.UI.Color.FromArgb(0xff, 0xf3, 0xf3, 0xf3);
 
         /// <summary>
         /// Gets or sets the solid color to use when system conditions prevent rendering the backdrop material.
@@ -103,7 +103,7 @@ namespace WinUIEx
             }
         }
 
-        private double _darkTintOpacity = double.NaN;
+        private double _darkTintOpacity = 0;
 
         /// <summary>
         /// Gets or sets the degree of opacity of the color tint.
@@ -126,7 +126,7 @@ namespace WinUIEx
             }
         }
 
-        private double _lightTintOpacity = double.NaN;
+        private double _lightTintOpacity = 0;
 
         /// <summary>
         /// Gets or sets the degree of opacity of the color tint.
@@ -149,7 +149,7 @@ namespace WinUIEx
             }
         }
 
-        private double _darkLuminosityOpacity = double.NaN;
+        private double _darkLuminosityOpacity = 1;
 
         /// <summary>
         /// Gets or sets the degree of opacity of the color's luminosity.
@@ -172,7 +172,7 @@ namespace WinUIEx
             }
         }
 
-        private double _lightLuminosityOpacity = double.NaN;
+        private double _lightLuminosityOpacity = 1;
 
         /// <summary>
         /// Gets or sets the degree of opacity of the color's luminosity.
@@ -240,8 +240,6 @@ namespace WinUIEx
         protected internal abstract void ApplyController(
             ISystemBackdropController controller, Microsoft.UI.Composition.ICompositionSupportsSystemBackdrop target, SystemBackdropConfiguration configuration);
 
-        private protected static bool IsEmpty(Windows.UI.Color c) => c.A == 0 && c.R == 0 && c.G == 0 && c.B == 0;
-
         /// <summary>
         /// Gets a proper indicating whether the system supports this backdrop.
         /// </summary>
@@ -254,6 +252,16 @@ namespace WinUIEx
     /// <seealso cref="MicaController"/>
     public class MicaSystemBackdrop : SystemBackdrop
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MicaSystemBackdrop"/> class.
+        /// </summary>
+        public MicaSystemBackdrop()
+        {
+            LightTintColor = Windows.UI.Color.FromArgb(0xff, 0xf3, 0xf3, 0xf3);
+            LightTintOpacity = 0.5;
+            DarkTintColor = Windows.UI.Color.FromArgb(0xff, 0x20, 0x20, 0x20);
+            DarkTintOpacity = 0.5;
+        }
         private MicaKind _kind;
 
         /// <summary>
@@ -279,14 +287,10 @@ namespace WinUIEx
             {
                 bool isDark = theme == SystemBackdropTheme.Dark;
                 mica.Kind = Kind;
-                if (!double.IsNaN(isDark ? DarkTintOpacity : LightTintOpacity))
-                    mica.TintOpacity = (float)(isDark ? DarkTintOpacity : LightTintOpacity);
-                if (!double.IsNaN(isDark ? DarkLuminosityOpacity : LightLuminosityOpacity))
-                    mica.LuminosityOpacity = (float)(isDark ? DarkLuminosityOpacity : LightLuminosityOpacity);
-                if (!IsEmpty(isDark ? DarkTintColor : LightTintColor))
-                    mica.TintColor = isDark ? DarkTintColor : LightTintColor;
-                if (!IsEmpty(isDark ? DarkFallbackColor : LightFallbackColor))
-                    mica.FallbackColor = isDark ? DarkFallbackColor : LightFallbackColor;
+                mica.TintOpacity = (float)(isDark ? DarkTintOpacity : LightTintOpacity);
+                mica.LuminosityOpacity = (float)(isDark ? DarkLuminosityOpacity : LightLuminosityOpacity);
+                mica.TintColor = isDark ? DarkTintColor : LightTintColor;
+                mica.FallbackColor = isDark ? DarkFallbackColor : LightFallbackColor;
             }
         }
 
@@ -307,6 +311,19 @@ namespace WinUIEx
     /// <seealso cref="DesktopAcrylicController"/>
     public class AcrylicSystemBackdrop : SystemBackdrop
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AcrylicSystemBackdrop"/> class.
+        /// </summary>
+        public AcrylicSystemBackdrop()
+        {
+            LightTintColor = Windows.UI.Color.FromArgb(0xff, 0xd3, 0xd3, 0xd3);
+            LightFallbackColor = Windows.UI.Color.FromArgb(0xff, 0xd3, 0xd3, 0xd3);
+            LightLuminosityOpacity = .64;
+            DarkTintColor = Windows.UI.Color.FromArgb(0xff, 0x40, 0x40, 0x40);
+            DarkFallbackColor = Windows.UI.Color.FromArgb(0xff, 0x40, 0x40, 0x40);
+            DarkLuminosityOpacity = .64;
+        }
+
         /// <inheritdoc/>
         public override bool IsSupported => DesktopAcrylicController.IsSupported();
 
@@ -319,14 +336,10 @@ namespace WinUIEx
             if (controller is DesktopAcrylicController acrylic)
             {
                 bool isDark = theme == SystemBackdropTheme.Dark;
-                if (!double.IsNaN(isDark ? DarkTintOpacity : LightTintOpacity))
-                    acrylic.TintOpacity = (float)(isDark ? DarkTintOpacity : LightTintOpacity);
-                if (!double.IsNaN(isDark ? DarkLuminosityOpacity : LightLuminosityOpacity))
-                    acrylic.LuminosityOpacity = (float)(isDark ? DarkLuminosityOpacity : LightLuminosityOpacity);
-                if (!IsEmpty(isDark ? DarkTintColor : LightTintColor))
-                    acrylic.TintColor = isDark ? DarkTintColor : LightTintColor;
-                if (!IsEmpty(isDark ? DarkFallbackColor : LightFallbackColor))
-                    acrylic.FallbackColor = isDark ? DarkFallbackColor : LightFallbackColor;
+                acrylic.TintOpacity = (float)(isDark ? DarkTintOpacity : LightTintOpacity);
+                acrylic.LuminosityOpacity = (float)(isDark ? DarkLuminosityOpacity : LightLuminosityOpacity);
+                acrylic.TintColor = isDark ? DarkTintColor : LightTintColor;
+                acrylic.FallbackColor = isDark ? DarkFallbackColor : LightFallbackColor;
             }
         }
 

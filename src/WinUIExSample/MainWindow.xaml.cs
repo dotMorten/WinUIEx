@@ -23,7 +23,7 @@ namespace WinUIExSample
     {
         private readonly Queue<string> windowEvents = new Queue<string>(101);
         private readonly WindowMessageMonitor monitor;
-        private AcrylicSystemBackdrop acrylicBackdrop = new AcrylicSystemBackdrop();
+        private AcrylicSystemBackdrop acrylicBackdrop = new AcrylicSystemBackdrop() { LightLuminosityOpacity = .75, DarkLuminosityOpacity = .75 };
         private MicaSystemBackdrop micaBackdrop;
 
         public MainWindow()
@@ -37,14 +37,6 @@ namespace WinUIExSample
                 Log("  - " + monitor.ToString());
             Log($"{monitors.Count} monitors detected");
             micaBackdrop = this.Backdrop as MicaSystemBackdrop;
-            acrylicBackdrop.DarkFallbackColor = micaBackdrop.DarkFallbackColor;
-            acrylicBackdrop.DarkLuminosityOpacity = micaBackdrop.DarkLuminosityOpacity;
-            acrylicBackdrop.DarkTintColor = micaBackdrop.DarkTintColor;
-            acrylicBackdrop.DarkTintOpacity = micaBackdrop.DarkTintOpacity;
-            acrylicBackdrop.LightFallbackColor = micaBackdrop.LightFallbackColor;
-            acrylicBackdrop.LightLuminosityOpacity = micaBackdrop.LightLuminosityOpacity;
-            acrylicBackdrop.LightTintColor = micaBackdrop.LightTintColor;
-            acrylicBackdrop.LightTintOpacity = micaBackdrop.LightTintOpacity;
         }
 
         protected override void OnPositionChanged(PointInt32 position) => Log($"Position Changed: {position.X},{position.Y}");

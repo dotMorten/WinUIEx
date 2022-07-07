@@ -8,7 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
     <winuiex:SplashScreen.Backdrop>
-        <winuiex:AcrylicSystemBackdrop />
+        <winuiex:AcrylicSystemBackdrop LightLuminosityOpacity=".25" DarkLuminosityOpacity=".25" />
     </winuiex:SplashScreen.Backdrop>
     <Grid>
         <Image Source="ms-appx:///Images/logo.png" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="1"

@@ -267,7 +267,7 @@ namespace WinUIEx
         /// Identifies the <see cref="AutoPlay"/> dependency property.
         /// </summary>
         public static readonly DependencyProperty AutoPlayProperty =
-            DependencyProperty.Register(nameof(AutoPlay), typeof(bool), typeof(MediaPlayerElement), new PropertyMetadata(true, (s,e) => ((MediaPlayerElement)s).OnAutoPlayPropertyChanged()));
+            DependencyProperty.Register(nameof(AutoPlay), typeof(bool), typeof(MediaPlayerElement), new PropertyMetadata(false, (s,e) => ((MediaPlayerElement)s).OnAutoPlayPropertyChanged()));
 
         private void OnAutoPlayPropertyChanged()
         {

@@ -28,12 +28,10 @@ There are still some outstanding limitations to this port of the MediaPlayerElem
   - `ZoomButton`
   - `FastForwardButton`
   - `RewindButton`
-  - `NextTrackButton`
-  - `PreviousTrackButton`
   - `PlaybackRateButton`
   - `FullWindowButton`
-  - `RepeatButton` (will only support repeating current item)
-
+  - Closed caption buttons
+  - Audio track selection buttons.
 It is recommended to turn these off with the `IsVisible` properties until their features are implemented.
 If you have a need for these today, I'd highly encourage you to consider sponsoring or contributing to WinUIEx.
 

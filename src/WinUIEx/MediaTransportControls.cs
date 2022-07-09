@@ -3,28 +3,7 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Input;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using Windows.Media.Playback;
-
-// TODO States:
-//
-//AudioSelectionAvailablityStates
-//  AudioSelectionAvailable
-//  AudioSelectionUnavailable
-//CCSelectionAvailablityStates
-//  CCSelectionAvailable
-//  CCSelectionUnavailable
-//FullWindowStates
-//  NonFullWindowState
-//  FullWindowState
-//RepeatStates
-//  RepeatNoneState
-//  RepeatOneState
-//  RepeatAllState
 
 namespace WinUIEx
 {
@@ -189,7 +168,7 @@ namespace WinUIEx
 
         internal void OnPlaybackStateChanged(MediaPlaybackSession sender)
         {
-            DispatcherQueue?.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Normal, () =>
+            RunOnUIThread(() =>
             {
                 UpdatePlaybackState(sender.MediaPlayer, true);
             });
@@ -198,13 +177,18 @@ namespace WinUIEx
         {
             bool previousEnabled = false;
             bool nextEnabled = false;
+            var playbackItem = player?.Source as MediaPlaybackItem;
             if (player?.Source is MediaPlaybackList list)
             {
                 previousEnabled = list.CurrentItemIndex > 0 && list.CurrentItemIndex < list.Items.Count;
                 nextEnabled = list.CurrentItemIndex < list.Items.Count - 1;
+                playbackItem = list.CurrentItem;
             }
+            var hasAudioTracks = playbackItem != null && playbackItem.AudioTracks.Count > 1;
+            var hasVideoTracks = playbackItem != null && playbackItem.VideoTracks.Count > 1;
+            var hasCaptions = playbackItem?.TimedMetadataTracks != null && playbackItem.TimedMetadataTracks.Count > 0;
             var state = player?.PlaybackSession.PlaybackState;
-            DispatcherQueue.TryEnqueue(() =>
+            RunOnUIThread(() =>
             {
                 switch (state)
                 {
@@ -222,6 +206,8 @@ namespace WinUIEx
                     default:
                         VisualStateManager.GoToState(this, "Normal", useTransitions); break;
                 }
+                VisualStateManager.GoToState(this, hasAudioTracks ? "AudioSelectionAvailable" : "AudioSelectionUnavailable", useTransitions);
+                VisualStateManager.GoToState(this, hasCaptions ? "CCSelectionAvailable" : "CCSelectionUnavailable", useTransitions);
 
                 if (GetTemplateChild("PreviousTrackButton") is Control previous)
                     previous.IsEnabled = previousEnabled;
@@ -232,7 +218,7 @@ namespace WinUIEx
 
         internal void OnPositionChanged(MediaPlaybackSession sender)
         {
-            DispatcherQueue?.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Normal, () =>
+            RunOnUIThread(() =>
             {
                 if (TimeElapsedElement != null)
                 {
@@ -256,7 +242,7 @@ namespace WinUIEx
 
         internal void OnVolumeChanged(double volume)
         {
-            DispatcherQueue?.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Normal, () =>
+            RunOnUIThread(() =>
             {
                 if (VolumeSlider != null)
                 {
@@ -269,7 +255,7 @@ namespace WinUIEx
 
         internal void OnMuteChanged(bool muted)
         {
-            DispatcherQueue?.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Normal, () =>
+            RunOnUIThread(() =>
             {
                 VisualStateManager.GoToState(this, muted ? "MuteState" : "VolumeState", true);
             });
@@ -277,7 +263,7 @@ namespace WinUIEx
 
         internal void OnMediaFailed(MediaPlayerFailedEventArgs args)
         {
-            DispatcherQueue?.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Normal, () =>
+            RunOnUIThread(() =>
             {
                 VisualStateManager.GoToState(this, "Error", true);
                 if(GetTemplateChild("ErrorTextBlock") is TextBlock ErrorTextBlock)
@@ -358,6 +344,14 @@ namespace WinUIEx
         /// </summary>
         public void Show() => VisualStateManager.GoToState(this, "ControlPanelFadeIn", true);
 
-        internal event EventHandler FullScreenToggleClicked;
+        private void RunOnUIThread(Action action)
+        {
+            if (DispatcherQueue.HasThreadAccess)
+                action();
+            else
+                DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Normal, () => action());
+        }
+
+        internal event EventHandler? FullScreenToggleClicked;
     }
 }

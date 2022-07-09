@@ -111,17 +111,44 @@ namespace WinUIEx
             InitializeButton("PreviousTrackButton", IsPreviousTrackButtonVisible, (p) => { });
             InitializeButton("PlaybackRateButton", IsPlaybackRateButtonVisible, (p) => { });
             InitializeButton("FullWindowButton", IsFullWindowButtonVisible, (p) => { FullScreenToggleClicked?.Invoke(this, EventArgs.Empty); });
-            InitializeButton("RepeatButton", IsRepeatButtonVisible, (p) =>
-            {
-                p.IsLoopingEnabled = !p.IsLoopingEnabled;
-                VisualStateManager.GoToState(this, p.IsLoopingEnabled ? "RepeatAllState" : "RepeatNoneState", true);
-            });
+            InitializeButton("RepeatButton", IsRepeatButtonVisible, (p) => UpdateRepeatState(p, true));
 
             var player = GetMediaPlayer();
             VisualStateManager.GoToState(this, IsCompact ? "CompactMode" : "NormalMode", false);
             VisualStateManager.GoToState(this, player?.IsMuted == true ? "MuteState" : "VolumeState", false);
-            VisualStateManager.GoToState(this, player?.IsLoopingEnabled == true ? "RepeatAllState" : "RepeatNoneState", false);
+            if (player != null)
+                UpdateRepeatState(player, false);
             UpdatePlaybackState(false);
+
+        private void UpdateRepeatState(MediaPlayer p, bool useTransitions)
+        {
+            if (p.Source is MediaPlaybackList list)
+            {
+                if (list.AutoRepeatEnabled)
+                {
+                    list.AutoRepeatEnabled = false;
+                    p.IsLoopingEnabled = false;
+                    VisualStateManager.GoToState(this, "RepeatNoneState", useTransitions);
+                }
+                else if (p.IsLoopingEnabled)
+                {
+                    p.IsLoopingEnabled = false;
+                    list.AutoRepeatEnabled = true;
+                    VisualStateManager.GoToState(this, "RepeatAllState", useTransitions);
+                }
+                else
+                {
+                    list.AutoRepeatEnabled = false;
+                    p.IsLoopingEnabled = true;
+                    VisualStateManager.GoToState(this, "RepeatOneState", useTransitions);
+                }
+            }
+            else
+            {
+                p.IsLoopingEnabled = !p.IsLoopingEnabled;
+                VisualStateManager.GoToState(this, p.IsLoopingEnabled ? "RepeatOneState" : "RepeatNoneState", useTransitions);
+            }
+        }
         }
 
         private void InitializeButton(string elementName, bool isVisible, Action<MediaPlayer>? onClick)

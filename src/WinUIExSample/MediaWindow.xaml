@@ -21,7 +21,7 @@
             PosterSource="ms-appx:///Images/logo.png"
             AreTransportControlsEnabled="True" Grid.Column="1">
             <winex:MediaPlayerElement.TransportControls>
-                <winex:MediaTransportControls IsFullWindowButtonVisible="False" />
+                <winex:MediaTransportControls IsFullWindowButtonVisible="False" IsNextTrackButtonVisible="True" IsPreviousTrackButtonVisible="True" />
             </winex:MediaPlayerElement.TransportControls>
         </winex:MediaPlayerElement>
         <ScrollViewer>
@@ -29,6 +29,7 @@
         </ScrollViewer>
         <StackPanel Grid.Column="2" Margin="20">
             <Button Content="Load Source" Click="LoadSourceButton_Click" HorizontalAlignment="Stretch" />
+            <Button Content="Load Playlist" Click="LoadPlaylistButton_Click" HorizontalAlignment="Stretch" />
             <Button Content="Load Invalid Source" Click="LoadInvalidSourceButton_Click" HorizontalAlignment="Stretch" />
             <Button Content="Show Controls" Click="ShowTransportControls_Click" HorizontalAlignment="Stretch" />
             <Button Content="Hide Controls" Click="HideTransportControls_Click" HorizontalAlignment="Stretch" />

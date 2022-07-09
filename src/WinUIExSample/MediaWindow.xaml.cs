@@ -67,6 +67,14 @@ namespace WinUIExSample
             player.Source = new MediaPlaybackItem(Windows.Media.Core.MediaSource.CreateFromUri(new Uri("https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4")));
         }
 
+        private void LoadPlaylistButton_Click(object sender, RoutedEventArgs e)
+        {
+            var list = new MediaPlaybackList();
+            list.Items.Add(new MediaPlaybackItem(Windows.Media.Core.MediaSource.CreateFromUri(new Uri("https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"))));
+            list.Items.Add(new MediaPlaybackItem(Windows.Media.Core.MediaSource.CreateFromUri(new Uri("https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"))));
+            player.Source = list;
+        }
+
         private void LoadInvalidSourceButton_Click(object sender, RoutedEventArgs e)
         {
             player.Source = new MediaPlaybackItem(Windows.Media.Core.MediaSource.CreateFromUri(new Uri("https://this-wont-work.com/errormedia.mp4")));
@@ -75,6 +83,5 @@ namespace WinUIExSample
         private void ShowTransportControls_Click(object sender, RoutedEventArgs e) => player.TransportControls.Show();
 
         private void HideTransportControls_Click(object sender, RoutedEventArgs e) => player.TransportControls.Hide();
-
     }
 }

@@ -118,7 +118,8 @@ namespace WinUIEx
             VisualStateManager.GoToState(this, player?.IsMuted == true ? "MuteState" : "VolumeState", false);
             if (player != null)
                 UpdateRepeatState(player, false);
-            UpdatePlaybackState(false);
+            UpdatePlaybackState(player, false);
+        }
 
         private void NextRepeatState(MediaPlayer p)
         {
@@ -156,7 +157,6 @@ namespace WinUIEx
             else
                 VisualStateManager.GoToState(this, "RepeatNoneState", useTransitions);
         }
-        }
 
         private void InitializeButton(string elementName, bool isVisible, Action<MediaPlayer>? onClick)
         {
@@ -172,6 +172,7 @@ namespace WinUIEx
                     };
             }
         }
+
         private Windows.Media.Playback.MediaPlayer? GetMediaPlayer()
         {
             var parent = Microsoft.UI.Xaml.Media.VisualTreeHelper.GetParent(this);
@@ -190,27 +191,43 @@ namespace WinUIEx
         {
             DispatcherQueue?.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Normal, () =>
             {
-                UpdatePlaybackState(true);
+                UpdatePlaybackState(sender.MediaPlayer, true);
             });
         }
-        private void UpdatePlaybackState(bool useTransitions)
+        private void UpdatePlaybackState(MediaPlayer? player, bool useTransitions)
         {
-            switch (GetMediaPlayer()?.PlaybackSession.PlaybackState)
+            bool previousEnabled = false;
+            bool nextEnabled = false;
+            if (player?.Source is MediaPlaybackList list)
             {
-                case Windows.Media.Playback.MediaPlaybackState.Opening:
-                    VisualStateManager.GoToState(this, "Loading", useTransitions); break;
-                case Windows.Media.Playback.MediaPlaybackState.Buffering:
-                    VisualStateManager.GoToState(this, "Buffering", useTransitions); break;
-                case Windows.Media.Playback.MediaPlaybackState.Playing:
-                    if (ShowAndHideAutomatically) _interactionTimer.Start();
-                    VisualStateManager.GoToState(this, "Normal", useTransitions);
-                    VisualStateManager.GoToState(this, "PlayState", useTransitions); break;
-                case Windows.Media.Playback.MediaPlaybackState.Paused:
-                    VisualStateManager.GoToState(this, "Normal", useTransitions);
-                    VisualStateManager.GoToState(this, "PauseState", useTransitions); break;
-                default:
-                    VisualStateManager.GoToState(this, "Normal", useTransitions); break;
+                previousEnabled = list.CurrentItemIndex > 0 && list.CurrentItemIndex < list.Items.Count;
+                nextEnabled = list.CurrentItemIndex < list.Items.Count - 1;
             }
+            var state = player?.PlaybackSession.PlaybackState;
+            DispatcherQueue.TryEnqueue(() =>
+            {
+                switch (state)
+                {
+                    case Windows.Media.Playback.MediaPlaybackState.Opening:
+                        VisualStateManager.GoToState(this, "Loading", useTransitions); break;
+                    case Windows.Media.Playback.MediaPlaybackState.Buffering:
+                        VisualStateManager.GoToState(this, "Buffering", useTransitions); break;
+                    case Windows.Media.Playback.MediaPlaybackState.Playing:
+                        if (ShowAndHideAutomatically) _interactionTimer.Start();
+                        VisualStateManager.GoToState(this, "Normal", useTransitions);
+                        VisualStateManager.GoToState(this, "PlayState", useTransitions); break;
+                    case Windows.Media.Playback.MediaPlaybackState.Paused:
+                        VisualStateManager.GoToState(this, "Normal", useTransitions);
+                        VisualStateManager.GoToState(this, "PauseState", useTransitions); break;
+                    default:
+                        VisualStateManager.GoToState(this, "Normal", useTransitions); break;
+                }
+
+                if (GetTemplateChild("PreviousTrackButton") is Control previous)
+                    previous.IsEnabled = previousEnabled;
+                if (GetTemplateChild("NextTrackButton") is Control next)
+                    next.IsEnabled = nextEnabled;
+            });
         }
 
         internal void OnPositionChanged(MediaPlaybackSession sender)
@@ -292,7 +309,6 @@ namespace WinUIEx
                 mp.PlaybackSession.Position = mp.PlaybackSession.NaturalDuration* fraction;
             }
         }
-
 
         private void VolumeSlider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
         {

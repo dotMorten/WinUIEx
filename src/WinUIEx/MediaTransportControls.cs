@@ -107,11 +107,11 @@ namespace WinUIEx
             InitializeButton("ZoomButton", IsZoomButtonVisible, (p) => { });
             InitializeButton("FastForwardButton", IsFastForwardButtonVisible, (p) => { });
             InitializeButton("RewindButton", IsFastRewindEnabled, (p) => { });
-            InitializeButton("NextTrackButton", IsNextTrackButtonVisible, (p) => { });
-            InitializeButton("PreviousTrackButton", IsPreviousTrackButtonVisible, (p) => { });
+            InitializeButton("NextTrackButton", IsNextTrackButtonVisible, (p) => { if (p.Source is MediaPlaybackList list) list.MoveNext(); });
+            InitializeButton("PreviousTrackButton", IsPreviousTrackButtonVisible, (p) => { if (p.Source is MediaPlaybackList list) list.MovePrevious(); });
             InitializeButton("PlaybackRateButton", IsPlaybackRateButtonVisible, (p) => { });
             InitializeButton("FullWindowButton", IsFullWindowButtonVisible, (p) => { FullScreenToggleClicked?.Invoke(this, EventArgs.Empty); });
-            InitializeButton("RepeatButton", IsRepeatButtonVisible, (p) => UpdateRepeatState(p, true));
+            InitializeButton("RepeatButton", IsRepeatButtonVisible, (p) => NextRepeatState(p));
 
             var player = GetMediaPlayer();
             VisualStateManager.GoToState(this, IsCompact ? "CompactMode" : "NormalMode", false);
@@ -120,7 +120,7 @@ namespace WinUIEx
                 UpdateRepeatState(player, false);
             UpdatePlaybackState(false);
 
-        private void UpdateRepeatState(MediaPlayer p, bool useTransitions)
+        private void NextRepeatState(MediaPlayer p)
         {
             if (p.Source is MediaPlaybackList list)
             {
@@ -128,26 +128,33 @@ namespace WinUIEx
                 {
                     list.AutoRepeatEnabled = false;
                     p.IsLoopingEnabled = false;
-                    VisualStateManager.GoToState(this, "RepeatNoneState", useTransitions);
                 }
                 else if (p.IsLoopingEnabled)
                 {
                     p.IsLoopingEnabled = false;
                     list.AutoRepeatEnabled = true;
-                    VisualStateManager.GoToState(this, "RepeatAllState", useTransitions);
                 }
                 else
                 {
                     list.AutoRepeatEnabled = false;
                     p.IsLoopingEnabled = true;
-                    VisualStateManager.GoToState(this, "RepeatOneState", useTransitions);
                 }
             }
             else
             {
                 p.IsLoopingEnabled = !p.IsLoopingEnabled;
-                VisualStateManager.GoToState(this, p.IsLoopingEnabled ? "RepeatOneState" : "RepeatNoneState", useTransitions);
             }
+            UpdateRepeatState(p, true);
+        }
+
+        private void UpdateRepeatState(MediaPlayer p, bool useTransitions)
+        {
+            if (p.Source is MediaPlaybackList list && list.AutoRepeatEnabled)
+                VisualStateManager.GoToState(this, "RepeatAllState", useTransitions);
+            else if (p.IsLoopingEnabled)
+                VisualStateManager.GoToState(this, "RepeatOneState", useTransitions);
+            else
+                VisualStateManager.GoToState(this, "RepeatNoneState", useTransitions);
         }
         }
 

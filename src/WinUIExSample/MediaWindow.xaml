@@ -17,9 +17,8 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
-        <winex:MediaPlayerElement x:Name="player"
+        <winex:MediaPlayerElement x:Name="player" AutoPlay="True"
             PosterSource="ms-appx:///Images/logo.png"
-            Source="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
             AreTransportControlsEnabled="True" Grid.Column="1">
             <winex:MediaPlayerElement.TransportControls>
                 <winex:MediaTransportControls IsFullWindowButtonVisible="False" />

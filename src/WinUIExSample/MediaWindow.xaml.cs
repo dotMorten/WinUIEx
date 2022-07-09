@@ -15,6 +15,7 @@ using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Media.Playback;
 using Windows.UI.Notifications;
 using WinUIEx;
 using WinUIEx.Messaging;
@@ -26,6 +27,7 @@ namespace WinUIExSample
         public MediaWindow()
         {
             this.InitializeComponent();
+            player.Source = new MediaPlaybackItem(Windows.Media.Core.MediaSource.CreateFromUri(new Uri("https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4")));
             BuildPropertyPanel(player);
             BuildPropertyPanel(player.TransportControls);
         }
@@ -62,12 +64,12 @@ namespace WinUIExSample
 
         private void LoadSourceButton_Click(object sender, RoutedEventArgs e)
         {
-            player.Source = new Uri("https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4");
+            player.Source = new MediaPlaybackItem(Windows.Media.Core.MediaSource.CreateFromUri(new Uri("https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4")));
         }
 
         private void LoadInvalidSourceButton_Click(object sender, RoutedEventArgs e)
         {
-            player.Source = new Uri("https://this-wont-work.com/errormedia.mp4");
+            player.Source = new MediaPlaybackItem(Windows.Media.Core.MediaSource.CreateFromUri(new Uri("https://this-wont-work.com/errormedia.mp4")));
         }
 
         private void ShowTransportControls_Click(object sender, RoutedEventArgs e) => player.TransportControls.Show();

@@ -63,8 +63,7 @@ namespace WinUIEx
             }
             if (e.NewValue is MediaPlayer newPlayer)
             {
-                if (Source is not null)
-                    newPlayer.SetUriSource(Source);
+                newPlayer.Source = Source;
                 newPlayer.PlaybackSession.PositionChanged += PlaybackSession_PositionChanged;
                 newPlayer.PlaybackSession.PlaybackStateChanged += PlaybackSession_PlaybackStateChanged;
                 newPlayer.VolumeChanged += MediaPlayer_VolumeChanged;
@@ -184,9 +183,10 @@ namespace WinUIEx
         /// Gets or sets a media source on the <see cref="MediaPlayerElement"/>.
         /// </summary>
         /// <value>The source of the media. The default is null.</value>
-        public Uri? Source
+        [System.ComponentModel.TypeConverter(typeof(MediaSourceConverter))]
+        public IMediaPlaybackSource? Source
         {
-            get { return (Uri?)GetValue(SourceProperty); }
+            get { return (IMediaPlaybackSource?)GetValue(SourceProperty); }
             set { SetValue(SourceProperty, value); }
         }
 
@@ -194,9 +194,13 @@ namespace WinUIEx
         /// Identifies the <see cref="Source"/> dependency property.
         /// </summary>
         public static readonly DependencyProperty SourceProperty =
-            DependencyProperty.Register(nameof(Source), typeof(Uri), typeof(MediaPlayerElement), new PropertyMetadata(null, (s,e) => ((MediaPlayerElement)s).OnSourcePropertyChanged(e)));
+            DependencyProperty.Register(nameof(Source), typeof(IMediaPlaybackSource), typeof(MediaPlayerElement), new PropertyMetadata(null, (s,e) => ((MediaPlayerElement)s).OnSourcePropertyChanged(e)));
 
-        private void OnSourcePropertyChanged(DependencyPropertyChangedEventArgs e) => MediaPlayer?.SetUriSource(Source);
+        private void OnSourcePropertyChanged(DependencyPropertyChangedEventArgs e)
+        {
+            if (MediaPlayer != null)
+                MediaPlayer.Source = Source;
+        }
 
         /// <summary>
         /// Gets or sets the image source that is used for a placeholder image during <see cref="MediaPlayerElement"/> loading transition states.

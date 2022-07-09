@@ -155,13 +155,19 @@ namespace WinUIEx
             get { return _mediaTransportControls; }
             set
             {
+                if (_mediaTransportControls != null)
+                    _mediaTransportControls.FullScreenToggleClicked -= OnFullScreenToggled;
                 _mediaTransportControls = value;
                 if (GetTemplateChild("TransportControlsPresenter") is ContentPresenter presenter)
                 {
                     presenter.Content = value;
                 }
+                if (_mediaTransportControls != null)
+                    _mediaTransportControls.FullScreenToggleClicked += OnFullScreenToggled;
             }
         }
+
+        private void OnFullScreenToggled(object? sender, EventArgs e) => IsFullWindow = !IsFullWindow;
 
         /// <summary>
         /// Gets or sets a value that specifies if the <see cref="MediaPlayerElement"/> is rendering in full window mode.
@@ -176,8 +182,24 @@ namespace WinUIEx
         /// <summary>
         /// Identifies the <see cref="IsFullWindow"/> dependency property.
         /// </summary>
+        /// <value><c>true</c> if the <see cref="MediaPlayerElement"/> is in full window mode; otherwise, <c>false</c>. The default is <c>false</c>.</value>
         public static readonly DependencyProperty IsFullWindowProperty =
-            DependencyProperty.Register(nameof(IsFullWindow), typeof(bool), typeof(MediaPlayerElement), new PropertyMetadata(false));
+            DependencyProperty.Register(nameof(IsFullWindow), typeof(bool), typeof(MediaPlayerElement), new PropertyMetadata(false, (s, e) => ((MediaPlayerElement)s).OnIsFullWindowPropertyChanged(e)));
+
+        private void OnIsFullWindowPropertyChanged(DependencyPropertyChangedEventArgs e)
+        {
+            if (IsFullWindow)
+            {
+                if(TransportControls != null)
+                    VisualStateManager.GoToState(TransportControls, "FullWindowState", true);
+                // TODO
+            }
+            else
+            {
+                if (TransportControls != null)
+                    VisualStateManager.GoToState(TransportControls, "NonFullWindowState", true);
+            }
+        }
 
         /// <summary>
         /// Gets or sets a media source on the <see cref="MediaPlayerElement"/>.

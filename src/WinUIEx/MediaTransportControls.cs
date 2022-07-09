@@ -110,7 +110,7 @@ namespace WinUIEx
             InitializeButton("NextTrackButton", IsNextTrackButtonVisible, (p) => { });
             InitializeButton("PreviousTrackButton", IsPreviousTrackButtonVisible, (p) => { });
             InitializeButton("PlaybackRateButton", IsPlaybackRateButtonVisible, (p) => { });
-            InitializeButton("FullWindowButton", IsFullWindowButtonVisible, (p) => { });
+            InitializeButton("FullWindowButton", IsFullWindowButtonVisible, (p) => { FullScreenToggleClicked?.Invoke(this, EventArgs.Empty); });
             InitializeButton("RepeatButton", IsRepeatButtonVisible, (p) =>
             {
                 p.IsLoopingEnabled = !p.IsLoopingEnabled;
@@ -308,5 +308,6 @@ namespace WinUIEx
         /// </summary>
         public void Show() => VisualStateManager.GoToState(this, "ControlPanelFadeIn", true);
 
+        internal event EventHandler FullScreenToggleClicked;
     }
 }

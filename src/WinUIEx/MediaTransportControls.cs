@@ -65,6 +65,11 @@ namespace WinUIEx
             // Configure button states and clicks. 
             // See https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.controls.mediatransportcontrols?view=winrt-22621#hiding-showing-enabling-and-disabling-buttons 
             // for description on behavior of buttons
+            var AudioTracksSelectionButton = GetTemplateChild("AudioTracksSelectionButton") as ButtonBase;
+            if (AudioTracksSelectionButton is not null)
+            {
+                AudioTracksSelectionButton.Click += AudioTracksSelectionButton_Click;
+            }
             InitializeButton("PlayPauseButton", true, (p) =>
             {
                 if (p.CurrentState == MediaPlayerState.Playing)
@@ -82,7 +87,7 @@ namespace WinUIEx
             InitializeButton("CompactOverlayButton", IsCompactOverlayButtonVisible, (p) => { IsCompact = !IsCompact; });
             InitializeButton("SkipBackwardButton", IsSkipBackwardButtonVisible, (p) => p.Position = TimeSpan.FromSeconds(Math.Max(p.Position.TotalSeconds - 10, 0)));
             InitializeButton("SkipForwardButton", IsSkipForwardButtonVisible, (p) => p.Position = TimeSpan.FromSeconds(Math.Min(p.Position.TotalSeconds + 30, p.NaturalDuration.TotalSeconds)));
-            // TODO:
+            
             InitializeButton("ZoomButton", IsZoomButtonVisible, (p) => { });
             InitializeButton("FastForwardButton", IsFastForwardButtonVisible, (p) => { });
             InitializeButton("RewindButton", IsFastRewindEnabled, (p) => { });
@@ -98,6 +103,63 @@ namespace WinUIEx
             if (player != null)
                 UpdateRepeatState(player, false);
             UpdatePlaybackState(player, false);
+        }
+
+        private Windows.Media.Playback.MediaPlayer? GetMediaPlayer()
+        {
+            var parent = Microsoft.UI.Xaml.Media.VisualTreeHelper.GetParent(this);
+            while (parent is not null)
+            {
+                if (parent is MediaPlayerElement elm)
+                {
+                    return elm.MediaPlayer;
+                }
+                parent = Microsoft.UI.Xaml.Media.VisualTreeHelper.GetParent(parent);
+            }
+            return null;
+        }
+
+        private MediaPlaybackItem? GetCurrentPlaybackItem()
+        {
+            var player = GetMediaPlayer();
+            if (player is null) return null;
+            if (player.Source is MediaPlaybackItem item)
+                return item;
+            if (player.Source is MediaPlaybackList list)
+                return list.CurrentItem;
+            return null;
+        }
+
+        private void AudioTracksSelectionButton_Click(object sender, RoutedEventArgs e)
+        {
+            var btn = sender as Button;
+            var playbackItem = GetCurrentPlaybackItem();
+            if (btn is null || playbackItem is null || playbackItem.AudioTracks.Count < 2) return;
+
+            MenuFlyout flyout = new MenuFlyout();
+            int id = 0;
+            foreach (var track in playbackItem.AudioTracks)
+            {
+                var name = track.Name;
+                string trackname = $"{id + 1}. {track.Name}";
+                if (!string.IsNullOrEmpty(track.Language))
+                {
+                    try
+                    {
+                        var cultureInfo = new System.Globalization.CultureInfo(track.Language);
+                        if (!string.IsNullOrEmpty(cultureInfo?.DisplayName))
+                            trackname += $" - {cultureInfo.DisplayName}";
+                    }
+                    catch { }
+                }
+                int index = id;
+                RadioMenuFlyoutItem item = new RadioMenuFlyoutItem() { Text = trackname, IsChecked = playbackItem.AudioTracks.SelectedIndex == id, GroupName = "audiotrack" };
+                item.Click += (s, e) => { playbackItem.AudioTracks.SelectedIndex = index; };
+                flyout.Items.Add(item);
+                id++;
+            }
+            btn.Flyout = flyout;
+            flyout.ShowAt(btn);
         }
 
         private void NextRepeatState(MediaPlayer p)
@@ -150,20 +212,6 @@ namespace WinUIEx
                             onClick(player);
                     };
             }
-        }
-
-        private Windows.Media.Playback.MediaPlayer? GetMediaPlayer()
-        {
-            var parent = Microsoft.UI.Xaml.Media.VisualTreeHelper.GetParent(this);
-            while (parent is not null)
-            {
-                if (parent is MediaPlayerElement elm)
-                {
-                    return elm.MediaPlayer;
-                }
-                parent = Microsoft.UI.Xaml.Media.VisualTreeHelper.GetParent(parent);
-            }
-            return null;
         }
 
         internal void OnPlaybackStateChanged(MediaPlaybackSession sender)

@@ -206,7 +206,6 @@ namespace WinUIEx
         /// Gets or sets a media source on the <see cref="MediaPlayerElement"/>.
         /// </summary>
         /// <value>The source of the media. The default is null.</value>
-        [System.ComponentModel.TypeConverter(typeof(MediaSourceConverter))]
         public IMediaPlaybackSource? Source
         {
             get { return (IMediaPlaybackSource?)GetValue(SourceProperty); }

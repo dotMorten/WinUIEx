@@ -83,22 +83,28 @@ namespace WinUIEx
                 Windows.Win32.PInvoke.CreateDirect3D11SurfaceFromDXGISurface(surface, out var isurface);
                 var d3dSurface = WinRT.MarshalInterface<Windows.Graphics.DirectX.Direct3D11.IDirect3DSurface>.FromAbi(Marshal.GetIUnknownForObject(isurface));
                 MediaPlayer.CopyFrameToVideoSurface(d3dSurface);
-                if (hassubtitles) // TODO: This'll only render on one frame until next text. Crash if repeating without this flag getting set.
-                {
-                    hassubtitles = false;
-                    MediaPlayer.RenderSubtitlesToSurface(d3dSurface);
-                }
                 Windows.Win32.Graphics.Dxgi.DXGI_PRESENT_PARAMETERS presentParam = new Windows.Win32.Graphics.Dxgi.DXGI_PRESENT_PARAMETERS(); // { 0, nullptr, nullptr, nullptr };
                 presentParam.DirtyRectsCount = 0;
                 m_swapchain.Present1(1, 0, &presentParam);
             });
         }
 
-        private bool hassubtitles = false;
-
         private unsafe void MediaPlayer_SubtitleFrameChanged(MediaPlayer sender, object args)
         {
-            hassubtitles = true;
+            if (m_swapchain is null)
+                return;
+            swapchainPanel?.DispatcherQueue?.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Normal, () =>
+            {
+                Guid g = IID_IDXGISurface;
+                m_swapchain.GetBuffer(0, &g, out var surfaceobj);
+                var surface = surfaceobj.As<Windows.Win32.Graphics.Dxgi.IDXGISurface>();
+                Windows.Win32.PInvoke.CreateDirect3D11SurfaceFromDXGISurface(surface, out var isurface);
+                var d3dSurface = WinRT.MarshalInterface<Windows.Graphics.DirectX.Direct3D11.IDirect3DSurface>.FromAbi(Marshal.GetIUnknownForObject(isurface));
+                MediaPlayer.RenderSubtitlesToSurface(d3dSurface);
+                Windows.Win32.Graphics.Dxgi.DXGI_PRESENT_PARAMETERS presentParam = new Windows.Win32.Graphics.Dxgi.DXGI_PRESENT_PARAMETERS(); // { 0, nullptr, nullptr, nullptr };
+                presentParam.DirtyRectsCount = 0;
+                m_swapchain.Present1(1, 0, &presentParam);
+            });
         }
 
         private unsafe void CreateSwapChain()
@@ -199,7 +205,7 @@ namespace WinUIEx
         {
             if(e.OldValue is MediaPlayer oldPlayer)
             {
-                oldPlayer.SubtitleFrameChanged -= MediaPlayer_SubtitleFrameChanged;
+                //oldPlayer.SubtitleFrameChanged -= MediaPlayer_SubtitleFrameChanged;
                 oldPlayer.VideoFrameAvailable -= MediaPlayer_VideoFrameAvailable;
                 oldPlayer.Dispose();
             }
@@ -209,7 +215,7 @@ namespace WinUIEx
                     newPlayer.SetSurfaceSize(new Windows.Foundation.Size(ActualWidth, ActualHeight));
                 newPlayer.IsVideoFrameServerEnabled = true;
                 newPlayer.VideoFrameAvailable += MediaPlayer_VideoFrameAvailable;
-                newPlayer.SubtitleFrameChanged += MediaPlayer_SubtitleFrameChanged;
+                //newPlayer.SubtitleFrameChanged += MediaPlayer_SubtitleFrameChanged;
             }
         }
 

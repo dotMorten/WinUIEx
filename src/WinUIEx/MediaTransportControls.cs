@@ -102,7 +102,7 @@ namespace WinUIEx
             VisualStateManager.GoToState(this, player?.IsMuted == true ? "MuteState" : "VolumeState", false);
             if (player != null)
                 UpdateRepeatState(player, false);
-            UpdatePlaybackState(player, false);
+            UpdateVisualStates(player, false);
         }
 
         private Windows.Media.Playback.MediaPlayer? GetMediaPlayer()
@@ -218,10 +218,10 @@ namespace WinUIEx
         {
             RunOnUIThread(() =>
             {
-                UpdatePlaybackState(sender.MediaPlayer, true);
+                UpdateVisualStates(sender.MediaPlayer, true);
             });
         }
-        private void UpdatePlaybackState(MediaPlayer? player, bool useTransitions)
+        private void UpdateVisualStates(MediaPlayer? player, bool useTransitions)
         {
             bool previousEnabled = false;
             bool nextEnabled = false;
@@ -234,7 +234,7 @@ namespace WinUIEx
             }
             var hasAudioTracks = playbackItem != null && playbackItem.AudioTracks.Count > 1;
             var hasVideoTracks = playbackItem != null && playbackItem.VideoTracks.Count > 1;
-            var hasCaptions = playbackItem?.TimedMetadataTracks != null && playbackItem.TimedMetadataTracks.Count > 0;
+            var hasCaptions = playbackItem?.TimedMetadataTracks != null && playbackItem.TimedMetadataTracks.Count > 1;
             var state = player?.PlaybackSession.PlaybackState;
             RunOnUIThread(() =>
             {

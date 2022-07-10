@@ -66,7 +66,9 @@ namespace WinUIEx
         {
             CreateSwapChain();
             if (ActualHeight > 0 && ActualWidth > 0 && swapchainPanel?.XamlRoot != null)
+            {
                 MediaPlayer.SetSurfaceSize(new Size(ActualWidth, ActualHeight));
+            }
         }
 
         private unsafe void MediaPlayer_VideoFrameAvailable(MediaPlayer sender, object args)
@@ -81,10 +83,22 @@ namespace WinUIEx
                 Windows.Win32.PInvoke.CreateDirect3D11SurfaceFromDXGISurface(surface, out var isurface);
                 var d3dSurface = WinRT.MarshalInterface<Windows.Graphics.DirectX.Direct3D11.IDirect3DSurface>.FromAbi(Marshal.GetIUnknownForObject(isurface));
                 MediaPlayer.CopyFrameToVideoSurface(d3dSurface);
+                if (hassubtitles) // TODO: This'll only render on one frame until next text. Crash if repeating without this flag getting set.
+                {
+                    hassubtitles = false;
+                    MediaPlayer.RenderSubtitlesToSurface(d3dSurface);
+                }
                 Windows.Win32.Graphics.Dxgi.DXGI_PRESENT_PARAMETERS presentParam = new Windows.Win32.Graphics.Dxgi.DXGI_PRESENT_PARAMETERS(); // { 0, nullptr, nullptr, nullptr };
                 presentParam.DirtyRectsCount = 0;
                 m_swapchain.Present1(1, 0, &presentParam);
             });
+        }
+
+        private bool hassubtitles = false;
+
+        private unsafe void MediaPlayer_SubtitleFrameChanged(MediaPlayer sender, object args)
+        {
+            hassubtitles = true;
         }
 
         private unsafe void CreateSwapChain()
@@ -185,6 +199,7 @@ namespace WinUIEx
         {
             if(e.OldValue is MediaPlayer oldPlayer)
             {
+                oldPlayer.SubtitleFrameChanged -= MediaPlayer_SubtitleFrameChanged;
                 oldPlayer.VideoFrameAvailable -= MediaPlayer_VideoFrameAvailable;
                 oldPlayer.Dispose();
             }
@@ -194,6 +209,7 @@ namespace WinUIEx
                     newPlayer.SetSurfaceSize(new Windows.Foundation.Size(ActualWidth, ActualHeight));
                 newPlayer.IsVideoFrameServerEnabled = true;
                 newPlayer.VideoFrameAvailable += MediaPlayer_VideoFrameAvailable;
+                newPlayer.SubtitleFrameChanged += MediaPlayer_SubtitleFrameChanged;
             }
         }
 

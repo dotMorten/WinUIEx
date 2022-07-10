@@ -3,6 +3,7 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Input;
 using System;
+using System.Linq;
 using Windows.Media.Playback;
 
 namespace WinUIEx
@@ -69,6 +70,11 @@ namespace WinUIEx
             if (AudioTracksSelectionButton is not null)
             {
                 AudioTracksSelectionButton.Click += AudioTracksSelectionButton_Click;
+            }
+            var CCSelectionButton = GetTemplateChild("CCSelectionButton") as ButtonBase;
+            if (CCSelectionButton is not null)
+            {
+                CCSelectionButton.Click += CCSelectionButton_Click;
             }
             InitializeButton("PlayPauseButton", true, (p) =>
             {
@@ -160,6 +166,58 @@ namespace WinUIEx
             }
             btn.Flyout = flyout;
             flyout.ShowAt(btn);
+        }
+
+        private void CCSelectionButton_Click(object sender, RoutedEventArgs e)
+        {
+            var btn = sender as Button;
+            var playbackItem = GetCurrentPlaybackItem();
+            if (btn is null || playbackItem?.Source?.ExternalTimedTextSources is null || playbackItem.Source.ExternalTimedTextSources.Count == 0) return;
+
+            MenuFlyout flyout = new MenuFlyout();
+            uint id = 0;
+            foreach (var track in playbackItem.TimedMetadataTracks)
+            {
+                string trackname = $"{id + 1}";//. {textSource.Name}";
+                if (!string.IsNullOrEmpty(track.Name))
+                    trackname += " " + track.Name;
+                if (!string.IsNullOrEmpty(track.Language))
+                {
+                    try
+                    {
+                        var cultureInfo = new System.Globalization.CultureInfo(track.Language);
+                        if (!string.IsNullOrEmpty(cultureInfo?.DisplayName))
+                            trackname += $" - {cultureInfo.DisplayName}";
+                    }
+                    catch { }
+                }
+                uint index = id;
+                RadioMenuFlyoutItem item = new RadioMenuFlyoutItem() { Tag = track, Text = trackname, IsChecked = playbackItem.TimedMetadataTracks.GetPresentationMode(id) == TimedMetadataTrackPresentationMode.PlatformPresented, GroupName = "cc" };
+                item.Click += ClosedCaptionSelected;
+                //item.Click += (s, e) => { playbackItem.TimedMetadataTracks.SetPresentationMode(index, item.IsChecked ? TimedMetadataTrackPresentationMode.Disabled : TimedMetadataTrackPresentationMode.ApplicationPresented); };
+                flyout.Items.Add(item);
+                id++;
+            }
+            if (flyout.Items.OfType<RadioMenuFlyoutItem>().Any(m => m.IsChecked))
+            {
+                RadioMenuFlyoutItem item = new RadioMenuFlyoutItem() { Text = "Off", GroupName = "cc" }; // TODO: Localize
+                item.Click += ClosedCaptionSelected;
+                flyout.Items.Insert(0, item);
+            }
+            btn.Flyout = flyout;
+            flyout.ShowAt(btn);
+        }
+
+        private void ClosedCaptionSelected(object sender, RoutedEventArgs e)
+        {
+            var track = (sender as FrameworkElement)?.Tag as Windows.Media.Core.TimedMetadataTrack;
+            var playbackItem = GetCurrentPlaybackItem();
+            if (playbackItem is null) return;
+            uint i = 0;
+            foreach (var t in playbackItem.TimedMetadataTracks)
+            {
+                playbackItem.TimedMetadataTracks.SetPresentationMode(i++, t == track ? TimedMetadataTrackPresentationMode.PlatformPresented : TimedMetadataTrackPresentationMode.Disabled);
+            }
         }
 
         private void NextRepeatState(MediaPlayer p)

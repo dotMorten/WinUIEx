@@ -51,6 +51,7 @@ namespace WinUIEx
             }
             SetValue(MediaPlayerProperty, mediaPlayer);
         }
+
         private void OnMediaPlayerPropertyChanged(DependencyPropertyChangedEventArgs e)
         {
             if (e.OldValue is MediaPlayer oldPlayer)

@@ -15,8 +15,11 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
         <winex:MediaPlayerElement x:Name="player" AutoPlay="True"
             PosterSource="ms-appx:///Images/logo.png"
             AreTransportControlsEnabled="True" Grid.Column="1">
@@ -24,10 +27,10 @@
                 <winex:MediaTransportControls IsFullWindowButtonVisible="False" IsNextTrackButtonVisible="True" IsPreviousTrackButtonVisible="True" />
             </winex:MediaPlayerElement.TransportControls>
         </winex:MediaPlayerElement>
-        <ScrollViewer>
+        <ScrollViewer Grid.RowSpan="2">
             <StackPanel Margin="20" x:Name="propPanel" />
         </ScrollViewer>
-        <StackPanel Grid.Column="2" Margin="20">
+        <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" Margin="5">
             <Button Content="Load Source" Click="LoadSourceButton_Click" HorizontalAlignment="Stretch" />
             <Button Content="Load Playlist" Click="LoadPlaylistButton_Click" HorizontalAlignment="Stretch" />
             <Button Content="Load Invalid Source" Click="LoadInvalidSourceButton_Click" HorizontalAlignment="Stretch" />

@@ -66,9 +66,10 @@
       <PublishProfile>Properties\PublishProfiles\win10-$(Platform).pubxml</PublishProfile>
     </ProjectReference>
   </ItemGroup>
+  <Import Project="..\Dependencies.targets" Condition="'$(WinAppSDKVersion)'==''" />
   <ItemGroup>
-    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.1.0" IncludeAssets="build" />
-    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22000.194">
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="$(WinAppSDKVersion)" IncludeAssets="build" />
+    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="$(WinAppSDKToolsVersion)" >
       <IncludeAssets>build</IncludeAssets>
     </PackageReference>
   </ItemGroup>

@@ -42,4 +42,9 @@
 	  <ProjectReference Include="..\WinUIEx\WinUIEx.csproj" />
 	</ItemGroup>
 
+  <Import Project="..\Dependencies.targets" Condition="'$(WinAppSDKVersion)'==''" />
+  <ItemGroup>
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="$(WinAppSDKVersion)" />
+  </ItemGroup>
+
 </Project>

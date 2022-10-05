@@ -151,33 +151,6 @@ namespace WinUIEx
         }
 
         /// <summary>
-        /// Gets or sets the title bar content 
-        /// </summary>
-        /// <value>The title bar content.</value>
-        [Obsolete("TitleBar has been obsoleted, and will be removed in a future release. Use the SetTitleBar method and ExtendsContentIntoTitleBar property instead.")]
-        public UIElement? TitleBar
-        {
-            get { return titleBarContainer.Content as UIElement; }
-            set
-            {
-                if (Microsoft.UI.Windowing.AppWindowTitleBar.IsCustomizationSupported())
-                    AppWindow.TitleBar.ResetToDefault();
-                titleBarContainer.Content = value;
-                if (value is null)
-                {
-                    titleBarArea.Visibility = Visibility.Collapsed;
-                    base.ExtendsContentIntoTitleBar = false;
-                }
-                else
-                {
-                    titleBarArea.Visibility = Visibility.Visible;
-                    base.ExtendsContentIntoTitleBar = true;
-                    SetTitleBar(titleBarArea);
-                }
-            }
-        }
-
-        /// <summary>
         /// Gets or sets a unique ID used for saving and restoring window size and position
         /// across sessions.
         /// </summary>

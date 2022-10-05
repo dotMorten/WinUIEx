@@ -20,13 +20,13 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <winex:MediaPlayerElement x:Name="player" AutoPlay="True"
+        <MediaPlayerElement x:Name="player"
             PosterSource="ms-appx:///Images/logo.png"
             AreTransportControlsEnabled="True" Grid.Column="1">
-            <winex:MediaPlayerElement.TransportControls>
-                <winex:MediaTransportControls IsFullWindowButtonVisible="False" IsNextTrackButtonVisible="True" IsPreviousTrackButtonVisible="True" />
-            </winex:MediaPlayerElement.TransportControls>
-        </winex:MediaPlayerElement>
+            <MediaPlayerElement.TransportControls>
+                <MediaTransportControls IsNextTrackButtonVisible="True" IsPreviousTrackButtonVisible="True" />
+            </MediaPlayerElement.TransportControls>
+        </MediaPlayerElement>
         <ScrollViewer Grid.RowSpan="2">
             <StackPanel Margin="20" x:Name="propPanel" />
         </ScrollViewer>

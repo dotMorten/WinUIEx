@@ -1,7 +1,7 @@
 <Project>
 
   <PropertyGroup>
-    <WinAppSDKVersion>1.2.220930.4-preview2</WinAppSDKVersion>
+    <WinAppSDKVersion>1.2.221109.1</WinAppSDKVersion>
     <WinAppSDKToolsVersion>10.0.22621.1</WinAppSDKToolsVersion>
   </PropertyGroup>
 

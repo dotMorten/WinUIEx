@@ -1,4 +1,6 @@
-﻿namespace WinUIExMauiSample
+﻿using WinUIEx;
+
+namespace WinUIExMauiSample
 {
     public partial class MainPage : ContentPage
     {
@@ -33,7 +35,7 @@
 #if WINDOWS
             var result = await WinUIEx.WebAuthenticator.AuthenticateAsync(authorizeUri, callbackUri);
 #else
-            var result = await WebAuthenticator.AuthenticateAsync(new WebAuthenticatorOptions()
+            var result = await Microsoft.Maui.Authentication.WebAuthenticator.AuthenticateAsync(new WebAuthenticatorOptions()
             {
                 Url = authorizeUri, CallbackUrl = callbackUri
             });
@@ -41,6 +43,21 @@
             if (Navigation.ModalStack.Count > 0)
                 _ = Navigation.PopModalAsync();
             await DisplayAlert("Success!", "Signed in", "OK");
+        }
+
+        private void Picker_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var selectedIndex = ((Picker)sender).SelectedIndex;
+            var window = this.Window?.Handler?.PlatformView as Microsoft.UI.Xaml.Window;
+            if (window is null) return;
+            var manager = WinUIEx.WindowManager.Get(window);
+            if (manager is null) return;
+            switch (selectedIndex)
+            {
+                case 0: manager.Backdrop = new AcrylicSystemBackdrop(); break;
+                case 1: manager.Backdrop = new MicaSystemBackdrop(); break;
+                case 2: manager.Backdrop = null; break;
+            }
         }
     }
 }

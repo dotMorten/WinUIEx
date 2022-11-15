@@ -18,7 +18,7 @@ namespace WinUIEx
     /// </summary>
     public partial class WindowManager : IDisposable
     {
-        private object? m_dispatcherQueueController = null;
+        private IntPtr m_dispatcherQueueController = IntPtr.Zero;
         private ISystemBackdropController? currentController;
         private SystemBackdropConfiguration? BackdropConfiguration;
         private SystemBackdrop? m_backdrop;
@@ -161,14 +161,15 @@ namespace WinUIEx
 
         private void EnsureDispatcherQueueController()
         {
-            if (Windows.System.DispatcherQueue.GetForCurrentThread() == null && m_dispatcherQueueController is null)
+            if (Windows.System.DispatcherQueue.GetForCurrentThread() == null && m_dispatcherQueueController == IntPtr.Zero)
             {
                 DispatcherQueueOptions options;
                 options.dwSize = Marshal.SizeOf(typeof(DispatcherQueueOptions));
                 options.threadType = 2;    // DQTYPE_THREAD_CURRENT
                 options.apartmentType = 2; // DQTAT_COM_STA
 
-                CreateDispatcherQueueController(options, ref m_dispatcherQueueController!);
+                IntPtr m_dispatcherQueueControllerPtr = IntPtr.Zero;
+                CreateDispatcherQueueController(options, ref m_dispatcherQueueController);
             }
         }
 
@@ -194,6 +195,6 @@ namespace WinUIEx
         }
 
         [DllImport("CoreMessaging.dll")]
-        private static extern int CreateDispatcherQueueController([In] DispatcherQueueOptions options, [In, Out, MarshalAs(UnmanagedType.IUnknown)] ref object dispatcherQueueController);
+        private static extern int CreateDispatcherQueueController([In] DispatcherQueueOptions options, [In, Out] ref IntPtr dispatcherQueueController);
     }
 }

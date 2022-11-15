@@ -28,6 +28,7 @@ namespace WinUIEx
         /// Creates and activates a new splashscreen, and creates and opens the specified window type once complete.
         /// </summary>
         /// <param name="window">Type of window to create. Must have an empty constructor</param>
+        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("The type's constructor must not be trimmed. Use the Window instance constructor instead to ensure trim safety.")]
         public SplashScreen(Type window) : this()
         {
             if (!window.IsSubclassOf(typeof(Window)) && window != typeof(Window))
@@ -78,7 +79,9 @@ namespace WinUIEx
             this.CenterOnScreen(w, h);
             await OnLoading();
             if (_windowType != null)
+#pragma warning disable IL2077 // Target parameter argument does not satisfy 'DynamicallyAccessedMembersAttribute' in call to target method. Type parameter already declared as requiring unreferenced code
                 _window = Activator.CreateInstance(_windowType) as Window;
+#pragma warning restore IL2077 // Target parameter argument does not satisfy 'DynamicallyAccessedMembersAttribute' in call to target method. The source field does not have matching annotations.
             _window?.Activate();
             this.Close();
             _window?.SetForegroundWindow();

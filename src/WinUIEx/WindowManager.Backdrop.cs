@@ -18,7 +18,7 @@ namespace WinUIEx
     /// </summary>
     public partial class WindowManager : IDisposable
     {
-        private object? m_dispatcherQueueController = null;
+        private IntPtr m_dispatcherQueueController = IntPtr.Zero;
         private ISystemBackdropController? currentController;
         private SystemBackdropConfiguration? BackdropConfiguration;
         private SystemBackdrop? m_backdrop;
@@ -61,46 +61,11 @@ namespace WinUIEx
         /// </summary>
         public ISystemBackdropController? ActiveBackdropController => currentController;
 
-        private Microsoft.UI.Xaml.Media.SolidColorBrush? _fallbackBackdrop;
-
         private void InitBackdrop()
         {
             if(m_backdrop is null)
             {
                 CleanUpBackdrop();
-                return;
-            }
-            if (!m_backdrop.IsSupported)
-            {
-                var rootElement = _window.Content as FrameworkElement;
-                if (rootElement is not null)
-                {
-                    // Initial state.
-                    _fallbackBackdrop = new Microsoft.UI.Xaml.Media.SolidColorBrush(rootElement.ActualTheme == ElementTheme.Dark ? m_backdrop.DarkFallbackColor : m_backdrop.LightFallbackColor);
-                    if (rootElement is Microsoft.UI.Xaml.Controls.Control control && control.Background is null)
-                    {
-                        control.Background = _fallbackBackdrop;
-                    }
-                    else if (rootElement is Microsoft.UI.Xaml.Controls.Panel panel && panel.Background is null)
-                    {
-                        panel.Background = _fallbackBackdrop;
-                    }
-                    else
-                    {
-                        _fallbackBackdrop = null;
-                        return;
-                    }
-                    // This should probably be weak in the rare event the root content changes
-                    // Unfortunately there's no good event to detect changes though.
-                    rootElement.ActualThemeChanged += (s, e) =>
-                    {
-                        bool isDark = s.ActualTheme == ElementTheme.Dark;
-                        if (_fallbackBackdrop != null && m_backdrop != null)
-                        {
-                            _fallbackBackdrop.Color = isDark ? m_backdrop.DarkFallbackColor : m_backdrop.LightFallbackColor;
-                        }
-                    };
-                }
                 return;
             }
 
@@ -144,31 +109,19 @@ namespace WinUIEx
             (currentController as DesktopAcrylicController)?.RemoveAllSystemBackdropTargets();
             currentController?.Dispose();
             currentController = null;
-            if (_fallbackBackdrop is not null)
-            {
-                var rootElement = _window.Content as FrameworkElement;
-                if (_window.Content is Microsoft.UI.Xaml.Controls.Control control && control.Background == _fallbackBackdrop)
-                {
-                    control.Background = null;
-                }
-                else if (_window.Content is Microsoft.UI.Xaml.Controls.Panel panel && panel.Background == _fallbackBackdrop)
-                {
-                    panel.Background = null;
-                }
-                _fallbackBackdrop = null;
-            }
         }
 
         private void EnsureDispatcherQueueController()
         {
-            if (Windows.System.DispatcherQueue.GetForCurrentThread() == null && m_dispatcherQueueController is null)
+            if (Windows.System.DispatcherQueue.GetForCurrentThread() == null && m_dispatcherQueueController == IntPtr.Zero)
             {
                 DispatcherQueueOptions options;
                 options.dwSize = Marshal.SizeOf(typeof(DispatcherQueueOptions));
                 options.threadType = 2;    // DQTYPE_THREAD_CURRENT
                 options.apartmentType = 2; // DQTAT_COM_STA
 
-                CreateDispatcherQueueController(options, ref m_dispatcherQueueController!);
+                IntPtr m_dispatcherQueueControllerPtr = IntPtr.Zero;
+                CreateDispatcherQueueController(options, ref m_dispatcherQueueController);
             }
         }
 
@@ -194,6 +147,6 @@ namespace WinUIEx
         }
 
         [DllImport("CoreMessaging.dll")]
-        private static extern int CreateDispatcherQueueController([In] DispatcherQueueOptions options, [In, Out, MarshalAs(UnmanagedType.IUnknown)] ref object dispatcherQueueController);
+        private static extern int CreateDispatcherQueueController([In] DispatcherQueueOptions options, [In, Out] ref IntPtr dispatcherQueueController);
     }
 }

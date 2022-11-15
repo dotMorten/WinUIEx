@@ -1,8 +1,9 @@
 <Project>
 
+  <Import Project="Dependencies.targets" Condition="'$(WinAppSDKVersion)'==''" />
+  
   <PropertyGroup>
-    <WinAppSDKVersion>1.1.0</WinAppSDKVersion>
-    <DefineConstants Condition="$([MSBuild]::VersionGreaterThanOrEquals('$(WinAppSDKVersion)','1.1-a'))">$(DefineConstants);WINAPPSDK_1_1_OR_NEWER</DefineConstants>
+    <DefineConstants Condition="$([MSBuild]::VersionGreaterThanOrEquals('$(WinAppSDKVersion)','1.2-a'))">$(DefineConstants);WINAPPSDK_1_2_OR_NEWER</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Label="PackageInfo" Condition="'$(PackageId)'!=''">
@@ -17,8 +18,8 @@
     <Authors>Morten Nielsen - https://xaml.dev</Authors>
     <Company>Morten Nielsen - https://xaml.dev</Company>
     <PackageIcon>logo.png</PackageIcon>
-    <Version>1.8.0</Version>
-    <PackageValidationBaselineVersion>1.7.0</PackageValidationBaselineVersion>
+    <Version>2.0.0</Version>
+    <PackageValidationBaselineVersion>1.8.0</PackageValidationBaselineVersion>
   </PropertyGroup>
 
   <ItemGroup Condition="'$(PackageId)'!=''">

@@ -22,8 +22,11 @@
     <PackageId>WinUIEx</PackageId>
     <Product>WinUI Extensions</Product>
     <PackageReleaseNotes>
-      - Removed `MediaPlayerElement` control (now included in Windows App SDK 1.2).
-      - Remove obsolete APIs (tray icon and WindowEx.TitleBar)
+      - Major version update. Requires Windows App SDK v1.2.
+      - BREAKING: Removed `MediaPlayerElement` control (now included in Windows App SDK 1.2).
+      - BREAKING: Remove obsolete APIs (tray icon and WindowEx.TitleBar).
+      - Add support for trimming.
+      - Remove workarounds for issues now addressed in Windows App SDK v1.2.
     </PackageReleaseNotes>
   </PropertyGroup>
 

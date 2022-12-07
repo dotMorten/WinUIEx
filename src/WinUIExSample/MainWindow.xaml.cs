@@ -133,7 +133,8 @@ namespace WinUIExSample
             switch (((ComboBox)sender).SelectedIndex)
             {
                 case 1: this.Backdrop = acrylicBackdrop; break;
-                case 2: this.Backdrop = micaBackdrop; break;
+                case 2: this.Backdrop = new MicaSystemBackdrop() { }; break; // micaBackdrop; micaBackdrop.Kind = Microsoft.UI.Composition.SystemBackdrops.MicaKind.Base; break;
+                case 3: this.Backdrop = new MicaSystemBackdrop() { Kind = Microsoft.UI.Composition.SystemBackdrops.MicaKind.BaseAlt }; break; // micaBackdrop; micaBackdrop.Kind = Microsoft.UI.Composition.SystemBackdrops.MicaKind.BaseAlt; break;
                 default: this.Backdrop = null; break;
             }
         }

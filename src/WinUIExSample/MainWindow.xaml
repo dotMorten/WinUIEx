@@ -38,6 +38,7 @@
                     <ComboBoxItem>Default</ComboBoxItem>
                     <ComboBoxItem>Acrylic</ComboBoxItem>
                     <ComboBoxItem>Mica (Windows 11 only)</ComboBoxItem>
+                    <ComboBoxItem>Mica Alt (Windows 11 only)</ComboBoxItem>
                 </ComboBox>
                 <ComboBox x:Name="themeSelector" Header="Theme" SelectedIndex="0" SelectionChanged="Theme_SelectionChanged" Margin="0,5,0,0">
                     <ComboBoxItem>Default</ComboBoxItem>

@@ -3,6 +3,7 @@ using Microsoft.UI.Composition.SystemBackdrops;
 using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using Windows.Win32.Graphics.Direct3D11;
 
 namespace WinUIEx
 {
@@ -15,8 +16,26 @@ namespace WinUIEx
     /// <seealso cref="Microsoft.UI.Composition.SystemBackdrops.MicaController" />
     /// <seealso cref="Microsoft.UI.Composition.SystemBackdrops.DesktopAcrylicController" />
     public abstract class SystemBackdrop
-    { 
-        private Windows.UI.Color _darkTintColor = Windows.UI.Color.FromArgb(0, 0, 0, 0);
+    {
+        private protected bool _isDarkTintOverridden = false;
+        private protected bool _isLightTintOverridden = false;
+        private protected bool _isDarkFallbackOverridden = false;
+        private protected bool _isLightFallbackOverridden = false;
+        private readonly protected static Windows.UI.Color _defaultDarkFallback = Windows.UI.Color.FromArgb(0xff, 0x20, 0x20, 0x20);
+        private readonly protected static Windows.UI.Color _defaultLightFallback = Windows.UI.Color.FromArgb(0xff, 0xf3, 0xf3, 0xf3);
+        private protected Windows.UI.Color _darkTintColor = Windows.UI.Color.FromArgb(0, 0, 0, 0);
+
+        /// <summary>
+        /// Resets any customized properties to their system defaults and reverts to automatic light/dark theme handling.
+        /// </summary>
+        public virtual void ResetProperties()
+        {
+            _isLightFallbackOverridden = false;
+            _isDarkFallbackOverridden = false;
+            _isDarkTintOverridden = false;
+            
+            _isLightTintOverridden = false;
+        }
 
         /// <summary>
         /// Gets or sets the color tint for the backdrop material.
@@ -31,12 +50,13 @@ namespace WinUIEx
             {
                 if (_darkTintColor != value)
                 {
+                    _isDarkTintOverridden = true;
                     _darkTintColor = value;
                     NotifyDirty();
                 }
             }
         }
-        private Windows.UI.Color _lightTintColor = Windows.UI.Color.FromArgb(0, 0, 0, 0);
+        private protected Windows.UI.Color _lightTintColor = Windows.UI.Color.FromArgb(0, 0, 0, 0);
 
         /// <summary>
         /// Gets or sets the color tint for the backdrop material.
@@ -51,13 +71,14 @@ namespace WinUIEx
             {
                 if (_lightTintColor != value)
                 {
+                    _isLightTintOverridden = true;
                     _lightTintColor = value;
                     NotifyDirty();
                 }
             }
         }
 
-        private Windows.UI.Color _darkFallbackColor = Windows.UI.Color.FromArgb(0xff, 0x20, 0x20, 0x20);
+        private protected Windows.UI.Color _darkFallbackColor = _defaultDarkFallback;
 
         /// <summary>
         /// Gets or sets the solid color to use when system conditions prevent rendering the backdrop material.
@@ -75,13 +96,14 @@ namespace WinUIEx
             {
                 if (_darkFallbackColor != value)
                 {
+                    _isDarkFallbackOverridden = true;
                     _darkFallbackColor = value;
                     NotifyDirty();
                 }
             }
         }
 
-        private Windows.UI.Color _lightFallbackColor = Windows.UI.Color.FromArgb(0xff, 0xf3, 0xf3, 0xf3);
+        private protected Windows.UI.Color _lightFallbackColor = _defaultLightFallback;
 
         /// <summary>
         /// Gets or sets the solid color to use when system conditions prevent rendering the backdrop material.
@@ -99,6 +121,7 @@ namespace WinUIEx
             {
                 if (_lightFallbackColor != value)
                 {
+                    _isLightFallbackOverridden = true;
                     _lightFallbackColor = value;
                     NotifyDirty();
                 }
@@ -255,26 +278,50 @@ namespace WinUIEx
     /// <seealso cref="AcrylicSystemBackdrop"/>
     public class MicaSystemBackdrop : SystemBackdrop
     {
+        private readonly static Windows.UI.Color _defaultDarkTint = Windows.UI.Color.FromArgb(0xff, 0x20, 0x20, 0x20);
+        private readonly static Windows.UI.Color _defaultLightTint = Windows.UI.Color.FromArgb(0xff, 0xf3, 0xf3, 0xf3);
+        private readonly static Windows.UI.Color _altDarkTint = Windows.UI.Color.FromArgb(0xff, 0x20, 0x20, 0x20); //TODO: Verify
+        private readonly static Windows.UI.Color _altLightTint = Windows.UI.Color.FromArgb(0xff, 0xda, 0xda, 0xda);
+        private readonly static Windows.UI.Color _altDarkFallback = Windows.UI.Color.FromArgb(0xff, 0x20, 0x20, 0x20); //TODO: Verify
+        private readonly static Windows.UI.Color _altLightFallback = Windows.UI.Color.FromArgb(0xff, 0xe8, 0xe8, 0xe8);
+
         /// <summary>
         /// Initializes a new instance of the <see cref="MicaSystemBackdrop"/> class.
         /// </summary>
         public MicaSystemBackdrop()
         {
-            LightTintColor = Windows.UI.Color.FromArgb(0xff, 0xf3, 0xf3, 0xf3);
+            LightTintColor = _defaultLightTint;
             LightTintOpacity = 0.5;
-            DarkTintColor = Windows.UI.Color.FromArgb(0xff, 0x20, 0x20, 0x20);
+            DarkTintColor = _defaultDarkTint;
             DarkTintOpacity = 0.5;
+            _isDarkTintOverridden = false;
+            _isLightTintOverridden = false;
         }
         private MicaKind _kind;
 
         /// <summary>
         /// Gets or sets the Mica backdrop kind.
         /// </summary>
+        /// <remarks>
+        /// Setting the Kind property will change the Tint and Fallback colors to new defaults. Note that if you
+        /// explicitly set the Tint and Fallback colors, changing the Kind will have no effect. This matches the
+        /// MicaController behavior in the Windows App SDK.
+        /// </remarks>
         /// <seealso cref="MicaController.Kind"/>
         public MicaKind Kind
         {
             get => _kind;
-            set { _kind = value; NotifyDirty(); }
+            set {
+                _kind = value;
+                 if(!_isDarkTintOverridden)
+                     _darkTintColor = _kind == MicaKind.Base ? _defaultDarkTint : _altDarkTint;
+                if (!_isLightTintOverridden)
+                    _lightTintColor = _kind == MicaKind.Base ? _defaultLightTint : _altLightTint;
+                if (!_isDarkFallbackOverridden)
+                    _darkFallbackColor = _kind == MicaKind.Base ? _defaultDarkFallback : _altDarkFallback;
+                if (!_isLightFallbackOverridden)
+                    _lightFallbackColor = _kind == MicaKind.Base ? _defaultLightFallback : _altLightFallback;
+                NotifyDirty(); }
         }
 
         /// <inheritdoc/>

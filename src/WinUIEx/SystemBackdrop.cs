@@ -17,25 +17,31 @@ namespace WinUIEx
     /// <seealso cref="Microsoft.UI.Composition.SystemBackdrops.DesktopAcrylicController" />
     public abstract class SystemBackdrop
     {
-        private protected bool _isDarkTintOverridden = false;
-        private protected bool _isLightTintOverridden = false;
-        private protected bool _isDarkFallbackOverridden = false;
-        private protected bool _isLightFallbackOverridden = false;
-        private readonly protected static Windows.UI.Color _defaultDarkFallback = Windows.UI.Color.FromArgb(0xff, 0x20, 0x20, 0x20);
-        private readonly protected static Windows.UI.Color _defaultLightFallback = Windows.UI.Color.FromArgb(0xff, 0xf3, 0xf3, 0xf3);
-        private protected Windows.UI.Color _darkTintColor = Windows.UI.Color.FromArgb(0, 0, 0, 0);
-
         /// <summary>
         /// Resets any customized properties to their system defaults and reverts to automatic light/dark theme handling.
         /// </summary>
         public virtual void ResetProperties()
         {
-            _isLightFallbackOverridden = false;
-            _isDarkFallbackOverridden = false;
             _isDarkTintOverridden = false;
-            
             _isLightTintOverridden = false;
+            _isDarkFallbackOverridden = false;
+            _isLightFallbackOverridden = false;
+            _isDarkTintOpacityOverridden = false;
+            _isLightTintOpacityOverridden = false;
+            _isDarkLuminosityOpacityOverridden = false;
+            _isLightLuminosityOpacityOverridden = false;
+            _darkTintColor = Windows.UI.Color.FromArgb(0, 0, 0, 0);
+            _lightTintColor = Windows.UI.Color.FromArgb(0, 0, 0, 0);
+            _darkFallbackColor = _defaultDarkFallback;
+            _lightFallbackColor = _defaultLightFallback;
+            _darkTintOpacity = 0;
+            _lightTintOpacity = 0;
+            _lightLuminosityOpacity = 1;
+            _darkLuminosityOpacity = 1;
         }
+
+        private protected Windows.UI.Color _darkTintColor = Windows.UI.Color.FromArgb(0, 0, 0, 0);
+        private protected bool _isDarkTintOverridden = false;
 
         /// <summary>
         /// Gets or sets the color tint for the backdrop material.
@@ -48,15 +54,17 @@ namespace WinUIEx
             get => _darkTintColor;
             set
             {
+                _isDarkTintOverridden = true;
                 if (_darkTintColor != value)
                 {
-                    _isDarkTintOverridden = true;
                     _darkTintColor = value;
                     NotifyDirty();
                 }
             }
         }
+
         private protected Windows.UI.Color _lightTintColor = Windows.UI.Color.FromArgb(0, 0, 0, 0);
+        private protected bool _isLightTintOverridden = false;
 
         /// <summary>
         /// Gets or sets the color tint for the backdrop material.
@@ -69,16 +77,18 @@ namespace WinUIEx
             get => _lightTintColor;
             set
             {
+                _isLightTintOverridden = true;
                 if (_lightTintColor != value)
                 {
-                    _isLightTintOverridden = true;
                     _lightTintColor = value;
                     NotifyDirty();
                 }
             }
         }
 
+        private readonly protected static Windows.UI.Color _defaultDarkFallback = Windows.UI.Color.FromArgb(0xff, 0x20, 0x20, 0x20);
         private protected Windows.UI.Color _darkFallbackColor = _defaultDarkFallback;
+        private protected bool _isDarkFallbackOverridden = false;
 
         /// <summary>
         /// Gets or sets the solid color to use when system conditions prevent rendering the backdrop material.
@@ -94,16 +104,18 @@ namespace WinUIEx
             get => _darkFallbackColor;
             set
             {
+                _isDarkFallbackOverridden = true;
                 if (_darkFallbackColor != value)
                 {
-                    _isDarkFallbackOverridden = true;
                     _darkFallbackColor = value;
                     NotifyDirty();
                 }
             }
         }
-
+        
+        private readonly protected static Windows.UI.Color _defaultLightFallback = Windows.UI.Color.FromArgb(0xff, 0xf3, 0xf3, 0xf3);
         private protected Windows.UI.Color _lightFallbackColor = _defaultLightFallback;
+        private protected bool _isLightFallbackOverridden = false;
 
         /// <summary>
         /// Gets or sets the solid color to use when system conditions prevent rendering the backdrop material.
@@ -119,16 +131,17 @@ namespace WinUIEx
             get => _lightFallbackColor;
             set
             {
+                _isLightFallbackOverridden = true;
                 if (_lightFallbackColor != value)
                 {
-                    _isLightFallbackOverridden = true;
                     _lightFallbackColor = value;
                     NotifyDirty();
                 }
             }
         }
 
-        private double _darkTintOpacity = 0;
+        private protected double _darkTintOpacity = 0;
+        private protected bool _isDarkTintOpacityOverridden = false;
 
         /// <summary>
         /// Gets or sets the degree of opacity of the color tint.
@@ -141,17 +154,19 @@ namespace WinUIEx
             get => _darkTintOpacity;
             set
             {
+                if (value < 0 || value > 1)
+                    throw new ArgumentOutOfRangeException(nameof(value));
+                _isDarkTintOpacityOverridden = true;
                 if (_darkTintOpacity != value)
                 {
-                    if (value < 0 || value > 1)
-                        throw new ArgumentOutOfRangeException(nameof(value));
                     _darkTintOpacity = value;
                     NotifyDirty();
                 }
             }
         }
 
-        private double _lightTintOpacity = 0;
+        private protected double _lightTintOpacity = 0;
+        private protected bool _isLightTintOpacityOverridden = false;
 
         /// <summary>
         /// Gets or sets the degree of opacity of the color tint.
@@ -164,17 +179,19 @@ namespace WinUIEx
             get => _lightTintOpacity;
             set
             {
+                if (value < 0 || value > 1)
+                    throw new ArgumentOutOfRangeException(nameof(value));
+                _isLightTintOpacityOverridden = true;
                 if (_lightTintOpacity != value)
                 {
-                    if (value < 0 || value > 1)
-                        throw new ArgumentOutOfRangeException(nameof(value));
                     _lightTintOpacity = value;
                     NotifyDirty();
                 }
             }
         }
 
-        private double _darkLuminosityOpacity = 1;
+        private protected double _darkLuminosityOpacity = 1;
+        private protected bool _isDarkLuminosityOpacityOverridden = false;
 
         /// <summary>
         /// Gets or sets the degree of opacity of the color's luminosity.
@@ -187,17 +204,19 @@ namespace WinUIEx
             get => _darkLuminosityOpacity;
             set
             {
+                if (value < 0 || value > 1)
+                    throw new ArgumentOutOfRangeException(nameof(value));
+                _isDarkLuminosityOpacityOverridden = true;
                 if (_darkLuminosityOpacity != value)
                 {
-                    if (value < 0 || value > 1)
-                        throw new ArgumentOutOfRangeException(nameof(value));
                     _darkLuminosityOpacity = value;
                     NotifyDirty();
                 }
             }
         }
 
-        private double _lightLuminosityOpacity = 1;
+        private protected double _lightLuminosityOpacity = 1;
+        private protected bool _isLightLuminosityOpacityOverridden = false;
 
         /// <summary>
         /// Gets or sets the degree of opacity of the color's luminosity.
@@ -210,10 +229,11 @@ namespace WinUIEx
             get => _lightLuminosityOpacity;
             set
             {
+                if (value < 0 || value > 1)
+                    throw new ArgumentOutOfRangeException(nameof(value));
+                _isLightLuminosityOpacityOverridden = true;
                 if (_lightLuminosityOpacity != value)
                 {
-                    if (value < 0 || value > 1)
-                        throw new ArgumentOutOfRangeException(nameof(value));
                     _lightLuminosityOpacity = value;
                     NotifyDirty();
                 }
@@ -280,7 +300,7 @@ namespace WinUIEx
     {
         private readonly static Windows.UI.Color _defaultDarkTint = Windows.UI.Color.FromArgb(0xff, 0x20, 0x20, 0x20);
         private readonly static Windows.UI.Color _defaultLightTint = Windows.UI.Color.FromArgb(0xff, 0xf3, 0xf3, 0xf3);
-        private readonly static Windows.UI.Color _altDarkTint = Windows.UI.Color.FromArgb(0xff, 0x20, 0x20, 0x20); //TODO: Verify
+        private readonly static Windows.UI.Color _altDarkTint = Windows.UI.Color.FromArgb(0xff, 0x0a, 0x0a, 0x0a);
         private readonly static Windows.UI.Color _altLightTint = Windows.UI.Color.FromArgb(0xff, 0xda, 0xda, 0xda);
         private readonly static Windows.UI.Color _altDarkFallback = Windows.UI.Color.FromArgb(0xff, 0x20, 0x20, 0x20); //TODO: Verify
         private readonly static Windows.UI.Color _altLightFallback = Windows.UI.Color.FromArgb(0xff, 0xe8, 0xe8, 0xe8);
@@ -290,13 +310,22 @@ namespace WinUIEx
         /// </summary>
         public MicaSystemBackdrop()
         {
-            LightTintColor = _defaultLightTint;
-            LightTintOpacity = 0.5;
-            DarkTintColor = _defaultDarkTint;
-            DarkTintOpacity = 0.5;
-            _isDarkTintOverridden = false;
-            _isLightTintOverridden = false;
+            ResetProperties();
         }
+
+        /// <inheritdoc />
+        public override void ResetProperties()
+        {
+            base.ResetProperties();
+            _lightTintOpacity = 0.5;
+            _darkTintOpacity = _kind == MicaKind.Base ? 0.8 : 0;
+            _darkTintColor = _kind == MicaKind.Base ? _defaultDarkTint : _altDarkTint;
+            _lightTintColor = _kind == MicaKind.Base ? _defaultLightTint : _altLightTint;
+            _darkFallbackColor = _kind == MicaKind.Base ? _defaultDarkFallback : _altDarkFallback;
+            _lightFallbackColor = _kind == MicaKind.Base ? _defaultLightFallback : _altLightFallback;
+            NotifyDirty();
+        }
+
         private MicaKind _kind;
 
         /// <summary>
@@ -313,7 +342,8 @@ namespace WinUIEx
             get => _kind;
             set {
                 _kind = value;
-                 if(!_isDarkTintOverridden)
+                // Only overwrite defaults if they haven't been explicitly set. These 5 values change when Kind is set
+                if(!_isDarkTintOverridden)
                      _darkTintColor = _kind == MicaKind.Base ? _defaultDarkTint : _altDarkTint;
                 if (!_isLightTintOverridden)
                     _lightTintColor = _kind == MicaKind.Base ? _defaultLightTint : _altLightTint;
@@ -321,6 +351,8 @@ namespace WinUIEx
                     _darkFallbackColor = _kind == MicaKind.Base ? _defaultDarkFallback : _altDarkFallback;
                 if (!_isLightFallbackOverridden)
                     _lightFallbackColor = _kind == MicaKind.Base ? _defaultLightFallback : _altLightFallback;
+                if (!_isDarkTintOpacityOverridden)
+                    _darkTintOpacity = _kind == MicaKind.Base ? 0.8 : 0;
                 NotifyDirty(); }
         }
 
@@ -336,11 +368,16 @@ namespace WinUIEx
             if (controller is MicaController mica)
             {
                 bool isDark = theme == SystemBackdropTheme.Dark;
+                mica.ResetProperties();
                 mica.Kind = Kind;
-                mica.TintOpacity = (float)(isDark ? DarkTintOpacity : LightTintOpacity);
-                mica.LuminosityOpacity = (float)(isDark ? DarkLuminosityOpacity : LightLuminosityOpacity);
-                mica.TintColor = isDark ? DarkTintColor : LightTintColor;
-                mica.FallbackColor = isDark ? DarkFallbackColor : LightFallbackColor;
+                if (isDark && _isDarkTintOpacityOverridden || !isDark && _isLightTintOpacityOverridden)
+                    mica.TintOpacity = (float)(isDark ? DarkTintOpacity : LightTintOpacity);
+                if (isDark && _isDarkLuminosityOpacityOverridden || !isDark && _isLightLuminosityOpacityOverridden)
+                    mica.LuminosityOpacity = (float)(isDark ? DarkLuminosityOpacity : LightLuminosityOpacity);
+                if (isDark && _isDarkTintOverridden || !isDark && _isLightTintOverridden)
+                    mica.TintColor = isDark ? DarkTintColor : LightTintColor;
+                if (isDark && _isDarkFallbackOverridden || !isDark && _isLightFallbackOverridden)
+                    mica.FallbackColor = isDark ? DarkFallbackColor : LightFallbackColor;
             }
         }
 
@@ -367,12 +404,20 @@ namespace WinUIEx
         /// </summary>
         public AcrylicSystemBackdrop()
         {
-            LightTintColor = Windows.UI.Color.FromArgb(0xff, 0xd3, 0xd3, 0xd3);
-            LightFallbackColor = Windows.UI.Color.FromArgb(0xff, 0xd3, 0xd3, 0xd3);
-            LightLuminosityOpacity = .64;
-            DarkTintColor = Windows.UI.Color.FromArgb(0xff, 0x40, 0x40, 0x40);
-            DarkFallbackColor = Windows.UI.Color.FromArgb(0xff, 0x40, 0x40, 0x40);
-            DarkLuminosityOpacity = .64;
+            ResetProperties();
+        }
+
+        /// <inheritdoc />
+        public override void ResetProperties()
+        {
+            base.ResetProperties();
+            _lightTintColor = Windows.UI.Color.FromArgb(0xff, 0xd3, 0xd3, 0xd3);
+            _lightFallbackColor = Windows.UI.Color.FromArgb(0xff, 0xd3, 0xd3, 0xd3);
+            _lightLuminosityOpacity = .64;
+            _darkTintColor = Windows.UI.Color.FromArgb(0xff, 0x54, 0x54, 0x54);
+            _darkFallbackColor = Windows.UI.Color.FromArgb(0xff, 0x54, 0x54, 0x54);
+            _darkLuminosityOpacity = .64;
+            NotifyDirty();
         }
 
         /// <inheritdoc/>
@@ -387,10 +432,15 @@ namespace WinUIEx
             if (controller is DesktopAcrylicController acrylic)
             {
                 bool isDark = theme == SystemBackdropTheme.Dark;
-                acrylic.TintOpacity = (float)(isDark ? DarkTintOpacity : LightTintOpacity);
-                acrylic.LuminosityOpacity = (float)(isDark ? DarkLuminosityOpacity : LightLuminosityOpacity);
-                acrylic.TintColor = isDark ? DarkTintColor : LightTintColor;
-                acrylic.FallbackColor = isDark ? DarkFallbackColor : LightFallbackColor;
+                acrylic.ResetProperties();
+                if (isDark && _isDarkTintOpacityOverridden || !isDark && _isLightTintOpacityOverridden)
+                    acrylic.TintOpacity = (float)(isDark ? DarkTintOpacity : LightTintOpacity);
+                if (isDark && _isDarkLuminosityOpacityOverridden || !isDark && _isLightLuminosityOpacityOverridden)
+                    acrylic.LuminosityOpacity = (float)(isDark ? DarkLuminosityOpacity : LightLuminosityOpacity);
+                if (isDark && _isDarkTintOverridden || !isDark && _isLightTintOverridden)
+                    acrylic.TintColor = isDark ? DarkTintColor : LightTintColor;
+                if (isDark && _isDarkFallbackOverridden || !isDark && _isLightFallbackOverridden)
+                    acrylic.FallbackColor = isDark ? DarkFallbackColor : LightFallbackColor;
             }
         }
 

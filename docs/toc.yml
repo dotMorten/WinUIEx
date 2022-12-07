@@ -5,6 +5,7 @@
   homepage: concepts/index.md
 - name: API Reference
   href: api/
+  homepage: api/index.md
 - name: Sponsor WinUIEx
   href: https://github.com/sponsors/dotMorten
 - name: GitHub

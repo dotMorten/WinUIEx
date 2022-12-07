@@ -302,7 +302,7 @@ namespace WinUIEx
         private readonly static Windows.UI.Color _defaultLightTint = Windows.UI.Color.FromArgb(0xff, 0xf3, 0xf3, 0xf3);
         private readonly static Windows.UI.Color _altDarkTint = Windows.UI.Color.FromArgb(0xff, 0x0a, 0x0a, 0x0a);
         private readonly static Windows.UI.Color _altLightTint = Windows.UI.Color.FromArgb(0xff, 0xda, 0xda, 0xda);
-        private readonly static Windows.UI.Color _altDarkFallback = Windows.UI.Color.FromArgb(0xff, 0x20, 0x20, 0x20); //TODO: Verify
+        private readonly static Windows.UI.Color _altDarkFallback = Windows.UI.Color.FromArgb(0xff, 0x20, 0x20, 0x20);
         private readonly static Windows.UI.Color _altLightFallback = Windows.UI.Color.FromArgb(0xff, 0xe8, 0xe8, 0xe8);
 
         /// <summary>

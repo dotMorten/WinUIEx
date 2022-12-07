@@ -14,7 +14,10 @@ jobs:
         
     - name: Clone Repo
       uses: actions/checkout@v1
-
+      
+    - name: Setup Visual Studio Command Prompt
+      uses: microsoft/setup-msbuild@v1.0.2
+      
     - name: Download DocFX
       run: |
         mkdir .tools/docfx

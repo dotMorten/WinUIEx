@@ -23,7 +23,7 @@ namespace WinUIExSample
     {
         private readonly Queue<string> windowEvents = new Queue<string>(101);
         private readonly WindowMessageMonitor monitor;
-        private AcrylicSystemBackdrop acrylicBackdrop = new AcrylicSystemBackdrop() { LightLuminosityOpacity = .75, DarkLuminosityOpacity = .75 };
+        private AcrylicSystemBackdrop acrylicBackdrop = new AcrylicSystemBackdrop();
         private MicaSystemBackdrop micaBackdrop;
 
         public MainWindow()
@@ -133,7 +133,8 @@ namespace WinUIExSample
             switch (((ComboBox)sender).SelectedIndex)
             {
                 case 1: this.Backdrop = acrylicBackdrop; break;
-                case 2: this.Backdrop = micaBackdrop; break;
+                case 2: this.Backdrop = micaBackdrop; micaBackdrop.Kind = Microsoft.UI.Composition.SystemBackdrops.MicaKind.Base; break;
+                case 3: this.Backdrop = micaBackdrop; micaBackdrop.Kind = Microsoft.UI.Composition.SystemBackdrops.MicaKind.BaseAlt; break;
                 default: this.Backdrop = null; break;
             }
         }

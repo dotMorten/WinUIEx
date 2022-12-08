@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
@@ -80,7 +80,7 @@ namespace WinUIEx
             }
             return null;
         }
-        
+
         private static NameValueCollection? GetState(IProtocolActivatedEventArgs protocolArgs)
         {
             NameValueCollection? vals = null;
@@ -104,6 +104,8 @@ namespace WinUIEx
             catch { }
             if (vals != null && vals["state"] is string state)
             {
+                // UrlDecode the state parameter to split it in its components (that were wrapped together in "state" in the Authenticate method)
+                var decodedState = System.Web.HttpUtility.UrlDecode(state);
                 var vals2 = System.Web.HttpUtility.ParseQueryString(state);
                 // Some services doesn't like & encoded state parameters, and breaks them out separately.
                 // In that case copy over the important values
@@ -183,12 +185,15 @@ namespace WinUIEx
 
             var query = System.Web.HttpUtility.ParseQueryString(authorizeUri.Query);
             var state = $"appInstanceId={Microsoft.Windows.AppLifecycle.AppInstance.GetCurrent().Key}&signinId={g}";
-            if(query["state"] is string oldstate && !string.IsNullOrEmpty(oldstate))
+            if (query["state"] is string oldstate && !string.IsNullOrEmpty(oldstate))
             {
                 // Encode the state parameter
                 state += "&state=" + System.Web.HttpUtility.UrlEncode(oldstate);
             }
-            query["state"] = state;
+            
+            // UrlEncode the state because otherwise the different state components (appInstanceId, signinId, optional custom state)
+            // will end up as "top level" parameters in the query string instead of all being wrapped in the state parameter
+            query["state"] = System.Web.HttpUtility.UrlEncode(state);
             b.Query = query.ToString();
             authorizeUri = b.Uri;
 

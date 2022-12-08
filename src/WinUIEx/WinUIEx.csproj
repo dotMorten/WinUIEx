@@ -1,5 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <!--<Sdk Name="Microsoft.DotNet.PackageValidation" Version="1.0.0-preview.7.21379.12" />-->
+  <Sdk Name="Microsoft.DotNet.PackageValidation" Version="1.0.0-preview.7.21379.12" />
 
   <PropertyGroup>
     <TargetFramework>net6.0-windows10.0.18362.0</TargetFramework>
@@ -22,13 +22,7 @@
     <PackageId>WinUIEx</PackageId>
     <Product>WinUI Extensions</Product>
     <PackageReleaseNotes>
-      - Major version update. Requires Windows App SDK v1.2.
-      - BREAKING: Removed `MediaPlayerElement` control (now included in Windows App SDK 1.2).
-      - BREAKING: Remove obsolete APIs (tray icon and WindowEx.TitleBar).
-      - Add support for trimming.
-      - Fix issue where MicaAlt wasn't applied. Setting Kind on the Mica backdrop will now change the backdrop settings for properties that hasn't been explicitly overridden (matches Windows App SDK behavior). (Issue #88)
-      - Adds support for defining a maximum width and height of the window. (Issue #81)
-      - Remove workarounds for issues now addressed in Windows App SDK v1.2.
+      - Ensure backdrop is always initialized during startup (Issue #90)
     </PackageReleaseNotes>
   </PropertyGroup>
 

@@ -70,10 +70,18 @@ namespace WinUIEx
             _monitor.WindowMessageReceived += OnWindowMessage;
             _window.Activated += Window_Activated;
             _window.Closed += Window_Closed;
+            _window.VisibilityChanged += Window_VisibilityChanged;
             AppWindow.Changed += AppWindow_Changed;
 
             overlappedPresenter = AppWindow.Presenter as OverlappedPresenter ?? Microsoft.UI.Windowing.OverlappedPresenter.Create();
             managers[window.GetWindowHandle()] = new WeakReference<WindowManager>(this);
+        }
+
+        private void Window_VisibilityChanged(object sender, WindowVisibilityChangedEventArgs args)
+        {
+            // Ensures backdrop gets set up if it was previously attempted initialized while window wasn't visible
+            if (args.Visible && m_backdrop is not null && currentController is null)
+                InitBackdrop();
         }
 
         private void Window_Activated(object sender, WindowActivatedEventArgs args)

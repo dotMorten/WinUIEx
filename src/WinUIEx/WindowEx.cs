@@ -298,7 +298,10 @@ namespace WinUIEx
         /// <summary>
         /// Gets or sets the minimum width of this window
         /// </summary>
+        /// <value>The minimum window width in device independent pixels.</value>
         /// <remarks>A window is currently set to a minimum of 139 pixels.</remarks>
+        /// <seealso cref="MaxWidth"/>
+        /// <seealso cref="MinHeight"/>
         public double MinWidth
         {
             get => _manager.MinWidth;
@@ -308,11 +311,40 @@ namespace WinUIEx
         /// <summary>
         /// Gets or sets the minimum height of this window
         /// </summary>
+        /// <value>The minimum window height in device independent pixels.</value>
         /// <remarks>A window is currently set to a minimum of 39 pixels.</remarks>
+        /// <seealso cref="MaxHeight"/>
+        /// <seealso cref="MinWidth"/>
         public double MinHeight
         {
             get => _manager.MinHeight;
             set => _manager.MinHeight = value;
+        }
+
+        /// <summary>
+        /// Gets or sets the maximum width of this window
+        /// </summary>
+        /// <value>The maximum window width in device independent pixels.</value>
+        /// <remarks>The default is 0, which means no limit. If the value is less than <see cref="MinWidth"/>, the <c>MinWidth</c> will also be used as the maximum width.</remarks>
+        /// <seealso cref="MaxHeight"/>
+        /// <seealso cref="MinWidth"/>
+        public double MaxWidth
+        {
+            get => _manager.MaxWidth;
+            set => _manager.MaxWidth = value;
+        }
+
+        /// <summary>
+        /// Gets or sets the maximum height of this window
+        /// </summary>
+        /// <value>The maximum window height in device independent pixels.</value>
+        /// <remarks>The default is 0, which means no limit. If the value is less than <see cref="MinHeight"/>, the <c>MinHeight</c> will also be used as the maximum height.</remarks>
+        /// <seealso cref="MaxWidth"/>
+        /// <seealso cref="MinHeight"/>
+        public double MaxHeight
+        {
+            get => _manager.MaxHeight;
+            set => _manager.MaxHeight = value;
         }
 
         /// <summary>

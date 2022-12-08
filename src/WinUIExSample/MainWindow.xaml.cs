@@ -165,5 +165,19 @@ namespace WinUIExSample
             var result = await WebAuthenticator.AuthenticateAsync(new Uri(authorizeUri), new Uri(callbackUri));
             Log("Logged in. Code returned: " + result.Properties["code"]);
         }
+
+        private void limitMaxCheckbox_Toggled(object sender, RoutedEventArgs e)
+        {
+            if(limitMaxCheckbox.IsOn)
+            {
+                sliderMaxWidth.Value = Width;
+                sliderMaxHeight.Value = Height;
+            }
+            else
+            {
+                MaxWidth = double.NaN;
+                MaxHeight = double.NaN;
+            }
+        }
     }
 }

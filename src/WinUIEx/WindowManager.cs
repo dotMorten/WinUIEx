@@ -123,6 +123,8 @@ namespace WinUIEx
         /// Gets or sets the width of the window.
         /// </summary>
         /// <value>The window width in device independent pixels.</value>
+        /// <seealso cref="MinWidth"/>
+        /// <seealso cref="MaxWidth"/>
         public double Width
         {
             get => AppWindow.Size.Width / (_window.GetDpiForWindow() / 96d);
@@ -133,6 +135,8 @@ namespace WinUIEx
         /// Gets or sets the height of the window.
         /// </summary>
         /// <value>The window height in device independent pixels.</value>
+        /// <seealso cref="MinHeight"/>
+        /// <seealso cref="MaxHeight"/>
         public double Height
         {
             get => AppWindow.Size.Height / (_window.GetDpiForWindow() / 96d);
@@ -146,6 +150,8 @@ namespace WinUIEx
         /// </summary>
         /// <value>The minimum window width in device independent pixels.</value>
         /// <remarks>A window is currently set to a minimum of 139 pixels.</remarks>
+        /// <seealso cref="MaxWidth"/>
+        /// <seealso cref="MinHeight"/>
         public double MinWidth
         {
             get => _minWidth;
@@ -164,6 +170,8 @@ namespace WinUIEx
         /// </summary>
         /// <value>The minimum window height in device independent pixels.</value>
         /// <remarks>A window is currently set to a minimum of 39 pixels.</remarks>
+        /// <seealso cref="MaxHeight"/>
+        /// <seealso cref="MinWidth"/>
         public double MinHeight
         {
             get => _minHeight;
@@ -171,6 +179,48 @@ namespace WinUIEx
             {
                 _minHeight = value;
                 if (Height < value)
+                    Height = value;
+            }
+        }
+
+        private double _maxWidth = 0;
+
+        /// <summary>
+        /// Gets or sets the maximum width of this window
+        /// </summary>
+        /// <value>The maximum window width in device independent pixels.</value>
+        /// <remarks>The default is 0, which means no limit. If the value is less than <see cref="MinWidth"/>, the <c>MinWidth</c> will also be used as the maximum width.</remarks>
+        /// <seealso cref="MaxHeight"/>
+        /// <seealso cref="MinWidth"/>
+        public double MaxWidth
+        {
+            get => _maxWidth;
+            set
+            {
+                if(value <= 0) throw new ArgumentOutOfRangeException(nameof(value));
+                _maxWidth = value;
+                if (Width > value)
+                    Width = value;
+            }
+        }
+
+        private double _maxHeight = 0;
+
+        /// <summary>
+        /// Gets or sets the maximum height of this window
+        /// </summary>
+        /// <value>The maximum window height in device independent pixels.</value>
+        /// <remarks>The default is 0, which means no limit. If the value is less than <see cref="MinHeight"/>, the <c>MinHeight</c> will also be used as the maximum height.</remarks>
+        /// <seealso cref="MaxWidth"/>
+        /// <seealso cref="MinHeight"/>
+        public double MaxHeight
+        {
+            get => _maxHeight;
+            set
+            {
+                if (value <= 0) throw new ArgumentOutOfRangeException(nameof(value));
+                _maxHeight = value;
+                if (Height > value)
                     Height = value;
             }
         }
@@ -203,6 +253,10 @@ namespace WinUIEx
                         var currentDpi = _window.GetDpiForWindow();
                         rect2->ptMinTrackSize.x = (int)(Math.Max(MinWidth * (currentDpi / 96f), rect2->ptMinTrackSize.x));
                         rect2->ptMinTrackSize.y = (int)(Math.Max(MinHeight * (currentDpi / 96f), rect2->ptMinTrackSize.y));
+                        if (!double.IsNaN(MaxWidth) && MaxWidth > 0)
+                            rect2->ptMaxTrackSize.x = (int)(Math.Min(Math.Max(MaxWidth, MinWidth) * (currentDpi / 96f), rect2->ptMaxTrackSize.x)); // If minwidth<maxwidth, minwidth will take presedence
+                        if (!double.IsNaN(MaxHeight) && MaxHeight > 0)
+                            rect2->ptMaxTrackSize.y = (int)(Math.Min(Math.Max(MaxHeight, MinHeight) * (currentDpi / 96f), rect2->ptMaxTrackSize.y)); // If minheight<maxheight, minheight will take presedence
                     }
                     break;
                 case WindowsMessages.WM_DPICHANGED:

@@ -17,7 +17,7 @@ jobs:
   
     - name: Get certificate
       id: cert_file
-      uses: timheuer/base64-to-file@master
+      uses: timheuer/base64-to-file@v1.2
       with:
         fileName: 'certfile.pfx'
         encodedString: ${{ secrets.BASE64_ENCODED_PFX }}

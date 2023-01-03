@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Nodes;
 
 namespace WinUIEx
 {
@@ -25,12 +26,17 @@ namespace WinUIEx
             {
                 if(key == "state")
                 {
-                    var values = System.Web.HttpUtility.ParseQueryString(query[key] ?? string.Empty);
-                    if(values["state"] is string state)
+                    try
                     {
-                        Properties[key] = state;
+                        var jsonObject = System.Text.Json.Nodes.JsonObject.Parse(query[key] ?? "{}") as JsonObject;
+
+                        if (jsonObject is not null && jsonObject.ContainsKey("state") && jsonObject["state"] is JsonValue jvalue && jvalue.TryGetValue<string>(out string? value))
+                        {
+                            Properties[key] = value;
+                            continue;
+                        }
                     }
-                    continue;
+                    catch { }
                 }
                 Properties[key] = query[key] ?? String.Empty;
             }

@@ -158,9 +158,9 @@ namespace WinUIExSample
         {
             string clientId = "imIwo061j9SUOQYm7O8Oe4HK";
             string clientSecret = "aeApQwwjBl1n_J6nknnxWNONuB0RaEjVHL5yhYdgz5XJOnDi";
-            string state = DateTime.Now.Ticks.ToString();
+            string state = DateTime.Now.ToString();
             string callbackUri = "winuiex://";
-            string authorizeUri = $"https://www.oauth.com/playground/auth-dialog.html?response_type=code&client_id={clientId}&redirect_uri={Uri.EscapeDataString(callbackUri)}&scope=photo+offline_access&state={state}";
+            string authorizeUri = $"https://www.oauth.com/playground/auth-dialog.html?response_type=code&client_id={clientId}&redirect_uri={Uri.EscapeDataString(callbackUri)}&scope=photo+offline_access&state={Uri.EscapeDataString(state)}";
 
             loginDetails.Text = "Login: pleasant-koala@example.com\npassword: Modern-Seahorse-66";
             oauthCancellationSource = new CancellationTokenSource();

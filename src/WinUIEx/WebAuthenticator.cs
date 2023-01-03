@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
+using System.Text.Json.Nodes;
+using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
@@ -88,7 +90,7 @@ namespace WinUIEx
             }
             return null;
         }
-        
+
         private static NameValueCollection? GetState(IProtocolActivatedEventArgs protocolArgs)
         {
             NameValueCollection? vals = null;
@@ -112,14 +114,20 @@ namespace WinUIEx
             catch { }
             if (vals != null && vals["state"] is string state)
             {
-                var vals2 = System.Web.HttpUtility.ParseQueryString(state);
-                // Some services doesn't like & encoded state parameters, and breaks them out separately.
-                // In that case copy over the important values
-                if (vals.AllKeys.Contains("appInstanceId") && !vals2.AllKeys.Contains("appInstanceId"))
-                    vals2.Add("appInstanceId", vals["appInstanceId"]);
-                if (vals.AllKeys.Contains("signinId") && !vals2.AllKeys.Contains("signinId"))
-                    vals2.Add("signinId", vals["signinId"]);
-                return vals2;
+                try
+                {
+                    var jsonObject = System.Text.Json.Nodes.JsonObject.Parse(state) as JsonObject;
+                    if (jsonObject is not null)
+                    {
+                        NameValueCollection vals2 = new NameValueCollection(jsonObject.Count);
+                        if(jsonObject.ContainsKey("appInstanceId") && jsonObject["appInstanceId"] is JsonValue jvalue && jvalue.TryGetValue<string>(out string? value))
+                            vals2.Add("appInstanceId", value);
+                        if(jsonObject.ContainsKey("signinId") && jsonObject["signinId"] is JsonValue jvalue2 && jvalue2.TryGetValue<string>(out string? value2))
+                            vals2.Add("signinId", value2);
+                        return vals2;
+                    }
+                }
+                catch { }
             }
             return null;
         }
@@ -187,21 +195,25 @@ namespace WinUIEx
                 throw new InvalidOperationException($"The URI Scheme {callbackUri.Scheme} is not declared in AppxManifest.xml");
             }
             var g = Guid.NewGuid();
+            var taskId = g.ToString();
             UriBuilder b = new UriBuilder(authorizeUri);
 
             var query = System.Web.HttpUtility.ParseQueryString(authorizeUri.Query);
-            var state = $"appInstanceId={Microsoft.Windows.AppLifecycle.AppInstance.GetCurrent().Key}&signinId={g}";
-            if(query["state"] is string oldstate && !string.IsNullOrEmpty(oldstate))
+            var stateJson = new JsonObject
             {
-                // Encode the state parameter
-                state += "&state=" + System.Web.HttpUtility.UrlEncode(oldstate);
+                { "appInstanceId", Microsoft.Windows.AppLifecycle.AppInstance.GetCurrent().Key },
+                { "signinId", taskId }
+            };
+            if (query["state"] is string oldstate && !string.IsNullOrEmpty(oldstate))
+            {
+                stateJson["state"] = oldstate;
             }
-            query["state"] = state;
+            
+            query["state"] = stateJson.ToJsonString();
             b.Query = query.ToString();
             authorizeUri = b.Uri;
 
             var tcs = new TaskCompletionSource<Uri>();
-            var taskId = g.ToString();
             if (cancellationToken.CanBeCanceled)
             {
                 cancellationToken.Register(() =>

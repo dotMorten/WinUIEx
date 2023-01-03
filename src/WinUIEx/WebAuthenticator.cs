@@ -170,7 +170,7 @@ namespace WinUIEx
 
         private async Task<WebAuthenticatorResult> Authenticate(Uri authorizeUri, Uri callbackUri)
         {
-            if (global::Windows.ApplicationModel.Package.Current is null)
+            if (!Helpers.IsAppPackaged)
             {
                 throw new InvalidOperationException("The WebAuthenticator requires a packaged app with an AppxManifest");
             }

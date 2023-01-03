@@ -310,7 +310,7 @@ namespace WinUIEx
 
         private void LoadPersistence()
         {
-            if (!string.IsNullOrEmpty(PersistenceId) && IsApplicationDataSupported)
+            if (!string.IsNullOrEmpty(PersistenceId) && Helpers.IsApplicationDataSupported)
             {
                 try
                 {
@@ -364,7 +364,7 @@ namespace WinUIEx
 
         private void SavePersistence()
         {
-            if (!string.IsNullOrEmpty(PersistenceId) && IsApplicationDataSupported)
+            if (!string.IsNullOrEmpty(PersistenceId) && Helpers.IsApplicationDataSupported)
             {
                 // Store monitor info - we won't restore on original screen if original monitor layout has changed
                 using var data = new System.IO.MemoryStream();
@@ -497,33 +497,5 @@ namespace WinUIEx
         /// </summary>
         public event EventHandler<ZOrderInfo>? ZOrderChanged;
 
-
-
-#pragma warning disable SA1203 // Constants should appear before fields
-        private const long AppModelErrorNoPackage = 15700L;
-#pragma warning restore SA1203 // Constants should appear before fields
-
-        [DllImport("kernel32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
-        private static extern int GetCurrentPackageFullName(ref int packageFullNameLength, System.Text.StringBuilder packageFullName);
-
-        private static bool IsAppPackaged
-        {
-            get
-            {
-                try
-                {
-                    // Application is MSIX packaged if it has an identity: https://learn.microsoft.com/en-us/windows/msix/detect-package-identity
-                    int length = 0;
-                    var sb = new System.Text.StringBuilder(0);
-                    int result = GetCurrentPackageFullName(ref length, sb);
-                    return result != AppModelErrorNoPackage;
-                }
-                catch
-                {
-                    return false;
-                }
-            }
-        }
-        private static bool IsApplicationDataSupported => IsAppPackaged;
     }
 }

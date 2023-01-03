@@ -22,7 +22,8 @@
     <PackageId>WinUIEx</PackageId>
     <Product>WinUI Extensions</Product>
     <PackageReleaseNotes>
-      - Ensure backdrop is always initialized during startup (Issue #90)
+      - Ensure backdrop is always initialized during startup (Issue #90).
+      - Don't attempt to use window persistence in un-packaged applications.
     </PackageReleaseNotes>
   </PropertyGroup>
 

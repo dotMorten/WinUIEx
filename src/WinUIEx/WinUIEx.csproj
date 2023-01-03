@@ -26,6 +26,7 @@
       - Don't attempt to use window persistence in un-packaged applications.
       - WebAuthenticator: now supports cancellation tokens.
       - WebAuthenticator: Avoids an issue where state parameters are not always correctly handled/preserved correctly by OAuth services (reported in PR #92).
+      - Persistence: Add support for custom Window state persistence storage, for use by unpackaged applications (Issue #61).
     </PackageReleaseNotes>
   </PropertyGroup>
 

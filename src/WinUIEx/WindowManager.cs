@@ -5,7 +5,6 @@ using System.Runtime.InteropServices;
 using Windows.Storage;
 using WinUIEx.Messaging;
 using Windows.Win32.UI.WindowsAndMessaging;
-using Microsoft.UI;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
@@ -22,7 +21,7 @@ namespace WinUIEx
         private readonly Window _window;
         private OverlappedPresenter overlappedPresenter;
         private readonly static Dictionary<IntPtr, WeakReference<WindowManager>> managers = new Dictionary<IntPtr, WeakReference<WindowManager>>();
-        private bool _isInitialized; // Set to true on first activation. Used to track persistance restore
+        private bool _isInitialized; // Set to true on first activation. Used to track persistence restore
 
         private static bool TryGetWindowManager(Window window, [MaybeNullWhen(false)] out WindowManager manager)
         {
@@ -254,7 +253,7 @@ namespace WinUIEx
             {
                 case WindowsMessages.WM_GETMINMAXINFO:
                     {
-                        if (_restoringPersistance)
+                        if (_restoringPersistence)
                             break;
                         // Restrict min-size
                         MINMAXINFO* rect2 = (MINMAXINFO*)e.Message.LParam;
@@ -269,7 +268,7 @@ namespace WinUIEx
                     break;
                 case WindowsMessages.WM_DPICHANGED:
                     {
-                        if (_restoringPersistance)
+                        if (_restoringPersistence)
                             e.Handled = true; // Don't let WinUI resize the window due to a dpi change caused by restoring window position - we got this.
                         break;
                     }
@@ -294,34 +293,64 @@ namespace WinUIEx
 
         #region Persistence
 
-        /// <summary>
-        /// Gets or sets a unique ID used for saving and restoring window size and position
-        /// across sessions.
-        /// </summary>
         /// <remarks>
         /// The ID must be set before the window activates. The window size and position
         /// will only be restored if the monitor layout hasn't changed between application settings.
         /// The property uses ApplicationData storage, and therefore is currently only functional for
         /// packaged applications.
+        /// By default the property uses <see cref="ApplicationData"/> storage, and therefore is currently only functional for
+        /// packaged applications. If you're using an unpackaged application, you must also set the <see cref="PersistenceStorage"/>
+        /// property and manage persisting this across application settings.
         /// </remarks>
+        /// <seealso cref="PersistenceStorage"/>
         public string? PersistenceId { get; set; }
 
-        private bool _restoringPersistance; // Flag used to avoid WinUI DPI adjustment
+        private bool _restoringPersistence; // Flag used to avoid WinUI DPI adjustment
 
-        private void LoadPersistence()
+        /// <summary>
+        /// Gets or sets the persistence storage for maintaining window settings across application settings.
+        /// </summary>
+        /// <remarks>
+        /// For a packaged application, this will be initialized automatically for you, and saved with the application identity using <see cref="ApplicationData"/>.
+        /// However for an unpackaged application, you will need to set this and serialize the property to/from disk between
+        /// application sessions. The provided dictionary is automatically written to when the window closes, and should be initialized
+        /// before any window with persistence opens.
+        /// </remarks>
+        /// <seealso cref="PersistenceId"/>
+        public static IDictionary<string, object>? PersistenceStorage { get; set; }
+
+        private static IDictionary<string, object>? GetPersistenceStorage(bool createIfMissing)
         {
-            if (!string.IsNullOrEmpty(PersistenceId) && Helpers.IsApplicationDataSupported)
+            if (PersistenceStorage is not null)
+                return PersistenceStorage;
+            if (Helpers.IsApplicationDataSupported)
             {
                 try
                 {
-                    if (ApplicationData.Current?.LocalSettings?.Containers is null ||
-                        !ApplicationData.Current.LocalSettings.Containers.ContainsKey("WinUIEx"))
+                    if(ApplicationData.Current?.LocalSettings.Containers.TryGetValue("WinUIEx", out var container) == true)
+                        return container.Values!;
+                    else if (createIfMissing)
+                        return ApplicationData.Current?.LocalSettings?.CreateContainer("WinUIEx", ApplicationDataCreateDisposition.Always)?.Values;
+                        
+                }
+                catch { }
+            }
+            return null;
+        }
+
+        private void LoadPersistence()
+        {
+            if (!string.IsNullOrEmpty(PersistenceId))
+            {
+                try
+                {
+                    var winuiExSettings = GetPersistenceStorage(false);
+                    if (winuiExSettings is null)
                         return;
                     byte[]? data = null;
-                    var winuiExSettings = ApplicationData.Current.LocalSettings.CreateContainer("WinUIEx", ApplicationDataCreateDisposition.Existing);
-                    if (winuiExSettings is not null && winuiExSettings.Values.ContainsKey($"WindowPersistance_{PersistenceId}"))
+                    if (winuiExSettings.ContainsKey($"WindowPersistance_{PersistenceId}"))
                     {
-                        var base64 = winuiExSettings.Values[$"WindowPersistance_{PersistenceId}"] as string;
+                        var base64 = winuiExSettings[$"WindowPersistance_{PersistenceId}"] as string;
                         if(base64 != null)
                             data = Convert.FromBase64String(base64);
                     }
@@ -354,9 +383,9 @@ namespace WinUIEx
                         retobj.showCmd = SHOW_WINDOW_CMD.SW_MAXIMIZE;
                     else if (retobj.showCmd != SHOW_WINDOW_CMD.SW_MAXIMIZE)
                         retobj.showCmd = SHOW_WINDOW_CMD.SW_NORMAL;
-                    _restoringPersistance = true;
+                    _restoringPersistence = true;
                     Windows.Win32.PInvoke.SetWindowPlacement(new Windows.Win32.Foundation.HWND(_window.GetWindowHandle()), in retobj);
-                    _restoringPersistance = false;
+                    _restoringPersistence = false;
                 }
                 catch { }
             }
@@ -364,35 +393,37 @@ namespace WinUIEx
 
         private void SavePersistence()
         {
-            if (!string.IsNullOrEmpty(PersistenceId) && Helpers.IsApplicationDataSupported)
+            if (!string.IsNullOrEmpty(PersistenceId))
             {
-                // Store monitor info - we won't restore on original screen if original monitor layout has changed
-                using var data = new System.IO.MemoryStream();
-                using var sw = new System.IO.BinaryWriter(data);
-                var monitors = MonitorInfo.GetDisplayMonitors();
-                sw.Write(monitors.Count);
-                foreach (var monitor in monitors)
+                var winuiExSettings = GetPersistenceStorage(true);
+                if (winuiExSettings is not null)
                 {
-                    sw.Write(monitor.Name);
-                    sw.Write(monitor.RectMonitor.Left);
-                    sw.Write(monitor.RectMonitor.Top);
-                    sw.Write(monitor.RectMonitor.Right);
-                    sw.Write(monitor.RectMonitor.Bottom);
-                }
-                var placement = new WINDOWPLACEMENT();
-                Windows.Win32.PInvoke.GetWindowPlacement(new Windows.Win32.Foundation.HWND(_window.GetWindowHandle()), ref placement);
+                    // Store monitor info - we won't restore on original screen if original monitor layout has changed
+                    using var data = new System.IO.MemoryStream();
+                    using var sw = new System.IO.BinaryWriter(data);
+                    var monitors = MonitorInfo.GetDisplayMonitors();
+                    sw.Write(monitors.Count);
+                    foreach (var monitor in monitors)
+                    {
+                        sw.Write(monitor.Name);
+                        sw.Write(monitor.RectMonitor.Left);
+                        sw.Write(monitor.RectMonitor.Top);
+                        sw.Write(monitor.RectMonitor.Right);
+                        sw.Write(monitor.RectMonitor.Bottom);
+                    }
+                    var placement = new WINDOWPLACEMENT();
+                    Windows.Win32.PInvoke.GetWindowPlacement(new Windows.Win32.Foundation.HWND(_window.GetWindowHandle()), ref placement);
 
-                int structSize = Marshal.SizeOf(typeof(WINDOWPLACEMENT));
-                IntPtr buffer = Marshal.AllocHGlobal(structSize);
-                Marshal.StructureToPtr(placement, buffer, false);
-                byte[] placementData = new byte[structSize];
-                Marshal.Copy(buffer, placementData, 0, structSize);
-                Marshal.FreeHGlobal(buffer);
-                sw.Write(placementData);
-                sw.Flush();
-                var winuiExSettings = ApplicationData.Current?.LocalSettings?.CreateContainer("WinUIEx", ApplicationDataCreateDisposition.Always);
-                if (winuiExSettings != null)
-                    winuiExSettings.Values[$"WindowPersistance_{PersistenceId}"] = Convert.ToBase64String(data.ToArray());
+                    int structSize = Marshal.SizeOf(typeof(WINDOWPLACEMENT));
+                    IntPtr buffer = Marshal.AllocHGlobal(structSize);
+                    Marshal.StructureToPtr(placement, buffer, false);
+                    byte[] placementData = new byte[structSize];
+                    Marshal.Copy(buffer, placementData, 0, structSize);
+                    Marshal.FreeHGlobal(buffer);
+                    sw.Write(placementData);
+                    sw.Flush();
+                    winuiExSettings[$"WindowPersistance_{PersistenceId}"] = Convert.ToBase64String(data.ToArray());
+                }
             }
         }
         #endregion

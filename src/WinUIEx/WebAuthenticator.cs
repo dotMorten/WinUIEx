@@ -29,7 +29,16 @@ namespace WinUIEx
         /// <param name="authorizeUri">Url to navigate to, beginning the authentication flow.</param>
         /// <param name="callbackUri">Expected callback url that the navigation flow will eventually redirect to.</param>
         /// <returns>Returns a result parsed out from the callback url.</returns>
-        public static Task<WebAuthenticatorResult> AuthenticateAsync(Uri authorizeUri, Uri callbackUri) => Instance.Authenticate(authorizeUri, callbackUri);
+        public static Task<WebAuthenticatorResult> AuthenticateAsync(Uri authorizeUri, Uri callbackUri) => Instance.Authenticate(authorizeUri, callbackUri, CancellationToken.None);
+
+        /// <summary>
+        /// Begin an authentication flow by navigating to the specified url and waiting for a callback/redirect to the callbackUrl scheme.
+        /// </summary>
+        /// <param name="authorizeUri">Url to navigate to, beginning the authentication flow.</param>
+        /// <param name="callbackUri">Expected callback url that the navigation flow will eventually redirect to.</param>
+        /// <param name="cancellationToken">Cancellation token.</param>
+        /// <returns>Returns a result parsed out from the callback url.</returns>
+        public static Task<WebAuthenticatorResult> AuthenticateAsync(Uri authorizeUri, Uri callbackUri, CancellationToken cancellationToken) => Instance.Authenticate(authorizeUri, callbackUri, cancellationToken);
 
         private static readonly WebAuthenticator Instance = new WebAuthenticator();
 
@@ -41,7 +50,6 @@ namespace WinUIEx
         }
 
         [System.Runtime.CompilerServices.ModuleInitializer]
-
         internal static void Init()
         {
             try
@@ -168,7 +176,7 @@ namespace WinUIEx
             }
         }
 
-        private async Task<WebAuthenticatorResult> Authenticate(Uri authorizeUri, Uri callbackUri)
+        private async Task<WebAuthenticatorResult> Authenticate(Uri authorizeUri, Uri callbackUri, CancellationToken cancellationToken)
         {
             if (!Helpers.IsAppPackaged)
             {
@@ -193,12 +201,27 @@ namespace WinUIEx
             authorizeUri = b.Uri;
 
             var tcs = new TaskCompletionSource<Uri>();
+            var taskId = g.ToString();
+            if (cancellationToken.CanBeCanceled)
+            {
+                cancellationToken.Register(() =>
+                {
+                    tcs.TrySetCanceled();
+                    if (tasks.ContainsKey(taskId))
+                        tasks.Remove(taskId);
+                });
+                if (cancellationToken.IsCancellationRequested)
+                {
+                    cancellationToken.ThrowIfCancellationRequested();
+                }
+            }
+
             var process = new System.Diagnostics.Process();
             process.StartInfo.FileName = "rundll32.exe";
             process.StartInfo.Arguments = "url.dll,FileProtocolHandler " + authorizeUri.ToString();
             process.StartInfo.UseShellExecute = true;
             process.Start();
-            tasks.Add(g.ToString(), tcs);
+            tasks.Add(taskId, tcs);
             var uri = await tcs.Task.ConfigureAwait(false);
             return new WebAuthenticatorResult(uri);
         }

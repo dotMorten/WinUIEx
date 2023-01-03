@@ -24,6 +24,7 @@
     <PackageReleaseNotes>
       - Ensure backdrop is always initialized during startup (Issue #90).
       - Don't attempt to use window persistence in un-packaged applications.
+      - WebAuthenticator now supports cancellation tokens.
     </PackageReleaseNotes>
   </PropertyGroup>
 

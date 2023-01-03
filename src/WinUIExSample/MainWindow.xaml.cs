@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Windowing;
@@ -151,19 +152,32 @@ namespace WinUIExSample
             LayoutRoot.RequestedTheme = theme;
         }
 
+
+        private CancellationTokenSource? oauthCancellationSource;
         private async void DoOAuth_Click(object sender, RoutedEventArgs e)
         {
-            string clientId = "VxIw33TIRCi1Tbk6pjh2i";
-            string clientSecret = "eEkUe5e9gUpO6KOYdL5pKTi683LADpi5_izZdHCI8Mndy32B";
+            string clientId = "imIwo061j9SUOQYm7O8Oe4HK";
+            string clientSecret = "aeApQwwjBl1n_J6nknnxWNONuB0RaEjVHL5yhYdgz5XJOnDi";
             string state = DateTime.Now.Ticks.ToString();
             string callbackUri = "winuiex://";
-            string authorizeUri = $"https://www.oauth.com/playground/auth-dialog.html?response_type=code&client_id={clientId}&redirect_uri={Uri.EscapeDataString(callbackUri)}&scope=photo+offline_access";// &state={state}";
+            string authorizeUri = $"https://www.oauth.com/playground/auth-dialog.html?response_type=code&client_id={clientId}&redirect_uri={Uri.EscapeDataString(callbackUri)}&scope=photo+offline_access&state={state}";
 
-            // login: nice-ferret@example.com
-            // password: Black-Capybara-83
-            _ = base.ShowMessageDialogAsync("Login: nice-ferret@example.com\npassword: Black-Capybara-83", "Enter credentials in browser");
-            var result = await WebAuthenticator.AuthenticateAsync(new Uri(authorizeUri), new Uri(callbackUri));
-            Log("Logged in. Code returned: " + result.Properties["code"]);
+            loginDetails.Text = "Login: pleasant-koala@example.com\npassword: Modern-Seahorse-66";
+            oauthCancellationSource = new CancellationTokenSource();
+            oauthCancellationSource.Token.Register(() => { OAuthWindow.Visibility = Visibility.Collapsed; });
+            OAuthWindow.Visibility = Visibility.Visible;
+            try
+            {
+                var result = await WebAuthenticator.AuthenticateAsync(new Uri(authorizeUri), new Uri(callbackUri), oauthCancellationSource.Token);
+                OAuthWindow.Visibility = Visibility.Collapsed;
+                Log($"Logged in. Code returned: {result.Properties["code"]}\tState carried: {result.Properties["state"]}");
+            }
+            catch (TaskCanceledException) { }
+        }
+
+        private void OAuthCancel_Click(object sender, RoutedEventArgs e)
+        {
+            oauthCancellationSource?.Cancel();
         }
 
         private void limitMaxCheckbox_Toggled(object sender, RoutedEventArgs e)

@@ -79,5 +79,15 @@
             <TextBlock Text="Log" />
             <TextBox IsReadOnly="True" AcceptsReturn="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" x:Name="WindowEventLog" Grid.Row="1" />
         </Grid>
+        <Grid Grid.ColumnSpan="3" Background="#ccffffff" x:Name="OAuthWindow" Visibility="Collapsed">
+            <Border HorizontalAlignment="Center" VerticalAlignment="Center" Margin="200" BorderBrush="Black" BorderThickness="2" Padding="20" CornerRadius="5" Background="White">
+                <StackPanel>
+                    <TextBlock Text="Waiting for login in browser..." FontWeight="Bold" />
+                    <TextBox x:Name="loginDetails" AcceptsReturn="True" IsReadOnly="True" BorderThickness="0" TextWrapping="Wrap" Background="Transparent" />
+                    <ProgressRing IsActive="True" HorizontalAlignment="Center" />
+                    <Button Content="Cancel" Click="OAuthCancel_Click" />
+                </StackPanel>
+            </Border>
+        </Grid>
     </Grid>
 </winex:WindowEx>

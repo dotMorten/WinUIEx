@@ -92,7 +92,7 @@ namespace WinUIEx
                 secondaryCommand = commands.Where(c => c != defaultCommand && c != cancelCommand).FirstOrDefault();
             }
             var dialog = new ContentDialog() { XamlRoot = Content.XamlRoot };
-            dialog.Content = new TextBlock() { Text = content };
+            dialog.Content = new TextBlock() { Text = content, TextWrapping = TextWrapping.Wrap };
             dialog.Title = title;
             dialog.PrimaryButtonText = defaultCommand.Label;
             if (secondaryCommand != null)
@@ -103,7 +103,9 @@ namespace WinUIEx
             {
                 dialog.CloseButtonText = cancelCommand.Label;
             }
-            var result = await dialog.ShowAsync();
+            var dialogTask = dialog.ShowAsync(ContentDialogPlacement.InPlace);
+            this.BringToFront();
+            var result = await dialogTask;
             switch (result)
             {
                 case ContentDialogResult.Primary:

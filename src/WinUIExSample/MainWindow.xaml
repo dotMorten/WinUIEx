@@ -69,6 +69,7 @@
                 <Button Content="Bring to front (2 second delay)" Click="BringToFront_Click" />
                 <Button Content="Show dialog" Click="ShowDialog_Click" />
                 <Button Content="Test OAuth" Click="DoOAuth_Click" />
+                <Button Content="Camera Capture" Click="ShowCameraCapture_Click" />
             </StackPanel>
         </ScrollViewer>
         <Grid Grid.Column="2" >

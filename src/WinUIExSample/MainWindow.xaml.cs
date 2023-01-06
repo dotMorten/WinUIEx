@@ -11,7 +11,12 @@ using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Windows.Foundation;
+using Windows.Foundation.Collections;
 using Windows.Graphics;
+using Windows.Media.Capture;
+using Windows.Storage;
+using Windows.System;
+using WinRT.Interop;
 using WinUIEx;
 using WinUIEx.Messaging;
 
@@ -192,6 +197,13 @@ namespace WinUIExSample
                 MaxWidth = double.NaN;
                 MaxHeight = double.NaN;
             }
+        }
+
+        private void ShowCameraCapture_Click(object sender, RoutedEventArgs e)
+        {
+            var cameraCapture = new CameraCaptureWindow();
+            cameraCapture.Activate();
+            cameraCapture.BringToFront();
         }
     }
 }

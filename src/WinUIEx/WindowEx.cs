@@ -65,8 +65,9 @@ namespace WinUIEx
         /// </summary>
         /// <param name="content">The message displayed to the user.</param>
         /// <param name="title">The title to display on the dialog, if any.</param>
+        /// <param name="theme">The theme style of the dialog, if any.</param>
         /// <returns>An object that represents the asynchronous operation.</returns>
-        public Task ShowMessageDialogAsync(string content, string title = "") => ShowMessageDialogAsync(content, null, title: title);
+        public Task ShowMessageDialogAsync(string content, string title = "", ElementTheme theme = ElementTheme.Default) => ShowMessageDialogAsync(content, null, title: title, theme: theme);
 
         /// <summary>
         /// Shows a message dialog
@@ -76,8 +77,9 @@ namespace WinUIEx
         /// <param name="defaultCommandIndex">The index of the command you want to use as the default. This is the command that fires by default when users press the ENTER key.</param>
         /// <param name="cancelCommandIndex">The index of the command you want to use as the cancel command. This is the command that fires when users press the ESC key.</param>
         /// <param name="title">The title to display on the dialog, if any.</param>
+        /// <param name="theme">The theme style of the dialog, if any.</param>
         /// <returns>An object that represents the asynchronous operation.</returns>
-        public async Task<Windows.UI.Popups.IUICommand> ShowMessageDialogAsync(string content, IList<Windows.UI.Popups.IUICommand>? commands, uint defaultCommandIndex = 0, uint cancelCommandIndex = 1, string title = "")
+        public async Task<Windows.UI.Popups.IUICommand> ShowMessageDialogAsync(string content, IList<Windows.UI.Popups.IUICommand>? commands, uint defaultCommandIndex = 0, uint cancelCommandIndex = 1, string title = "", ElementTheme theme = ElementTheme.Default)
         {
             if (commands != null && commands.Count > 3)
                 throw new InvalidOperationException("A maximum of 3 commands can be specified");
@@ -94,6 +96,7 @@ namespace WinUIEx
             var dialog = new ContentDialog() { XamlRoot = Content.XamlRoot };
             dialog.Content = new TextBlock() { Text = content, TextWrapping = TextWrapping.Wrap };
             dialog.Title = title;
+            dialog.RequestedTheme = theme;
             dialog.PrimaryButtonText = defaultCommand.Label;
             if (secondaryCommand != null)
             {

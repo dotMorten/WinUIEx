@@ -38,6 +38,7 @@
     </PackageReference>
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="$(WinAppSDKVersion)" />
     <None Include="README.md" Pack="true" PackagePath="\" />
+    <None Include="LICENSE" Pack="true" PackagePath="\" />
   </ItemGroup>
 
 </Project>

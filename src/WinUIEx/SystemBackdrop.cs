@@ -15,6 +15,7 @@ namespace WinUIEx
     /// <seealso cref="AcrylicSystemBackdrop"/>
     /// <seealso cref="Microsoft.UI.Composition.SystemBackdrops.MicaController" />
     /// <seealso cref="Microsoft.UI.Composition.SystemBackdrops.DesktopAcrylicController" />
+    [Obsolete("Use Microsoft.UI.Xaml.Media.SystemBackdrop")]
     public abstract class SystemBackdrop
     {
         /// <summary>
@@ -296,6 +297,7 @@ namespace WinUIEx
     /// Note: requires Windows 11 and up - Windows 10 will use fallback colors.
     /// </summary>
     /// <seealso cref="AcrylicSystemBackdrop"/>
+    [Obsolete("Use Microsoft.UI.Xaml.Media.MicaBackdrop")]
     public class MicaSystemBackdrop : SystemBackdrop
     {
         private readonly static Windows.UI.Color _defaultDarkTint = Windows.UI.Color.FromArgb(0xff, 0x20, 0x20, 0x20);
@@ -397,6 +399,7 @@ namespace WinUIEx
     /// </summary>
     /// <seealso cref="DesktopAcrylicController"/>
     /// <seealso cref="MicaSystemBackdrop"/>
+    [Obsolete("Use Microsoft.UI.Xaml.Media.DesktopAcrylicBackdrop")]
     public class AcrylicSystemBackdrop : SystemBackdrop
     {
         /// <summary>

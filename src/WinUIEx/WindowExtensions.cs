@@ -15,7 +15,8 @@ namespace WinUIEx
         /// </summary>
         /// <param name="window"></param>
         /// <returns></returns>
-        public static AppWindow GetAppWindow(this Microsoft.UI.Xaml.Window window) => GetAppWindowFromWindowHandle(window.GetWindowHandle());
+        [Obsolete("Use Microsoft.UI.Xaml.Window.AppWindow")]
+        public static AppWindow GetAppWindow(this Microsoft.UI.Xaml.Window window) => window.AppWindow;
 
         /// <summary>Returns the dots per inch (dpi) value for the associated window.</summary>
         /// <param name = "window">The window you want to get information about.</param>
@@ -102,7 +103,7 @@ namespace WinUIEx
         /// </summary>
         /// <param name="window">window</param>
         /// <param name="enable"><c>true</c> if this window should be shown in the task switchers, otherwise <c>false</c>.</param>
-        public static void SetIsShownInSwitchers(this Microsoft.UI.Xaml.Window window, bool enable) => window.GetAppWindow().IsShownInSwitchers = enable;
+        public static void SetIsShownInSwitchers(this Microsoft.UI.Xaml.Window window, bool enable) => window.AppWindow.IsShownInSwitchers = enable;
 
         /// <summary>
         /// Sets the icon for the window, using the specified icon ID.
@@ -115,7 +116,7 @@ namespace WinUIEx
         {
             if (window is null)
                 throw new ArgumentNullException(nameof(window));
-            var appwindow = window.GetAppWindow();
+            var appwindow = window.AppWindow;
             if (appwindow.Presenter is OverlappedPresenter overlapped)
                 action(overlapped);
             else 
@@ -125,7 +126,7 @@ namespace WinUIEx
         {
             if (window is null)
                 throw new ArgumentNullException(nameof(window));
-            var appwindow = window.GetAppWindow();
+            var appwindow = window.AppWindow;
             return action(appwindow.Presenter as OverlappedPresenter);
         }
 
@@ -149,7 +150,7 @@ namespace WinUIEx
         public static void MoveAndResize(this Microsoft.UI.Xaml.Window window, double x, double y, double width, double height)
         {
             var scale = HwndExtensions.GetDpiForWindow(window.GetWindowHandle()) / 96f;
-            window.GetAppWindow().MoveAndResize(new Windows.Graphics.RectInt32((int)x, (int)y, (int)(width * scale), (int)(height * scale)));
+            window.AppWindow.MoveAndResize(new Windows.Graphics.RectInt32((int)x, (int)y, (int)(width * scale), (int)(height * scale)));
         }
 
         /// <summary>
@@ -161,7 +162,7 @@ namespace WinUIEx
         public static void SetWindowSize(this Microsoft.UI.Xaml.Window window, double width, double height)
         {
             var scale = HwndExtensions.GetDpiForWindow(window.GetWindowHandle()) / 96f;
-            window.GetAppWindow().Resize(new Windows.Graphics.SizeInt32((int)(width * scale), (int)(height * scale)));
+            window.AppWindow.Resize(new Windows.Graphics.SizeInt32((int)(width * scale), (int)(height * scale)));
         }
 
         /// <summary>
@@ -170,7 +171,7 @@ namespace WinUIEx
         /// <param name="window"></param>
         /// <param name="kind"></param>
         /// <returns></returns>
-        public static void SetWindowPresenter(this Microsoft.UI.Xaml.Window window, AppWindowPresenterKind kind) => window.GetAppWindow().SetPresenter(kind);
+        public static void SetWindowPresenter(this Microsoft.UI.Xaml.Window window, AppWindowPresenterKind kind) => window.AppWindow.SetPresenter(kind);
 
         /// <summary>
         /// Gets the native HWND pointer handle for the window
@@ -267,7 +268,7 @@ namespace WinUIEx
         /// <param name="color">color</param>
         public static void SetTitleBarBackgroundColors(this Microsoft.UI.Xaml.Window window, Windows.UI.Color color)
         {
-            var appWindow = window.GetAppWindow();
+            var appWindow = window.AppWindow;
             if (AppWindowTitleBar.IsCustomizationSupported())
             {
                 appWindow.TitleBar.ButtonBackgroundColor = color;

@@ -119,11 +119,6 @@ namespace WinUIEx
         }
 
         /// <summary>
-        /// Gets a reference to the AppWindow for the app
-        /// </summary>
-        public Microsoft.UI.Windowing.AppWindow AppWindow => _manager.AppWindow;
-
-        /// <summary>
         /// Brings the window to the front
         /// </summary>
         /// <returns></returns>
@@ -355,6 +350,7 @@ namespace WinUIEx
         /// </summary>
         /// <seealso cref="MicaSystemBackdrop"/>
         /// <seealso cref="AcrylicSystemBackdrop"/>
+        [Obsolete("Use Microsoft.UI.Xaml.Window.SystemBackdrop")]
         public SystemBackdrop? Backdrop
         {
             get => _manager.Backdrop;

@@ -79,8 +79,10 @@ namespace WinUIEx
         private void Window_VisibilityChanged(object sender, WindowVisibilityChangedEventArgs args)
         {
             // Ensures backdrop gets set up if it was previously attempted initialized while window wasn't visible
+#pragma warning disable CS0612 // Type or member is obsolete
             if (args.Visible && m_backdrop is not null && currentController is null)
                 InitBackdrop();
+#pragma warning restore CS0612 // Type or member is obsolete
         }
 
         private void Window_Activated(object sender, WindowActivatedEventArgs args)
@@ -124,7 +126,7 @@ namespace WinUIEx
         /// <summary>
         /// Gets a reference to the AppWindow for the app
         /// </summary>
-        public Microsoft.UI.Windowing.AppWindow AppWindow => _window.GetAppWindow();
+        public Microsoft.UI.Windowing.AppWindow AppWindow => _window.AppWindow;
 
         /// <summary>
         /// Gets or sets the width of the window.

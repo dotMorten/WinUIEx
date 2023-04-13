@@ -14,6 +14,7 @@
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <LangVersion>10</LangVersion>
     <IsTrimmable>true</IsTrimmable>
+    <TreatWarningsAsErrors Condition="'$(Configuration)'=='Release'">true</TreatWarningsAsErrors>
   </PropertyGroup>
 
   <PropertyGroup Label="PackageInfo">

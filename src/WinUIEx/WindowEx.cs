@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Markup;
@@ -117,6 +118,11 @@ namespace WinUIEx
                     return cancelCommand ?? new Windows.UI.Popups.UICommand();
             }
         }
+
+        /// <summary>
+        /// Gets a reference to the AppWindow for the app
+        /// </summary>
+        public new AppWindow AppWindow => base.AppWindow; // Kept here for binary compatibility
 
         /// <summary>
         /// Brings the window to the front

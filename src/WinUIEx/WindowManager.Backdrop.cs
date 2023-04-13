@@ -31,6 +31,7 @@ namespace WinUIEx
         /// <seealso cref="MicaSystemBackdrop"/>
         /// <seealso cref="AcrylicSystemBackdrop"/>
         [Obsolete("Use Microsoft.UI.Xaml.Window.SystemBackdrop")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public SystemBackdrop? Backdrop
         {
             get => m_backdrop;

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Threading.Tasks;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
@@ -51,6 +52,7 @@ namespace WinUIEx
         /// Note: Windows 10 doesn't support these, so will fall back to default backdrop .
         /// </summary>
         [Obsolete("Use Microsoft.UI.Xaml.Window.SystemBackdrop")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public SystemBackdrop? Backdrop
         {
             get => _manager.Backdrop;

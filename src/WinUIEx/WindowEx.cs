@@ -177,18 +177,28 @@ namespace WinUIEx
         {
             get => windowArea.Content;
             set 
-            { 
-                if(windowArea.Content is FrameworkElement oldelm)
-                    oldelm.ActualThemeChanged -= WindowContent_ActualThemeChanged;
+            {
+                if (windowArea.Content is FrameworkElement oldelm)
+                {
+                    if (_propChangedCallbackId != 0)
+                    {
+                        oldelm.UnregisterPropertyChangedCallback(FrameworkElement.RequestedThemeProperty, _propChangedCallbackId);
+                        _propChangedCallbackId = 0;
+                    }
+                }
                 windowArea.Content = value;
                 if (windowArea.Content is FrameworkElement newelm)
-                    newelm.ActualThemeChanged += WindowContent_ActualThemeChanged;
+                {
+                    _propChangedCallbackId = newelm.RegisterPropertyChangedCallback(FrameworkElement.RequestedThemeProperty, RequestedThemePropertyChanged);
+                }
             }
         }
 
-        private void WindowContent_ActualThemeChanged(FrameworkElement sender, object args)
+        private long _propChangedCallbackId;
+
+        private void RequestedThemePropertyChanged(DependencyObject sender, DependencyProperty dp)
         {
-            if(this.Content is FrameworkElement elm && windowArea.Content is FrameworkElement childelm)
+            if (this.Content is FrameworkElement elm && windowArea.Content is FrameworkElement childelm)
             {
                 elm.RequestedTheme = childelm.RequestedTheme;
             }

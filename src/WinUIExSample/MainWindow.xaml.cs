@@ -28,6 +28,7 @@ namespace WinUIExSample
         public MainWindow()
         {
             this.InitializeComponent();
+            this.SystemBackdrop = new Microsoft.UI.Xaml.Media.MicaBackdrop();
             this.SetTitleBarBackgroundColors(Microsoft.UI.Colors.CornflowerBlue);
             PersistenceId = "MainWindow";
             monitor = new WindowMessageMonitor(this);

@@ -11,9 +11,6 @@
     Width="1024" Height="768"
     MinWidth="500" MinHeight="250"
     mc:Ignorable="d" >
-    <winex:WindowEx.SystemBackdrop>
-        <MicaBackdrop />
-    </winex:WindowEx.SystemBackdrop>
 
     <Grid Padding="20" x:Name="LayoutRoot">
         <Grid.ColumnDefinitions>

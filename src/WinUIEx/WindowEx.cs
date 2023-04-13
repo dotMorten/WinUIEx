@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Markup;
@@ -121,7 +122,7 @@ namespace WinUIEx
         /// <summary>
         /// Gets a reference to the AppWindow for the app
         /// </summary>
-        public Microsoft.UI.Windowing.AppWindow AppWindow => _manager.AppWindow;
+        public new AppWindow AppWindow => base.AppWindow; // Kept here for binary compatibility
 
         /// <summary>
         /// Brings the window to the front
@@ -355,6 +356,8 @@ namespace WinUIEx
         /// </summary>
         /// <seealso cref="MicaSystemBackdrop"/>
         /// <seealso cref="AcrylicSystemBackdrop"/>
+        [Obsolete("Use Microsoft.UI.Xaml.Window.SystemBackdrop")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public SystemBackdrop? Backdrop
         {
             get => _manager.Backdrop;

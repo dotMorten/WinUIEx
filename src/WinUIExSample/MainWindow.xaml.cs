@@ -24,12 +24,11 @@ namespace WinUIExSample
     {
         private readonly Queue<string> windowEvents = new Queue<string>(101);
         private readonly WindowMessageMonitor monitor;
-        private AcrylicSystemBackdrop acrylicBackdrop = new AcrylicSystemBackdrop();
-        private MicaSystemBackdrop micaBackdrop;
 
         public MainWindow()
         {
             this.InitializeComponent();
+            this.SystemBackdrop = new Microsoft.UI.Xaml.Media.MicaBackdrop();
             this.SetTitleBarBackgroundColors(Microsoft.UI.Colors.CornflowerBlue);
             PersistenceId = "MainWindow";
             monitor = new WindowMessageMonitor(this);
@@ -37,7 +36,6 @@ namespace WinUIExSample
             foreach (var monitor in monitors.Reverse())
                 Log("  - " + monitor.ToString());
             Log($"{monitors.Count} monitors detected");
-            micaBackdrop = this.Backdrop as MicaSystemBackdrop;
         }
 
         protected override void OnPositionChanged(PointInt32 position) => Log($"Position Changed: {position.X},{position.Y}");
@@ -126,18 +124,6 @@ namespace WinUIExSample
         private void WindowMessageReceived(object sender, WindowMessageEventArgs e)
         {
             Log(e.Message.ToString());
-        }
-
-        private void Backdrop_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (micaBackdrop is null) return; // Still loading
-            switch (((ComboBox)sender).SelectedIndex)
-            {
-                case 1: this.Backdrop = acrylicBackdrop; break;
-                case 2: this.Backdrop = micaBackdrop; micaBackdrop.Kind = Microsoft.UI.Composition.SystemBackdrops.MicaKind.Base; break;
-                case 3: this.Backdrop = micaBackdrop; micaBackdrop.Kind = Microsoft.UI.Composition.SystemBackdrops.MicaKind.BaseAlt; break;
-                default: this.Backdrop = null; break;
-            }
         }
 
         private void Theme_SelectionChanged(object sender, SelectionChangedEventArgs e)

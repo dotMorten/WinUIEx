@@ -22,11 +22,8 @@
     <PackageId>WinUIEx</PackageId>
     <Product>WinUI Extensions</Product>
     <PackageReleaseNotes>
-      - Ensure backdrop is always initialized during startup (Issue #90).
-      - Don't attempt to use window persistence in un-packaged applications.
-      - WebAuthenticator: now supports cancellation tokens.
-      - WebAuthenticator: Avoids an issue where state parameters are not always correctly handled/preserved correctly by OAuth services (reported in PR #92).
-      - Persistence: Add support for custom Window state persistence storage, for use by unpackaged applications (Issue #61).
+      - Upgrade to Windows App SDK 1.3
+      - Deprecated Backdrop APIs in favor of Microsoft's new Backdrop APIs
     </PackageReleaseNotes>
   </PropertyGroup>
 

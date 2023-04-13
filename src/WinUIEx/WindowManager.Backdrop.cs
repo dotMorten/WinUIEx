@@ -21,6 +21,7 @@ namespace WinUIEx
         private IntPtr m_dispatcherQueueController = IntPtr.Zero;
         private ISystemBackdropController? currentController;
         private SystemBackdropConfiguration? BackdropConfiguration;
+        [Obsolete]
         private SystemBackdrop? m_backdrop;
 
         /// <summary>
@@ -29,6 +30,8 @@ namespace WinUIEx
         /// </summary>
         /// <seealso cref="MicaSystemBackdrop"/>
         /// <seealso cref="AcrylicSystemBackdrop"/>
+        [Obsolete("Use Microsoft.UI.Xaml.Window.SystemBackdrop")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public SystemBackdrop? Backdrop
         {
             get => m_backdrop;
@@ -52,8 +55,10 @@ namespace WinUIEx
 
         private void Backdrop_IsDirty(object? sender, EventArgs e)
         {
+#pragma warning disable CS0612 // Type or member is obsolete
             if (currentController != null && BackdropConfiguration != null && m_backdrop != null)
                 m_backdrop.UpdateController(currentController, BackdropConfiguration.Theme);
+#pragma warning restore CS0612 // Type or member is obsolete
         }
 
         /// <summary>
@@ -63,7 +68,8 @@ namespace WinUIEx
 
         private void InitBackdrop()
         {
-            if(m_backdrop is null)
+#pragma warning disable CS0612 // Type or member is obsolete
+            if (m_backdrop is null)
             {
                 CleanUpBackdrop();
                 return;
@@ -101,6 +107,7 @@ namespace WinUIEx
             m_backdrop.UpdateController(controller, BackdropConfiguration.Theme);
             m_backdrop.ApplyController(controller, _window.As<Microsoft.UI.Composition.ICompositionSupportsSystemBackdrop>(), BackdropConfiguration);
             currentController = controller;
+#pragma warning restore CS0612 // Type or member is obsolete
         }
 
         private void CleanUpBackdrop()

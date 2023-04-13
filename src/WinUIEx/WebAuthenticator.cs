@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Microsoft.Windows.AppLifecycle;
+using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
 using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
@@ -31,6 +31,8 @@ namespace WinUIEx
         /// <param name="authorizeUri">Url to navigate to, beginning the authentication flow.</param>
         /// <param name="callbackUri">Expected callback url that the navigation flow will eventually redirect to.</param>
         /// <returns>Returns a result parsed out from the callback url.</returns>
+        /// <remarks>Prior to calling this, a call to <see cref="CheckOAuthRedirectionActivation(bool)"/> must be made during application startup.</remarks>
+        /// <seealso cref="CheckOAuthRedirectionActivation(bool)"/>
         public static Task<WebAuthenticatorResult> AuthenticateAsync(Uri authorizeUri, Uri callbackUri) => Instance.Authenticate(authorizeUri, callbackUri, CancellationToken.None);
 
         /// <summary>
@@ -40,6 +42,8 @@ namespace WinUIEx
         /// <param name="callbackUri">Expected callback url that the navigation flow will eventually redirect to.</param>
         /// <param name="cancellationToken">Cancellation token.</param>
         /// <returns>Returns a result parsed out from the callback url.</returns>
+        /// <remarks>Prior to calling this, a call to <see cref="CheckOAuthRedirectionActivation(bool)"/> must be made during application startup.</remarks>
+        /// <seealso cref="CheckOAuthRedirectionActivation(bool)"/>
         public static Task<WebAuthenticatorResult> AuthenticateAsync(Uri authorizeUri, Uri callbackUri, CancellationToken cancellationToken) => Instance.Authenticate(authorizeUri, callbackUri, cancellationToken);
 
         private static readonly WebAuthenticator Instance = new WebAuthenticator();
@@ -49,19 +53,6 @@ namespace WinUIEx
         private WebAuthenticator()
         {
             Microsoft.Windows.AppLifecycle.AppInstance.GetCurrent().Activated += CurrentAppInstance_Activated;
-        }
-
-        [System.Runtime.CompilerServices.ModuleInitializer]
-        internal static void Init()
-        {
-            try
-            {
-                OnAppCreation();
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Trace.WriteLine("WinUIEx: Failed to initialize the WebAuthenticator: " + ex.Message, "WinUIEx");
-            }
         }
 
         private static bool IsUriProtocolDeclared(string scheme)
@@ -131,12 +122,44 @@ namespace WinUIEx
             }
             return null;
         }
+        private static bool _oauthCheckWasPerformed;
 
-        private static void OnAppCreation()
+        /// <summary>
+        /// Performs an OAuth protocol activation check and redirects activation to the correct application instance.
+        /// </summary>
+        /// <param name="skipShutDownOnActivation">If <c>true</c>, this application instance will not automatically be shut down. If set to
+        /// <c>true</c> ensure you handle instance exit, or you'll end up with multiple instances running.</param>
+        /// <returns><c>true</c> if the activation was redirected and this instance should be shut down, otherwise <c>false</c>.</returns>
+        /// <remarks>
+        /// The call to this method should be done preferably in the Program.Main method, or the application constructor. It must be called
+        /// prior to using <see cref="AuthenticateAsync(Uri, Uri, CancellationToken)"/>
+        /// </remarks>
+        /// <seealso cref="AuthenticateAsync(Uri, Uri, CancellationToken)"/>
+        public static bool CheckOAuthRedirectionActivation(bool skipShutDownOnActivation = false)
         {
             var activatedEventArgs = Microsoft.Windows.AppLifecycle.AppInstance.GetCurrent()?.GetActivatedEventArgs();
+            return CheckOAuthRedirectionActivation(activatedEventArgs, skipShutDownOnActivation);
+        }
+
+        /// <summary>
+        /// Performs an OAuth protocol activation check and redirects activation to the correct application instance.
+        /// </summary>
+        /// <param name="activatedEventArgs">The activation arguments</param>
+        /// <param name="skipShutDownOnActivation">If <c>true</c>, this application instance will not automatically be shut down. If set to
+        /// <c>true</c> ensure you handle instance exit, or you'll end up with multiple instances running.</param>
+        /// <returns><c>true</c> if the activation was redirected and this instance should be shut down, otherwise <c>false</c>.</returns>
+        /// <remarks>
+        /// The call to this method should be done preferably in the Program.Main method, or the application constructor. It must be called
+        /// prior to using <see cref="AuthenticateAsync(Uri, Uri, CancellationToken)"/>
+        /// </remarks>
+        /// <seealso cref="AuthenticateAsync(Uri, Uri, CancellationToken)"/>
+        public static bool CheckOAuthRedirectionActivation(AppActivationArguments? activatedEventArgs, bool skipShutDownOnActivation = false)
+        {
+            _oauthCheckWasPerformed = true;
             if (activatedEventArgs is null)
-                return;
+                return false;
+            if (activatedEventArgs.Kind != Microsoft.Windows.AppLifecycle.ExtendedActivationKind.Protocol)
+                return false;
             var state = GetState(activatedEventArgs);
             if (state is not null && state["appInstanceId"] is string id && state["signinId"] is string signinId && !string.IsNullOrEmpty(signinId))
             {
@@ -146,7 +169,9 @@ namespace WinUIEx
                 {
                     // Redirect to correct instance and close this one
                     instance.RedirectActivationToAsync(activatedEventArgs).AsTask().Wait();
-                    System.Diagnostics.Process.GetCurrentProcess().Kill();
+                    if (!skipShutDownOnActivation)
+                        System.Diagnostics.Process.GetCurrentProcess().Kill();
+                    return true;
                 }
             }
             else
@@ -157,6 +182,7 @@ namespace WinUIEx
                     Microsoft.Windows.AppLifecycle.AppInstance.FindOrRegisterForKey(Guid.NewGuid().ToString());
                 }
             }
+            return false;
         }
 
         private void CurrentAppInstance_Activated(object? sender, Microsoft.Windows.AppLifecycle.AppActivationArguments e)
@@ -186,6 +212,10 @@ namespace WinUIEx
 
         private async Task<WebAuthenticatorResult> Authenticate(Uri authorizeUri, Uri callbackUri, CancellationToken cancellationToken)
         {
+            if(!_oauthCheckWasPerformed)
+            {
+                throw new InvalidOperationException("OAuth redirection check on app activation was not detected. Please make sure a call to WebAuthenticator.CheckOAuthRedirectionActivation was made during App creation.");
+            }
             if (!Helpers.IsAppPackaged)
             {
                 throw new InvalidOperationException("The WebAuthenticator requires a packaged app with an AppxManifest");

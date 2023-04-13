@@ -25,6 +25,8 @@
       - Upgrade to Windows App SDK 1.3.
       - Deprecated Backdrop APIs in favor of Microsoft's new Backdrop APIs.
       - Setting Default RequestedTheme has no effect (Issue #101)
+      - BREAKING BEHAVIOR: WebAuthenticator now requires a call to WebAuthenticator.CheckOAuthRedirectionActivation() during app startup. Fixes #115, #111 and #96.
+      - Various minor bug fixes.
     </PackageReleaseNotes>
   </PropertyGroup>
 

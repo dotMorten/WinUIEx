@@ -8,9 +8,7 @@ using System.Linq;
 using System.Text.Json.Nodes;
 using Microsoft.UI.Xaml;
 using System.Runtime.InteropServices;
-
-// To learn more about WinUI, the WinUI project structure,
-// and more about our project templates, see: http://aka.ms/winui-project-info.
+using WinUIEx;
 
 namespace WinUIExSample
 {
@@ -25,6 +23,8 @@ namespace WinUIExSample
         /// </summary>
         public App()
         {
+            if (WebAuthenticator.CheckOAuthRedirectionActivation())
+                return;
             this.InitializeComponent();
             int length = 0;
             var sb = new System.Text.StringBuilder(0);
@@ -35,7 +35,7 @@ namespace WinUIExSample
                 WinUIEx.WindowManager.PersistenceStorage = new FilePersistence("WinUIExPersistence.json");
             }
         }
-
+        
         /// <summary>
         /// Invoked when the application is launched normally by the end user.  Other entry points
         /// will be used such as when the application is launched to open a specific file.
@@ -43,9 +43,8 @@ namespace WinUIExSample
         /// <param name="args">Details about the launch request and process.</param>
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
-             var splash = new SplashScreen(typeof(MainWindow));
-             splash.Completed += (s, e) => m_window = e;
-
+            var splash = new SplashScreen(typeof(MainWindow));
+            splash.Completed += (s, e) => m_window = e;
         }
 
         private Window m_window;

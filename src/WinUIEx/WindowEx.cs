@@ -93,6 +93,8 @@ namespace WinUIEx
                 secondaryCommand = commands.Where(c => c != defaultCommand && c != cancelCommand).FirstOrDefault();
             }
             var dialog = new ContentDialog() { XamlRoot = Content.XamlRoot };
+            if (Content is FrameworkElement elm)
+                dialog.RequestedTheme = elm.RequestedTheme;
             dialog.Content = new TextBlock() { Text = content, TextWrapping = TextWrapping.Wrap };
             dialog.Title = title;
             dialog.PrimaryButtonText = defaultCommand.Label;

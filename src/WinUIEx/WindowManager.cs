@@ -255,17 +255,27 @@ namespace WinUIEx
             {
                 case WindowsMessages.WM_GETMINMAXINFO:
                     {
-                        if (_restoringPersistence)
-                            break;
-                        // Restrict min-size
                         MINMAXINFO* rect2 = (MINMAXINFO*)e.Message.LParam;
                         var currentDpi = _window.GetDpiForWindow();
-                        rect2->ptMinTrackSize.x = (int)(Math.Max(MinWidth * (currentDpi / 96f), rect2->ptMinTrackSize.x));
-                        rect2->ptMinTrackSize.y = (int)(Math.Max(MinHeight * (currentDpi / 96f), rect2->ptMinTrackSize.y));
-                        if (!double.IsNaN(MaxWidth) && MaxWidth > 0)
-                            rect2->ptMaxTrackSize.x = (int)(Math.Min(Math.Max(MaxWidth, MinWidth) * (currentDpi / 96f), rect2->ptMaxTrackSize.x)); // If minwidth<maxwidth, minwidth will take presedence
-                        if (!double.IsNaN(MaxHeight) && MaxHeight > 0)
-                            rect2->ptMaxTrackSize.y = (int)(Math.Min(Math.Max(MaxHeight, MinHeight) * (currentDpi / 96f), rect2->ptMaxTrackSize.y)); // If minheight<maxheight, minheight will take presedence
+                        if (_restoringPersistence)
+                        {
+                            // Only restrict maxsize during restore
+                            if (!double.IsNaN(MaxWidth) && MaxWidth > 0)
+                                rect2->ptMaxSize.x = (int)(Math.Min(Math.Max(MaxWidth, MinWidth) * (currentDpi / 96f), rect2->ptMaxSize.x)); // If minwidth<maxwidth, minwidth will take presedence
+                            if (!double.IsNaN(MaxHeight) && MaxHeight > 0)
+                                rect2->ptMaxSize.y = (int)(Math.Min(Math.Max(MaxHeight, MinHeight) * (currentDpi / 96f), rect2->ptMaxSize.y)); // If minheight<maxheight, minheight will take presedence
+                        }
+                        else
+                        {
+                            // Restrict min-size
+                            rect2->ptMinTrackSize.x = (int)(Math.Max(MinWidth * (currentDpi / 96f), rect2->ptMinTrackSize.x));
+                            rect2->ptMinTrackSize.y = (int)(Math.Max(MinHeight * (currentDpi / 96f), rect2->ptMinTrackSize.y));
+                            // Restrict max-size
+                            if (!double.IsNaN(MaxWidth) && MaxWidth > 0)
+                                rect2->ptMaxTrackSize.x = (int)(Math.Min(Math.Max(MaxWidth, MinWidth) * (currentDpi / 96f), rect2->ptMaxTrackSize.x)); // If minwidth<maxwidth, minwidth will take presedence
+                            if (!double.IsNaN(MaxHeight) && MaxHeight > 0)
+                                rect2->ptMaxTrackSize.y = (int)(Math.Min(Math.Max(MaxHeight, MinHeight) * (currentDpi / 96f), rect2->ptMaxTrackSize.y)); // If minheight<maxheight, minheight will take presedence
+                        }
                     }
                     break;
                 case WindowsMessages.WM_DPICHANGED:

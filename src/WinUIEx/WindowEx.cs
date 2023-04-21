@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Markup;
@@ -92,6 +93,8 @@ namespace WinUIEx
                 secondaryCommand = commands.Where(c => c != defaultCommand && c != cancelCommand).FirstOrDefault();
             }
             var dialog = new ContentDialog() { XamlRoot = Content.XamlRoot };
+            if (Content is FrameworkElement elm)
+                dialog.RequestedTheme = elm.RequestedTheme;
             dialog.Content = new TextBlock() { Text = content, TextWrapping = TextWrapping.Wrap };
             dialog.Title = title;
             dialog.PrimaryButtonText = defaultCommand.Label;
@@ -121,7 +124,7 @@ namespace WinUIEx
         /// <summary>
         /// Gets a reference to the AppWindow for the app
         /// </summary>
-        public Microsoft.UI.Windowing.AppWindow AppWindow => _manager.AppWindow;
+        public new AppWindow AppWindow => base.AppWindow; // Kept here for binary compatibility
 
         /// <summary>
         /// Brings the window to the front
@@ -176,18 +179,28 @@ namespace WinUIEx
         {
             get => windowArea.Content;
             set 
-            { 
-                if(windowArea.Content is FrameworkElement oldelm)
-                    oldelm.ActualThemeChanged -= WindowContent_ActualThemeChanged;
+            {
+                if (windowArea.Content is FrameworkElement oldelm)
+                {
+                    if (_propChangedCallbackId != 0)
+                    {
+                        oldelm.UnregisterPropertyChangedCallback(FrameworkElement.RequestedThemeProperty, _propChangedCallbackId);
+                        _propChangedCallbackId = 0;
+                    }
+                }
                 windowArea.Content = value;
                 if (windowArea.Content is FrameworkElement newelm)
-                    newelm.ActualThemeChanged += WindowContent_ActualThemeChanged;
+                {
+                    _propChangedCallbackId = newelm.RegisterPropertyChangedCallback(FrameworkElement.RequestedThemeProperty, RequestedThemePropertyChanged);
+                }
             }
         }
 
-        private void WindowContent_ActualThemeChanged(FrameworkElement sender, object args)
+        private long _propChangedCallbackId;
+
+        private void RequestedThemePropertyChanged(DependencyObject sender, DependencyProperty dp)
         {
-            if(this.Content is FrameworkElement elm && windowArea.Content is FrameworkElement childelm)
+            if (this.Content is FrameworkElement elm && windowArea.Content is FrameworkElement childelm)
             {
                 elm.RequestedTheme = childelm.RequestedTheme;
             }
@@ -355,6 +368,8 @@ namespace WinUIEx
         /// </summary>
         /// <seealso cref="MicaSystemBackdrop"/>
         /// <seealso cref="AcrylicSystemBackdrop"/>
+        [Obsolete("Use Microsoft.UI.Xaml.Window.SystemBackdrop")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public SystemBackdrop? Backdrop
         {
             get => _manager.Backdrop;

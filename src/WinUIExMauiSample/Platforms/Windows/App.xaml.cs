@@ -16,6 +16,8 @@ namespace WinUIExMauiSample.WinUI
         /// </summary>
         public App()
         {
+            if (WinUIEx.WebAuthenticator.CheckOAuthRedirectionActivation())
+                return;
             this.InitializeComponent();
         }
 

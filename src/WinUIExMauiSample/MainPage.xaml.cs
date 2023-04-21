@@ -30,7 +30,7 @@ namespace WinUIExMauiSample
 
             _ = Navigation.PushModalAsync(new ContentPage()
             {
-                Content = new Label() { Text = $"Waiting for sign in in your browser\n Username: 'nice-ferret@example.com'\n Password: Black-Capybara-83" }
+                Content = new Label() { Text = $"Waiting for sign in in your browser\n Username: 'pleasant-koala@example.com'\n Password: Modern-Seahorse-66" }
             });
 #if WINDOWS
             var result = await WinUIEx.WebAuthenticator.AuthenticateAsync(authorizeUri, callbackUri);

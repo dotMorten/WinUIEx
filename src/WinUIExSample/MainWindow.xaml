@@ -11,9 +11,6 @@
     Width="1024" Height="768"
     MinWidth="500" MinHeight="250"
     mc:Ignorable="d" >
-    <winex:WindowEx.Backdrop>
-        <winex:MicaSystemBackdrop  />
-    </winex:WindowEx.Backdrop>
 
     <Grid Padding="20" x:Name="LayoutRoot">
         <Grid.ColumnDefinitions>
@@ -33,12 +30,6 @@
                     <ComboBoxItem>Overlapped</ComboBoxItem>
                     <ComboBoxItem>Compact</ComboBoxItem>
                     <ComboBoxItem>Fullscren</ComboBoxItem>
-                </ComboBox>
-                <ComboBox x:Name="backdropSelector" Header="Backdrop" SelectedIndex="2" SelectionChanged="Backdrop_SelectionChanged" Margin="0,5,0,0">
-                    <ComboBoxItem>Default</ComboBoxItem>
-                    <ComboBoxItem>Acrylic</ComboBoxItem>
-                    <ComboBoxItem>Mica (Windows 11 only)</ComboBoxItem>
-                    <ComboBoxItem>Mica Alt (Windows 11 only)</ComboBoxItem>
                 </ComboBox>
                 <ComboBox x:Name="themeSelector" Header="Theme" SelectedIndex="0" SelectionChanged="Theme_SelectionChanged" Margin="0,5,0,0">
                     <ComboBoxItem>Default</ComboBoxItem>

@@ -93,18 +93,18 @@ namespace WinUIEx
             string? photoFileToken = null;
             string? videoFileToken = null;
             
-            var set = new ValueSet();
+            var inputData = new ValueSet();
             if (mode == CameraCaptureUIMode.Photo)
             {
-                set.Add("MediaType", "photo");
+                inputData.Add("MediaType", "photo");
             }
             else if (mode == CameraCaptureUIMode.Video)
             {
-                set.Add("MediaType", "video");
+                inputData.Add("MediaType", "video");
             }
             else if (mode == CameraCaptureUIMode.PhotoOrVideo)
             {
-                set.Add("MediaType", "photoOrVideo");
+                inputData.Add("MediaType", "photoOrVideo");
             }
             if (mode == CameraCaptureUIMode.Photo || mode == CameraCaptureUIMode.PhotoOrVideo)
             {
@@ -112,18 +112,18 @@ namespace WinUIEx
                 File.WriteAllBytes(path, new byte[] { });
                 photoFile = await StorageFile.GetFileFromPathAsync(path);
                 photoFileToken = Windows.ApplicationModel.DataTransfer.SharedStorageAccessManager.AddFile(photoFile);
-                set.Add("PhotoFileToken", photoFileToken);
-                set.Add("AllowCropping", PhotoSettings.AllowCropping);
+                inputData.Add("PhotoFileToken", photoFileToken);
+                inputData.Add("AllowCropping", PhotoSettings.AllowCropping);
                 if (PhotoSettings.CroppedAspectRatio.Width > 0)
-                    set.Add("PhotoCroppedARWidth", (int)PhotoSettings.CroppedAspectRatio.Width);
+                    inputData.Add("PhotoCroppedARWidth", (int)PhotoSettings.CroppedAspectRatio.Width);
                 if (PhotoSettings.CroppedAspectRatio.Height > 0)
-                    set.Add("PhotoCroppedARHeight", (int)PhotoSettings.CroppedAspectRatio.Height);
+                    inputData.Add("PhotoCroppedARHeight", (int)PhotoSettings.CroppedAspectRatio.Height);
                 if (PhotoSettings.CroppedSizeInPixels.Width > 0)
-                    set.Add("PhotoCropWidth", (int)PhotoSettings.CroppedSizeInPixels.Width);
+                    inputData.Add("PhotoCropWidth", (int)PhotoSettings.CroppedSizeInPixels.Width);
                 if (PhotoSettings.CroppedSizeInPixels.Height > 0)
-                    set.Add("PhotoCropHeight", (int)PhotoSettings.CroppedSizeInPixels.Height);
-                set.Add("PhotoFormat", (int)PhotoSettings.Format);
-                set.Add("MaxResolution", (int)PhotoSettings.MaxResolution);
+                    inputData.Add("PhotoCropHeight", (int)PhotoSettings.CroppedSizeInPixels.Height);
+                inputData.Add("PhotoFormat", (int)PhotoSettings.Format);
+                inputData.Add("MaxResolution", (int)PhotoSettings.MaxResolution);
             }
 
             if (mode == CameraCaptureUIMode.Video || mode == CameraCaptureUIMode.PhotoOrVideo)
@@ -132,18 +132,20 @@ namespace WinUIEx
                 File.WriteAllBytes(path, new byte[] { });
                 videoFile = await StorageFile.GetFileFromPathAsync(path);
                 videoFileToken = Windows.ApplicationModel.DataTransfer.SharedStorageAccessManager.AddFile(videoFile);
-                set.Add("VideoFileToken", videoFileToken);
-                set.Add("AllowTrimming", VideoSettings.AllowTrimming);
+                inputData.Add("VideoFileToken", videoFileToken);
+                inputData.Add("AllowTrimming", VideoSettings.AllowTrimming);
                 if (VideoSettings.MaxDurationInSeconds > 0)
-                    set.Add("MaxDurationInSeconds", (int)VideoSettings.MaxDurationInSeconds);
-                set.Add("MaxVideoResolution", (int)VideoSettings.MaxResolution);
-                set.Add("VideoFormat", (int)VideoSettings.Format);
+                    inputData.Add("MaxDurationInSeconds", (int)VideoSettings.MaxDurationInSeconds);
+                inputData.Add("MaxVideoResolution", (int)VideoSettings.MaxResolution);
+                inputData.Add("VideoFormat", (int)VideoSettings.Format);
             }
 
             var uri = new Uri("microsoft.windows.camera.picker:");
-            var result = await Launcher.LaunchUriForResultsAsync(uri, _launcherOptions, set);
-            Windows.ApplicationModel.DataTransfer.SharedStorageAccessManager.RemoveFile(videoFileToken);
-            Windows.ApplicationModel.DataTransfer.SharedStorageAccessManager.RemoveFile(photoFileToken);
+            var result = await Launcher.LaunchUriForResultsAsync(uri, _launcherOptions, inputData);
+            if(videoFileToken is not null)
+                Windows.ApplicationModel.DataTransfer.SharedStorageAccessManager.RemoveFile(videoFileToken);
+            if (photoFileToken is not null)
+                Windows.ApplicationModel.DataTransfer.SharedStorageAccessManager.RemoveFile(photoFileToken);
             if (result.Status == LaunchUriStatus.Success)
             {
                 if (result.Result is null)

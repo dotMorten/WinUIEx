@@ -149,6 +149,8 @@ namespace WinUIEx
         /// <summary>
         /// Gets or sets the window title.
         /// </summary>
+        [Obsolete("Use Microsoft.UI.Xaml.Window.Title")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public new string Title // Workaround for https://github.com/microsoft/microsoft-ui-xaml/issues/3689
         {
             get => base.Title;

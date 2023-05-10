@@ -147,6 +147,15 @@ namespace WinUIEx
         }
 
         /// <summary>
+        /// Gets or sets the window title.
+        /// </summary>
+        public new string Title // Old Workaround for https://github.com/microsoft/microsoft-ui-xaml/issues/3689. Needs to stay for binary compat
+        {
+            get => base.Title;
+            set => base.Title = value;
+        }
+        
+        /// <summary>
         /// Gets or sets a unique ID used for saving and restoring window size and position
         /// across sessions.
         /// </summary>

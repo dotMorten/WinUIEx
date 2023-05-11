@@ -320,10 +320,10 @@ namespace WinUIEx
         /// </summary>
         /// <remarks>
         /// <para>When the <see cref="WindowState"/> property is changed, <see cref="StateChanged"/> is raised.</para>
-        /// </remarks>
         /// <note type="caution">
         /// This property only has affect when using the <see cref="OverlappedPresenter"/>.
         /// </note>
+        /// </remarks>
         /// <value>A <see cref="WindowState"/> that determines whether a window is restored, minimized, or maximized.
         /// The default is <see cref="WindowState.Normal"/> (restored).</value>
         /// <seealso cref="WindowManager.StateChanged"/>
@@ -348,10 +348,12 @@ namespace WinUIEx
         /// <summary>
         /// Occurs when the window's <see cref="WindowState"/> property changes.
         /// </summary>
-        /// <seealso cref="WindowManager.WindowState"/>
+        /// <remarks>
         /// <note type="caution">
         /// This event only has affect when using the <see cref="OverlappedPresenter"/>.
         /// </note>
+        /// </remarks>
+        /// <seealso cref="WindowManager.WindowState"/>
         /// <seealso cref="PresenterChanged"/>
         public event EventHandler<WindowState>? StateChanged;
 

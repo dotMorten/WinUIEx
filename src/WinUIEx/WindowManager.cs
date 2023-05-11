@@ -320,8 +320,8 @@ namespace WinUIEx
         /// </summary>
         /// <remarks>
         /// <para>When the <see cref="WindowState"/> property is changed, <see cref="StateChanged"/> is raised.</para>
-        /// <note type="caution">
-        /// This property only has affect when using the <see cref="OverlappedPresenter"/>.
+        /// <note type="tip">
+        /// This property only has affect when using the OverlappedPresenter.
         /// </note>
         /// </remarks>
         /// <value>A <see cref="WindowState"/> that determines whether a window is restored, minimized, or maximized.
@@ -349,8 +349,8 @@ namespace WinUIEx
         /// Occurs when the window's <see cref="WindowState"/> property changes.
         /// </summary>
         /// <remarks>
-        /// <note type="caution">
-        /// This event only has affect when using the <see cref="OverlappedPresenter"/>.
+        /// <note type="tip">
+        /// This event only has affect when using the OverlappedPresenter.
         /// </note>
         /// </remarks>
         /// <seealso cref="WindowManager.WindowState"/>

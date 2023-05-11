@@ -320,7 +320,7 @@ namespace WinUIEx
         /// </summary>
         /// <remarks>
         /// <para>When the <see cref="WindowState"/> property is changed, <see cref="StateChanged"/> is raised.</para>
-        /// <note type="tip">
+        /// <note>
         /// This property only has affect when using the OverlappedPresenter.
         /// </note>
         /// </remarks>
@@ -349,7 +349,7 @@ namespace WinUIEx
         /// Occurs when the window's <see cref="WindowState"/> property changes.
         /// </summary>
         /// <remarks>
-        /// <note type="tip">
+        /// <note>
         /// This event only has affect when using the OverlappedPresenter.
         /// </note>
         /// </remarks>

@@ -447,8 +447,8 @@ namespace WinUIEx
                     for (int i = 0; i < monitorCount; i++)
                     {
                         var pMonitor = monitors[i];
-                        if (pMonitor.Name != br.ReadString() ||
-                            pMonitor.RectMonitor.Left != br.ReadDouble() ||
+                        br.ReadString(); // Skip monitor name - it can change without layout changing. See #98
+                        if (pMonitor.RectMonitor.Left != br.ReadDouble() ||
                             pMonitor.RectMonitor.Top != br.ReadDouble() ||
                             pMonitor.RectMonitor.Right != br.ReadDouble() ||
                             pMonitor.RectMonitor.Bottom != br.ReadDouble())

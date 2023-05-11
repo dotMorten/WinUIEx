@@ -25,6 +25,7 @@
     <PackageReleaseNotes>
       - Add WindowExtensions.Move method (Issue #122).
       - Add State and WindowStateChanged properties to Window Manager to track minimize/maximize/restore (Issue #112).
+      - Improve persistance restore by ignoring display names (Issue #98).
     </PackageReleaseNotes>
   </PropertyGroup>
 

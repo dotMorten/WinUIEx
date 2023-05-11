@@ -29,7 +29,7 @@
                 <ComboBox Header="Presenter" SelectedIndex="0" SelectionChanged="Presenter_SelectionChanged">
                     <ComboBoxItem>Overlapped</ComboBoxItem>
                     <ComboBoxItem>Compact</ComboBoxItem>
-                    <ComboBoxItem>Fullscren</ComboBoxItem>
+                    <ComboBoxItem>Fullscreen</ComboBoxItem>
                 </ComboBox>
                 <ComboBox x:Name="themeSelector" Header="Theme" SelectedIndex="0" SelectionChanged="Theme_SelectionChanged" Margin="0,5,0,0">
                     <ComboBoxItem>Default</ComboBoxItem>
@@ -58,6 +58,13 @@
                 <Button Content="Minimize + Restore (2 second delay)" Click="MinimizeWindow_Click" />
                 <Button Content="Hide + Restore (2 second delay)" Click="HideWindow_Click" />
                 <Button Content="Bring to front (2 second delay)" Click="BringToFront_Click" />
+                <ComboBox x:Name="windowState" SelectionChanged="windowState_SelectionChanged">
+                    <ComboBox.Items>
+                        <ComboBoxItem>Window State: Normal</ComboBoxItem>
+                        <ComboBoxItem>Window State: Minimized</ComboBoxItem>
+                        <ComboBoxItem>Window State: Maximized</ComboBoxItem>
+                    </ComboBox.Items>
+                </ComboBox>
                 <Button Content="Show dialog" Click="ShowDialog_Click" />
                 <Button Content="Test OAuth" Click="DoOAuth_Click" />
             </StackPanel>

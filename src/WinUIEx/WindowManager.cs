@@ -74,6 +74,12 @@ namespace WinUIEx
 
             overlappedPresenter = AppWindow.Presenter as OverlappedPresenter ?? Microsoft.UI.Windowing.OverlappedPresenter.Create();
             managers[window.GetWindowHandle()] = new WeakReference<WindowManager>(this);
+            switch (overlappedPresenter.State)
+            {
+                case OverlappedPresenterState.Restored: _windowState = WindowState.Normal; break;
+                case OverlappedPresenterState.Minimized: _windowState = WindowState.Minimized; break;
+                case OverlappedPresenterState.Maximized: _windowState = WindowState.Maximized; break;
+            }
         }
 
         private void Window_VisibilityChanged(object sender, WindowVisibilityChangedEventArgs args)
@@ -284,8 +290,70 @@ namespace WinUIEx
                             e.Handled = true; // Don't let WinUI resize the window due to a dpi change caused by restoring window position - we got this.
                         break;
                     }
+                case WindowsMessages.WM_SIZE:
+                    {
+                        // https://learn.microsoft.com/en-us/windows/win32/winmsg/wm-size
+                        WindowState state;
+                        
+                        switch (e.Message.WParam)
+                        {
+                            case 0: state = WindowState.Normal; break;
+                            case 1: state = WindowState.Minimized; break;
+                            case 2: state = WindowState.Maximized; break;
+                            default: return;
+                        }
+                        if (state != _windowState)
+                        {
+                            _windowState = state;
+                            StateChanged?.Invoke(this, state);
+                        }
+                        break;
+                    }
+
             }
         }
+
+        private WindowState _windowState;
+
+        /// <summary>
+        /// Gets or sets the current window state.
+        /// </summary>
+        /// <remarks>
+        /// <para>When the <see cref="WindowState"/> property is changed, <see cref="StateChanged"/> is raised.</para>
+        /// </remarks>
+        /// <note type="caution">
+        /// This property only has affect when using the <see cref="OverlappedPresenter"/>.
+        /// </note>
+        /// <value>A <see cref="WindowState"/> that determines whether a window is restored, minimized, or maximized.
+        /// The default is <see cref="WindowState.Normal"/> (restored).</value>
+        /// <seealso cref="WindowManager.StateChanged"/>
+        /// <seealso cref="PresenterKind"/>
+        public WindowState WindowState
+        {
+            get => _windowState;
+            set
+            {
+                if (value != _windowState)
+                {
+                    switch (value)
+                    {
+                        case WindowState.Normal: overlappedPresenter.Restore(); break;
+                        case WindowState.Minimized: overlappedPresenter.Minimize(); break;
+                        case WindowState.Maximized: overlappedPresenter.Maximize(); break;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Occurs when the window's <see cref="WindowState"/> property changes.
+        /// </summary>
+        /// <seealso cref="WindowManager.WindowState"/>
+        /// <note type="caution">
+        /// This event only has affect when using the <see cref="OverlappedPresenter"/>.
+        /// </note>
+        /// <seealso cref="PresenterChanged"/>
+        public event EventHandler<WindowState>? StateChanged;
 
         /// <summary>
         /// Event raised when a windows message is received.
@@ -540,5 +608,26 @@ namespace WinUIEx
         /// </summary>
         public event EventHandler<ZOrderInfo>? ZOrderChanged;
 
+    }
+
+    /// <summary>
+    /// Specifies whether a window is minimized, maximized, or restored. Used by the <see cref="WindowManager.WindowState"/> property.
+    /// </summary>
+    /// <seealso cref="WindowManager.WindowState"/>
+    /// <seealso cref="WindowManager.StateChanged"/>
+    public enum WindowState
+    {
+        /// <summary>
+        /// The window is restored.
+        /// </summary>
+        Normal = 0,
+        /// <summary>
+        /// The window is minimized.
+        /// </summary>
+        Minimized = 1,
+        /// <summary>
+        /// The window is maximized.
+        /// </summary>
+        Maximized = 2
     }
 }

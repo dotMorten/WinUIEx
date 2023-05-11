@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -24,6 +25,7 @@ namespace WinUIExSample
     {
         private readonly Queue<string> windowEvents = new Queue<string>(101);
         private readonly WindowMessageMonitor monitor;
+        private readonly WindowManager manager;
 
         public MainWindow()
         {
@@ -32,10 +34,13 @@ namespace WinUIExSample
             this.SetTitleBarBackgroundColors(Microsoft.UI.Colors.CornflowerBlue);
             PersistenceId = "MainWindow";
             monitor = new WindowMessageMonitor(this);
+            manager = WindowManager.Get(this);
             var monitors = MonitorInfo.GetDisplayMonitors();
             foreach (var monitor in monitors.Reverse())
                 Log("  - " + monitor.ToString());
             Log($"{monitors.Count} monitors detected");
+            manager.StateChanged += Manager_StateChanged;
+            windowState.SelectedIndex = (int)manager.WindowState;
         }
 
         protected override void OnPositionChanged(PointInt32 position) => Log($"Position Changed: {position.X},{position.Y}");
@@ -124,6 +129,18 @@ namespace WinUIExSample
         private void WindowMessageReceived(object sender, WindowMessageEventArgs e)
         {
             Log(e.Message.ToString());
+            if(e.Message.MessageId == 0x0005) //WM_SIZE
+            {
+                // https://learn.microsoft.com/en-us/windows/win32/winmsg/wm-size
+                switch (e.Message.WParam)
+                {
+                    case 0: Debug.WriteLine("Restored" + e.Message.LParam); break;
+                    case 1: Debug.WriteLine("Minimized"); break;
+                    case 2: Debug.WriteLine("Maximized"); break;
+                    case 3: Debug.WriteLine("Max-show"); break;
+                    case 4: Debug.WriteLine("Max-hide"); break;
+                }
+            }
         }
 
         private void Theme_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -179,5 +196,16 @@ namespace WinUIExSample
                 MaxHeight = double.NaN;
             }
         }
+
+        private void windowState_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var newState = (WindowState)windowState.SelectedIndex;
+            manager.WindowState = newState;
+        }
+        private void Manager_StateChanged(object sender, WindowState e)
+        {
+            windowState.SelectedIndex = (int)e;
+        }
+
     }
 }

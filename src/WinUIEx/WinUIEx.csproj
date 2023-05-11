@@ -23,12 +23,8 @@
     <PackageId>WinUIEx</PackageId>
     <Product>WinUI Extensions</Product>
     <PackageReleaseNotes>
-      - Upgrade to Windows App SDK 1.3.1 and remove workarounds no longer needed.
-      - Deprecated Backdrop APIs in favor of Microsoft's new Backdrop APIs.
-      - Setting Default RequestedTheme has no effect (Issue #101)
-      - BREAKING BEHAVIOR: WebAuthenticator now requires a call to WebAuthenticator.CheckOAuthRedirectionActivation() during app startup. (Issues #115, #111 and #96).
-      - MaxWidth/Height wasn't applied when persistence restores a maximized window limited by width/height (Issue #97).
-      - Various minor bug fixes.
+      - Add WindowExtensions.Move method (Issue #122).
+      - Add State and WindowStateChanged properties to Window Manager to track minimize/maximize/restore (Issue #112).
     </PackageReleaseNotes>
   </PropertyGroup>
 

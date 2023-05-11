@@ -150,7 +150,7 @@ namespace WinUIEx.Messaging
         /// Sent to a window after its size has changed.
         /// See <a href="https://docs.microsoft.com/en-us/windows/win32/winmsg/wm-size">WM_SIZE message</a>.
         /// </summary>
-        WM_SIZE = 4,
+        WM_SIZE = 0x0005,
 
         /// <summary>
         /// Sent to a window that the user is resizing. By processing this message, an application can monitor the size and position of the drag rectangle and, if needed, change its size or position.

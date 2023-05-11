@@ -145,12 +145,23 @@ namespace WinUIEx
         /// <param name="window">Window</param>
         /// <param name="x">Left side of the window</param>
         /// <param name="y">Top side of the window</param>
-        /// <param name="width">Width of the window in device independent pixels, or <c>null</c> if keeping the current size</param>
-        /// <param name="height">Height of the window in device independent pixels, or <c>null</c> if keeping the current size</param>
+        /// <param name="width">Width of the window in device independent pixels.</param>
+        /// <param name="height">Height of the window in device independent pixels.</param>
         public static void MoveAndResize(this Microsoft.UI.Xaml.Window window, double x, double y, double width, double height)
         {
             var scale = HwndExtensions.GetDpiForWindow(window.GetWindowHandle()) / 96f;
             window.AppWindow.MoveAndResize(new Windows.Graphics.RectInt32((int)x, (int)y, (int)(width * scale), (int)(height * scale)));
+        }
+
+        /// <summary>
+        /// Positions the window
+        /// </summary>
+        /// <param name="window">Window</param>
+        /// <param name="x">Left side of the window</param>
+        /// <param name="y">Top side of the window</param>
+        public static void Move(this Microsoft.UI.Xaml.Window window, int x, int y)
+        {
+            window.AppWindow.MoveAndResize(new Windows.Graphics.RectInt32(x, y, window.AppWindow.Size.Width, window.AppWindow.Size.Height));
         }
 
         /// <summary>

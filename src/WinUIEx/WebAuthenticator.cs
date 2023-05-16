@@ -107,7 +107,7 @@ namespace WinUIEx
             {
                 try
                 {
-                    var jsonObject = System.Text.Json.Nodes.JsonObject.Parse(state) as JsonObject;
+                    var jsonObject = System.Text.Json.Nodes.JsonObject.Parse(Uri.UnescapeDataString(state)) as JsonObject;
                     if (jsonObject is not null)
                     {
                         NameValueCollection vals2 = new NameValueCollection(jsonObject.Count);
@@ -239,7 +239,7 @@ namespace WinUIEx
                 stateJson["state"] = oldstate;
             }
             
-            query["state"] = stateJson.ToJsonString();
+            query["state"] = Uri.EscapeUriString(stateJson.ToJsonString());
             b.Query = query.ToString();
             authorizeUri = b.Uri;
 

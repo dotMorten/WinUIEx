@@ -28,8 +28,8 @@ namespace WinUIEx
                 {
                     try
                     {
-                        var jsonObject = System.Text.Json.Nodes.JsonObject.Parse(query[key] ?? "{}") as JsonObject;
-
+                        var jsonDecoded = (query[key] == null) ? "{}" : Uri.UnescapeDataString(query[key]);
+                        var jsonObject = System.Text.Json.Nodes.JsonObject.Parse(jsonDecoded) as JsonObject;
                         if (jsonObject is not null && jsonObject.ContainsKey("state") && jsonObject["state"] is JsonValue jvalue && jvalue.TryGetValue<string>(out string? value))
                         {
                             Properties[key] = value;

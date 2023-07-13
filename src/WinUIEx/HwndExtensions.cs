@@ -256,6 +256,67 @@ namespace WinUIEx
             if (r != currentStyle)
                 Marshal.ThrowExceptionForHR(Marshal.GetLastWin32Error());
         }
+
+        /// <summary>
+        /// Sets the opacity of a layered window.
+        /// </summary>
+        /// <param name="hWnd">Window handle</param>
+        /// <param name="alpha">Alpha value used to describe the opacity of the layered window. When <paramref name="alpha"/> is 0, the window is completely transparent. When <paramref name="alpha"/> is 255, the window is opaque.</param>
+        //// <seealso cref="SetLayeredWindowAttributes(IntPtr, byte, byte, byte, byte)"/>
+        public static void SetWindowOpacity(IntPtr hWnd, byte alpha)
+        {
+            var handle = new HWND(hWnd);
+            var extendedStyle = (WindowStyles)PInvoke.GetWindowLong(handle, WINDOW_LONG_PTR_INDEX.GWL_EXSTYLE);
+            if(extendedStyle.HasFlag(WindowStyles.WS_EX_LAYERED) == false)
+                PInvoke.SetWindowLong(handle, WINDOW_LONG_PTR_INDEX.GWL_EXSTYLE, (int) (extendedStyle | WindowStyles.WS_EX_LAYERED));
+            if (!PInvoke.SetLayeredWindowAttributes(handle, 0, alpha, LAYERED_WINDOW_ATTRIBUTES_FLAGS.LWA_ALPHA))
+                Marshal.ThrowExceptionForHR(Marshal.GetLastWin32Error());
+        }
+        [Flags]
+        private enum WindowStyles : int
+        {
+            WS_EX_LAYERED = 0x00080000,
+        }
+
+        /* Chroma keys doesn't seem to work on WinUI windows
+        /// <summary>
+        /// Sets the opacity of a layered window.
+        /// </summary>
+        /// <param name="hWnd">Window handle</param>
+        /// <param name="chromaKeyRed">The red part of the color that specifies the transparency color key to be used when composing the layered window. All pixels painted by the window in this color will be transparent.</param>
+        /// <param name="chromaKeyGreen">The green part of the color that specifies the transparency color key to be used when composing the layered window. All pixels painted by the window in this color will be transparent.</param>
+        /// <param name="chromaKeyBlue">The blue part of the color that specifies the transparency color key to be used when composing the layered window. All pixels painted by the window in this color will be transparent.</param>
+        /// <seealso cref="SetLayeredWindowAttributes(IntPtr, byte, byte, byte, byte)"/>
+        public static void SetWindowChromaKey(IntPtr hWnd, byte chromaKeyRed, byte chromaKeyGreen, byte chromaKeyBlue)
+        {
+            var handle = new HWND(hWnd);
+            var extendedStyle = (WindowStyles)PInvoke.GetWindowLong(handle, WINDOW_LONG_PTR_INDEX.GWL_EXSTYLE);
+            if (extendedStyle.HasFlag(WindowStyles.WS_EX_LAYERED) == false)
+                PInvoke.SetWindowLong(handle, WINDOW_LONG_PTR_INDEX.GWL_EXSTYLE, (int)(extendedStyle | WindowStyles.WS_EX_LAYERED));
+            uint color = (uint)((chromaKeyRed) | (chromaKeyGreen << 8) | chromaKeyBlue << 16);
+            if (!PInvoke.SetLayeredWindowAttributes(handle , color, 0, LAYERED_WINDOW_ATTRIBUTES_FLAGS.LWA_COLORKEY))
+                Marshal.ThrowExceptionForHR(Marshal.GetLastWin32Error());
+        }
+
+        /// <summary>
+        /// Sets the opacity and transparency color key of a layered window.
+        /// </summary>
+        /// <param name="hWnd">Window handle</param>
+        /// <param name="chromaKeyRed">The red part of the color that specifies the transparency color key to be used when composing the layered window. All pixels painted by the window in this color will be transparent.</param>
+        /// <param name="chromaKeyGreen">The green part of the color that specifies the transparency color key to be used when composing the layered window. All pixels painted by the window in this color will be transparent.</param>
+        /// <param name="chromaKeyBlue">The blue part of the color that specifies the transparency color key to be used when composing the layered window. All pixels painted by the window in this color will be transparent.</param>
+        /// <param name="alpha">Alpha value used to describe the opacity of the layered window. When <paramref name="alpha"/> is 0, the window is completely transparent. When <paramref name="alpha"/> is 255, the window is opaque.</param>
+        public static void SetLayeredWindowAttributes(IntPtr hWnd, byte chromaKeyRed, byte chromaKeyGreen, byte chromaKeyBlue, byte alpha)
+        {
+            var handle = new HWND(hWnd);
+            var extendedStyle = (WindowStyles)PInvoke.GetWindowLong(handle, WINDOW_LONG_PTR_INDEX.GWL_EXSTYLE);
+            if (extendedStyle.HasFlag(WindowStyles.WS_EX_LAYERED) == false)
+                PInvoke.SetWindowLong(handle, WINDOW_LONG_PTR_INDEX.GWL_EXSTYLE, (int)(extendedStyle | WindowStyles.WS_EX_LAYERED));
+
+            uint color = (uint)((chromaKeyRed) | (chromaKeyGreen << 8) | chromaKeyBlue << 16);
+            if (!PInvoke.SetLayeredWindowAttributes(handle, color, alpha, LAYERED_WINDOW_ATTRIBUTES_FLAGS.LWA_COLORKEY | LAYERED_WINDOW_ATTRIBUTES_FLAGS.LWA_ALPHA))
+                Marshal.ThrowExceptionForHR(Marshal.GetLastWin32Error());
+        }*/
     }
 
     /// <summary>

@@ -7,6 +7,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.UI;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
@@ -203,6 +204,12 @@ namespace WinUIExSample
         {
             base.OnStateChanged(state);
             windowState.SelectedIndex = (int)state;
+        }
+
+        private void Slider_ValueChanged(object sender, Microsoft.UI.Xaml.Controls.Primitives.RangeBaseValueChangedEventArgs e)
+        {
+            this.SetWindowOpacity((byte)e.NewValue);
+
         }
     }
 }

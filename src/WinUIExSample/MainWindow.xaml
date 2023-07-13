@@ -67,6 +67,7 @@
                 </ComboBox>
                 <Button Content="Show dialog" Click="ShowDialog_Click" />
                 <Button Content="Test OAuth" Click="DoOAuth_Click" />
+                <Slider Header="Window Opacity" Minimum="1" Maximum="255" Value="255" ValueChanged="Slider_ValueChanged" />
             </StackPanel>
         </ScrollViewer>
         <Grid Grid.Column="2" >

@@ -289,5 +289,33 @@ namespace WinUIEx
                 appWindow.TitleBar.InactiveBackgroundColor = color;
             }
         }
+
+        /// <summary>
+        /// Sets the opacity of a layered window.
+        /// </summary>
+        /// <param name="window">window</param>
+        /// <param name="alpha">Alpha value used to describe the opacity of the layered window. When <paramref name="alpha"/> is 0, the window is completely transparent. When <paramref name="alpha"/> is 255, the window is opaque.</param>
+        //// <seealso cref="SetLayeredWindowAttributes(Microsoft.UI.Xaml.Window, Windows.UI.Color, byte)" />
+        public static void SetWindowOpacity(this Microsoft.UI.Xaml.Window window, byte alpha)
+            => HwndExtensions.SetWindowOpacity(GetWindowHandle(window), alpha);
+
+        /* Chroma keys doesn't seem to work on WinUI windows
+        /// <summary>
+        /// Sets the opacity of a layered window.
+        /// </summary>
+        /// <param name="window">window</param>
+        /// <param name="chromaKey">The color that specifies the transparency color key to be used when composing the layered window. All pixels painted by the window in this color will be transparent.</param>
+        /// <seealso cref="SetLayeredWindowAttributes(Microsoft.UI.Xaml.Window, Windows.UI.Color, byte)" />
+        public static void SetWindowChromaKey(this Microsoft.UI.Xaml.Window window, Windows.UI.Color chromaKey)
+            => HwndExtensions.SetWindowChromaKey(GetWindowHandle(window), chromaKey.R, chromaKey.G, chromaKey.B);
+
+        /// <summary>
+        /// Sets the opacity and transparency color key of a layered window.
+        /// </summary>
+        /// <param name="window">window</param>
+        /// <param name="chromaKey">The color that specifies the transparency color key to be used when composing the layered window. All pixels painted by the window in this color will be transparent.</param>
+        /// <param name="alpha">Alpha value used to describe the opacity of the layered window. When <paramref name="alpha"/> is 0, the window is completely transparent. When <paramref name="alpha"/> is 255, the window is opaque.</param>
+        public static void SetLayeredWindowAttributes(this Microsoft.UI.Xaml.Window window, Windows.UI.Color chromaKey, byte alpha) 
+            => HwndExtensions.SetLayeredWindowAttributes(GetWindowHandle(window), chromaKey.R, chromaKey.G, chromaKey.B, alpha);*/
     }
 }

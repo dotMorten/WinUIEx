@@ -25,6 +25,7 @@ GetDesktopWindow
 GetClientRect
 LoadIcon
 UpdateLayeredWindow
+SetLayeredWindowAttributes
 GetDpiForMonitor
 ShowWindow
 LoadImage

@@ -33,6 +33,7 @@ namespace WinUIEx
             _manager.PresenterChanged += (s, e) => { OnPresenterChanged(Presenter); PresenterChanged?.Invoke(this, e); };
             _manager.PositionChanged += (s, e) => { OnPositionChanged(e); PositionChanged?.Invoke(this, e); };
             _manager.ZOrderChanged += (s, e) => { OnZOrderChanged(e); ZOrderChanged?.Invoke(this, e); };
+            _manager.WindowStateChanged += (s, e) => { OnStateChanged(e); WindowStateChanged?.Invoke(this, e); };
             SizeChanged += (s, e) => { OnSizeChanged(e); };
             
             var rootContent = new Grid();
@@ -240,6 +241,48 @@ namespace WinUIEx
         {
             get => _manager.IsResizable;
             set => _manager.IsResizable = value;
+        }
+
+        /// <summary>
+        /// Gets or sets the current window state.
+        /// </summary>
+        /// <remarks>
+        /// <para>When the <see cref="WindowState"/> property is changed, <see cref="WindowStateChanged"/> is raised.</para>
+        /// <note>
+        /// This property only has affect when using the OverlappedPresenter.
+        /// </note>
+        /// </remarks>
+        /// <value>A <see cref="WindowState"/> that determines whether a window is restored, minimized, or maximized.
+        /// The default is <see cref="WindowState.Normal"/> (restored).</value>
+        /// <seealso cref="WindowStateChanged"/>
+        /// <seealso cref="PresenterKind"/>
+        /// <seealso cref="OnStateChanged"/>
+        public WindowState WindowState
+        {
+            get => _manager.WindowState;
+            set => _manager.WindowState = value;
+        }
+
+        /// <summary>
+        /// Occurs when the window's <see cref="WindowState"/> property changes.
+        /// </summary>
+        /// <remarks>
+        /// <note>
+        /// This event only has affect when using the OverlappedPresenter.
+        /// </note>
+        /// </remarks>
+        /// <seealso cref="WindowState"/>
+        /// <seealso cref="OnStateChanged"/>
+        public event EventHandler<WindowState>? WindowStateChanged;
+
+        /// <summary>
+        /// Called when the <see cref="WindowState"/> changed.
+        /// </summary>
+        /// <param name="state">The new window state</param>
+        /// <seealso cref="WindowStateChanged"/>
+        /// <seealso cref="WindowState"/>
+        protected virtual void OnStateChanged(WindowState state)
+        {
         }
 
         /*

@@ -305,7 +305,7 @@ namespace WinUIEx
                         if (state != _windowState)
                         {
                             _windowState = state;
-                            StateChanged?.Invoke(this, state);
+                            WindowStateChanged?.Invoke(this, state);
                         }
                         break;
                     }
@@ -319,14 +319,14 @@ namespace WinUIEx
         /// Gets or sets the current window state.
         /// </summary>
         /// <remarks>
-        /// <para>When the <see cref="WindowState"/> property is changed, <see cref="StateChanged"/> is raised.</para>
+        /// <para>When the <see cref="WindowState"/> property is changed, <see cref="WindowStateChanged"/> is raised.</para>
         /// <note>
         /// This property only has affect when using the OverlappedPresenter.
         /// </note>
         /// </remarks>
         /// <value>A <see cref="WindowState"/> that determines whether a window is restored, minimized, or maximized.
         /// The default is <see cref="WindowState.Normal"/> (restored).</value>
-        /// <seealso cref="WindowManager.StateChanged"/>
+        /// <seealso cref="WindowStateChanged"/>
         /// <seealso cref="PresenterKind"/>
         public WindowState WindowState
         {
@@ -353,9 +353,9 @@ namespace WinUIEx
         /// This event only has affect when using the OverlappedPresenter.
         /// </note>
         /// </remarks>
-        /// <seealso cref="WindowManager.WindowState"/>
+        /// <seealso cref="WindowState"/>
         /// <seealso cref="PresenterChanged"/>
-        public event EventHandler<WindowState>? StateChanged;
+        public event EventHandler<WindowState>? WindowStateChanged;
 
         /// <summary>
         /// Event raised when a windows message is received.
@@ -616,7 +616,7 @@ namespace WinUIEx
     /// Specifies whether a window is minimized, maximized, or restored. Used by the <see cref="WindowManager.WindowState"/> property.
     /// </summary>
     /// <seealso cref="WindowManager.WindowState"/>
-    /// <seealso cref="WindowManager.StateChanged"/>
+    /// <seealso cref="WindowManager.WindowStateChanged"/>
     public enum WindowState
     {
         /// <summary>

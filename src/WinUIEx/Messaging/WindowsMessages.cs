@@ -147,10 +147,36 @@ namespace WinUIEx.Messaging
         WM_MOVING = 0x0216,
 
         /// <summary>
+        /// Sent to a window when a pointer leaves detection range over the window (hover) or when a pointer moves outside the boundaries of the window.
+        /// See <a href="https://learn.microsoft.com/en-us/windows/win32/inputmsg/wm-pointerleave">WM_POINTERLEAVE message</a>.
+        /// </summary>
+        WM_POINTERLEAVE = 0x024A,
+
+        /// <summary>
+        /// Posted to provide an update on a pointer that made contact over the non-client area of a window or when a hovering uncaptured
+        /// contact moves over the non-client area of a window. While the pointer is hovering, the message targets whichever window the
+        /// pointer happens to be over. While the pointer is in contact with the surface, the pointer is implicitly captured to the window
+        /// over which the pointer made contact and that window continues to receive input for the pointer until it breaks contact.
+        /// See <a href="https://learn.microsoft.com/en-us/windows/win32/inputmsg/wm-ncpointerupdate">WM_NCPOINTERUPDATE message</a>.
+        /// </summary>
+        WM_NCPOINTERUPDATE = 0x0241,
+
+        /// <summary>
         /// Sent to a window after its size has changed.
         /// See <a href="https://docs.microsoft.com/en-us/windows/win32/winmsg/wm-size">WM_SIZE message</a>.
         /// </summary>
         WM_SIZE = 0x0005,
+
+        /// <summary>
+        /// The WM_NCUAHDRAWCAPTION message is an undocumented message related to themes. When handling WM_NCPAINT, this message should also be handled.
+        /// </summary>
+        WM_NCUAHDRAWCAPTION = 0x00AE,
+
+        /// <summary>
+        /// Sent to a window in order to determine what part of the window corresponds to a particular screen coordinate.
+        /// See <a href="https://learn.microsoft.com/en-us/windows/win32/inputdev/wm-nchittest">WM_NCHITTEST message</a>.
+        /// </summary>
+        WM_NCHITTEST = 0x0084,
 
         /// <summary>
         /// Sent to a window that the user is resizing. By processing this message, an application can monitor the size and position of the drag rectangle and, if needed, change its size or position.
@@ -287,6 +313,11 @@ namespace WinUIEx.Messaging
         /// </summary>
         WM_USER = 0x0400,
 
+        /// <summary>
+        /// Sent to a window to retrieve a handle to the large or small icon associated with a window. The system displays the large icon
+        /// in the ALT+TAB dialog, and the small icon in the window caption.
+        /// See <a href="https://learn.microsoft.com/en-us/windows/win32/winmsg/wm-geticon">WM_GETICON message</a>
+        /// </summary>
         WM_GETICON = 0x007f,
 
         /// <summary>
@@ -318,6 +349,58 @@ namespace WinUIEx.Messaging
         /// See <a href="https://docs.microsoft.com/en-us/windows/win32/winmsg/wm-themechanged">WM_THEMECHANGE message</a>
         /// </summary>
         WM_THEMECHANGE = 0x031A,
+
+        /// <summary>
+        /// Typically, an application draws in a window in response to a WM_PAINT message. The system sends this message to a window 
+        /// procedure when changes to the window have altered the content of the client area. The system sends the message only if 
+        /// there are no other messages in the application message queue.
+        /// See <a href="https://learn.microsoft.com/en-us/windows/win32/gdi/the-wm-paint-message">WM_PAINT message</a>
+        /// </summary>
+        WM_PAINT = 0x000F,
+
+        /// <summary>
+        /// Sent when the window background must be erased (for example, when a window is resized). The message is sent to prepare 
+        /// an invalidated portion of a window for painting.
+        /// See <a href="https://learn.microsoft.com/en-us/windows/win32/winmsg/wm-erasebkgnd">WM_ERASEBKGND message</a>
+        /// </summary>
+        WM_ERASEBKGND = 0x0014,
+
+        /// <summary>
+        /// Sent when the size and position of a window's client area must be calculated. By processing this message, an application
+        /// can control the content of the window's client area when the size or position of the window changes.
+        /// See <a href="https://learn.microsoft.com/en-us/windows/win32/winmsg/wm-nccalcsize">WM_NCCALCSIZE message</a>
+        /// </summary>
+        WM_NCCALCSIZE = 0x0083,
+
+        /// <summary>
+        /// The <see cref="WM_NCPAINT"/> message is sent to a window when its frame must be painted.
+        /// See <a href="https://learn.microsoft.com/en-us/windows/win32/gdi/wm-ncpaint">WM_NCPAINT message</a>
+        /// </summary>
+        WM_NCPAINT = 0x0085,
+
+        /// <summary>
+        /// Posted when the user presses the left mouse button while the cursor is within the nonclient area of a window. This message
+        /// is posted to the window that contains the cursor. If a window has captured the mouse, this message is not posted.
+        /// See <a href="https://learn.microsoft.com/en-us/windows/win32/inputdev/wm-nclbuttondown">WM_NCLBUTTONDOWN message</a>
+        /// </summary>
+        WM_NCLBUTTONDOWN = 0x00A1,
+
+        /// <summary>
+        /// Posted when a pointer makes contact over the non-client area of a window. The message targets the window over which
+        /// the pointer makes contact. The pointer is implicitly captured to the window so that the window continues to receive input 
+        /// for the pointer until it breaks contact.
+        /// See <a href="https://learn.microsoft.com/en-us/windows/win32/inputmsg/wm-ncpointerdown">WM_NCPOINTERDOWN message</a>
+        /// </summary>
+        WM_NCPOINTERDOWN = 0x0242,
+
+        /// <summary>
+        /// Posted when a pointer that made contact over the non-client area of a window breaks contact. The message targets the 
+        /// window over which the pointer makes contact and the pointer is, at that point, implicitly captured to the window so 
+        /// that the window continues to receive input for the pointer until it breaks contact, including the <see cref="WM_NCPOINTERUP"/>
+        /// notification.
+        /// See <a href="https://learn.microsoft.com/en-us/windows/win32/inputmsg/wm-ncpointerup">WM_NCPOINTERUP message</a>
+        /// </summary>
+        WM_NCPOINTERUP = 0x0243,
 
         /// <summary>
         /// This message is only sent when using NOTIFYICON_VERSION_4, the Shell now sends the associated application an NIN_SELECT notification.

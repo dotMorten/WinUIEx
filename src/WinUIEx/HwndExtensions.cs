@@ -112,7 +112,7 @@ namespace WinUIEx
             var cy = (info.rcMonitor.bottom + info.rcMonitor.top) / 2;
             var left = cx - (w / 2);
             var top = cy - (h / 2);
-            SetWindowPosOrThrow(new HWND(hwnd), new HWND(), left, top, w, h, SET_WINDOW_POS_FLAGS.SWP_SHOWWINDOW);
+            SetWindowPosOrThrow(new HWND(hwnd), new HWND(), left, top, w, h, (SET_WINDOW_POS_FLAGS)0);
         }
 
         /// <summary>

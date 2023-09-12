@@ -80,6 +80,7 @@ namespace WinUIEx
                 h = 480;
 
             this.CenterOnScreen(w, h);
+            this.Show();
             await OnLoading();
             if (_windowType != null)
 #pragma warning disable IL2077 // Target parameter argument does not satisfy 'DynamicallyAccessedMembersAttribute' in call to target method. Type parameter already declared as requiring unreferenced code

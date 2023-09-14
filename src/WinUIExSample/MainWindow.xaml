@@ -12,14 +12,14 @@
     MinWidth="500" MinHeight="250"
     mc:Ignorable="d" >
 
-    <Grid Padding="20" x:Name="LayoutRoot">
+    <Grid x:Name="LayoutRoot">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <ScrollViewer>
-            <StackPanel>
+        <ScrollViewer Margin="20,20,0,20">
+            <StackPanel Background="{StaticResource SemiTransparentBackgroundBrush}" Padding="10" CornerRadius="5">
                 <ToggleSwitch Header="Can Minimize" IsOn="{x:Bind IsMinimizable, Mode=TwoWay}" />
                 <ToggleSwitch Header="Can Maximize" IsOn="{x:Bind IsMaximizable, Mode=TwoWay}" />
                 <ToggleSwitch Header="Can Resize" IsOn="{x:Bind IsResizable, Mode=TwoWay}" />
@@ -36,10 +36,17 @@
                     <ComboBoxItem>Dark</ComboBoxItem>
                     <ComboBoxItem>Light</ComboBoxItem>
                 </ComboBox>
+                <ComboBox x:Name="backdropSelector" Header="Backdrop" SelectedIndex="0" SelectionChanged="Backdrop_SelectionChanged" Margin="0,5,0,0">
+                    <ComboBoxItem>Mica</ComboBoxItem>
+                    <ComboBoxItem>Acrylic</ComboBoxItem>
+                    <ComboBoxItem>Transparent</ComboBoxItem>
+                    <ComboBoxItem>Animated</ComboBoxItem>
+                    <ComboBoxItem>Blur</ComboBoxItem>
+                </ComboBox>
             </StackPanel>
         </ScrollViewer>
-        <ScrollViewer Grid.Column="1" Padding="5,0">
-            <StackPanel >
+        <ScrollViewer Grid.Column="1" Padding="5,0" Margin="5,20">
+            <StackPanel  Background="{StaticResource SemiTransparentBackgroundBrush}" Padding="10" CornerRadius="5">
                 <StackPanel.Resources>
                     <Style TargetType="Button">
                         <Setter Property="HorizontalAlignment" Value="Stretch" />
@@ -58,7 +65,6 @@
                 <Button Content="Minimize + Restore (2 second delay)" Click="MinimizeWindow_Click" />
                 <Button Content="Hide + Restore (2 second delay)" Click="HideWindow_Click" />
                 <Button Content="Bring to front (2 second delay)" Click="BringToFront_Click" />
-                <Button Content="Toggle Custom Backdrops" Click="Transparent_Click" />
                 <ComboBox x:Name="windowState" SelectionChanged="windowState_SelectionChanged">
                     <ComboBox.Items>
                         <ComboBoxItem>Window State: Normal</ComboBoxItem>
@@ -71,10 +77,11 @@
                 <Slider Header="Window Opacity" Minimum="1" Maximum="255" Value="255" ValueChanged="Slider_ValueChanged" />
             </StackPanel>
         </ScrollViewer>
-        <Grid Grid.Column="2" >
+        <Grid Grid.Column="2" Margin="0,0,20,0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
+                <RowDefinition Height="20" />
             </Grid.RowDefinitions>
             <TextBlock Text="Log" />
             <TextBox IsReadOnly="True" AcceptsReturn="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" x:Name="WindowEventLog" Grid.Row="1" />

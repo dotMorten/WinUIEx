@@ -153,6 +153,15 @@ namespace WinUIEx.Messaging
         WM_POINTERLEAVE = 0x024A,
 
         /// <summary>
+        /// Posted to provide an update on a pointer that made contact over the client area of a window or on a hovering uncaptured pointer over
+        /// the client area of a window. While the pointer is hovering, the message targets whichever window the pointer happens to be over. While
+        /// the pointer is in contact with the surface, the pointer is implicitly captured to the window over which the pointer made contact and
+        /// that window continues to receive input for the pointer until it breaks contact.
+        /// See <a href="https://learn.microsoft.com/en-us/windows/win32/inputmsg/wm-pointerupdate">WM_POINTERUPDATE message</a>.
+        /// </summary>
+        WM_POINTERUPDATE = 0x0245,
+
+        /// <summary>
         /// Posted to provide an update on a pointer that made contact over the non-client area of a window or when a hovering uncaptured
         /// contact moves over the non-client area of a window. While the pointer is hovering, the message targets whichever window the
         /// pointer happens to be over. While the pointer is in contact with the surface, the pointer is implicitly captured to the window

@@ -12,46 +12,33 @@ namespace WinUIEx
     /// <summary>
     /// A custom backdrop that make the window completely transparent.
     /// </summary>
-    public class TransparentBackdrop : ColorBackdrop
-    {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="TransparentBackdrop"/> class.
-        /// </summary>
-        public TransparentBackdrop() : base(Windows.UI.Color.FromArgb(0, 255, 255, 255))
-        { 
-        }
-    }
-
-    /// <summary>
-    /// A custom backdrop that sets the background to the specified color - supports opacity to make the window semi-transparent.
-    /// </summary>
-    public class ColorBackdrop : Microsoft.UI.Xaml.Media.SystemBackdrop
+    public class TransparentTintBackdrop : CompositionBrushBackdrop
     {
         private WindowMessageMonitor? monitor;
         private Windows.UI.Composition.CompositionColorBrush? brush;
-        
+
         /// <summary>
-        /// Initializes a new instance of the <see cref="ColorBackdrop"/> class.
+        /// Initializes a new instance of the <see cref="TransparentTintBackdrop"/> class.
         /// </summary>
-        public ColorBackdrop() : this(Microsoft.UI.Colors.White)
+        public TransparentTintBackdrop() : this(Microsoft.UI.Colors.Transparent) 
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ColorBackdrop"/> class.
+        /// Initializes a new instance of the <see cref="TransparentTintBackdrop"/> class.
         /// </summary>
-        /// <param name="color">Color for the background</param>
-        public ColorBackdrop(Windows.UI.Color color)
+        /// <param name="tintColor">Color for the background. The Alpha value defines the opacity of the window</param>
+        public TransparentTintBackdrop(Windows.UI.Color tintColor)
         {
-            Color = color;
+            _color = tintColor;
         }
 
         private Windows.UI.Color _color;
 
         /// <summary>
-        /// Gets or sets the color used for the backdrop.
+        /// Gets or sets the color used for the backdrop. The Alpha value defines the opacity of the window.
         /// </summary>
-        public Windows.UI.Color  Color
+        public Windows.UI.Color TintColor
         {
             get { return _color; }
             set
@@ -65,10 +52,9 @@ namespace WinUIEx
         }
 
         /// <inheritdoc />
-        protected override void OnDefaultSystemBackdropConfigurationChanged(ICompositionSupportsSystemBackdrop target, XamlRoot xamlRoot)
+        protected override Windows.UI.Composition.CompositionBrush CreateBrush(Windows.UI.Composition.Compositor compositor)
         {
-            if (target != null)
-                base.OnDefaultSystemBackdropConfigurationChanged(target, xamlRoot);
+            return WindowManager.Compositor.CreateColorBrush(TintColor);
         }
 
         /// <inheritdoc />
@@ -83,13 +69,10 @@ namespace WinUIEx
 
             ConfigureDwm(hWnd);
 
-            brush = WindowManager.Compositor.CreateColorBrush(Color);
-            connectedTarget.SystemBackdrop = brush;
+            base.OnTargetConnected(connectedTarget, xamlRoot);
 
             var hdc = PInvoke.GetDC(new Windows.Win32.Foundation.HWND((nint)hWnd));
             ClearBackground((nint)hWnd, hdc.Value);
-
-            base.OnTargetConnected(connectedTarget, xamlRoot);
         }
 
         /// <inheritdoc />

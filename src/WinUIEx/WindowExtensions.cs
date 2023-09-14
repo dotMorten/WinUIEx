@@ -291,6 +291,20 @@ namespace WinUIEx
         }
 
         /// <summary>
+        /// Gets the current window style
+        /// </summary>
+        /// <param name="window">Window</param>
+        /// <returns></returns>
+        public static WindowStyle GetWindowStyle(this Microsoft.UI.Xaml.Window window) => HwndExtensions.GetWindowStyle(window.GetWindowHandle());
+
+        /// <summary>
+        /// Sets the current window style
+        /// </summary>
+        /// <param name="window">Window</param>
+        /// <param name="newStyle"></param>
+        public static void SetWindowStyle(this Microsoft.UI.Xaml.Window window, WindowStyle newStyle) => HwndExtensions.SetWindowStyle(window.GetWindowHandle(), newStyle);
+
+        /// <summary>
         /// Sets the opacity of a layered window.
         /// </summary>
         /// <param name="window">window</param>

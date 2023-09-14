@@ -1,18 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.UI;
-using Microsoft.UI.Composition;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Media;
 using Windows.Foundation;
 using Windows.Graphics;
 using WinUIEx;
@@ -24,11 +21,16 @@ namespace WinUIExSample
     {
         private readonly Queue<string> windowEvents = new Queue<string>(101);
         private readonly WindowMessageMonitor monitor;
+        private MicaBackdrop micaBackdrop = new MicaBackdrop();
+        private DesktopAcrylicBackdrop acrylicBackdrop = new DesktopAcrylicBackdrop();
+        private TransparentTintBackdrop transparentTintBackdrop = new TransparentTintBackdrop();
+        private ColorAnimatedBackdrop colorRotatingBackdrop = new ColorAnimatedBackdrop();
+        private BlurredBackdrop blurredBackdrop = new BlurredBackdrop();
 
         public MainWindow()
         {
             this.InitializeComponent();
-            this.SystemBackdrop = new Microsoft.UI.Xaml.Media.MicaBackdrop();
+            this.SystemBackdrop = micaBackdrop;
             this.SetTitleBarBackgroundColors(Microsoft.UI.Colors.CornflowerBlue);
             PersistenceId = "MainWindow";
             monitor = new WindowMessageMonitor(this);
@@ -210,92 +212,42 @@ namespace WinUIExSample
 
         }
 
-        private void Transparent_Click(object sender, RoutedEventArgs e)
+        private void Backdrop_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var _windowHandle = this.GetWindowHandle();
-            if (SystemBackdrop is TransparentBackdrop)
-                SystemBackdrop = new Microsoft.UI.Xaml.Media.MicaBackdrop();
-            else if (SystemBackdrop is Microsoft.UI.Xaml.Media.MicaBackdrop)
-                SystemBackdrop = new ColorRotatingBackdrop();
-            else
-                SystemBackdrop = new TransparentBackdrop();
+            if (micaBackdrop is null) return; // Still loading
+            switch (((ComboBox)sender).SelectedIndex)
+            {
+                case 1: this.SystemBackdrop = acrylicBackdrop; break;
+                case 2: this.SystemBackdrop = transparentTintBackdrop; break;
+                case 3: this.SystemBackdrop = colorRotatingBackdrop; break;
+                case 4: this.SystemBackdrop = blurredBackdrop; break;
+                default: this.SystemBackdrop = micaBackdrop; break;
+            }
         }
 
-        private class ColorRotatingBackdrop : ColorBackdrop
+        private class ColorAnimatedBackdrop : CompositionBrushBackdrop
         {
-            private static Windows.UI.Color startColor = Windows.UI.Color.FromArgb(127, 255, 0, 0);
-            public ColorRotatingBackdrop() : base(startColor)
+            protected override Windows.UI.Composition.CompositionBrush CreateBrush(Windows.UI.Composition.Compositor compositor)
             {
-            }
-
-            private async void RunColorLoop()
-            {
-                float angle = 0;
-                while (isConnected)
-                {
-                    await Task.Delay(20);
-                    base.Color = RotateHue(startColor, angle++);
-                }
-            }
-
-            bool isConnected;
-            protected override void OnTargetConnected(ICompositionSupportsSystemBackdrop connectedTarget, XamlRoot xamlRoot)
-            {
-                isConnected = true;
-                RunColorLoop();
-                base.OnTargetConnected(connectedTarget, xamlRoot);
-            }
-
-            protected override void OnTargetDisconnected(ICompositionSupportsSystemBackdrop disconnectedTarget)
-            {
-                isConnected = false;
-                base.OnTargetDisconnected(disconnectedTarget);
-            }
-            private static Windows.UI.Color RotateHue(Windows.UI.Color color, float angle)
-            {
-                var dcolor = System.Drawing.Color.FromArgb(color.A, color.R, color.G, color.B);
-                float hue = dcolor.GetHue();
-                float saturation = dcolor.GetSaturation();
-                float lightness = dcolor.GetBrightness();
-
-                hue += angle;
-                if (hue > 360)
-                    hue -= 360;
-                else if (hue < 0)
-                    hue += 360;
-
-                return ColorFromHSL(color.A, hue, saturation, lightness);
-            }
-            public static Windows.UI.Color ColorFromHSL(byte alpha, float hue, float saturation, float lightness)
-            {
-                if (saturation == 0)
-                    return Windows.UI.Color.FromArgb(alpha, (byte)(lightness * 255), (byte)(lightness * 255), (byte)(lightness * 255));
-
-                float q = lightness < 0.5 ? lightness * (1 + saturation) : lightness + saturation - lightness * saturation;
-                float p = 2 * lightness - q;
-
-                float hk = hue / 360;
-
-                float tr = hk + 1.0f / 3.0f;
-                float tg = hk;
-                float tb = hk - 1.0f / 3.0f;
-
-                tr = tr < 0 ? tr + 1 : tr > 1 ? tr - 1 : tr;
-                tg = tg < 0 ? tg + 1 : tg > 1 ? tg - 1 : tg;
-                tb = tb < 0 ? tb + 1 : tb > 1 ? tb - 1 : tb;
-
-                return Windows.UI.Color.FromArgb(alpha, (byte)(255 * HueToRGB(p, q, tr)), (byte)(255 * HueToRGB(p, q, tg)), (byte)(255 * HueToRGB(p, q, tb)));
-            }
-
-            private static float HueToRGB(float p, float q, float t)
-            {
-                if (t < 0) t += 1;
-                if (t > 1) t -= 1;
-                if (t < 1.0 / 6.0) return p + (q - p) * 6 * t;
-                if (t < 1.0 / 2.0) return q;
-                if (t < 2.0 / 3.0) return p + (q - p) * (2.0f / 3.0f - t) * 6;
-                return p;
+                var brush = compositor.CreateColorBrush(Windows.UI.Color.FromArgb(255,255,0,0));
+                var animation = compositor.CreateColorKeyFrameAnimation();
+                var easing = compositor.CreateLinearEasingFunction();
+                animation.InsertKeyFrame(0, Colors.Red, easing);
+                animation.InsertKeyFrame(.333f, Colors.Green, easing);
+                animation.InsertKeyFrame(.667f, Colors.Blue, easing);
+                animation.InsertKeyFrame(1, Colors.Red, easing);
+                animation.InterpolationColorSpace = Windows.UI.Composition.CompositionColorSpace.Hsl;
+                animation.Duration = TimeSpan.FromSeconds(15);
+                animation.IterationBehavior = Windows.UI.Composition.AnimationIterationBehavior.Forever;
+                brush.StartAnimation("Color", animation);
+                return brush;
             }
         }
-    }
+
+        private class BlurredBackdrop : CompositionBrushBackdrop
+        {
+            protected override Windows.UI.Composition.CompositionBrush CreateBrush(Windows.UI.Composition.Compositor compositor)
+                => compositor.CreateHostBackdropBrush();
+        }
+   }
 }

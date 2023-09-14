@@ -29,6 +29,13 @@ namespace WinUIEx
     {
         private WindowMessageMonitor? monitor;
         private Windows.UI.Composition.CompositionColorBrush? brush;
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ColorBackdrop"/> class.
+        /// </summary>
+        public ColorBackdrop() : this(Microsoft.UI.Colors.White)
+        {
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ColorBackdrop"/> class.

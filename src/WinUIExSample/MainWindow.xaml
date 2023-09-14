@@ -58,6 +58,7 @@
                 <Button Content="Minimize + Restore (2 second delay)" Click="MinimizeWindow_Click" />
                 <Button Content="Hide + Restore (2 second delay)" Click="HideWindow_Click" />
                 <Button Content="Bring to front (2 second delay)" Click="BringToFront_Click" />
+                <Button Content="Toggle Custom Backdrops" Click="Transparent_Click" />
                 <ComboBox x:Name="windowState" SelectionChanged="windowState_SelectionChanged">
                     <ComboBox.Items>
                         <ComboBoxItem>Window State: Normal</ComboBoxItem>

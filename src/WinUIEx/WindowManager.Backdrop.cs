@@ -18,7 +18,7 @@ namespace WinUIEx
     /// </summary>
     public partial class WindowManager : IDisposable
     {
-        private IntPtr m_dispatcherQueueController = IntPtr.Zero;
+        private static IntPtr m_dispatcherQueueController = IntPtr.Zero;
         private ISystemBackdropController? currentController;
         private SystemBackdropConfiguration? BackdropConfiguration;
         [Obsolete]
@@ -118,7 +118,7 @@ namespace WinUIEx
             currentController = null;
         }
 
-        private void EnsureDispatcherQueueController()
+        private static void EnsureDispatcherQueueController()
         {
             if (Windows.System.DispatcherQueue.GetForCurrentThread() == null && m_dispatcherQueueController == IntPtr.Zero)
             {
@@ -127,11 +127,29 @@ namespace WinUIEx
                 options.threadType = 2;    // DQTYPE_THREAD_CURRENT
                 options.apartmentType = 2; // DQTAT_COM_STA
 
-                IntPtr m_dispatcherQueueControllerPtr = IntPtr.Zero;
-                CreateDispatcherQueueController(options, ref m_dispatcherQueueController);
+                CreateDispatcherQueueController(options, out m_dispatcherQueueController);
             }
         }
-
+        static Windows.UI.Composition.Compositor? compositor;
+        static object compositorLock = new object();
+        internal static Windows.UI.Composition.Compositor Compositor
+        {
+            get
+            {
+                if (compositor == null)
+                {
+                    lock (compositorLock)
+                    {
+                        if (compositor == null)
+                        {
+                            EnsureDispatcherQueueController();
+                            compositor = new Windows.UI.Composition.Compositor();
+                        }
+                    }
+                }
+                return compositor;
+            }
+        }
         private static SystemBackdropTheme ConvertToSystemBackdropTheme(ElementTheme theme)
         {
             switch (theme)
@@ -154,6 +172,6 @@ namespace WinUIEx
         }
 
         [DllImport("CoreMessaging.dll")]
-        private static extern int CreateDispatcherQueueController([In] DispatcherQueueOptions options, [In, Out] ref IntPtr dispatcherQueueController);
+        private static extern int CreateDispatcherQueueController([In] DispatcherQueueOptions options, out IntPtr dispatcherQueueController);
     }
 }

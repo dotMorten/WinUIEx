@@ -8,6 +8,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.UI;
+using Microsoft.UI.Composition;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
@@ -19,9 +20,6 @@ using WinUIEx.Messaging;
 
 namespace WinUIExSample
 {
-    /// <summary>
-    /// An empty window that can be used on its own or navigated to within a Frame.
-    /// </summary>
     public sealed partial class MainWindow : WindowEx
     {
         private readonly Queue<string> windowEvents = new Queue<string>(101);
@@ -210,6 +208,94 @@ namespace WinUIExSample
         {
             this.SetWindowOpacity((byte)e.NewValue);
 
+        }
+
+        private void Transparent_Click(object sender, RoutedEventArgs e)
+        {
+            var _windowHandle = this.GetWindowHandle();
+            if (SystemBackdrop is TransparentBackdrop)
+                SystemBackdrop = new Microsoft.UI.Xaml.Media.MicaBackdrop();
+            else if (SystemBackdrop is Microsoft.UI.Xaml.Media.MicaBackdrop)
+                SystemBackdrop = new ColorRotatingBackdrop();
+            else
+                SystemBackdrop = new TransparentBackdrop();
+        }
+
+        private class ColorRotatingBackdrop : ColorBackdrop
+        {
+            private static Windows.UI.Color startColor = Windows.UI.Color.FromArgb(127, 255, 0, 0);
+            public ColorRotatingBackdrop() : base(startColor)
+            {
+            }
+
+            private async void RunColorLoop()
+            {
+                float angle = 0;
+                while (isConnected)
+                {
+                    await Task.Delay(20);
+                    base.Color = RotateHue(startColor, angle++);
+                }
+            }
+
+            bool isConnected;
+            protected override void OnTargetConnected(ICompositionSupportsSystemBackdrop connectedTarget, XamlRoot xamlRoot)
+            {
+                isConnected = true;
+                RunColorLoop();
+                base.OnTargetConnected(connectedTarget, xamlRoot);
+            }
+
+            protected override void OnTargetDisconnected(ICompositionSupportsSystemBackdrop disconnectedTarget)
+            {
+                isConnected = false;
+                base.OnTargetDisconnected(disconnectedTarget);
+            }
+            private static Windows.UI.Color RotateHue(Windows.UI.Color color, float angle)
+            {
+                var dcolor = System.Drawing.Color.FromArgb(color.A, color.R, color.G, color.B);
+                float hue = dcolor.GetHue();
+                float saturation = dcolor.GetSaturation();
+                float lightness = dcolor.GetBrightness();
+
+                hue += angle;
+                if (hue > 360)
+                    hue -= 360;
+                else if (hue < 0)
+                    hue += 360;
+
+                return ColorFromHSL(color.A, hue, saturation, lightness);
+            }
+            public static Windows.UI.Color ColorFromHSL(byte alpha, float hue, float saturation, float lightness)
+            {
+                if (saturation == 0)
+                    return Windows.UI.Color.FromArgb(alpha, (byte)(lightness * 255), (byte)(lightness * 255), (byte)(lightness * 255));
+
+                float q = lightness < 0.5 ? lightness * (1 + saturation) : lightness + saturation - lightness * saturation;
+                float p = 2 * lightness - q;
+
+                float hk = hue / 360;
+
+                float tr = hk + 1.0f / 3.0f;
+                float tg = hk;
+                float tb = hk - 1.0f / 3.0f;
+
+                tr = tr < 0 ? tr + 1 : tr > 1 ? tr - 1 : tr;
+                tg = tg < 0 ? tg + 1 : tg > 1 ? tg - 1 : tg;
+                tb = tb < 0 ? tb + 1 : tb > 1 ? tb - 1 : tb;
+
+                return Windows.UI.Color.FromArgb(alpha, (byte)(255 * HueToRGB(p, q, tr)), (byte)(255 * HueToRGB(p, q, tg)), (byte)(255 * HueToRGB(p, q, tb)));
+            }
+
+            private static float HueToRGB(float p, float q, float t)
+            {
+                if (t < 0) t += 1;
+                if (t > 1) t -= 1;
+                if (t < 1.0 / 6.0) return p + (q - p) * 6 * t;
+                if (t < 1.0 / 2.0) return q;
+                if (t < 2.0 / 3.0) return p + (q - p) * (2.0f / 3.0f - t) * 6;
+                return p;
+            }
         }
     }
 }

@@ -48,3 +48,10 @@ IDXGIAdapter
 IDXGIDevice
 IDXGIFactory2
 CreateDirect3D11SurfaceFromDXGISurface
+CreateDispatcherQueueController
+DwmEnableBlurBehindWindow
+DwmExtendFrameIntoClientArea
+CreateRectRgn
+CreateSolidBrush
+FillRect
+GetDC

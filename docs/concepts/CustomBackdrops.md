@@ -1,6 +1,6 @@
 ## Custom Backdrops
 
-The [TransparentBackdrop](https://dotmorten.github.io/WinUIEx/api/WinUIEx.TransparentBackdrop.html) and [ColorBackdrop[(https://dotmorten.github.io/WinUIEx/api/WinUIEx.ColorBackdrop.html) allows you to set the background to be fully transparent, or a solid color with alpha.
+The [TransparentBackdrop](https://dotmorten.github.io/WinUIEx/api/WinUIEx.TransparentBackdrop.html) and [ColorBackdrop](https://dotmorten.github.io/WinUIEx/api/WinUIEx.ColorBackdrop.html) allows you to set the background to be fully transparent, or a solid color with alpha.
 This can be useful for changing the visual shape of the window, and create transparent areas of the window.
 These are similar to the Mica and Acrylic backdrops, but without the blur effects.
 

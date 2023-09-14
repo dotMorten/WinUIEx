@@ -1,4 +1,5 @@
-﻿using WinUIEx;
+﻿using Microsoft.UI.Xaml.Media;
+using WinUIEx;
 
 namespace WinUIExMauiSample
 {
@@ -50,13 +51,12 @@ namespace WinUIExMauiSample
             var selectedIndex = ((Picker)sender).SelectedIndex;
             var window = this.Window?.Handler?.PlatformView as Microsoft.UI.Xaml.Window;
             if (window is null) return;
-            var manager = WinUIEx.WindowManager.Get(window);
-            if (manager is null) return;
             switch (selectedIndex)
             {
-                case 0: manager.Backdrop = new AcrylicSystemBackdrop(); break;
-                case 1: manager.Backdrop = new MicaSystemBackdrop(); break;
-                case 2: manager.Backdrop = null; break;
+                case 0: window.SystemBackdrop = new DesktopAcrylicBackdrop(); break;
+                case 1: window.SystemBackdrop = new MicaBackdrop(); break;
+                case 2: window.SystemBackdrop = new TransparentBackdrop(); break;
+                case 3: window.SystemBackdrop = null; break;
             }
         }
     }

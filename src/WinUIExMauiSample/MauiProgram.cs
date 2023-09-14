@@ -1,5 +1,6 @@
 ﻿using Microsoft.Maui.LifecycleEvents;
 using Microsoft.UI.Composition.SystemBackdrops;
+using Microsoft.UI.Xaml.Media;
 using WinUIEx;
 
 namespace WinUIExMauiSample
@@ -27,7 +28,7 @@ namespace WinUIExMauiSample
                              manager.PersistenceId = "MainWindowPersistanceId";
                              manager.MinWidth = 640;
                              manager.MinHeight = 480;
-                             manager.Backdrop = new AcrylicSystemBackdrop();
+                             window.SystemBackdrop = new DesktopAcrylicBackdrop();
                          });
                      });
                  })

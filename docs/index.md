@@ -17,6 +17,7 @@ A set of extension methods and classes to fill some gaps in WinUI 3, mostly arou
   - [UI Test Tooling for easy UI Testing](concepts/UITests.md)
   - [Splash screen](concepts/Splashscreen.md)
   - [OAuth Web Authenticator](concepts/WebAuthenticator.md)
+  - [Custom Backdrops](concepts/CustomBackdrops.md)
 
 
 And more to come...

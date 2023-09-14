@@ -45,6 +45,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{8D51A09F-8
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "concepts", "concepts", "{0B722EAE-DA7A-4091-9024-9BB9CC37F527}"
 	ProjectSection(SolutionItems) = preProject
+		..\docs\concepts\CustomBackdrops.md = ..\docs\concepts\CustomBackdrops.md
 		..\docs\concepts\HwndExtensions.md = ..\docs\concepts\HwndExtensions.md
 		..\docs\concepts\index.md = ..\docs\concepts\index.md
 		..\docs\concepts\Maui.md = ..\docs\concepts\Maui.md

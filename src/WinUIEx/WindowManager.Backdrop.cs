@@ -64,6 +64,8 @@ namespace WinUIEx
         /// <summary>
         /// Gets the currently active window backdrop.
         /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete()]
         public ISystemBackdropController? ActiveBackdropController => currentController;
 
         private void InitBackdrop()

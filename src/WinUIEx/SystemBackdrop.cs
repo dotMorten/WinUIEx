@@ -16,6 +16,7 @@ namespace WinUIEx
     /// <seealso cref="Microsoft.UI.Composition.SystemBackdrops.MicaController" />
     /// <seealso cref="Microsoft.UI.Composition.SystemBackdrops.DesktopAcrylicController" />
     [Obsolete("Use Microsoft.UI.Xaml.Media.SystemBackdrop")]
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public abstract class SystemBackdrop
     {
         /// <summary>
@@ -298,6 +299,7 @@ namespace WinUIEx
     /// </summary>
     /// <seealso cref="AcrylicSystemBackdrop"/>
     [Obsolete("Use Microsoft.UI.Xaml.Media.MicaBackdrop")]
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public class MicaSystemBackdrop : SystemBackdrop
     {
         private readonly static Windows.UI.Color _defaultDarkTint = Windows.UI.Color.FromArgb(0xff, 0x20, 0x20, 0x20);
@@ -400,6 +402,7 @@ namespace WinUIEx
     /// <seealso cref="DesktopAcrylicController"/>
     /// <seealso cref="MicaSystemBackdrop"/>
     [Obsolete("Use Microsoft.UI.Xaml.Media.DesktopAcrylicBackdrop")]
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public class AcrylicSystemBackdrop : SystemBackdrop
     {
         /// <summary>

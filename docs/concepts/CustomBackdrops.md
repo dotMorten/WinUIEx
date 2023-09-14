@@ -4,7 +4,7 @@ The [TransparentTintBackdrop](https://dotmorten.github.io/WinUIEx/api/WinUIEx.Tr
 This can be useful for changing the visual shape of the window, and create transparent areas of the window, or more advanced background effects.
 These are similar to the Mica and Acrylic backdrops.
 
-Transparent backdrop:
+### Transparent backdrop:
 ```xml
 <Window ...
    xmlns:winuiex="using:WinUIEx">
@@ -14,7 +14,7 @@ Transparent backdrop:
 </Window>
 ```
 
-Semi-transparent blue backdrop:
+### Semi-transparent blue backdrop:
 ```xml
 <Window ...
    xmlns:winuiex="using:WinUIEx">
@@ -24,7 +24,7 @@ Semi-transparent blue backdrop:
 </Window>
 ```
 
-Custom animated composition-brush backdrop:
+### Custom animated composition-brush backdrop:
 ```cs
 public class ColorAnimatedBackdrop : CompositionBrushBackdrop
 {
@@ -46,7 +46,7 @@ public class ColorAnimatedBackdrop : CompositionBrushBackdrop
 }
 ```
 
-Blurred composition-brush backdrop:
+### Blurred composition-brush backdrop:
 ```cs
 public class BlurredBackdrop : CompositionBrushBackdrop
 {

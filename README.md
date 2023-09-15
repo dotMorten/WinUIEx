@@ -12,16 +12,18 @@ A set of extension methods and classes to fill some gaps in WinUI 3, mostly arou
 
 ### Features
 
-  - [Window Extension methods](docs/concepts/WindowExtensions.md)
-  - [HWND Window Handle Extensions methods](docs/concepts/HwndExtensions.md)
-  - [Extended `WindowEx` Window class](docs/concepts/WindowEx.md)
-  - [Window Manager](docs/concepts/WindowManager.md)
-  - [Splash Screens](docs/concepts/Splashscreen.md)
-  - [OAuth Web Authentication](docs/concepts/WebAuthenticator.md)
-  - [UI Test Tooling for easy UI Testing](docs/concepts/UITests.md)
+  - [Window Extension methods](https://dotmorten.github.io/WinUIEx/concepts/WindowExtensions.html)
+  - [HWND Window Handle Extensions methods](https://dotmorten.github.io/WinUIEx/concepts/HwndExtensions.html)
+  - [Extended `WindowEx` Window class](https://dotmorten.github.io/WinUIEx/concepts/WindowEx.html)
+  - [Window Manager](https://dotmorten.github.io/WinUIEx/concepts/WindowManager.html)
+  - [Splash Screens](https://dotmorten.github.io/WinUIEx/concepts/Splashscreen.html)
+  - [OAuth Web Authentication](https://dotmorten.github.io/WinUIEx/concepts/WebAuthenticator.html)
+  - [Custom Window Backdrops](https://dotmorten.github.io/WinUIEx/concepts/CustomBackdrops.html)
 
 
 And more to come...
+
+https://github.com/dotMorten/WinUIEx/assets/1378165/49274b59-5628-4a0c-b6ca-4f38784614cf
 
 ![image](https://user-images.githubusercontent.com/1378165/171925868-5783b70d-3942-4911-8c77-86df696a7b97.png)
 

@@ -9,7 +9,7 @@ These are similar to the Mica and Acrylic backdrops.
 <Window ...
    xmlns:winuiex="using:WinUIEx">
     <Window.SystemBackdrop>
-        <winex:TransparentTintBackdrop />
+        <winuiex:TransparentTintBackdrop />
     </Window.SystemBackdrop>
 </Window>
 ```
@@ -19,7 +19,7 @@ These are similar to the Mica and Acrylic backdrops.
 <Window ...
    xmlns:winuiex="using:WinUIEx">
     <Window.SystemBackdrop>
-        <winex:TransparentTintBackdrop TintColor="#554444ff" />
+        <winuiex:TransparentTintBackdrop TintColor="#554444ff" />
     </Window.SystemBackdrop>
 </Window>
 ```

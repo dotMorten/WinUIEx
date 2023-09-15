@@ -55,4 +55,4 @@ public class BlurredBackdrop : CompositionBrushBackdrop
 }
 ```
 
-[!Video https://github.com/dotMorten/WinUIEx/assets/1378165/49274b59-5628-4a0c-b6ca-4f38784614cf]
+[!Video https://youtu.be/Z3mV-bdWGN8]

@@ -305,6 +305,36 @@ namespace WinUIEx
         public static void SetWindowStyle(this Microsoft.UI.Xaml.Window window, WindowStyle newStyle) => HwndExtensions.SetWindowStyle(window.GetWindowHandle(), newStyle);
 
         /// <summary>
+        /// Disables or enables the window style
+        /// </summary>
+        /// <param name="window">Window</param>
+        /// <param name="visible"></param>
+        /// <param name="style"></param>
+        public static void ToggleWindowStyle(this Microsoft.UI.Xaml.Window window, bool visible, WindowStyle style) => HwndExtensions.ToggleWindowStyle(window.GetWindowHandle(), visible, style);
+
+        /// <summary>
+        /// Gets the current window style
+        /// </summary>
+        /// <param name="window">Window</param>
+        /// <returns></returns>
+        public static ExtendedWindowStyle GetExtendedWindowStyle(this Microsoft.UI.Xaml.Window window) => HwndExtensions.GetExtendedWindowStyle(window.GetWindowHandle());
+
+        /// <summary>
+        /// Sets the current window style
+        /// </summary>
+        /// <param name="window">Window</param>
+        /// <param name="newStyle"></param>
+        public static void SetExtendedWindowStyle(this Microsoft.UI.Xaml.Window window, ExtendedWindowStyle newStyle) => HwndExtensions.SetExtendedWindowStyle(window.GetWindowHandle(), newStyle);
+
+        /// <summary>
+        /// Disables or enables the window style
+        /// </summary>
+        /// <param name="window">Window</param>
+        /// <param name="visible"></param>
+        /// <param name="style"></param>
+        public static void ToggleExtendedWindowStyle(this Microsoft.UI.Xaml.Window window, bool visible, ExtendedWindowStyle style) => HwndExtensions.ToggleExtendedWindowStyle(window.GetWindowHandle(), visible, style);
+
+        /// <summary>
         /// Sets the opacity of a layered window.
         /// </summary>
         /// <param name="window">window</param>

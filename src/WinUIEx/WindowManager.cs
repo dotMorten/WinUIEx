@@ -413,7 +413,6 @@ namespace WinUIEx
                         return container.Values!;
                     else if (createIfMissing)
                         return ApplicationData.Current?.LocalSettings?.CreateContainer("WinUIEx", ApplicationDataCreateDisposition.Always)?.Values;
-                        
                 }
                 catch { }
             }

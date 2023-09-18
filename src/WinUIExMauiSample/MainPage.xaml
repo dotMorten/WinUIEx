@@ -47,6 +47,7 @@
                     <Picker.Items>
                         <x:String>Acrylic</x:String>
                         <x:String>Mica</x:String>
+                        <x:String>Transparent</x:String>
                         <x:String>None</x:String>
                     </Picker.Items>
                     <Picker.SelectedIndex>2</Picker.SelectedIndex>

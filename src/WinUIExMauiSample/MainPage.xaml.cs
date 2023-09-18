@@ -55,7 +55,7 @@ namespace WinUIExMauiSample
             {
                 case 0: window.SystemBackdrop = new DesktopAcrylicBackdrop(); break;
                 case 1: window.SystemBackdrop = new MicaBackdrop(); break;
-                case 2: window.SystemBackdrop = new TransparentBackdrop(); break;
+                case 2: window.SystemBackdrop = new TransparentTintBackdrop(); break;
                 case 3: window.SystemBackdrop = null; break;
             }
         }

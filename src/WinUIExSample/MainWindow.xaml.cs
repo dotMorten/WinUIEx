@@ -34,7 +34,10 @@ namespace WinUIExSample
             PersistenceId = "MainWindow";
             monitor = new WindowMessageMonitor(this);
             navigationView.Loaded += NavigationView_Loaded;
+            this.Closed += MainWindow_Closed;
         }
+
+        private void MainWindow_Closed(object sender, WindowEventArgs args) => logWindow?.Close();
 
         private void NavigationView_Loaded(object sender, RoutedEventArgs e)
         {

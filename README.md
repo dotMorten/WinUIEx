@@ -23,7 +23,8 @@ A set of extension methods and classes to fill some gaps in WinUI 3, mostly arou
 
 And more to come...
 
+#### Functional Test App
+https://github.com/dotMorten/WinUIEx/assets/1378165/ce41d0b0-da5d-40c5-b6fd-ff272f15d57e
+
+#### Custom Backdrops:
 https://github.com/dotMorten/WinUIEx/assets/1378165/49274b59-5628-4a0c-b6ca-4f38784614cf
-
-![image](https://user-images.githubusercontent.com/1378165/171925868-5783b70d-3942-4911-8c77-86df696a7b97.png)
-

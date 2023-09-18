@@ -88,6 +88,12 @@ namespace WinUIExSample
             logWindow?.UpdateLog();
         }
 
+        protected override void OnStateChanged(WindowState state)
+        {
+            Log("State changed: " + state);
+            base.OnStateChanged(state);
+        }
+
         public void ShowLogWindow()
         {
             if (logWindow is null || logWindow.AppWindow is null)
@@ -96,7 +102,6 @@ namespace WinUIExSample
                 logWindow.Closed += (s,e) => this.logWindow = null;
             }
             logWindow.Activate();
-            //logWindow.Show();
         }
         
 

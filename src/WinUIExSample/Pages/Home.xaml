@@ -21,11 +21,11 @@
             <StackPanel Background="{StaticResource SemiTransparentBackgroundBrush}" CornerRadius="10" Padding="10" Margin="0,10,0,0">
                 <TextBlock>WinUIEx: A set of extension methods and classes to fill some gaps in WinUI 3, mostly around windowing and unit testing.</TextBlock>
                 <TextBlock>
-                    <Run>Read the documentation at </Run><Hyperlink NavigateUri="https://dotmorten.github.io/WinUIEx/">dotmorten.github.io/WinUIEx/</Hyperlink>, and view all the source
+                    <Run>Read the documentation at</Run> <Hyperlink NavigateUri="https://dotmorten.github.io/WinUIEx/">dotmorten.github.io/WinUIEx/</Hyperlink>, and view all the source
                     at <Hyperlink NavigateUri="https://github.com/dotMorten/WinUIEx">github.com/dotMorten/WinUIEx</Hyperlink>.
                     <LineBreak /><LineBreak />
                     <Run>If you find this library useful, please consider </Run>
-                    <Hyperlink NavigateUri="https://github.com/sponsors/dotMorten">sponsoring me at Github</Hyperlink>.
+                    <Hyperlink NavigateUri="https://github.com/sponsors/dotMorten">sponsoring me</Hyperlink>.
                 </TextBlock>
             </StackPanel>
             <StackPanel Background="{StaticResource SemiTransparentBackgroundBrush}" CornerRadius="10" Padding="10"  Margin="0,10,0,0">

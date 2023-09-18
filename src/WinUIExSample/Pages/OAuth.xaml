@@ -11,27 +11,35 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <StackPanel Background="{ThemeResource SemiTransparentBackgroundBrush}" CornerRadius="10" Padding="10">
             <TextBlock Text="OAuth" FontSize="32" FontFamily="Segoe UI" FontWeight="Light" Margin="0,-10,0,0" />
         </StackPanel>
-        
+
         <StackPanel Background="{ThemeResource SemiTransparentBackgroundBrush}" CornerRadius="10" Padding="10" Margin="0,10,0,0" Grid.Row="1">
-
-            <Button Content="Test OAuth" Click="DoOAuth_Click" x:Name="SigninButton" />
-            <Grid x:Name="OAuthWindow" Visibility="Collapsed">
-                <Border HorizontalAlignment="Center" VerticalAlignment="Center" BorderBrush="Black" BorderThickness="2" Padding="20" CornerRadius="5" Background="White">
-                    <StackPanel>
-                        <TextBlock Text="Please sign in using the browser that opened." />
-                        <TextBox x:Name="loginDetails" AcceptsReturn="True" IsReadOnly="True" BorderThickness="0" TextWrapping="Wrap" Background="Transparent" />
-                        <ProgressRing IsActive="True" HorizontalAlignment="Center" />
-                        <Button Content="Cancel" Click="OAuthCancel_Click" />
-                    </StackPanel>
-                </Border>
-            </Grid>
-            <TextBlock x:Name="Result" HorizontalAlignment="Center" FontSize="18" Margin="20"/>
-
+            <TextBox Header="State" x:Name="stateField" Description="State carried across the login-flow" Margin="0,0,0,30" />
+            <Button Content="Test OAuth Code" Click="DoOAuth_Click" Width="150" />
+            <Button Content="Test OAuth Implicit" Click="DoOAuth2_Click" Width="150" />
         </StackPanel>
+        
+        <StackPanel Background="{ThemeResource SemiTransparentBackgroundBrush}" CornerRadius="10" Padding="10" Margin="0,10,0,0" Grid.Row="2">
+            <TextBlock x:Name="Result" HorizontalAlignment="Center" FontSize="18" Margin="20"/>
+        </StackPanel>
+        
+        <Grid x:Name="OAuthWindow" Visibility="Collapsed" Grid.RowSpan="3" Background="{StaticResource SemiTransparentBackgroundBrush}">
+            <Border HorizontalAlignment="Center" VerticalAlignment="Center" BorderBrush="Black" BorderThickness="2" Padding="20" CornerRadius="5" >
+                <Border.Background>
+                    <AcrylicBrush Opacity="1" />
+                </Border.Background>
+                <StackPanel>
+                    <TextBlock Text="Please sign in using the browser that opened." />
+                    <ProgressRing IsActive="True" HorizontalAlignment="Center" />
+                    <Button Content="Cancel" Click="OAuthCancel_Click" />
+                </StackPanel>
+            </Border>
+        </Grid>
+
     </Grid>
 </Page>

@@ -9,11 +9,16 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Sockets;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Xml;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Web.Http;
 using WinUIEx;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -30,41 +35,50 @@ namespace WinUIExSample.Pages
         {
             this.InitializeComponent();
         }
+        public WindowEx MainWindow => ((App)Application.Current).MainWindow;
+
         private CancellationTokenSource? oauthCancellationSource;
-        private async void DoOAuth_Click(object sender, RoutedEventArgs e)
+        private void DoOAuth_Click(object sender, RoutedEventArgs e)
         {
-            SigninButton.IsEnabled = false;
+            DoOAuth("code");
+        }
+
+        private void DoOAuth2_Click(object sender, RoutedEventArgs e)
+        {
+            DoOAuth("token");
+        }
+        private async void DoOAuth(string responseType)
+        { 
+            using MockOAuthServer server = new MockOAuthServer();
+
             Result.Text = "Waiting for login in browser...";
             string clientId = "imIwo061j9SUOQYm7O8Oe4HK";
-            string clientSecret = "aeApQwwjBl1n_J6nknnxWNONuB0RaEjVHL5yhYdgz5XJOnDi";
-            string state = DateTime.Now.ToString();
             string callbackUri = "winuiex://";
-            string authorizeUri = $"https://www.oauth.com/playground/auth-dialog.html?response_type=code&client_id={clientId}&redirect_uri={Uri.EscapeDataString(callbackUri)}&scope=photo+offline_access&state={Uri.EscapeDataString(state)}";
-
-            loginDetails.Text = "Login: pleasant-koala@example.com\npassword: Modern-Seahorse-66";
+            string authorizeUri = $"{server.Url}?response_type={responseType}&client_id={clientId}&redirect_uri={Uri.EscapeDataString(callbackUri)}&scope=photo+offline_access";
+            if(!string.IsNullOrEmpty(stateField.Text))
+            {
+                authorizeUri += $"&state={Uri.EscapeDataString(stateField.Text)}";
+            }
             oauthCancellationSource = new CancellationTokenSource();
             oauthCancellationSource.Token.Register(() => { OAuthWindow.Visibility = Visibility.Collapsed; });
+
             OAuthWindow.Visibility = Visibility.Visible;
             try
             {
                 var result = await WebAuthenticator.AuthenticateAsync(new Uri(authorizeUri), new Uri(callbackUri), oauthCancellationSource.Token);
                 OAuthWindow.Visibility = Visibility.Collapsed;
-                Result.Text = $"Logged in. Code returned: {result.Properties["code"]}\tState carried: {result.Properties["state"]}";
+                Result.Text = $"Logged in. Info returned:";
+                foreach(var value in result.Properties)
+                    Result.Text += $"\n {value.Key} = {value.Value}";
             }
             catch (TaskCanceledException) {
                 Result.Text = "Sign in cancelled";
             }
-            SigninButton.IsEnabled = true;
         }
 
         private void OAuthCancel_Click(object sender, RoutedEventArgs e)
         {
-            oauthCancellationSource?.Cancel();
-        }
-
-        private void Result_Holding(object sender, HoldingRoutedEventArgs e)
-        {
-
+            oauthCancellationSource?.Cancel();            
         }
     }
 }

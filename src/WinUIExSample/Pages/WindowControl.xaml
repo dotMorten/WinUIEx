@@ -20,15 +20,16 @@
             <StackPanel>
                 <StackPanel Background="{StaticResource SemiTransparentBackgroundBrush}" CornerRadius="10" Padding="10">
                     <TextBlock Text="WindowEx Switches" FontSize="24" FontFamily="Segoe UI" FontWeight="Light" Margin="0,0,0,10" />
+                    <GridView>
                     <ToggleSwitch Header="Can Minimize" IsOn="{x:Bind MainWindow.IsMinimizable, Mode=TwoWay}" />
                     <ToggleSwitch Header="Can Maximize" IsOn="{x:Bind MainWindow.IsMaximizable, Mode=TwoWay}" />
                     <ToggleSwitch Header="Can Resize" IsOn="{x:Bind MainWindow.IsResizable, Mode=TwoWay}" />
                     <ToggleSwitch Header="Is Titlebar Visible" IsOn="{x:Bind MainWindow.IsTitleBarVisible, Mode=TwoWay}" />
                     <ToggleSwitch Header="Always On Top" IsOn="{x:Bind MainWindow.IsAlwaysOnTop, Mode=TwoWay}" />
+                    </GridView>
                 </StackPanel>
                 <StackPanel Background="{StaticResource SemiTransparentBackgroundBrush}" CornerRadius="10" Padding="10" Margin="0,10,0,0">
                     <TextBlock Text="Sizing" FontSize="24" FontFamily="Segoe UI" FontWeight="Light" Margin="0,0,0,10" />
-
                     <Slider Header="Minimum Width" Maximum="1024" Minimum="136" Value="{x:Bind MainWindow.MinWidth, Mode=TwoWay}" x:Name="sliderMinWidth" />
                     <Slider Header="Minimum Height" Maximum="768" Minimum="39" Value="{x:Bind MainWindow.MinHeight, Mode=TwoWay}" x:Name="sliderMinHeight" />
                     <ToggleSwitch Header="Limit max size" x:Name="limitMaxCheckbox" Toggled="limitMaxCheckbox_Toggled" />
@@ -36,28 +37,39 @@
                     <Slider Visibility="{x:Bind limitMaxCheckbox.IsOn, Mode=OneWay}" Header="Maximum Height" Maximum="1200" Minimum="250" Value="{x:Bind MainWindow.MaxHeight, Mode=TwoWay}" x:Name="sliderMaxHeight" />
                     <Button Content="Get Display Info" Click="DisplayInfo_Click" />
                 </StackPanel>
-                <StackPanel Background="{StaticResource SemiTransparentBackgroundBrush}" CornerRadius="10" Padding="10" Margin="0,10,0,0">
+                <StackPanel Background="{StaticResource SemiTransparentBackgroundBrush}" CornerRadius="10" Padding="10" Margin="0,10,0,0">                  
                     <TextBlock Text="Window Operations" FontSize="24" FontFamily="Segoe UI" FontWeight="Light" Margin="0,0,0,10" />
                     <GridView>
+                        <GridView.Resources>
+                            <Style TargetType="Button">
+                                <Setter Property="Width" Value="245" />
+                            </Style>
+                        </GridView.Resources>
+                        <GridView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <ItemsWrapGrid ItemHeight="40" Orientation="Horizontal" />
+                            </ItemsPanelTemplate>
+                        </GridView.ItemsPanel>
                         <Button Content="Center On Screen" Click="Center_Click" />
                         <Button Content="Maximize" Click="MaximizeWindow_Click" />
                         <Button Content="Restore" Click="RestoreWindow_Click" />
                         <Button Content="Minimize + Restore (2 second delay)" Click="MinimizeWindow_Click" />
                         <Button Content="Hide + Restore (2 second delay)" Click="HideWindow_Click" />
                         <Button Content="Bring to front (2 second delay)" Click="BringToFront_Click" />
+                        <ComboBox x:Name="windowState" SelectionChanged="windowState_SelectionChanged" Width="245" >
+                            <ComboBox.Items>
+                                <ComboBoxItem>Window State: Normal</ComboBoxItem>
+                                <ComboBoxItem>Window State: Minimized</ComboBoxItem>
+                                <ComboBoxItem>Window State: Maximized</ComboBoxItem>
+                            </ComboBox.Items>
+                        </ComboBox>
                     </GridView>
-                    <ComboBox x:Name="windowState" SelectionChanged="windowState_SelectionChanged">
-                        <ComboBox.Items>
-                            <ComboBoxItem>Window State: Normal</ComboBoxItem>
-                            <ComboBoxItem>Window State: Minimized</ComboBoxItem>
-                            <ComboBoxItem>Window State: Maximized</ComboBoxItem>
-                        </ComboBox.Items>
-                    </ComboBox>
                 </StackPanel>
+                <!--
                 <StackPanel Background="{StaticResource SemiTransparentBackgroundBrush}" CornerRadius="10" Padding="10" Margin="0,10,0,0">
                     <TextBlock Text="Misc" FontSize="24" FontFamily="Segoe UI" FontWeight="Light" Margin="0,0,0,10" />
                     <TextBox Header="Title:" Text="{x:Bind MainWindow.Title, Mode=TwoWay}" />
-                </StackPanel>
+                </StackPanel>-->
             </StackPanel>
         </ScrollViewer>
     </Grid>

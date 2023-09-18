@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ex:WindowEx
+    x:Class="WinUIExSample.LogWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ex="using:WinUIEx"
+    xmlns:local="using:WinUIExSample"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Width="640" Height="480"
+    PersistenceId="LogWindow"
+    Title="WinUIEx Log" 
+    mc:Ignorable="d">
+    <Window.SystemBackdrop>
+        <DesktopAcrylicBackdrop />
+    </Window.SystemBackdrop>
+    <Grid Margin="0">
+        <Grid.RowDefinitions>
+            <RowDefinition  Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Border VerticalAlignment="Top" Background="CornflowerBlue">
+            <TextBlock Text="WinUIEx Log" FontSize="24" FontFamily="Segoe UI" FontWeight="Light" Margin="10,5,0,5" Foreground="White" />
+        </Border>
+        <TextBox CornerRadius="10" Grid.Row="1" Background="Transparent" BorderThickness="1" IsReadOnly="True" AcceptsReturn="True" Margin="10"
+                 VerticalAlignment="Stretch" HorizontalAlignment="Stretch" x:Name="WindowEventLog" />
+    </Grid>
+</ex:WindowEx>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="WinUIExSample.Pages.Home"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:WinUIExSample.Pages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackPanel Background="{StaticResource SemiTransparentBackgroundBrush}" CornerRadius="10" Padding="10">
+            <TextBlock Text="WinUIEx" FontSize="32" FontFamily="Segoe UI" FontWeight="Light" Margin="0,-10,0,0" />
+            <TextBlock Text="Functional Test App" FontSize="24" FontFamily="Segoe UI" FontWeight="Light" x:Name="Status" />
+        </StackPanel>
+        <StackPanel Grid.Row="1">
+            <StackPanel Background="{StaticResource SemiTransparentBackgroundBrush}" CornerRadius="10" Padding="10" Margin="0,10,0,0">
+                <TextBlock>WinUIEx: A set of extension methods and classes to fill some gaps in WinUI 3, mostly around windowing and unit testing.</TextBlock>
+                <TextBlock>
+                    <Run>Read the documentation at </Run><Hyperlink NavigateUri="https://dotmorten.github.io/WinUIEx/">dotmorten.github.io/WinUIEx/</Hyperlink>, and view all the source
+                    at <Hyperlink NavigateUri="https://github.com/dotMorten/WinUIEx">github.com/dotMorten/WinUIEx</Hyperlink>.
+                    <LineBreak /><LineBreak />
+                    <Run>If you find this library useful, please consider </Run>
+                    <Hyperlink NavigateUri="https://github.com/sponsors/dotMorten">sponsoring me at Github</Hyperlink>.
+                </TextBlock>
+            </StackPanel>
+            <StackPanel Background="{StaticResource SemiTransparentBackgroundBrush}" CornerRadius="10" Padding="10"  Margin="0,10,0,0">
+                <Button Content="Open Log Window" Click="OpenLogWindow_Click" />
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Page>

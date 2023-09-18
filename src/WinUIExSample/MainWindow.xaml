@@ -11,90 +11,29 @@
     Width="1024" Height="768"
     MinWidth="500" MinHeight="250"
     mc:Ignorable="d" >
-
-    <Grid x:Name="LayoutRoot">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
-        <ScrollViewer Margin="20,20,0,20">
-            <StackPanel Background="{StaticResource SemiTransparentBackgroundBrush}" Padding="10" CornerRadius="5">
-                <ToggleSwitch Header="Can Minimize" IsOn="{x:Bind IsMinimizable, Mode=TwoWay}" />
-                <ToggleSwitch Header="Can Maximize" IsOn="{x:Bind IsMaximizable, Mode=TwoWay}" />
-                <ToggleSwitch Header="Can Resize" IsOn="{x:Bind IsResizable, Mode=TwoWay}" />
-                <ToggleSwitch Header="Is Titlebar Visible" IsOn="{x:Bind IsTitleBarVisible, Mode=TwoWay}" />
-                <ToggleSwitch Header="Always On Top" IsOn="{x:Bind IsAlwaysOnTop, Mode=TwoWay}" />
-                <ToggleSwitch Header="Subscribe To Window Messages" Toggled="WMMessages_Toggled" />
-                <ComboBox Header="Presenter" SelectedIndex="0" SelectionChanged="Presenter_SelectionChanged">
-                    <ComboBoxItem>Overlapped</ComboBoxItem>
-                    <ComboBoxItem>Compact</ComboBoxItem>
-                    <ComboBoxItem>Fullscreen</ComboBoxItem>
-                </ComboBox>
-                <ComboBox x:Name="themeSelector" Header="Theme" SelectedIndex="0" SelectionChanged="Theme_SelectionChanged" Margin="0,5,0,0">
-                    <ComboBoxItem>Default</ComboBoxItem>
-                    <ComboBoxItem>Dark</ComboBoxItem>
-                    <ComboBoxItem>Light</ComboBoxItem>
-                </ComboBox>
-                <ComboBox x:Name="backdropSelector" Header="Backdrop" SelectedIndex="0" SelectionChanged="Backdrop_SelectionChanged" Margin="0,5,0,0">
-                    <ComboBoxItem>Mica</ComboBoxItem>
-                    <ComboBoxItem>Acrylic</ComboBoxItem>
-                    <ComboBoxItem>Transparent</ComboBoxItem>
-                    <ComboBoxItem>Animated</ComboBoxItem>
-                    <ComboBoxItem>Blur</ComboBoxItem>
-                </ComboBox>
+    <Grid>      
+        <Grid.RowDefinitions>
+            <RowDefinition Height="44" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Border VerticalAlignment="Stretch" Background="{StaticResource SemiTransparentBackgroundBrush}" >
+            <StackPanel Orientation="Horizontal" Margin="30,0" >
+                <ImageIcon Source="ms-appx:///Images/logo.png" Margin="12" />
+                <TextBlock Text="WinUI EX Test App" VerticalAlignment="Center" />
             </StackPanel>
-        </ScrollViewer>
-        <ScrollViewer Grid.Column="1" Padding="5,0" Margin="5,20">
-            <StackPanel  Background="{StaticResource SemiTransparentBackgroundBrush}" Padding="10" CornerRadius="5">
-                <StackPanel.Resources>
-                    <Style TargetType="Button">
-                        <Setter Property="HorizontalAlignment" Value="Stretch" />
-                        <Setter Property="Margin" Value="5" />
-                    </Style>
-                </StackPanel.Resources>
-                <TextBox Header="Title:" Text="{x:Bind Title, Mode=TwoWay}" />
-                <Slider Header="Minimum Width" Maximum="1024" Minimum="136" Value="{x:Bind MinWidth, Mode=TwoWay}" x:Name="sliderMinWidth" />
-                <Slider Header="Minimum Height" Maximum="768" Minimum="39" Value="{x:Bind MinHeight, Mode=TwoWay}" x:Name="sliderMinHeight" />
-                <ToggleSwitch Header="Limit max size" x:Name="limitMaxCheckbox" Toggled="limitMaxCheckbox_Toggled" />
-                <Slider Visibility="{x:Bind limitMaxCheckbox.IsOn, Mode=OneWay}" Header="Maximum Width" Maximum="2000" Minimum="250" Value="{x:Bind MaxWidth, Mode=TwoWay}" x:Name="sliderMaxWidth" />
-                <Slider Visibility="{x:Bind limitMaxCheckbox.IsOn, Mode=OneWay}" Header="Maximum Height" Maximum="1200" Minimum="250" Value="{x:Bind MaxHeight, Mode=TwoWay}" x:Name="sliderMaxHeight" />
-                <Button Content="Center On Screen" Click="Center_Click" />
-                <Button Content="Maximize" Click="MaximizeWindow_Click" />
-                <Button Content="Restore" Click="RestoreWindow_Click" />
-                <Button Content="Minimize + Restore (2 second delay)" Click="MinimizeWindow_Click" />
-                <Button Content="Hide + Restore (2 second delay)" Click="HideWindow_Click" />
-                <Button Content="Bring to front (2 second delay)" Click="BringToFront_Click" />
-                <ComboBox x:Name="windowState" SelectionChanged="windowState_SelectionChanged">
-                    <ComboBox.Items>
-                        <ComboBoxItem>Window State: Normal</ComboBoxItem>
-                        <ComboBoxItem>Window State: Minimized</ComboBoxItem>
-                        <ComboBoxItem>Window State: Maximized</ComboBoxItem>
-                    </ComboBox.Items>
-                </ComboBox>
-                <Button Content="Show dialog" Click="ShowDialog_Click" />
-                <Button Content="Test OAuth" Click="DoOAuth_Click" />
-                <Slider Header="Window Opacity" Minimum="1" Maximum="255" Value="255" ValueChanged="Slider_ValueChanged" />
-            </StackPanel>
-        </ScrollViewer>
-        <Grid Grid.Column="2" Margin="0,0,20,0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="20" />
-            </Grid.RowDefinitions>
-            <TextBlock Text="Log" />
-            <TextBox IsReadOnly="True" AcceptsReturn="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" x:Name="WindowEventLog" Grid.Row="1" />
-        </Grid>
-        <Grid Grid.ColumnSpan="3" Background="#ccffffff" x:Name="OAuthWindow" Visibility="Collapsed">
-            <Border HorizontalAlignment="Center" VerticalAlignment="Center" Margin="200" BorderBrush="Black" BorderThickness="2" Padding="20" CornerRadius="5" Background="White">
-                <StackPanel>
-                    <TextBlock Text="Waiting for login in browser..." FontWeight="Bold" />
-                    <TextBox x:Name="loginDetails" AcceptsReturn="True" IsReadOnly="True" BorderThickness="0" TextWrapping="Wrap" Background="Transparent" />
-                    <ProgressRing IsActive="True" HorizontalAlignment="Center" />
-                    <Button Content="Cancel" Click="OAuthCancel_Click" />
-                </StackPanel>
-            </Border>
-        </Grid>
+        </Border>
+        <NavigationView IsPaneOpen="True" AlwaysShowHeader="False" BackRequested="NavigationView_BackRequested"
+                        IsPaneToggleButtonVisible="True" CompactModeThresholdWidth="0" x:Name="navigationView"
+                        OpenPaneLength="250" Grid.RowSpan="2" PaneDisplayMode="Auto" SelectionChanged="NavigationView_SelectionChanged">
+            <NavigationView.MenuItems>
+                <NavigationViewItem Content="Home" Tag="Home" Icon="Home" />
+                <NavigationViewItem Content="Window Control" Tag="WindowControl" Icon="ViewAll" />
+                <NavigationViewItem Content="Window Design" Tag="WindowDesign" Icon="NewWindow" />
+                <NavigationViewItem Content="OAuth" Tag="OAuth" Icon="OtherUser" />
+                <NavigationViewItem Content="Window Messaging" Tag="Messaging" Icon="Message" />
+                <NavigationViewItem Content="Dialogs" Tag="Dialogs" Icon="Accept" />
+            </NavigationView.MenuItems>
+            <Frame Margin="0,44,0,0" x:Name="contentFrame" Padding="10" Background="Transparent"/>
+        </NavigationView>
     </Grid>
 </winex:WindowEx>

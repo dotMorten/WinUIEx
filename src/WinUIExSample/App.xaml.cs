@@ -43,11 +43,15 @@ namespace WinUIExSample
         /// <param name="args">Details about the launch request and process.</param>
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
+            // m_window = new MainWindow();
+            // m_window.Activate();
             var splash = new SplashScreen(typeof(MainWindow));
-            splash.Completed += (s, e) => m_window = e;
+            splash.Completed += (s, e) => m_window = (WindowEx)e;
         }
 
-        private Window m_window;
+        private WindowEx m_window;
+
+        public WindowEx MainWindow => m_window;
 
         [DllImport("kernel32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
         private static extern int GetCurrentPackageFullName(ref int packageFullNameLength, System.Text.StringBuilder packageFullName);

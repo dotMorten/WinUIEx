@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Window
+    x:Class="WinUIExSample.TransparentWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:WinUIExSample"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ex="using:WinUIEx"
+    mc:Ignorable="d">
+
+    <Window.SystemBackdrop>
+        <ex:TransparentTintBackdrop />
+    </Window.SystemBackdrop>
+    <Grid>
+
+        <Ellipse Width="100" Height="100" Fill="#aaff0000" HorizontalAlignment="Center" VerticalAlignment="Center" />
+        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Hello Transparent World" />
+
+    </Grid>
+</Window>

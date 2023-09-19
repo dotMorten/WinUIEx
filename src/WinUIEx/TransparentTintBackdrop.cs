@@ -67,6 +67,12 @@ namespace WinUIEx
             monitor = new WindowMessageMonitor((IntPtr)hWnd);
             monitor.WindowMessageReceived += Monitor_WindowMessageReceived;
 
+            var extStyle = HwndExtensions.GetExtendedWindowStyle((IntPtr)hWnd);
+            var style = HwndExtensions.GetWindowStyle((IntPtr)hWnd);
+            var hWnd2 = (IntPtr)xamlSource.SiteBridge.WindowId.Value;
+            var extStyle2 = HwndExtensions.GetExtendedWindowStyle((IntPtr)hWnd2);
+            var style2 = HwndExtensions.GetWindowStyle((IntPtr)hWnd2);
+
             ConfigureDwm(hWnd);
 
             base.OnTargetConnected(connectedTarget, xamlRoot);

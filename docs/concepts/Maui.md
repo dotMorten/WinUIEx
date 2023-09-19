@@ -5,8 +5,20 @@
 Add WinUIEx to the Windows build target by adding a package reference in the `.csproj` file:
 ```xml
   <ItemGroup>
-    <PackageReference Include="WinUIEx" Version="1.7.0" Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'" />
+    <PackageReference Include="WinUIEx" Version="2.3.0" Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'" />
   </ItemGroup>
+```
+
+If the referenced version of WinUIEx relies on a newer version of the Windows App SDK than .NET MAUI implicitly references, you'll likely see errors like this:
+```
+Error	NU1605	Warning As Error: Detected package downgrade: Microsoft.WindowsAppSDK from 1.4.230822000 to 1.2.221209.1.
+Reference the package directly from the project to select a different version. MauiApp8 -> WinUIEx 2.3.0 -> Microsoft.WindowsAppSDK (>= 1.4.230822000) 
+```
+To address that, explicitly reference the Windows App SDK package with the version mentioned in the error. For example:
+```xml
+<ItemGroup>
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.4.230822000" Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'" />
+</ItemGroup>
 ```
 
 ### Perform operations when Windows are created

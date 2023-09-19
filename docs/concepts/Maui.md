@@ -21,6 +21,28 @@ To address that, explicitly reference the Windows App SDK package with the versi
 </ItemGroup>
 ```
 
+### Use WinUIEx's WebAuthenticator instead of .NET MAUI's
+.NET MAUI does not support the WebAuthenticator out of the box on Windows. Instead you can use WinUIEx to get the same capability.
+First in `\Platforms\Windows\App.xaml.cs`, add the `WebAuthenticator.CheckOAuthRedirectionActivation` to the App constructor and return if it returns `true`:
+```cs
+    public App()
+    {
+        if (WinUIEx.WebAuthenticator.CheckOAuthRedirectionActivation())
+            return;
+        this.InitializeComponent();
+    }
+```
+When you want to perform an OAuth request, on Windows use WinUIEx's authenticator, instead of .NET MAUI's:
+```cs
+#if WINDOWS
+    var result = await WinUIEx.WebAuthenticator.AuthenticateAsync(new Uri(authUri), new Uri(redirectUri));
+#else
+    var result = await WebAuthenticator.AuthenticateAsync(new Uri(authUri), new Uri(redirectUri));
+#endif
+````
+Lastly, make sure you've registered the redirect uri-scheme in `Platforms\Windows\Package.appxmanifest`, as described in [WebAuthenticator](WebAuthenticator.md).
+
+
 ### Perform operations when Windows are created
 
 Use the `ConfigureLifecycleEvents` to be notified of new windows getting created, which you can then extend with WinUIEx.

@@ -41,4 +41,22 @@
     <None Include="README.md" Pack="true" PackagePath="\" />
   </ItemGroup>
 
+  <!-- Analyzer stuff -->
+  <PropertyGroup>
+    <TargetsForTfmSpecificContentInPackage>$(TargetsForTfmSpecificContentInPackage);_AddAnalyzersToOutput</TargetsForTfmSpecificContentInPackage>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WinUIEx.Analyzers\WinUIEx.Analyzers\WinUIEx.Analyzers.csproj" PrivateAssets="all" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="tools\*.ps1" CopyToOutputDirectory="PreserveNewest" Pack="true" PackagePath="" />
+  </ItemGroup>
+
+  <Target Name="_AddAnalyzersToOutput">
+    <ItemGroup>
+      <TfmSpecificPackageFile Include="$(OutputPath)\WinUIEx.Analyzers.dll" PackagePath="analyzers/dotnet/cs" />
+      <!--<TfmSpecificPackageFile Include="$(OutputPath)\WinUIEx.Analyzers.CodeFixes.dll" PackagePath="analyzers/dotnet/cs" />-->
+    </ItemGroup>
+  </Target>
 </Project>

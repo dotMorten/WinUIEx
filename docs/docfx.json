@@ -27,7 +27,9 @@
         "files": [
           "concepts/**/*.md",
           "concepts/**/*.yml",
-	  "api/**/*.md",
+          "rules/**/*.md",
+          "rules/**/*.yml",
+          "api/**/*.md",
           "*.md",
           "toc.yml"
         ]

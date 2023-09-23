@@ -23,12 +23,7 @@
     <PackageId>WinUIEx</PackageId>
     <Product>WinUI Extensions</Product>
     <PackageReleaseNotes>
-      - Added new TransparentTintBackdrop and CompositionBrushBackdrop classes to support transparent/tinted windows and customm backdrops (Issue #42).
-      - Add WindowExtensions.Move method (Issue #122).
-      - Add WindowState and WindowStateChanged properties to Window Manager to track minimize/maximize/restore (Issue #112).
-      - Improve persistance restore by ignoring display names (Issue #98).
-      - Added support for setting window opacity.
-      - `Window.CenterOnScreen()` no longer sets the Window to show. Call the `Window.ShowWindow()` extension to bring the window to the front. (Issue #132)
+      - Added analyzers for some non-functional APIs
     </PackageReleaseNotes>
   </PropertyGroup>
 

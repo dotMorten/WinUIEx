@@ -25,8 +25,8 @@ namespace WinUIEx.Analyzers
         private static readonly LocalizableString Description1002 = new LocalizableResourceString(nameof(Resources.DispatcherDescription), Resources.ResourceManager, typeof(Resources));
         private const string Category = "Usage";
 
-        private static readonly DiagnosticDescriptor AlwaysNullRule = new DiagnosticDescriptor(DiagnosticId1001, Title1001, MessageFormat1001, Category, DiagnosticSeverity.Warning, isEnabledByDefault: true, description: Description1001);
-        private static readonly DiagnosticDescriptor DispatcherRule = new DiagnosticDescriptor(DiagnosticId1002, Title1002, MessageFormat1002, Category, DiagnosticSeverity.Warning, isEnabledByDefault: true, description: Description1002);
+        private static readonly DiagnosticDescriptor AlwaysNullRule = new DiagnosticDescriptor(DiagnosticId1001, Title1001, MessageFormat1001, Category, DiagnosticSeverity.Warning, isEnabledByDefault: true, description: Description1001, helpLinkUri: "https://dotmorten.github.io/WinUIEx/rules/WinUIEx1001.html");
+        private static readonly DiagnosticDescriptor DispatcherRule = new DiagnosticDescriptor(DiagnosticId1002, Title1002, MessageFormat1002, Category, DiagnosticSeverity.Warning, isEnabledByDefault: true, description: Description1002, helpLinkUri: "https://dotmorten.github.io/WinUIEx/rules/WinUIEx1002.html");
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics { get { return ImmutableArray.Create(AlwaysNullRule, DispatcherRule); } }
 

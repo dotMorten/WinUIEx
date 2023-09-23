@@ -4,7 +4,7 @@ The member will always be null and should not be used. This API was there due to
 
 |Item|Value|
 |-|-|
-|Category|MicrosoftCodeAnalysisCorrectness|
+|Category|Usage|
 |Enabled|True|
 |Severity|Warning|
 |CodeFix|False|

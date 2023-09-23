@@ -4,7 +4,7 @@ The Dispatcher will always return null. It has been replaced by the DispatcherQu
 
 |Item|Value|
 |-|-|
-|Category|MicrosoftCodeAnalysisCorrectness|
+|Category|Usage|
 |Enabled|True|
 |Severity|Warning|
 |CodeFix|False|

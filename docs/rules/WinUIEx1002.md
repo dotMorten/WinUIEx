@@ -1,6 +1,6 @@
-## WinUIEX1002: The member will always be null.
+## WinUIEX1002: Dispatcher must be replaced with DispatcherQueue.
 
-The Dispatcher will always return null. It has been replaced by the DispatcherQueue. This API was there due to UWP API surface area requirements, but is not used in WinUI, and has been replaced by the DispatcherQueue.
+The Dispatcher will always return null, and has been replaced by the DispatcherQueue. This API was there due to UWP API surface area requirements, but is not used in WinUI, and has been replaced by the DispatcherQueue.
 
 |Item|Value|
 |-|-|
@@ -16,13 +16,14 @@ To address this, change your use of `Dispatcher` from:
 ```cs
 Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
 {
-
+   // your code
 });
 ```
 to:
 ```cs
 DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Normal, () =>
 {
+   // your code
 });
 ```
 

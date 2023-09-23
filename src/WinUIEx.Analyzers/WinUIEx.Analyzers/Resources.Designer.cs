@@ -106,7 +106,7 @@ namespace WinUIEx.Analyzers {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Dispatcher is not available in WinUI 3.
+        ///   Looks up a localized string similar to Dispatcher must be replaced with DispatcherQueue.
         /// </summary>
         internal static string DispatcherTitle {
             get {

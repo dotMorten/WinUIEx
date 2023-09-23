@@ -133,6 +133,6 @@
     <value>The member '{0}' will always be null and should not be used. Instead use '{1}'.</value>
   </data>
   <data name="DispatcherTitle" xml:space="preserve">
-    <value>Dispatcher is not available in WinUI 3</value>
+    <value>Dispatcher must be replaced with DispatcherQueue</value>
   </data>
 </root>

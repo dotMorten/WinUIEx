@@ -66,6 +66,7 @@ namespace WinUIExSample.Pages
             try
             {
                 var result = await WebAuthenticator.AuthenticateAsync(new Uri(authorizeUri), new Uri(callbackUri), oauthCancellationSource.Token);
+                MainWindow.BringToFront();
                 OAuthWindow.Visibility = Visibility.Collapsed;
                 Result.Text = $"Logged in. Info returned:";
                 foreach(var value in result.Properties)

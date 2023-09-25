@@ -20,7 +20,7 @@
 
   <PropertyGroup Label="PackageInfo">
     <Description>A set of extension methods and classes to fill some gaps in WinUI 3, mostly around windowing.</Description>
-    <PackageTags>WinUI</PackageTags>
+    <PackageTags>WinUI, WinAppSDK, Windows, XAML</PackageTags>
     <PackageId>WinUIEx</PackageId>
     <Product>WinUI Extensions</Product>
     <PackageReleaseNotes>

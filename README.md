@@ -19,9 +19,18 @@ A set of extension methods and classes to fill some gaps in WinUI 3, mostly arou
   - [Splash Screens](https://dotmorten.github.io/WinUIEx/concepts/Splashscreen.html)
   - [OAuth Web Authentication](https://dotmorten.github.io/WinUIEx/concepts/WebAuthenticator.html)
   - [Custom Window Backdrops](https://dotmorten.github.io/WinUIEx/concepts/CustomBackdrops.html)
+  - Code analyzers for Windows App SDK APIs to guide the developer.
 
 
 And more to come...
+
+### Example of WinUIEx production apps
+
+ - [Windows Dev Home](https://github.com/microsoft/devhome)
+ - [Microsoft Power Toys](https://github.com/microsoft/PowerToys)
+ - [Files App](https://github.com/files-community/Files)
+ - [Lively Wallpaper](https://github.com/rocksdanister/lively)
+
 
 #### Functional Test App
 https://github.com/dotMorten/WinUIEx/assets/1378165/ce41d0b0-da5d-40c5-b6fd-ff272f15d57e

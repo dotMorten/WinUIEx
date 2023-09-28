@@ -28,6 +28,7 @@ And more to come...
 
  - [Windows Dev Home](https://github.com/microsoft/devhome)
  - [Microsoft Power Toys](https://github.com/microsoft/PowerToys)
+ - [Windows Template Studio](https://marketplace.visualstudio.com/items?itemName=WASTeamAccount.WindowsTemplateStudio)
  - [Files App](https://github.com/files-community/Files)
  - [Lively Wallpaper](https://github.com/rocksdanister/lively)
 

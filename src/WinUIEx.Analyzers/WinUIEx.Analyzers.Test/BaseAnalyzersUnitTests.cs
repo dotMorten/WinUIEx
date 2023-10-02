@@ -19,7 +19,7 @@ namespace WinUIEx.Analyzers.Test
                    return new ReferenceAssemblies("net6.0-windows10.0.19041.0", new PackageIdentity("Microsoft.NETCore.App.Ref", "6.0.0"), System.IO.Path.Combine("ref", "net6.0"))
                             .AddPackages(ImmutableArray.Create(new PackageIdentity[] {
                                 new PackageIdentity("Microsoft.Windows.SDK.NET.Ref", "10.0.19041.29"),
-                                new PackageIdentity("Microsoft.WindowsAppSDK", "1.0.0") }));
+                                new PackageIdentity("Microsoft.WindowsAppSDK", "1.4.230822000") }));
                });
         public static ReferenceAssemblies Net60WinUI1_0 => _lazyNet60WinUI1_0.Value;
 

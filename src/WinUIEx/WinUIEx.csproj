@@ -24,7 +24,7 @@
     <PackageId>WinUIEx</PackageId>
     <Product>WinUI Extensions</Product>
     <PackageReleaseNotes>
-      - Added analyzers for some non-functional APIs
+      - Fixed WebAuthenticator issue not working with FireFox (#117)
     </PackageReleaseNotes>
   </PropertyGroup>
 

@@ -260,7 +260,7 @@ namespace WinUIEx
 
             var process = new System.Diagnostics.Process();
             process.StartInfo.FileName = "rundll32.exe";
-            process.StartInfo.Arguments = "url.dll,FileProtocolHandler " + authorizeUri.ToString();
+            process.StartInfo.Arguments = $"url.dll,FileProtocolHandler \"{authorizeUri.ToString().Replace("\"","%22")}\"";
             process.StartInfo.UseShellExecute = true;
             process.Start();
             tasks.Add(taskId, tcs);

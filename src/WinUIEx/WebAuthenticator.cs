@@ -1,4 +1,4 @@
-﻿using Microsoft.Windows.AppLifecycle;
+using Microsoft.Windows.AppLifecycle;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -25,6 +25,8 @@ namespace WinUIEx
     /// </remarks>
     public sealed class WebAuthenticator
     {
+        public static Func<Uri, Uri>? BeforeProcessStart { get; set; }
+
         /// <summary>
         /// Begin an authentication flow by navigating to the specified url and waiting for a callback/redirect to the callbackUrl scheme.
         /// </summary>
@@ -258,9 +260,11 @@ namespace WinUIEx
                 }
             }
 
+            var newUri = BeforeProcessStart != null ? BeforeProcessStart(authorizeUri) : authorizeUri;
+
             var process = new System.Diagnostics.Process();
             process.StartInfo.FileName = "rundll32.exe";
-            process.StartInfo.Arguments = $"url.dll,FileProtocolHandler \"{authorizeUri.ToString().Replace("\"","%22")}\"";
+            process.StartInfo.Arguments = $"url.dll,FileProtocolHandler \"{newUri.ToString().Replace("\"","%22")}\"";
             process.StartInfo.UseShellExecute = true;
             process.Start();
             tasks.Add(taskId, tcs);

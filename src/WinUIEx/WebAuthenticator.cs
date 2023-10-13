@@ -1,4 +1,4 @@
-using Microsoft.Windows.AppLifecycle;
+﻿using Microsoft.Windows.AppLifecycle;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -109,7 +109,17 @@ namespace WinUIEx
             {
                 try
                 {
-                    var jsonObject = System.Text.Json.Nodes.JsonObject.Parse(state) as JsonObject;
+                    JsonObject? jsonObject;
+
+                    try
+                    {
+                        jsonObject = System.Text.Json.Nodes.JsonObject.Parse(state) as JsonObject;
+                    } 
+                    catch (Exception e)
+                    {
+                        jsonObject = System.Text.Json.Nodes.JsonObject.Parse(Uri.UnescapeDataString(state)) as JsonObject;
+                    }
+
                     if (jsonObject is not null)
                     {
                         NameValueCollection vals2 = new NameValueCollection(jsonObject.Count);

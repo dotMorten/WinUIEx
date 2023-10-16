@@ -72,9 +72,9 @@ namespace WinUIEx
             return decl != null && decl.Any();
         }
 
-        private static System.Collections.Specialized.NameValueCollection? GetState(Microsoft.Windows.AppLifecycle.AppActivationArguments activatedEventArgs)
+        private static System.Collections.Specialized.NameValueCollection? GetState(Microsoft.Windows.AppLifecycle.AppActivationArguments? activatedEventArgs)
         {
-            if (activatedEventArgs.Kind == Microsoft.Windows.AppLifecycle.ExtendedActivationKind.Protocol &&
+            if (activatedEventArgs != null && activatedEventArgs.Kind == Microsoft.Windows.AppLifecycle.ExtendedActivationKind.Protocol &&
                 activatedEventArgs.Data is IProtocolActivatedEventArgs protocolArgs)
             {
                 return GetState(protocolArgs);
@@ -156,10 +156,7 @@ namespace WinUIEx
         public static bool CheckOAuthRedirectionActivation(AppActivationArguments? activatedEventArgs, bool skipShutDownOnActivation = false)
         {
             _oauthCheckWasPerformed = true;
-            if (activatedEventArgs is null)
-                return false;
-            if (activatedEventArgs.Kind != Microsoft.Windows.AppLifecycle.ExtendedActivationKind.Protocol)
-                return false;
+
             var state = GetState(activatedEventArgs);
             if (state is not null && state["appInstanceId"] is string id && state["signinId"] is string signinId && !string.IsNullOrEmpty(signinId))
             {

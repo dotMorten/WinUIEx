@@ -21,6 +21,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Include="Images\**\*.jpg"/>
     <Content Include="Images\**\*.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

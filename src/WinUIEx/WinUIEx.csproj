@@ -24,7 +24,7 @@
     <PackageId>WinUIEx</PackageId>
     <Product>WinUI Extensions</Product>
     <PackageReleaseNotes>
-      - Fixed WebAuthenticator issue not working with FireFox (#117)
+      - Ensure WebAuthenticator URL is fully encoded to avoid issues with certain OAuth servers (#144)
     </PackageReleaseNotes>
   </PropertyGroup>
 

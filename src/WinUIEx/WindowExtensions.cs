@@ -39,7 +39,9 @@ namespace WinUIEx
         /// <summary>Brings the thread that created the specified window into the bottom of other windows.</summary>
         /// <param name="window">
         /// <para>The window that should be activated and brought to the bottom of other windows.</para>
-        public static bool SetBottomWindow(this Microsoft.UI.Xaml.Window window) => HwndExtensions.SetBottomWindow(window.GetWindowHandle());
+        /// <param name="enable"></param>
+        /// <para>Whether to display on the bottom of other windows.</para>
+        public static bool SetBottomWindow(this Microsoft.UI.Xaml.Window window, bool enable) => HwndExtensions.SetBottomWindow(window.GetWindowHandle(), enable);
 
         /// <summary>
         /// Configures whether the window should always be displayed on top of other windows or not

@@ -133,11 +133,6 @@ namespace WinUIEx
         /// <returns></returns>
         public bool BringToFront() => WindowExtensions.SetForegroundWindow(this);
 
-        /// <summary>
-        /// Brings the window to the bottom of other windows
-        /// </summary>
-        public bool BringToBottom() => WindowExtensions.SetBottomWindow(this);
-
         private Icon? _TaskBarIcon;
 
         /// <summary>

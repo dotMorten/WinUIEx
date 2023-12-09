@@ -57,7 +57,6 @@
                         <Button Content="Minimize + Restore (2 second delay)" Click="MinimizeWindow_Click" />
                         <Button Content="Hide + Restore (2 second delay)" Click="HideWindow_Click" />
                         <Button Content="Bring to front (2 second delay)" Click="BringToFront_Click" />
-                        <Button Content="Bring to bottom (2 second delay)" Click="BringToBottom_Click" />
                         <ComboBox x:Name="windowState" SelectionChanged="windowState_SelectionChanged" Width="245" >
                             <ComboBox.Items>
                                 <ComboBoxItem>Window State: Normal</ComboBoxItem>

@@ -50,12 +50,16 @@ namespace WinUIEx
         /// <summary>Brings the thread that created the specified window into the bottom of other windows.</summary>
         /// <param name="hWnd">
         /// <para>A handle to the window that should be brought to the bottom of other windows.</para>
+        /// <param name="enable">Whether to display on the bottom of other windows.</param>
         /// </param>
         /// <returns>
         /// <para><c>true</c> if the window was brought to the bottom of other windows.</para>
         /// <para><c>false</c> if the window was not brought to the bottom of other windows.</para>
         /// </returns>
-        public static bool SetBottomWindow(IntPtr hWnd) => PInvoke.SetWindowPos(new HWND(hWnd), new HWND(1), 0, 0, 0, 0, SET_WINDOW_POS_FLAGS.SWP_NOSIZE | SET_WINDOW_POS_FLAGS.SWP_NOMOVE);
+        /// <remarks>
+        /// <para><see href = "https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-setwindowpos">Learn more about this API from docs.microsoft.com</see>>.</para>
+        /// </remarks>
+        public static bool SetBottomWindow(IntPtr hWnd, bool enable) => PInvoke.SetWindowPos(new HWND(hWnd), new HWND(enable ? 1 : -2), 0, 0, 0, 0, SET_WINDOW_POS_FLAGS.SWP_NOSIZE | SET_WINDOW_POS_FLAGS.SWP_NOMOVE);
 
         /// <summary>Retrieves the window handle to the active window attached to the calling thread's message queue.</summary>
         /// <returns>

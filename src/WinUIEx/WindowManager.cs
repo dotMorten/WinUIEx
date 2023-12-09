@@ -254,6 +254,10 @@ namespace WinUIEx
                     });
                 }
             }
+            if (_shouldSetBottomWindow)
+            {
+                _window.SetBottomWindow(true);
+            }
             WindowMessageReceived?.Invoke(this, e);
             if (e.Handled)
                 return;
@@ -540,6 +544,11 @@ namespace WinUIEx
             }
             if(args.DidZOrderChange)
                 ZOrderChanged?.Invoke(this, new ZOrderInfo() { IsZOrderAtTop = args.IsZOrderAtTop, IsZOrderAtBottom = args.IsZOrderAtBottom, ZOrderBelowWindowId = args.ZOrderBelowWindowId });
+            if (args.IsZOrderAtBottom && _shouldSetBottomWindow)
+            {
+                _shouldSetBottomWindow = false;
+                _IsAlwaysOnBottom = true;
+            }
         }
 
         private bool _IsTitleBarVisible = true;
@@ -593,6 +602,8 @@ namespace WinUIEx
             set => overlappedPresenter.IsAlwaysOnTop = value;
         }
 
+        private bool _shouldSetBottomWindow;  // flag used to set bottom window after window is activated
+
         private bool _IsAlwaysOnBottom;
 
         /// <summary>
@@ -603,11 +614,23 @@ namespace WinUIEx
             get { return _IsAlwaysOnBottom; }
             set
             {
-                if (_isInitialized && value)
+                if (value)
                 {
-                    _window.SetBottomWindow();
+                    if (_isInitialized)
+                    {
+                        _window.SetBottomWindow(true);
+                        _IsAlwaysOnBottom = true;
+                    }
+                    else
+                    {
+                        _shouldSetBottomWindow = true;
+                    }
                 }
-                _IsAlwaysOnBottom = value;
+                else
+                {
+                    _IsAlwaysOnBottom = false;
+                    _window.SetBottomWindow(false);
+                }
             }
         }
 

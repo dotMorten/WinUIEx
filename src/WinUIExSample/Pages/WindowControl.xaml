@@ -26,6 +26,7 @@
                     <ToggleSwitch Header="Can Resize" IsOn="{x:Bind MainWindow.IsResizable, Mode=TwoWay}" />
                     <ToggleSwitch Header="Is Titlebar Visible" IsOn="{x:Bind MainWindow.IsTitleBarVisible, Mode=TwoWay}" />
                     <ToggleSwitch Header="Always On Top" IsOn="{x:Bind MainWindow.IsAlwaysOnTop, Mode=TwoWay}" />
+                    <ToggleSwitch Header="Always On Bottom" IsOn="{x:Bind MainWindow.IsAlwaysOnBottom, Mode=TwoWay}" />
                     </GridView>
                 </StackPanel>
                 <StackPanel Background="{StaticResource SemiTransparentBackgroundBrush}" CornerRadius="10" Padding="10" Margin="0,10,0,0">
@@ -56,6 +57,7 @@
                         <Button Content="Minimize + Restore (2 second delay)" Click="MinimizeWindow_Click" />
                         <Button Content="Hide + Restore (2 second delay)" Click="HideWindow_Click" />
                         <Button Content="Bring to front (2 second delay)" Click="BringToFront_Click" />
+                        <Button Content="Bring to bottom (2 second delay)" Click="BringToBottom_Click" />
                         <ComboBox x:Name="windowState" SelectionChanged="windowState_SelectionChanged" Width="245" >
                             <ComboBox.Items>
                                 <ComboBoxItem>Window State: Normal</ComboBoxItem>

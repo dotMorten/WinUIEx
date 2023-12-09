@@ -83,6 +83,11 @@ namespace WinUIExSample.Pages
             MainWindow.BringToFront();
         }
 
+        private async void BringToBottom_Click(object sender, RoutedEventArgs e)
+        {
+            await Task.Delay(2000);
+            MainWindow.BringToBottom();
+        }
 
         private void limitMaxCheckbox_Toggled(object sender, RoutedEventArgs e)
         {

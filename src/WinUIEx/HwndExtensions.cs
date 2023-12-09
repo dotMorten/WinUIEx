@@ -47,6 +47,16 @@ namespace WinUIEx
         /// </remarks>
         public static bool SetForegroundWindow(IntPtr hWnd) => PInvoke.SetForegroundWindow(new HWND(hWnd));
 
+        /// <summary>Brings the thread that created the specified window into the bottom of other windows.</summary>
+        /// <param name="hWnd">
+        /// <para>A handle to the window that should be brought to the bottom of other windows.</para>
+        /// </param>
+        /// <returns>
+        /// <para><c>true</c> if the window was brought to the bottom of other windows.</para>
+        /// <para><c>false</c> if the window was not brought to the bottom of other windows.</para>
+        /// </returns>
+        public static bool SetBottomWindow(IntPtr hWnd) => PInvoke.SetWindowPos(new HWND(hWnd), new HWND(1), 0, 0, 0, 0, SET_WINDOW_POS_FLAGS.SWP_NOSIZE | SET_WINDOW_POS_FLAGS.SWP_NOMOVE);
+
         /// <summary>Retrieves the window handle to the active window attached to the calling thread's message queue.</summary>
         /// <returns>
         /// <para>The return value is the handle to the active window attached to the calling thread's message queue. Otherwise, the return value is <b>IntPtr.Zero</b>.</para>

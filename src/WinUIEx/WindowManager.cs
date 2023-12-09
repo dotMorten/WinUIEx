@@ -309,6 +309,22 @@ namespace WinUIEx
                         }
                         break;
                     }
+                case WindowsMessages.WM_WINDOWPOSCHANGING:
+                    {
+                        // https://stackoverflow.com/questions/365094/window-on-desktop
+                        if (!_isAlwaysOnBottom)
+                            return;
+
+                        const uint SWP_NOZORDER = 0x0004;
+                        var lParam = e.Message.LParam;
+
+                        var windowPos = Marshal.PtrToStructure<WINDOWPOS>(lParam);
+                        windowPos.flags |= SWP_NOZORDER;
+                        Marshal.StructureToPtr(windowPos, lParam, false);
+
+                        e.Handled = true;
+                        break;
+                    }
 
             }
         }
@@ -577,6 +593,17 @@ namespace WinUIEx
             set => overlappedPresenter.IsAlwaysOnTop = value;
         }
 
+        private bool _isAlwaysOnBottom;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this window is always on bottom.
+        /// </summary>
+        public bool IsAlwaysOnBottom
+        {
+            get => _isAlwaysOnBottom;
+            set => _isAlwaysOnBottom = value;
+        }
+
         /// <summary>
         /// Gets or sets the presenter kind for the current window
         /// </summary>
@@ -609,6 +636,20 @@ namespace WinUIEx
         /// </summary>
         public event EventHandler<ZOrderInfo>? ZOrderChanged;
 
+        /// <summary>
+        /// Represents the position of a window.
+        /// </summary>
+        [StructLayout(LayoutKind.Sequential)]
+        private struct WINDOWPOS
+        {
+            internal nint hwnd;
+            internal nint hwndInsertAfter;
+            internal int x;
+            internal int y;
+            internal int cx;
+            internal int cy;
+            internal uint flags;
+        }
     }
 
     /// <summary>

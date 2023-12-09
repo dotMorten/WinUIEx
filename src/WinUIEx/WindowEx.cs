@@ -133,6 +133,11 @@ namespace WinUIEx
         /// <returns></returns>
         public bool BringToFront() => WindowExtensions.SetForegroundWindow(this);
 
+        /// <summary>
+        /// Brings the window to the bottom of other windows
+        /// </summary>
+        public bool BringToBottom() => WindowExtensions.SetBottomWindow(this);
+
         private Icon? _TaskBarIcon;
 
         /// <summary>
@@ -312,6 +317,15 @@ namespace WinUIEx
         {
             get => _manager.IsAlwaysOnTop;
             set => _manager.IsAlwaysOnTop = value;
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this window is always on bottom.
+        /// </summary>
+        public bool IsAlwaysOnBottom
+        {
+            get => _manager.IsAlwaysOnBottom;
+            set => _manager.IsAlwaysOnBottom = value;
         }
 
         /// <summary>

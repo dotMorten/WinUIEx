@@ -312,7 +312,7 @@ namespace WinUIEx
                 case WindowsMessages.WM_WINDOWPOSCHANGING:
                     {
                         // https://stackoverflow.com/questions/365094/window-on-desktop
-                        if (!_isAlwaysOnBottom)
+                        if (!_IsAlwaysOnBottom)
                             return;
 
                         const uint SWP_NOZORDER = 0x0004;
@@ -593,15 +593,22 @@ namespace WinUIEx
             set => overlappedPresenter.IsAlwaysOnTop = value;
         }
 
-        private bool _isAlwaysOnBottom;
+        private bool _IsAlwaysOnBottom;
 
         /// <summary>
         /// Gets or sets a value indicating whether this window is always on bottom.
         /// </summary>
         public bool IsAlwaysOnBottom
         {
-            get => _isAlwaysOnBottom;
-            set => _isAlwaysOnBottom = value;
+            get { return _IsAlwaysOnBottom; }
+            set
+            {
+                if (_isInitialized && value)
+                {
+                    _window.SetBottomWindow();
+                }
+                _IsAlwaysOnBottom = value;
+            }
         }
 
         /// <summary>

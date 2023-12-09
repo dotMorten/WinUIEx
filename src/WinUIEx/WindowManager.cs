@@ -544,7 +544,7 @@ namespace WinUIEx
             }
             if(args.DidZOrderChange)
                 ZOrderChanged?.Invoke(this, new ZOrderInfo() { IsZOrderAtTop = args.IsZOrderAtTop, IsZOrderAtBottom = args.IsZOrderAtBottom, ZOrderBelowWindowId = args.ZOrderBelowWindowId });
-            if (args.IsZOrderAtBottom && _shouldSetBottomWindow)
+            if (_shouldSetBottomWindow && args.IsZOrderAtBottom)
             {
                 _shouldSetBottomWindow = false;
                 _IsAlwaysOnBottom = true;

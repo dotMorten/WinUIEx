@@ -441,7 +441,7 @@ namespace WinUIEx
                     var monitors = MonitorInfo.GetDisplayMonitors();
                     System.IO.BinaryReader br = new System.IO.BinaryReader(new System.IO.MemoryStream(data));
                     int monitorCount = br.ReadInt32();
-                    if (monitorCount < monitors.Count)
+                    if (monitorCount != monitors.Count)
                         return; // Don't restore - list of monitors changed
                     for (int i = 0; i < monitorCount; i++)
                     {

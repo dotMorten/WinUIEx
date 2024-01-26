@@ -54,7 +54,7 @@ namespace WinUIEx
         /// <inheritdoc />
         protected override Windows.UI.Composition.CompositionBrush CreateBrush(Windows.UI.Composition.Compositor compositor)
         {
-            return WindowManager.Compositor.CreateColorBrush(TintColor);
+            return brush = WindowManager.Compositor.CreateColorBrush(TintColor);
         }
 
         /// <inheritdoc />

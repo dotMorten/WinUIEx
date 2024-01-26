@@ -24,7 +24,7 @@
     <PackageId>WinUIEx</PackageId>
     <Product>WinUI Extensions</Product>
     <PackageReleaseNotes>
-      - Ensure WebAuthenticator URL is fully encoded to avoid issues with certain OAuth servers (#144)
+        - Can't change TransparentTintBackdrop.TintColor at runtime (#149)
     </PackageReleaseNotes>
   </PropertyGroup>
 

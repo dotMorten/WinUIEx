@@ -37,9 +37,18 @@ namespace WinUIExSample.Pages
         {
             var allVideoDevices = await DeviceInformation.FindAllAsync(DeviceClass.VideoCapture);
             DeviceInformation cameraDevice = allVideoDevices.FirstOrDefault(x => x.EnclosureLocation != null && x.EnclosureLocation.Panel == Windows.Devices.Enumeration.Panel.Front) ?? allVideoDevices.FirstOrDefault();
-            
+
+            var frameSourceGroups = await Windows.Media.Capture.Frames.MediaFrameSourceGroup.FindAllAsync();
+            var selectedFrameSourceGroup = frameSourceGroups.First();
             mediaCapture = new Windows.Media.Capture.MediaCapture();
-            var settings = new MediaCaptureInitializationSettings { VideoDeviceId = cameraDevice.Id };
+            var settings = new MediaCaptureInitializationSettings
+            {
+                VideoDeviceId = cameraDevice.Id,
+                SourceGroup = selectedFrameSourceGroup,
+                SharingMode = MediaCaptureSharingMode.SharedReadOnly,
+                StreamingCaptureMode = StreamingCaptureMode.Video,
+                MemoryPreference = MediaCaptureMemoryPreference.Cpu
+            };
             await mediaCapture.InitializeAsync(settings);
             elm.Source = mediaCapture;
             //await mediaCapture.StartPreviewAsync();

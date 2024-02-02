@@ -28,6 +28,8 @@ namespace WinUIEx
     // https://learn.microsoft.com/en-us/windows/win32/api/mfidl/nn-mfidl-imfmediasink
     // https://github.com/nickluo/CameraCapture/
     // https://github.com/castorix/WinUI3_DirectShow_Capture
+    // https://github.com/TripleSM/MediaFrameCapture/blob/main/WinUI3MediaFrameCapture/WinUI3MediaFrameCapture/MainWindow.xaml.cs  - Framereader, not sink based
+    // https://github.com/mmaitre314/MediaCaptureWPF/blob/6b42e0c288c3ef290b47f1267b37ac7488f60483/MediaCaptureWPF/CapturePreview.cs#L41
     public partial class CaptureElement
     {
         private static readonly Guid IID_IDXGIFactory2_Guid = new Guid("50c83a1c-e072-4c48-87b0-3630fa36a6d0");

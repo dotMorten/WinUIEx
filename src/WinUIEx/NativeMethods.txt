@@ -55,3 +55,8 @@ CreateRectRgn
 CreateSolidBrush
 FillRect
 GetDC
+
+IMFCapturePreviewSink
+
+IMFCaptureEngine 
+MFCreateSourceReaderFromMediaSource

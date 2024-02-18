@@ -46,9 +46,12 @@ namespace WinUIUnitTests
         {
             m_window = new WindowEx();
             m_window.Activate();
-            WinUIEx.TestTools.MSTest.UnitTestClient.Run(m_window);
+            Microsoft.VisualStudio.TestPlatform.TestExecutor.UnitTestClient.CreateDefaultUI();
+            Microsoft.VisualStudio.TestPlatform.TestExecutor.UnitTestClient.Run(Environment.CommandLine);
         }
 
-        private Window m_window;
+        private static Window m_window;
+
+        public static Window Window => m_window;
     }
 }

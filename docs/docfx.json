@@ -5,8 +5,6 @@
         {
           "files": [ 
             "WinUIEx/WinUIEx.csproj",
-            "TestTools/WinUIEx.TestTools/WinUIEx.TestTools.csproj",
-            "TestTools/WinUIEx.TestTools.MSTest/WinUIEx.TestTools.MSTest.csproj"
           ],
           "src" : "../src/"
         },

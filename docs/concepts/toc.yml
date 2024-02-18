@@ -14,8 +14,6 @@
   href: WebAuthenticator.md
 - name: Custom Backdrops
   href: CustomBackdrops.md
-- name: UI Testing
-  href: UITests.md
 - name: Object Model Diagram
   href: ../api/omd.html
 - name: Using with .NET MAUI

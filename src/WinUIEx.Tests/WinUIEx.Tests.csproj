@@ -39,7 +39,7 @@
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
   </ItemGroup>
 
-  <Import Project="..\..\Dependencies.targets" Condition="'$(WinAppSDKVersion)'==''" />
+  <Import Project="..\Dependencies.targets" Condition="'$(WinAppSDKVersion)'==''" />
   <ItemGroup>
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="$(WinAppSDKVersion)" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="$(WinAppSDKToolsVersion)" />
@@ -53,8 +53,6 @@
     <ProjectCapability Include="Msix" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\WinUIEx\WinUIEx.csproj" />
-    <ProjectReference Include="..\WinUIEx.TestTools.MSTest.CodeGenerator\WinUIEx.TestTools.MSTest.CodeGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
-    <ProjectReference Include="..\WinUIEx.TestTools.MSTest\WinUIEx.TestTools.MSTest.csproj" />
+    <ProjectReference Include="..\WinUIEx\WinUIEx.csproj" />
   </ItemGroup>
 </Project>

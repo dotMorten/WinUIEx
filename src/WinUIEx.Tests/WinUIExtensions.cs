@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WinUIEx.TestTools
+namespace WinUIUnitTests
 {
     /// <summary>
     /// A set of helper extensions for UI Testing
@@ -180,9 +180,9 @@ namespace WinUIEx.TestTools
         public static async Task WaitFrame(int frameCount = 1)
         {
             var tcs = new TaskCompletionSource<object>();
-            if (TestHost.Window?.DispatcherQueue.HasThreadAccess == false)
+            if (App.Window?.DispatcherQueue.HasThreadAccess == false)
             {
-                TestHost.Window.DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Normal, async () =>
+                App.Window.DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Normal, async () =>
                 {
                     await WaitFrame(frameCount);
                     tcs.SetResult(null);

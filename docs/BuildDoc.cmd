@@ -18,7 +18,7 @@ IF NOT EXIST "..\.tools\nuget.exe" (
 REM Generate OMD
 dotnet tool install --tool-path %~dp0../.tools/omd dotMorten.OmdGenerator --version 1.4.0
 mkdir %~dp0../artifacts/docs/api
-%~dp0..\.tools\omd\generateomd /source=%~dp0../src/WinUIEx/.;%~dp0../src/TestTools/WinUIEx.TestTools/.;%~dp0../src/TestTools/WinUIEx.TestTools.MSTest/. /output=%~dp0../artifacts/docs/api/omd.html
+%~dp0..\.tools\omd\generateomd /source=%~dp0../src/WinUIEx/. /output=%~dp0../artifacts/docs/api/omd.html
 ﻿
 %~dp0..\.tools\nuget install memberpage -Version 2.58.0 -OutputDirectory %~dp0
 REM Build the output site (HTML) from the generated metadata and input files (uses configuration in docfx.json in this folder)

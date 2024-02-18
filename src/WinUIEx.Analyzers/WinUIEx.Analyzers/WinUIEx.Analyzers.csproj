@@ -6,6 +6,7 @@
 
     <!-- Avoid ID conflicts with the package project. -->
     <PackageId>*$(MSBuildProjectFile)*</PackageId>
+    <LangVersion>10</LangVersion> 
   </PropertyGroup>
 
   <ItemGroup>

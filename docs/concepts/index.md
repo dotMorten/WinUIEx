@@ -6,7 +6,6 @@
   - [Extended `WindowEx` Window class](WindowEx.md)
   - [Window Manager](WindowManager.md)
   - [Window Message Monitor](WindowMessageMonitor.md)
-  - [UI Test Tooling for easy UI Testing](UITests.md)
   - [Web Authenticator](WebAuthenticator.md)
   - [Backdrops](CustomBackdrops.md)
 

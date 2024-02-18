@@ -33,7 +33,7 @@ jobs:
     - name: Test WinUIEx Analyzer
       run: |
         msbuild /restore /t:Build src\WinUIEx.Analyzers\WinUIEx.Analyzers.Test\WinUIEx.Analyzers.Test.csproj /p:Configuration=Release
-        vstest.console.exe src\WinUIEx.Analyzers\WinUIEx.Analyzers.Test\bin\Debug\net6.0-windows10.0.19041.0\WinUIEx.Analyzers.Test.dll --logger:"console;verbosity=normal" /InIsolation
+        vstest.console.exe src\WinUIEx.Analyzers\WinUIEx.Analyzers.Test\bin\Release\net6.0-windows10.0.19041.0\WinUIEx.Analyzers.Test.dll --logger:"console;verbosity=normal" /InIsolation
       
     - name: Upload artifacts
       uses: actions/upload-artifact@v1

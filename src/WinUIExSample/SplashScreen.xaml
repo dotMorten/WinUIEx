@@ -8,16 +8,15 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
     <Grid>
-        <Image Source="ms-appx:///Images/logo.png" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="1"
-               Width="200"
+        <Image Source="ms-appx:///Images/splash.jpg" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="1" Stretch="UniformToFill"
                />
         <StackPanel VerticalAlignment="Bottom">
-            <TextBlock Text="WinUI EX Sample App" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,25"
-                       Foreground="#215A9D" FontWeight="Black"
-                       Style="{StaticResource TitleTextBlockStyle}"  />    
+            <TextBlock Text="WinUI EX Sample App" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,-5"
+                       Foreground="White" FontWeight="Light"
+                       Style="{StaticResource TitleTextBlockStyle}" />
             <TextBlock x:Name="status" Text="Loading..." HorizontalAlignment="Center" />
             <ProgressBar x:Name="progress" Minimum="0" Maximum="100" HorizontalAlignment="Stretch" 
-                     Height="20" Margin="10,3"
+                     Height="20" Margin="10,3" Foreground="White"
                      />
         </StackPanel>
     </Grid>

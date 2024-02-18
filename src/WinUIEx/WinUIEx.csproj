@@ -24,7 +24,7 @@
     <PackageId>WinUIEx</PackageId>
     <Product>WinUI Extensions</Product>
     <PackageReleaseNotes>
-      - Added analyzers for some non-functional APIs
+        - Can't change TransparentTintBackdrop.TintColor at runtime (#149)
     </PackageReleaseNotes>
   </PropertyGroup>
 

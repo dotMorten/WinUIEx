@@ -82,6 +82,32 @@ namespace WinUIUnitTests
                 }
             });
             if (!ok)
+                tcs.TrySetException(new InvalidOperationException("Could not run test on UI thread"));
+            return tcs.Task;
+        }
+
+        public static Task RunWindowTest(Action<Window> action)
+        {
+            TaskCompletionSource tcs = new TaskCompletionSource();
+            bool ok = App.Window.DispatcherQueue.TryEnqueue(() =>
+            {
+                Window window = new Window();
+                window.Activate();
+                try
+                {
+                    action(window);
+                    tcs.TrySetResult();
+                }
+                catch (System.Exception ex)
+                {
+                    tcs.TrySetException(ex);
+                }
+                finally
+                {
+                    window.Close();
+                }
+            });
+            if (!ok)
                 tcs.TrySetException(new InvalidOperationException("Could now run test on UI thread"));
             return tcs.Task;
         }

@@ -95,6 +95,24 @@ namespace WinUIUnitTests
             return await tcs.Task;
         }
 #endif
+        public static async Task<T> AwaitEvent<T>(Action<EventHandler<T>> subscribe, Action<EventHandler<T>> unsubscribe, System.Threading.CancellationToken cancellationToken = default)
+        {
+            TaskCompletionSource<T> tcs = new TaskCompletionSource<T>();
+            cancellationToken.Register(() => tcs.TrySetCanceled());
+            EventHandler<T> handler = (s, e) =>
+            {
+                tcs.TrySetResult(e);
+            };
+            subscribe(handler);
+            try
+            {
+                return await tcs.Task;
+            }
+            finally
+            {
+                unsubscribe(handler);
+            };
+        }
 
         /// <summary>
         /// Completes when the provided element has loaded.
@@ -102,8 +120,12 @@ namespace WinUIUnitTests
         /// <param name="element">Element.</param>
         /// <param name="cancellationToken">Cancellation token.</param>
         /// <returns></returns>
-        public static async Task LoadAsync(this global::Microsoft.UI.Xaml.FrameworkElement element, System.Threading.CancellationToken cancellationToken = default)
+        public static async Task LoadAsync(this global::Microsoft.UI.Xaml.UIElement uielement, System.Threading.CancellationToken cancellationToken = default)
         {
+            if(uielement is not FrameworkElement element)
+            {
+                throw new ArgumentException("Element must be a FrameworkElement", nameof(uielement));
+            }
             if (element.IsLoaded)
                 return;
             TaskCompletionSource<object> tcs = new TaskCompletionSource<object>();

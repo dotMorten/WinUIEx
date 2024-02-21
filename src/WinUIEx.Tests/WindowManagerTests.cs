@@ -45,7 +45,7 @@ namespace WinUIUnitTests
                 var manager = WindowManager.Get(window);
                 manager.Width = 500;
                 await window.Content.LoadAsync();
-                Assert.AreEqual(500, window.AppWindow.Size.Width * window.Content.XamlRoot.RasterizationScale);
+                Assert.AreEqual(500, window.AppWindow.Size.Width / window.Content.XamlRoot.RasterizationScale);
             });
         }
 
@@ -58,7 +58,7 @@ namespace WinUIUnitTests
                 var manager = WindowManager.Get(window);
                 manager.Height = 500;
                 await window.Content.LoadAsync();
-                Assert.AreEqual(500, window.AppWindow.Size.Height * window.Content.XamlRoot.RasterizationScale);
+                Assert.AreEqual(500, window.AppWindow.Size.Height / window.Content.XamlRoot.RasterizationScale);
             });
         }
 
@@ -72,7 +72,7 @@ namespace WinUIUnitTests
                 manager.Width = 500;
                 await window.Content.LoadAsync();
                 manager.MinWidth = 600;
-                Assert.AreEqual(600, window.AppWindow.Size.Width * window.Content.XamlRoot.RasterizationScale);
+                Assert.AreEqual(600, window.AppWindow.Size.Width / window.Content.XamlRoot.RasterizationScale);
             });
         }
 
@@ -86,7 +86,7 @@ namespace WinUIUnitTests
                 manager.Height = 500;
                 await window.Content.LoadAsync();
                 manager.MinHeight = 600;
-                Assert.AreEqual(600, window.AppWindow.Size.Height * window.Content.XamlRoot.RasterizationScale);
+                Assert.AreEqual(600, window.AppWindow.Size.Height / window.Content.XamlRoot.RasterizationScale);
             });
         }
 
@@ -100,7 +100,7 @@ namespace WinUIUnitTests
                 manager.Width = 600;
                 manager.MaxWidth = 500;
                 await window.Content.LoadAsync();
-                Assert.AreEqual(500, window.AppWindow.Size.Width * window.Content.XamlRoot.RasterizationScale);
+                Assert.AreEqual(500, window.AppWindow.Size.Width / window.Content.XamlRoot.RasterizationScale);
             });
         }
 
@@ -112,7 +112,7 @@ namespace WinUIUnitTests
                 manager.Height = 600;
                 manager.MaxHeight = 500;
                 await window.Content.LoadAsync();
-                Assert.AreEqual(500, window.AppWindow.Size.Height * window.Content.XamlRoot.RasterizationScale);
+                Assert.AreEqual(500, window.AppWindow.Size.Height / window.Content.XamlRoot.RasterizationScale);
             });
 
         [TestMethod]

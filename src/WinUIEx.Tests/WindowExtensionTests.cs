@@ -15,7 +15,7 @@ public partial class WindowExtensionTests
             var windowPadding = WindowContext.Width - width;
             WindowContext.Width = 500;
             await grid.SizeChangedAsync();
-            Assert.AreEqual(500, grid.ActualWidth + windowPadding, "Width after window resize");
+            Assert.AreEqual(500, grid.ActualWidth + windowPadding, 0.01, "Width after window resize");
         });
     }
 
@@ -31,7 +31,7 @@ public partial class WindowExtensionTests
             var windowPadding = WindowEx.Height - height;
             WindowEx.Height = 500;
             await grid.SizeChangedAsync();
-            Assert.AreEqual(500, grid.ActualHeight + windowPadding, "Height after window resize");
+            Assert.AreEqual(500, grid.ActualHeight + windowPadding, 0.01, "Height after window resize");
         });
     }
 

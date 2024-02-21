@@ -21,7 +21,7 @@ namespace WinUIUnitTests
             {
                 var manager1 = WindowManager.Get(window);
                 var manager2 = WindowManager.Get(window);
-                Assert.ReferenceEquals(manager1, manager2);
+                Assert.AreSame(manager1, manager2);
             });
         }
 
@@ -32,7 +32,7 @@ namespace WinUIUnitTests
             {
                 var manager = WindowManager.Get(window);
                 Assert.IsNotNull(manager.AppWindow);
-                Assert.ReferenceEquals(manager.AppWindow, window.AppWindow);
+                Assert.AreSame(manager.AppWindow, window.AppWindow);
             });
         }
 

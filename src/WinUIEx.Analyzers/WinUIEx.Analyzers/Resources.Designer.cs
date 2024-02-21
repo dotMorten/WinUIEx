@@ -70,7 +70,7 @@ namespace WinUIEx.Analyzers {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The member &apos;{0}&apos; will always be null and should not be used..
+        ///   Looks up a localized string similar to The member &apos;{0}&apos; will always be null and should not be used.
         /// </summary>
         internal static string AlwaysNullMessageFormat {
             get {
@@ -79,7 +79,7 @@ namespace WinUIEx.Analyzers {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The member will always be null..
+        ///   Looks up a localized string similar to The member will always be null.
         /// </summary>
         internal static string AlwaysNullTitle {
             get {

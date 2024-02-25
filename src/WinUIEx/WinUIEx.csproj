@@ -27,6 +27,7 @@
       - Ensure WebAuthenticator URL is fully encoded to avoid issues with certain OAuth servers (#144)
       - Can't change TransparentTintBackdrop.TintColor at runtime (#149)
       - Avoid first-chance exception in Window Persistence
+      - Allow resetting MaxWidth/MaxHeight back to the default value of 0
     </PackageReleaseNotes>
   </PropertyGroup>
 

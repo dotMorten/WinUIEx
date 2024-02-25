@@ -212,9 +212,9 @@ namespace WinUIEx
             get => _maxWidth;
             set
             {
-                if(value <= 0) throw new ArgumentOutOfRangeException(nameof(value));
+                if(value < 0) throw new ArgumentOutOfRangeException(nameof(value));
                 _maxWidth = value;
-                if (Width > value)
+                if (value > 0 && Width > value)
                     Width = value;
             }
         }
@@ -233,9 +233,9 @@ namespace WinUIEx
             get => _maxHeight;
             set
             {
-                if (value <= 0) throw new ArgumentOutOfRangeException(nameof(value));
+                if (value < 0) throw new ArgumentOutOfRangeException(nameof(value));
                 _maxHeight = value;
-                if (Height > value)
+                if (value > 0 && Height > value)
                     Height = value;
             }
         }

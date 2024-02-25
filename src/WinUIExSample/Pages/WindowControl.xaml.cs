@@ -93,8 +93,8 @@ namespace WinUIExSample.Pages
             }
             else
             {
-                MainWindow.MaxWidth = double.NaN;
-                MainWindow.MaxHeight = double.NaN;
+                MainWindow.MaxWidth = 0;
+                MainWindow.MaxHeight = 0;
             }
         }
         public int WindowStateSelectedIndex

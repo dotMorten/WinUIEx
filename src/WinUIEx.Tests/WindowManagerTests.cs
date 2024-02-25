@@ -85,8 +85,7 @@ namespace WinUIUnitTests
         }
 
         [TestMethod]
-        public async Task SetMaxWidth()
-        {
+        public async Task SetMaxWidth() => 
             await UITestHelper.RunWindowTest(async (window) =>
             {
                 window.Content = new Grid();
@@ -96,7 +95,21 @@ namespace WinUIUnitTests
                 await window.Content.LoadAsync();
                 Assert.AreEqual(500, window.AppWindow.Size.Width / window.Content.XamlRoot.RasterizationScale);
             });
-        }
+
+        [TestMethod]
+        public async Task ResetMaxWidth() =>
+            await UITestHelper.RunWindowTest(async (window) =>
+            {
+                window.Content = new Grid();
+                var manager = WindowManager.Get(window);
+                manager.Width = 600;
+                manager.MaxWidth = 500;
+                await window.Content.LoadAsync();
+                Assert.AreEqual(500, window.AppWindow.Size.Width / window.Content.XamlRoot.RasterizationScale);
+                manager.MaxWidth = 0;
+                manager.Width = 600;
+                Assert.AreEqual(600, window.AppWindow.Size.Width / window.Content.XamlRoot.RasterizationScale);
+            });
 
         [TestMethod]
         public async Task SetMaxHeight() => await UITestHelper.RunWindowTest(async (window) =>
@@ -107,6 +120,22 @@ namespace WinUIUnitTests
                 manager.MaxHeight = 500;
                 await window.Content.LoadAsync();
                 Assert.AreEqual(500, window.AppWindow.Size.Height / window.Content.XamlRoot.RasterizationScale);
+            });
+
+
+        [TestMethod]
+        public async Task ResetMaxHeight() =>
+            await UITestHelper.RunWindowTest(async (window) =>
+            {
+                window.Content = new Grid();
+                var manager = WindowManager.Get(window);
+                manager.Height = 600;
+                manager.MaxHeight = 500;
+                await window.Content.LoadAsync();
+                Assert.AreEqual(500, window.AppWindow.Size.Height / window.Content.XamlRoot.RasterizationScale);
+                manager.MaxHeight = 0;
+                manager.Height = 600;
+                Assert.AreEqual(600, window.AppWindow.Size.Height / window.Content.XamlRoot.RasterizationScale);
             });
 
         [TestMethod]

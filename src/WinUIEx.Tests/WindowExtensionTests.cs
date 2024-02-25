@@ -1,6 +1,7 @@
 ﻿namespace WinUIUnitTests;
 
 [TestClass]
+[TestCategory(nameof(WinUIEx.WindowExtensions))]
 public partial class WindowExtensionTests
 {
     [TestMethod]

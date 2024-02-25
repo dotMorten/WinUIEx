@@ -1,15 +1,9 @@
 ﻿using Microsoft.UI.Windowing;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Mail;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.Services.Maps;
 
 namespace WinUIUnitTests
 {
     [TestClass]
+    [TestCategory(nameof(WinUIEx.WindowManager))]
     public class WindowManagerTests
     {
         public TestContext TestContext { get; set; }

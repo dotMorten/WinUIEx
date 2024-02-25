@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 namespace WinUIUnitTests
 {
     [TestClass]
+    [TestCategory(nameof(WinUIEx.MonitorInfo))]
     public class MonitorInfoTests
     {
         [TestMethod]

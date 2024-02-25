@@ -1,6 +1,7 @@
 ﻿namespace WinUIUnitTests;
 
 [TestClass]
+[TestCategory(nameof(WinUIEx.WindowEx))]
 public partial class WindowExTests
 {
     [WorkItem(16)]

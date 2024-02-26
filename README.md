@@ -5,6 +5,12 @@
 
 A set of extension methods and classes to fill some gaps in WinUI 3, mostly around windowing, authentication and helpers to simplify code.
 
+
+Watch WinUIEx covered in the On .NET Live show:
+
+[![Watch the video](https://img.youtube.com/vi/VQ0lP_0uboQ/hqdefault.jpg)](https://www.youtube.com/watch?v=VQ0lP_0uboQ&t=169s)
+
+
 ### NuGet Package:
   - [WinUIEX](https://www.nuget.org/packages/WinUIEx/)
 

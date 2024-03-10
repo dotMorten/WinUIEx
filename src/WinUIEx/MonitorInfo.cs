@@ -4,6 +4,7 @@ using Windows.Win32.Graphics.Gdi;
 using Windows.Foundation;
 using System.Collections.Generic;
 using Windows.Win32;
+using System;
 
 namespace WinUIEx
 {
@@ -46,6 +47,7 @@ namespace WinUIEx
                 new Rect(new Point(info.__AnonymousBase_winuser_L13558_C43.rcWork.left, info.__AnonymousBase_winuser_L13558_C43.rcWork.top),
                 new Point(info.__AnonymousBase_winuser_L13558_C43.rcWork.right, info.__AnonymousBase_winuser_L13558_C43.rcWork.bottom));
             Name = new string(info.szDevice.AsSpan()).Replace("\0", "").Trim();
+            IsPrimary = monitor == PInvoke.MonitorFromWindow(new(IntPtr.Zero), MONITOR_FROM_FLAGS.MONITOR_DEFAULTTOPRIMARY);
         }
 
         /// <summary>
@@ -69,8 +71,13 @@ namespace WinUIEx
         /// </remarks>
         public Rect RectWork { get; }
 
+        /// <summary>
+        /// Gets if the monitor is the the primary display monitor.
+        /// </summary>
+        public bool IsPrimary { get; }
+
         /// <inheritdoc />
-        public override string ToString() => $"{Name} {RectMonitor.Width}x{RectMonitor.Height}";
+        public override string ToString() => $"{Name} {(IsPrimary ? " Primary" : "")} {RectMonitor.Width}x{RectMonitor.Height}";
 
         private static unsafe bool GetMonitorInfo(HMONITOR hMonitor, ref MONITORINFOEXW lpmi)
         {

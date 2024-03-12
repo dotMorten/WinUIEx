@@ -33,6 +33,29 @@ namespace WinUIEx
             return list;
         }
 
+        /// <summary>
+        /// Gets the display monitor that is nearest to a given window.
+        /// </summary>
+        /// <param name="hwnd">Window handle</param>
+        /// <returns>The display monitor that is nearest to a given window.</returns>
+        public unsafe static MonitorInfo GetWindowDisplayMonitor(IntPtr hwnd)
+        {
+            var windowMonitor = PInvoke.MonitorFromWindow(new(hwnd), MONITOR_FROM_FLAGS.MONITOR_DEFAULTTONEAREST);
+            MonitorInfo monitorInfo = null!;
+            MONITORENUMPROC callback = new MONITORENUMPROC((HMONITOR monitor, HDC deviceContext, RECT* rect, LPARAM data) =>
+            {
+                if (monitor == windowMonitor)
+                {
+                    monitorInfo = new MonitorInfo(monitor, rect);
+                    return false;
+                }
+                return true;
+            });
+            LPARAM data = new LPARAM();
+            bool ok = PInvoke.EnumDisplayMonitors(null, null, callback, data);
+            return monitorInfo;
+        }
+
         private readonly HMONITOR _monitor;
 
         internal unsafe MonitorInfo(HMONITOR monitor, RECT* rect)

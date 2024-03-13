@@ -95,7 +95,7 @@ namespace WinUIEx
         public Rect RectWork { get; }
 
         /// <summary>
-        /// Gets the display monitor coordinate relative to the primary display monitor coordinate, expressed in virtual-screen coordinates.
+        /// Gets the coordinates of the display monitor origin in the primary display monitor, expressed in virtual-screen coordinates.
         /// </summary>
         /// <remarks>
         /// <note>For display monitor coordinates, the origin is the upper-left corner of the display monitor.</note>

@@ -4,6 +4,7 @@ using Windows.Win32.Graphics.Gdi;
 using Windows.Foundation;
 using System.Collections.Generic;
 using Windows.Win32;
+using System;
 
 namespace WinUIEx
 {
@@ -32,10 +33,34 @@ namespace WinUIEx
             return list;
         }
 
+        /// <summary>
+        /// Gets the display monitor that is nearest to a given window.
+        /// </summary>
+        /// <param name="hwnd">Window handle</param>
+        /// <returns>The display monitor that is nearest to a given window.</returns>
+        public unsafe static MonitorInfo GetWindowDisplayMonitor(IntPtr hwnd)
+        {
+            var windowMonitor = PInvoke.MonitorFromWindow(new(hwnd), MONITOR_FROM_FLAGS.MONITOR_DEFAULTTONEAREST);
+            MonitorInfo monitorInfo = null!;
+            MONITORENUMPROC callback = new MONITORENUMPROC((HMONITOR monitor, HDC deviceContext, RECT* rect, LPARAM data) =>
+            {
+                if (monitor == windowMonitor)
+                {
+                    monitorInfo = new MonitorInfo(monitor, rect);
+                    return false;
+                }
+                return true;
+            });
+            LPARAM data = new LPARAM();
+            bool ok = PInvoke.EnumDisplayMonitors(null, null, callback, data);
+            return monitorInfo;
+        }
+
         private readonly HMONITOR _monitor;
 
         internal unsafe MonitorInfo(HMONITOR monitor, RECT* rect)
         {
+            PointMonitor = new Point(rect->left, rect->top);
             RectMonitor =
                 new Rect(new Point(rect->left, rect->top),
                 new Point(rect->right, rect->bottom));
@@ -68,6 +93,19 @@ namespace WinUIEx
         /// <note>If the monitor is not the primary display monitor, some of the rectangle's coordinates may be negative values.</note>
         /// </remarks>
         public Rect RectWork { get; }
+
+        /// <summary>
+        /// Gets the coordinates of the display monitor origin in the primary display monitor, expressed in virtual-screen coordinates.
+        /// </summary>
+        /// <remarks>
+        /// <note>For display monitor coordinates, the origin is the upper-left corner of the display monitor.</note>
+        /// </remarks>
+        public Point PointMonitor { get; }
+
+        /// <summary>
+        /// Gets if the monitor is the the primary display monitor.
+        /// </summary>
+        public bool IsPrimary => _monitor == PInvoke.MonitorFromWindow(new(IntPtr.Zero), MONITOR_FROM_FLAGS.MONITOR_DEFAULTTOPRIMARY);
 
         /// <inheritdoc />
         public override string ToString() => $"{Name} {RectMonitor.Width}x{RectMonitor.Height}";

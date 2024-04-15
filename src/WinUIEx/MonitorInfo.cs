@@ -60,7 +60,6 @@ namespace WinUIEx
 
         internal unsafe MonitorInfo(HMONITOR monitor, RECT* rect)
         {
-            PointMonitor = new Point(rect->left, rect->top);
             RectMonitor =
                 new Rect(new Point(rect->left, rect->top),
                 new Point(rect->right, rect->bottom));
@@ -93,14 +92,6 @@ namespace WinUIEx
         /// <note>If the monitor is not the primary display monitor, some of the rectangle's coordinates may be negative values.</note>
         /// </remarks>
         public Rect RectWork { get; }
-
-        /// <summary>
-        /// Gets the coordinates of the display monitor origin in the primary display monitor, expressed in virtual-screen coordinates.
-        /// </summary>
-        /// <remarks>
-        /// <note>For display monitor coordinates, the origin is the upper-left corner of the display monitor.</note>
-        /// </remarks>
-        public Point PointMonitor { get; }
 
         /// <summary>
         /// Gets if the monitor is the the primary display monitor.

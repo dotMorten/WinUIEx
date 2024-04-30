@@ -7,7 +7,7 @@ To get the extension methods, first add `using WinUIEx;` to the top of your code
     myWindow.Minimize();
     myWindow.Maximize();
     myWindow.Restore();
-    myWindow.Hide();`
+    myWindow.Hide();
 ```
 
 - Move and resize window

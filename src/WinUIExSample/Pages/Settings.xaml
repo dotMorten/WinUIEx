@@ -14,7 +14,7 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <StackPanel Background="{ThemeResource SemiTransparentBackgroundBrush}" CornerRadius="10" Padding="10">
-            <TextBlock Text="Window Design" FontSize="32" FontFamily="Segoe UI" FontWeight="Light" Margin="0,-10,0,0" />
+            <TextBlock Text="Settings" FontSize="32" FontFamily="Segoe UI" FontWeight="Light" Margin="0,-10,0,0" />
         </StackPanel>
         <StackPanel Background="{ThemeResource SemiTransparentBackgroundBrush}" CornerRadius="10" Padding="10" Margin="0,10,0,0" Grid.Row="1">
             <ComboBox x:Name="themeSelector" Header="Theme" SelectedIndex="{x:Bind ThemeSelectedIndex, Mode=TwoWay}" Margin="0,5,0,0">

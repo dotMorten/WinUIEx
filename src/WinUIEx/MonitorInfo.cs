@@ -4,6 +4,7 @@ using Windows.Win32.Graphics.Gdi;
 using Windows.Foundation;
 using System.Collections.Generic;
 using Windows.Win32;
+using System;
 
 namespace WinUIEx
 {
@@ -30,6 +31,31 @@ namespace WinUIEx
             if (!ok)
                 Marshal.ThrowExceptionForHR(Marshal.GetLastWin32Error());
             return list;
+        }
+
+        /// <summary>
+        /// Gets the display monitor that is nearest to a given window.
+        /// </summary>
+        /// <param name="hwnd">Window handle</param>
+        /// <returns>The display monitor that is nearest to a given window, or null if no monitor is found.</returns>
+        public unsafe static MonitorInfo? GetNearestDisplayMonitor(IntPtr hwnd)
+        {
+            var nearestMonitor = PInvoke.MonitorFromWindow(new(hwnd), MONITOR_FROM_FLAGS.MONITOR_DEFAULTTONEAREST);
+            MonitorInfo? nearestMonitorInfo = null;
+            MONITORENUMPROC callback = new MONITORENUMPROC((HMONITOR monitor, HDC deviceContext, RECT* rect, LPARAM data) =>
+            {
+                if (monitor == nearestMonitor)
+                {
+                    nearestMonitorInfo = new MonitorInfo(monitor, rect);
+                    return false;
+                }
+                return true;
+            });
+            LPARAM data = new LPARAM();
+            bool ok = PInvoke.EnumDisplayMonitors(null, null, callback, data);
+            if (!ok)
+                Marshal.ThrowExceptionForHR(Marshal.GetLastWin32Error());
+            return nearestMonitorInfo;
         }
 
         private readonly HMONITOR _monitor;
@@ -68,6 +94,11 @@ namespace WinUIEx
         /// <note>If the monitor is not the primary display monitor, some of the rectangle's coordinates may be negative values.</note>
         /// </remarks>
         public Rect RectWork { get; }
+
+        /// <summary>
+        /// Gets if the monitor is the the primary display monitor.
+        /// </summary>
+        public bool IsPrimary => _monitor == PInvoke.MonitorFromWindow(new(IntPtr.Zero), MONITOR_FROM_FLAGS.MONITOR_DEFAULTTOPRIMARY);
 
         /// <inheritdoc />
         public override string ToString() => $"{Name} {RectMonitor.Width}x{RectMonitor.Height}";

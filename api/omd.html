@@ -1,0 +1,559 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>OMD</title>
+      <style>
+         body { padding: 0; }
+		 ul { list-style:none; padding-left: 20px; margin-right:10px; }
+         .objectBox { border-style:solid; border-width:1px; margin:10px; float:left; border-radius:10px;}
+         .objectBox > .header { font-size:10px; padding:10px; border-radius:10px 10px 0 0;}
+         .objectBox > .header.noMembers { border-radius: 10px; }
+         .objectBox > .header > span { font-size:20px; }
+		 .class {  background: linear-gradient(to right, rgb(211, 220, 239), white);  }
+         .struct { background: linear-gradient(to right, rgb(211, 220, 239), white); }
+         .enum { background: linear-gradient(to right, rgb(221, 214, 239), white); }
+         .interface { background: linear-gradient(to right, rgb(231, 240, 220), white); }
+         .delegate { background: linear-gradient(to right, rgb(237, 218, 220), white); }
+         
+         .members > h4 { font-size:14px; background:rgb(240, 242, 239); display:block; padding:5px; margin:0; font-weight:normal; }
+         .typeExisting { border-color:#ddd; }
+		 .existing { opacity: .5; }
+         .typeRemoved { border-color:red; border-style:dashed; border-width:3px; text-decoration: line-through;border-style:dashed; border-width:3px; }
+         .memberRemoved { color: red; text-decoration: line-through; }
+         .obsolete { text-decoration: line-through; opacity:.75; }
+         .static { background-image: url(data:image/gif;base64,R0lGODlhDQAKAPcPAOhfF/nXxfbDqOx9Q/GbbvOvi/Klffvh0+6HUe+RYOlpJutzNPjNtvzr4v718AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAAA8ALAAAAAANAAoAAAhMAB8IDJBAAYCDBxccEGgAocODAQQ+LBCAQYEBER88RCDAgcCPBB4e5PjxgYABIgEQELjwQYOTDyUOMCAgQEiHElMeLCCw4MMFBCIGBAA7); background-repeat: no-repeat; background-position: left center; margin-left:-35px; padding-left:35px; }
+ 
+         .members li {  background-repeat: no-repeat; padding-left:20px; background-position: left center; }
+         .pubevent { background-image: url(data:image/gif;base64,R0lGODlhCgAMANU3APzksP7y2ebl4u+9kOvj1Pf39vDGkunm4V5HMIyCXOLd1a6XYN7YzpeDU+fQiZVvH+qwf6eUYFhTS8/Bofbv0/jz3vv6+Nva1Ih6SuilfObPienl36CLRsC5pKyXamtPKWpiSN3Mjp94HciyeIxoIumqfuXg1+mggefj3q2CIPXAbsq+n93FguXh2vn048a4kPLMlHlsRu7Cif/kf/rRdufIWeGHgv///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAADcALAAAAAAKAAwAAAZXwNvNFXJoWCPPRFgDzGQZm6Rwq9QCtJINJGACaBAbpnujXFU2zkV4q81msMHJhtjcFo1Ygmb7mNgWL3wkDGw3K3wPLYYEBjYiCoY3HQMpKJI3BBEHmDdBADs=); padding-left:20px; background-position: left center; }
+         .protevent { background-image: url(data:image/gif;base64,R0lGODlhEAAQAOZPAOGHgt28WvjYaOfIWaOALvrRdtO4f+7AL//kf8ipX49uIu3iyubl4vDr3//PMvzksO+9kP7y2a6XYN3Mjufj3umggaaFOJVvH93FgvDo1uTbxu7blvXssnlsRvv6+Pbv0/f39u7CiaCLRu7q3oyCXMiyeMuvdWtPKefQia2CIOjIXdva1OmqfvXrrufXs5eDU/by6V5HMOnl36eUYObPicq+n8a4kFhTS8Cyj+ilfOXh2oh6Ss/Bofn046yXauvj1OXTq4xrH4xoIuLd1eqwf+Xg1/71rPLMlN7Yzp94Hfjz3mpiSPXAbunm4fDGkv///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAAE8ALAAAAAAQABAAAAeRgE+Cg4SFhoM9Eyg0GCU+PIdPAw8IITkANyCHSgMRBSwASwyRkwVEADujhx+dTAAiK5GSCAhHEBUAMTKCCwYmCUASLx0kBQAnRbwGHAICFi4eNsZCSIMGLUZBAQ4ENcYXOoQGGwIBAQcETgBJQ4UZCQ4C6DgQKRSHGgECBCM/M02y9KGTNSiACgUNCAqCgVBhIAA7); }
+         .privevent { background-image: url(data:image/gif;base64,R0lGODlhEAAQAOZYAOGHgt/j6ufIWfrRdqy3y0FLWMnQ3crR3sjO2f/kf+Pm6vDy9PzksKCrwrK7zv7y2bjA0r7H1ubl4tLX4v///4h6Suqwf21/lvXAbunm4enl38a4kGpiSJCetN3Mjldqgp94Hfbv0/n044yCXHuJneLd1bvD1IxoIubPifLMlPjz3mR2jd7YzufQide4kpinvMTM2l5widva1HWFnOilfKeUZayXaqCLRumqfsTM2e7CiW+Al4eUpVhTS++9kJeDU+mggbvF1GdRPGR2jrG6zW5SLefj3sC4nuXh2t3Fgq2CIOXg13qKociyeE9jfGN1jb3G1qu3y3lsRs/BobjB0md3kE9ie5VvH////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAAFgALAAAAAAQABAAAAehgFiCg4SFhoMiHi0oSU02U4dYAgwJOjQAPRSHKgIPAzgAHBKRkwMWABWjhyGdGAA3MpqHAgkJKT5AAEIaggsHEEQENT9SIwMARUuDBwEEDVBMWBvHJyyDCzkvggQ7R8dXSIQKQR0GBitDLgAgJYUGAfABExFPSkaGJgEF+xMQPBmHCARAUAABAgckIjU4ACMCFQdRrERSMONClRgfnCiIFAgAOw==); }
+         .privprotevent { background-image: url(data:image/gif;base64,R0lGODlhEAAQAOZYAOGHgt/j6ufIWfrRdqy3y0FLWMnQ3crR3sjO2f/kf+Pm6vDy9PzksKCrwrK7zv7y2bjA0r7H1ubl4tLX4v///4h6Suqwf21/lvXAbunm4enl38a4kGpiSJCetN3Mjldqgp94Hfbv0/n044yCXHuJneLd1bvD1IxoIubPifLMlPjz3mR2jd7YzufQide4kpinvMTM2l5widva1HWFnOilfKeUZayXaqCLRumqfsTM2e7CiW+Al4eUpVhTS++9kJeDU+mggbvF1GdRPGR2jrG6zW5SLefj3sC4nuXh2t3Fgq2CIOXg13qKociyeE9jfGN1jb3G1qu3y3lsRs/BobjB0md3kE9ie5VvH////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAAFgALAAAAAAQABAAAAehgFiCg4SFhoMiHi0oSU02U4dYAgwJOjQAPRSHKgIPAzgAHBKRkwMWABWjhyGdGAA3MpqHAgkJKT5AAEIaggsHEEQENT9SIwMARUuDBwEEDVBMWBvHJyyDCzkvggQ7R8dXSIQKQR0GBitDLgAgJYUGAfABExFPSkaGJgEF+xMQPBmHCARAUAABAgckIjU4ACMCFQdRrERSMONClRgfnCiIFAgAOw==); }
+         
+         .pubmethod { background-image: url(data:image/gif;base64,R0lGODlhEAALANU/AM9p0Ky1rvDV8Pfwq/qY++6l79XVrLtvvPLb8n4ufqhQqZ48nunlq/Lg8/qr+3wtffqZ+9Vv1ZZSl92Y3tNu1Pqb++zS7LW7rY01jpikruTK5OKv4uuR7KlSqnEkcu3Y7e6+7vqf+8zOrPTm9I5Gj5BOkevR64qZrtFt0pU4lvDj8O6d7/Pj86dPqPqu++Xiq6ZQp+jR6Hore+aY55ynrubM5uOs48HErOmQ6n8wgKlQqn4wf3wufHUndc+Iz////yH5BAEAAD8ALAAAAAAQAAsAAAZmwJ9wSET4VMTk0GjzsZREgQ/k4vgaxIEhcPr5Ng4CAecbQX+wQ6FCgMxKvwHDcAtkfi2UOrSS8M4dABEHEyQLCUIDLyIXND8aCigUOwsYD2c/MToACSkyApg/Hwo5PSahQhYeNUJBADs=); }
+         .protmethod { background-image: url(data:image/gif;base64,R0lGODlhEQAQALMPAKdUqPCf8e3lq+rS68+0ePXq8+3l06WvrfXGMIIxg6SBMI5tIfjYaN28Ws+Iz////yH5BAEAAA8ALAAAAAARABAAAARk8MlJ33ClankD3tQ1BF5GCcJxFA7pfiDQugEgoan6yIALJKCdY+j4AR8GgpIwsABkiSgwKWAwFALOU9okoBYNhGIyMDYfXkYjPCYnzkgCgiE2BCWGxtV+l+jFfX4NC3x9BYR9EQA7); }
+         .privmethod { background-image: url(data:image/gif;base64,R0lGODlhEAAQAOZoAP///9/j6s+Iz9LX4kFLWKy3y8jO2bK7zuPm6srR3vDy9PqY+8nQ3ahQqdXVrO6l77tvvPfwq34ufrjA0r7H1qCrwvLb8u6+7uOs43UndalQqqy1rWFyiejR6Onlq+vR67jB0sTM2uTK5JinvLxwvVVnf6pVq+aY5/Lg89Nu1Ky0rq1crt2Y3o5Gj5ZSl2d3kN+w31dqgtVv1fDV8I01jtWY1ebM5pikrn4wf9Fq0oqZrnWFnHwufHEkcumQ6o2brfqu++6d72R2jZ88n/v7/Pqb+5U4lstnzJ+qu3wtffTm9NJr038wgPPj89PY2/DU8OzS7JBOkXore09jfLvD1L3G1l5wie3Y7fqr+/Dj8G1/lmR2jvqZ+5w8neKv4vqf++uR7MHErKpYq5CetNFt0nqInau3y29/lP///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAAGgALAAAAAAQABAAAAe4gGiCg4QWAlmEiYOGGAJNioRPAhdAYDUohBEOKjoAMF5YCws+AkoAkGIQD0ULXCdRABEeDmEbN2gmZKpfQS48p4orOTIkLC1dEgAKCRMHBU5oIg1LKThDNEkACQEFFQNIgh0aRxJGUjMKAyMAAFU/CoJXDUwZH2gIA2MMDEJbCINQetgQxCCAwQADKJSBhIZKAAIQB0w4w7BAAAMEDBg4wIFhhQQhKIA4YKYEQwQ7tLywEmMKEYaBAAA7); }
+         .privprotmethod { background-image: url(data:image/gif;base64,R0lGODlhEAAQAOZoAP///9/j6s+Iz9LX4kFLWKy3y8jO2bK7zuPm6srR3vDy9PqY+8nQ3ahQqdXVrO6l77tvvPfwq34ufrjA0r7H1qCrwvLb8u6+7uOs43UndalQqqy1rWFyiejR6Onlq+vR67jB0sTM2uTK5JinvLxwvVVnf6pVq+aY5/Lg89Nu1Ky0rq1crt2Y3o5Gj5ZSl2d3kN+w31dqgtVv1fDV8I01jtWY1ebM5pikrn4wf9Fq0oqZrnWFnHwufHEkcumQ6o2brfqu++6d72R2jZ88n/v7/Pqb+5U4lstnzJ+qu3wtffTm9NJr038wgPPj89PY2/DU8OzS7JBOkXore09jfLvD1L3G1l5wie3Y7fqr+/Dj8G1/lmR2jvqZ+5w8neKv4vqf++uR7MHErKpYq5CetNFt0nqInau3y29/lP///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAAGgALAAAAAAQABAAAAe4gGiCg4QWAlmEiYOGGAJNioRPAhdAYDUohBEOKjoAMF5YCws+AkoAkGIQD0ULXCdRABEeDmEbN2gmZKpfQS48p4orOTIkLC1dEgAKCRMHBU5oIg1LKThDNEkACQEFFQNIgh0aRxJGUjMKAyMAAFU/CoJXDUwZH2gIA2MMDEJbCINQetgQxCCAwQADKJSBhIZKAAIQB0w4w7BAAAMEDBg4wIFhhQQhKIA4YKYEQwQ7tLywEmMKEYaBAAA7); }
+
+         .pubproperty { background-image: url(data:image/gif;base64,R0lGODlhEAAQAOZ9AKKvxP/////9+0ZOVH2d3//rbqykj/b////taE1PVOjw/MHI0cHI0nBhSktPUnBhS/7//y4hAkxPUvnhcjMnFVOsQVlNV/3+/pmPeu3r5+LNeuz5/9+yMsSTFT+XKcjP2d7BYU86MNbl/9DIwtLi+Liso1t4We/0+3N1fImSp0GeMuq7MWBcXfbbaZWEU4BrV87Kwvnjf+Xk38ve/fL2/cDH0WdgUqq62s3Iv6TF/1FmQJm2k4XMheHw/6TTmuyoEffdatLq/zKMGPj7/qOXgIR1XhsQC4BxXClmHNzp/4mcadapLubu++Pt/39tW/PSWLWmgUxQU/bhg5adpNDi//q6IvrrsAoHEPj6/VA9QWVWT+3HS66YWH3BcLfK8dXq//ricvz+/qaiX/z+/45iFEtOUd7p+qytsPn7/3JcQcLJ0/LPVty9VN3Z1EtLTqCWgIyQUO3DQPTXZ7nJ5YtyUcS4ldPZ45OFc+np4uXThsiZHU1RVv/QH////wAAAAAAACH5BAEAAH0ALAAAAAAQABAAAAe+gH2Cg4SFhSV1bVBEbxh3Rzg+XYQjVk4FmGBybHRKPIQZLwhcBRNAa1tVYhUErTcGMS4IIS1PcSs/cCoEOXMGUg8aNghZHHodZDoeBF4GeQ8pDSAWfBRXEVomQgsBeEUyATANS0YsU4I7SNwCAgEBYWdpdk0DhDUB7AEXQzQKCkn1BqkJAAAAhIIIRQQUxACfgDFYTjAxQ4LKwj4NC6JBWHDGxQ8OD4jc0ONLkIso3CRYuSeKAwkOylw0RHNQIAA7); }
+         .protproperty { background-image: url(data:image/gif;base64,R0lGODlhEAAQAPeKAP///6KvxP/9+/jYaN28WqOALn2d39O4f//rbk1PVO7AL6ykj//taPb////PMnBhS/Dr349uIktPUsHI0XBhSsipX8HI0pmPesSTFeXTq87KwpWEU4BxXO3HS/j7/padpDKMGO7q3omSpylmHFt4Wf7//4BrV+Xk3+XThnJcQVFmQKe+pOjIXfz+/ktLTt3Z1FA9QfTXZ/bhg+/0+/fdavn7/8uvdeyoEaq62uHw/4mcaZOFc66YWN7BYWdgUsDH0a2urLnJ5dDIwv71rOzjqE86ME1RVvby6UxQUwoHEPnhcvLPVmVWT/rrsMiZHYxrH+3r5/rics3Iv+fXs1OsQdapLj+XKRsQC/q6Iunp4uLNellNV0xPUn9tW9y9VIR1Xvnjf+z5/zMnFcLJ07fK8fPSWMS4lXN1fPj6/YXMhaOXgPbbacbMxi4hAqCWgO3DQPLqsmBcXevhzerZleDayLWmgcjP2fL2/f3+/qbBrqytsN+yMv/QH45iFItyUaaFONTNuvz+/7iso+bu+6aiX+q7MUGeMpy4mYyQUKTF/////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAAIoALAAAAAAQABAAAAjsABUJVCTIzIs6atxc2MFByqE8AxUJadIFgcUoMbz40ZEmIhQTDHggUEJjSQcshKgYWIljAZgNDIqsKfOm0A1EhgwkCrJAxgMtPhjA2OMEQx8VVgyQWYDigQgKPbbwEZOkDRMSICYAyPLlBAANFKpcifNB4IoRWgUIAACghZ4UgA7YqJBB4A8AagHg8XCHzgE4Awb8maJoDIAAAUogDnCAyJAnBBwUUGQBr4BAaGYMOjBnAAECCiZXRlxjMZAKDgaElqPIjuUGsMPkYENgQIEQAs+4SMDbCBIJXCTUDh2x+EACLCJAMG78iPKBAQEAOw==); }
+         .privproperty { background-image: url(data:image/gif;base64,R0lGODlhEAAQAPeYAP///6KvxP/9+9/j6n2d36y3y//rbkFLWMjO2fb//6ykj//taE1PVMnQ3crR3rjA0uPm6r7H1rK7zsHI0nBhS3BhSqCrwtLX4sHI0YBxXPj7/uDl63WFnGR2jW1/lsLJ0+np4sSTFTMnFd3Z1OyoEZOFc9bY2JWEU+/0++3HS6u3y/TXZ66YWO3DQPj6/d7BYXqKoU9ie9y9VIBrV1FmQOjw/IXMhWVWTwoHEPLPVhsQC/nhcvrrsPnjf45iFImcaXN1fGBcXbvF1Liso//QH/bhg6TF/1OsQUtLTqq62vz+/zKMGOq7MZmPerfK8ffdasTM2r3G1vPSWPrick9jfLjB0sTM2fbbaUxQU1VogZinvG+Al11vh9jd5sjP2ZCetN+yMmd3kM3Iv39tW8iZHT+XKbnJ5Vt4WaaiX3JcQU1RVomSp1A9QZadpMS4leXk31dqgn1/goyQUEGeMqCWgGdgUotyUWN1jfz+/qOXgOLm7Pq6Ii4hAtapLk86MPL2/eXThqbBrs7KwuLNeqytsFlNV2R2jvn7//3+/py4me76/+Xr8+bu+8DH0ae+pClmHP7//7G6zYR1Xl5widDIwrvD1O3r57Wmgf///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAAJgALAAAAAAQABAAAAj7ADEJxDTEzYhLeeg0KZFBTKJAAzFR4jHGgMUpK2TY+WEjoqUZC1gY2PEkR4o9aI4QWJlEQY8TC/xckdKCCQk5cwgYMaOgCIVBdRawAUMmhA8aZQg4UQCIwpoKLwoREYGDz40zSzAAACHpDQBBFfroCNJGoKNHWgUIAAAAD6E0ehw8iFRAYCMAagEg0vCnhoMBBSxEgYHpA4AAASAhDrDBihYTAApswTQBrwAlLlAwWiTkS4MGHQxRPhzgEOIuDQaoHnAhwh0vlhPIVlRpwIHbFx5wAYKEgW81WOIUGIDgAAIEErJEjGjBAZQIVSSoiLF8IAQOHsJMgkMFQkAAOw==); }
+         .privprotproperty { background-image: url(data:image/gif;base64,R0lGODlhEAAQAPeYAP///6KvxP/9+9/j6n2d36y3y//rbkFLWMjO2fb//6ykj//taE1PVMnQ3crR3rjA0uPm6r7H1rK7zsHI0nBhS3BhSqCrwtLX4sHI0YBxXPj7/uDl63WFnGR2jW1/lsLJ0+np4sSTFTMnFd3Z1OyoEZOFc9bY2JWEU+/0++3HS6u3y/TXZ66YWO3DQPj6/d7BYXqKoU9ie9y9VIBrV1FmQOjw/IXMhWVWTwoHEPLPVhsQC/nhcvrrsPnjf45iFImcaXN1fGBcXbvF1Liso//QH/bhg6TF/1OsQUtLTqq62vz+/zKMGOq7MZmPerfK8ffdasTM2r3G1vPSWPrick9jfLjB0sTM2fbbaUxQU1VogZinvG+Al11vh9jd5sjP2ZCetN+yMmd3kM3Iv39tW8iZHT+XKbnJ5Vt4WaaiX3JcQU1RVomSp1A9QZadpMS4leXk31dqgn1/goyQUEGeMqCWgGdgUotyUWN1jfz+/qOXgOLm7Pq6Ii4hAtapLk86MPL2/eXThqbBrs7KwuLNeqytsFlNV2R2jvn7//3+/py4me76/+Xr8+bu+8DH0ae+pClmHP7//7G6zYR1Xl5widDIwrvD1O3r57Wmgf///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAAJgALAAAAAAQABAAAAj7ADEJxDTEzYhLeeg0KZFBTKJAAzFR4jHGgMUpK2TY+WEjoqUZC1gY2PEkR4o9aI4QWJlEQY8TC/xckdKCCQk5cwgYMaOgCIVBdRawAUMmhA8aZQg4UQCIwpoKLwoREYGDz40zSzAAACHpDQBBFfroCNJGoKNHWgUIAAAAD6E0ehw8iFRAYCMAagEg0vCnhoMBBSxEgYHpA4AAASAhDrDBihYTAApswTQBrwAlLlAwWiTkS4MGHQxRPhzgEOIuDQaoHnAhwh0vlhPIVlRpwIHbFx5wAYKEgW81WOIUGIDgAAIEErJEjGjBAZQIVSSoiLF8IAQOHsJMgkMFQkAAOw==); }
+
+         .pubfield { background-image: url(data:image/gif;base64,R0lGODlhEAAQANUsAAAzmVub2JnN/7LY+1qa15W+5nmw47XE4efx+6HQ/pHD8d7t+oq97oK36sXb8X2y5ShXr77L5Ut0vB5OqdPn+q/W/Hmw5NLm+dLm+I7C87rX8f///8LZ8NXo+4vA9M3j+b/Y7zVjtZ/Q/p3J8pDE9qPR/niv43yz553P/lyb2Hy06ay93v///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAACwALAAAAAAQABAAAAZUQJZwSCwaj0gi5oFIDj8mhmHhpFhIgozhguxoPAJBYiRBnhQogWgwASALjUFpAAG4j4WAqhKyAzZHKQEBfgARSCAEhHYHThwEjE5CDgArkpeYmURBADs=); }
+         .protfield { background-image: url(data:image/gif;base64,R0lGODlhEAAQAOZIAAAzmf////jYaN28WqOALlub2JnN/+7AL9O4f7LY+1qa1+fXs/Tu4MipX7XE4Y9uIvDr33mw453J8vDo1ny06fH2/I7C83iv432y5TVjtf71rOXVtB5OqYq97vXrrovA9Pby6eTw+4O04rfP5v/aZClasO7q3oxrH3mw5KPR/uDu/JDE9v/PMvXssp3G7ev0/KHQ/ujIXcuvdcLZ8J/Q/u7blubMgoW04uby/IK36uTx/MXb8ZHD8b7L5ay93ihXr3uy5Z3P/lyb2K/W/OvhzeTbxqaFONLm+f///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAAEgALAAAAAAQABAAAAeXgEiCg4RIAYWIgwEhGBWHiYIBKhcdES+PiAE6KCsGFhFHkDhAHwYGMBIlkC48QQY0CRwAkQG1hyI5CSkJPwCzAQwIMg0LATcFFEMZvrPBLQICRgtCBQXMAD1IGx4aJwMsBCMK1r4Oggg1AgMDBwRIMwrlgxMNJALtRII7AD6FRQMCCJiARMjGPXcEBQ2I8QBCQkEgGiYMBAA7); }
+         .privfield { background-image: url(data:image/gif;base64,R0lGODlhEAAQAOZRAAAzmd/j6lub2Ky3y0FLWJnN/+Pm6rLY+8jO2crR3snQ3Vqa177H1rjA0rK7zrXE4fDy9HSq3qCrwtLX4nmw473G1sTM2ZCetGd3kFdqgp3P/m1/lp3J8pDE9tLm+LfP5ny06bjB0q/W/IvA9J/Q/rvF1B5OqXyz59Lm+dXo+77L5cXb8SlasJinvKu3y83j+X2y5aPR/rG6zV5wiZHD8XqKoVyb2IKRpDVjtXiv4yhXr7vD1MTM2tPn+vv7/N7t+nWFnGR2jU9ie2p7kay93sLZ8G+Al47C86HQ/niGm2R2joK36oq97qPJ7E9jfHuy5efx+////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAAFEALAAAAAAQABAAAAebgFGCg4SFhoYeMFCHhS85TBQ/jII9TR0FRxQojClPIwUFSBwsjCc0GgUkByYAjBFLBzEHOgCtURAJDTIDEBECICI4tbYJAQMSFTU2AgLDACqCFi2CA0YfC821D4IGJRcKCkFKBkUL2oMKAeoBEww3USsARIQ7AQT3Ew1JjAMBCAQIEDgYwkhCAh4MQjhwIYSRDyAbMMzI4MTAoUAAOw==); }
+         .privprotfield { background-image: url(data:image/gif;base64,R0lGODlhEAAQAOZRAAAzmd/j6lub2Ky3y0FLWJnN/+Pm6rLY+8jO2crR3snQ3Vqa177H1rjA0rK7zrXE4fDy9HSq3qCrwtLX4nmw473G1sTM2ZCetGd3kFdqgp3P/m1/lp3J8pDE9tLm+LfP5ny06bjB0q/W/IvA9J/Q/rvF1B5OqXyz59Lm+dXo+77L5cXb8SlasJinvKu3y83j+X2y5aPR/rG6zV5wiZHD8XqKoVyb2IKRpDVjtXiv4yhXr7vD1MTM2tPn+vv7/N7t+nWFnGR2jU9ie2p7kay93sLZ8G+Al47C86HQ/niGm2R2joK36oq97qPJ7E9jfHuy5efx+////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAAFEALAAAAAAQABAAAAebgFGCg4SFhoYeMFCHhS85TBQ/jII9TR0FRxQojClPIwUFSBwsjCc0GgUkByYAjBFLBzEHOgCtURAJDTIDEBECICI4tbYJAQMSFTU2AgLDACqCFi2CA0YfC821D4IGJRcKCkFKBkUL2oMKAeoBEww3USsARIQ7AQT3Ew1JjAMBCAQIEDgYwkhCAh4MQjhwIYSRDyAbMMzI4MTAoUAAOw==); }
+
+         .pubdelegate { background-image: url(data:image/gif;base64,R0lGODlhEAAQAPebAP///9tw3PqY+6M+pOfq7dJl07fB0owtjUFVb83T2qu2y6Ctw/T1+E9je7nD05k2murlq9fWrJs4nPr6/LKgy0ped6I+o8HFrJ2pwtht2a24zJqnv1hrg0hbdY2ctsfO3EBSbLjB0qOvxqqzraexx+jq8f39/mx9lNZt0vLz9uPn7cW02jxRa8nP3VRmf5mlruqL65ejreLl7N/j6ubo7+Dj68HJ2M7PrPX2+Pqt+rO6rdvf5/qm+8LI0ZeMs+js8bS90MDI15ekvbG7zktfecmm1uTn7vn6+5ShuurmrF9xiK23zGByipilvp2pu73G1sDI2JOguTtPaThOaNne55OhurO90JWjtdne5jhNZ0RYcpyowK+5zZaStpumtK21rfqx+vHy9tNn1PDy9aayx7yq0ZKfudLY4rvE1f7+/qezyPb3+Zqmru3u8/f4+ubiq/v7/JCesJajvHiJn87U4dG84uuQ7Npu28HJ16GtxMjP3FpthbC7zbG8z+vu877H1tHW4nqKoOXX7mZ3kFVngLbA0urs8aA8oaq1xN3D6Y6dtqlFqrjC09jXrKm0yevt8qWwx5Shs8PGrHKDmtbc5rzF1ejZ8HCAl+Tn69vg6EVZc////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAAJsALAAAAAAQABAAAAjuADcJHEjAyhISBAYqJIjIyZVAl3osVPgkzg4ARpoomTjQQCQcAABU4bAQExQ0hfpocARpAYYNcsx4SLDJRkgAaY6kMCQoQCI9QUK42FTp5gQGfiwFyBGgjoMhDTYZAPDmhg42NAKA4SEgwAoFRDYBAWDCzZgSM1DYEcB2EZkOm7gkaSTpywssBQLAEDBgQB4tmxTAYdBGRaYzYu4E6HtoC4JNatZAiHBhRIwiBTIMkHBACIhNIsL8qEGJzoc/ZQpYONAlipRNCx7JoAKoBR5GfCg88IFEUZZNCeZMOjGIyR5CDSpoQsBiiheO0DcFBAA7); }
+         .protdelegate { background-image: url(data:image/gif;base64,R0lGODlhEAAQAPeQAP///9tw3N28WvjYaKM+pKOALvqY+9O4f+fq7dJl0+7AL6Ctw4wtjc3T2v/PMk9je8ipX49uIkFVb5s4nJ2pwtpu2+3kqZqnv5Shs7Kgy2ByirjB0qWwx5qmrqayx6u2y6q1xMHJ2L7H1oxrH/Xsslhrg+3iyuXX7uTn6/7+/ubo75yowEBSbFVngPqt+sLI0ZeMs253gPT1+KGtxJShusHJ13CAl5ajvJ2pu3qKoFpthd3D6aaFOJk2msmm1paStpKfuaGhnUped7vE1Y6dtrG8z0VZc8++k19xiOjZ8PLz9o2ctrbA0sDI18DI2Pr6/KA8oeqL68vMyeTn7khbddne5tvf55ejrTtPabO90Ovu85Ohuvn6+9G84ktfed/PrqlFqpekvcW02vDr3/X2+MnP3bC7zd/j6qm0ybGulb3G1sfO3NZt0pCesKI+o/qx+v71rLjC0zhNZ1Rmf9ht2ers8bG7zsS/sK23zKexx7yq0ebVkc7U4TxRa9LY4ujIXThOaMuvdZWjtZilvsjP3LzF1euQ7ERYcvqm+7nD0/Do1tNn1K24zJOguZumtLfB0v///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAAJAALAAAAAAQABAAAAjuACEJHIggC548CAYqJAgCh6AcNl4sVKimjRVIUwYhmTjwEQYykABsKbEQhZMhTIowQsNhAYULN4AsaQApBICbKbgoqXMiwA5CTTbMgVToJoAnMrQkCeAiQJdEdh5AunMgEIQjHVQEeIPIQAAxH7yYOEBiwAAeX86wMWSgLRgPVA5YgDNCgIMCVRIEiGKAAIEZhw7sGSBAgIICfhZVCOAXygoJiiA4GHA4zRUfCegQmMAgDAtIQQQMKCCFzxoRehK4YfCjERZIC0QfLlMjjpkMPWDQICIHUgMBfyLE0KCjxQMhRiT0AeRoYIQxHBUGBAA7); }
+         .privdelegate { background-image: url(data:image/gif;base64,R0lGODlhEAAQAPeWAP///9tw3PqY+6M+pEFLWOHl7OPm6qy3y77H1sjO2efq7dJl09/j6srR3rjA0tLX4owtjbG6zU9je73G1rK7zqCrwkFVb7jB0jhNZ6A8odpu20hbdbfB0qayx6exx9ht2cnQ3dvf56lFquvu8+rs8ZCesEped/Lz9pinvLvD1PT1+KWwx09jfKGtxKq1xLvE1Y6dtnqKoebo76Ctw8TM2am0yVRmf7Kgy8TM2ps4nLnD0/7+/md3kPqm+2+Al9Zt0kRYcr7H05eMs/Dy9EBSbJShupk2mpaStsHJ2Pqx+ktfecDI2E9ie2R2jvr6/Ovr1a24zEVZc6u3y7bA0ldqgrvF1GN1jWR2jTtPad7i6ZShs7C7zZOgudNn1JWjtZCetMjP3NG84uXX7sLI0byq0euQ7HqKoLzF1fqt+s7U3vn6+8DI17O90N3D6eTn61VngF9xiJumtLG8z+Di1cmm1lVogeTn7pOhurjC05yowDxRa9PZ3PX2+K23zFhrg42ctpekvau2y6I+o3WFnJKfuV5wiThOaM3T2rG7zl1vh5ilvujZ8LS9zG1/lsW02uqL65qnv+Pn7ZajvJ2pwnCAl52pu////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAAJYALAAAAAAQABAAAAjyAC0JHKiATR8PCgYqJOiikhczlMYsVDihRAgAdhTBmTiQgxY+AADc8bPQzZIXU+RAqbFixiRIkgj9OWQJSUgAO9ScICEmQBsway7YsHTmphMVIxYFQBMgjA5EEixlaeAgwoE9MgIk6SEggKNASiw1YHCgAqMYDH6UEcBWRIcNQ2igeDJngo80CwI8EjBgQAsgBqp8qXqlSZAuGgL0zZDHAohIBSI/QGCFzoIPA3JAAEQkRQECoB84SISAzAJBEI5wwXKAQQICCRJQqINnyw0jQorAwFChAQ4EFyhIYfJGgokoFvQYimNgUCMehaiwMMDRUkAAOw==); }
+         .privprotdelegate { background-image: url(data:image/gif;base64,R0lGODlhEAAQAPeWAP///9tw3PqY+6M+pEFLWOHl7OPm6qy3y77H1sjO2efq7dJl09/j6srR3rjA0tLX4owtjbG6zU9je73G1rK7zqCrwkFVb7jB0jhNZ6A8odpu20hbdbfB0qayx6exx9ht2cnQ3dvf56lFquvu8+rs8ZCesEped/Lz9pinvLvD1PT1+KWwx09jfKGtxKq1xLvE1Y6dtnqKoebo76Ctw8TM2am0yVRmf7Kgy8TM2ps4nLnD0/7+/md3kPqm+2+Al9Zt0kRYcr7H05eMs/Dy9EBSbJShupk2mpaStsHJ2Pqx+ktfecDI2E9ie2R2jvr6/Ovr1a24zEVZc6u3y7bA0ldqgrvF1GN1jWR2jTtPad7i6ZShs7C7zZOgudNn1JWjtZCetMjP3NG84uXX7sLI0byq0euQ7HqKoLzF1fqt+s7U3vn6+8DI17O90N3D6eTn61VngF9xiJumtLG8z+Di1cmm1lVogeTn7pOhurjC05yowDxRa9PZ3PX2+K23zFhrg42ctpekvau2y6I+o3WFnJKfuV5wiThOaM3T2rG7zl1vh5ilvujZ8LS9zG1/lsW02uqL65qnv+Pn7ZajvJ2pwnCAl52pu////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAAJYALAAAAAAQABAAAAjyAC0JHKiATR8PCgYqJOiikhczlMYsVDihRAgAdhTBmTiQgxY+AADc8bPQzZIXU+RAqbFixiRIkgj9OWQJSUgAO9ScICEmQBsway7YsHTmphMVIxYFQBMgjA5EEixlaeAgwoE9MgIk6SEggKNASiw1YHCgAqMYDH6UEcBWRIcNQ2igeDJngo80CwI8EjBgQAsgBqp8qXqlSZAuGgL0zZDHAohIBSI/QGCFzoIPA3JAAEQkRQECoB84SISAzAJBEI5wwXKAQQICCRJQqINnyw0jQorAwFChAQ4EFyhIYfJGgokoFvQYimNgUCMehaiwMMDRUkAAOw==); }
+
+          .expander {font-size: 18px; background-color: black; color:white; clear:both; cursor: pointer;padding: 10px;border: none;text-align: left;outline: none;margin:0 0 2px 0;transition: 0.4s;}
+          .expander:hover {background-color: #555;}
+          .expander:after {content: '\002B';color: #FFF;font-weight: bold;float: right;margin-left: 5px;}
+          .active:after {content: "\2212";}
+          .collapse {display: none;}
+      </style>
+    </head>
+<body>
+
+Generated with <a href="https://github.com/dotMorten/DotNetOMDGenerator">.NET Object Model Diagram Generator</a><br /><br />
+
+
+<section id='WinUIEx'>
+<h3 class='expander active'>WinUIEx</h3><div>
+<div class='objectBox' id='WinUIEx.AcrylicSystemBackdrop'>
+<div class='header class obsolete'>
+<span title="Defines the Acrylic System Backdrop settings to apply to the window.">AcrylicSystemBackdrop : <a href='#WinUIEx.SystemBackdrop'>SystemBackdrop</a></span>
+</div>
+<div class='members'>
+<h4>Constructors</h4>
+<ul>
+<li class='pubmethod'><span title="Initializes a new instance of the AcrylicSystemBackdrop class.">AcrylicSystemBackdrop</span>()</li>
+</ul></div>
+</div>
+<div class='objectBox' id='WinUIEx.CompositionBrushBackdrop'>
+<div class='header class'>
+<span title="Helper class for creating composition-brush based backdrops.">CompositionBrushBackdrop : SystemBackdrop</span>
+</div>
+<div class='members'>
+<h4>Constructors</h4>
+<ul>
+<li class='pubmethod'><span title="Initializes a new instance of the CompositionBrushBackdrop class.">CompositionBrushBackdrop</span>()</li>
+</ul></div>
+<div class='members'><h4>Methods</h4><ul>
+<li class='protmethod'><span title="Called when the brush needs to be created for the provided compositor.">CreateBrush</span>(Compositor <span title="Compositor context">compositor</span>) : CompositionBrush</li>
+</ul></div>
+</div>
+<div class='objectBox' id='WinUIEx.ExtendedWindowStyle'>
+<div class='header enum'>
+<span title="Flags used for ToggleExtendedWindowStyle method">ExtendedWindowStyle : int</span>
+</div>
+<ul class='members'>
+<li class='pubfield'><span title="The window accepts drag-drop files.">AcceptFiles</span></li>
+<li class='pubfield'><span title="Forces a top-level window onto the taskbar when the window is visible.">AppWindow</span></li>
+<li class='pubfield'><span title="The window has a border with a sunken edge.">ClientEdge</span></li>
+<li class='pubfield'><span title="Paints all descendants of a window in bottom-to-top painting order using double-buffering. Bottom-to-top painting order allows a descendent window to have translucency (alpha) and transparency (color-key) effects, but only if the descendent window also has the WS_EX_TRANSPARENT bit set. Double-buffering allows the window and its descendents to be painted without flicker. This cannot be used if the window has a class style of either CS_OWNDC or CS_CLASSDC.
+    Windows 2000: This style is not supported.">Composited</span></li>
+<li class='pubfield'><span title="The title bar of the window includes a question mark. When the user clicks the question mark, the cursor changes to a question mark with a pointer. If the user then clicks a child window, the child receives a WM_HELP message. The child window should pass the message to the parent window procedure, which should call the WinHelp function using the HELP_WM_HELP command. The Help application displays a pop-up window that typically contains help for the child window.
+    WS_EX_CONTEXTHELP cannot be used with the WS_MAXIMIZEBOX or WS_MINIMIZEBOX styles.">ContextHelp</span></li>
+<li class='pubfield'><span title="The window itself contains child windows that should take part in dialog box navigation. If this style is specified, the dialog manager recurses into children of this window when performing navigation operations such as handling the TAB key, an arrow key, or a keyboard mnemonic.">ControlParent</span></li>
+<li class='pubfield'><span title="The window has a double border; the window can, optionally, be created with a title bar by specifying the WS_CAPTION style in the dwStyle parameter.">DlgModalFrame</span></li>
+<li class='pubfield'><span title="The window is a layered window. This style cannot be used if the window has a class style of either CS_OWNDC or CS_CLASSDC.
+    Windows 8: The WS_EX_LAYERED style is supported for top-level windows and child windows. Previous Windows versions support WS_EX_LAYERED only for top-level windows.">Layered</span></li>
+<li class='pubfield'><span title="If the shell language is Hebrew, Arabic, or another language that supports reading order alignment, the horizontal origin of the window is on the right edge. Increasing horizontal values advance to the left.">LayoutRtl</span></li>
+<li class='pubfield'><span title="The window has generic left-aligned properties. This is the default.">Left</span></li>
+<li class='pubfield'><span title="If the shell language is Hebrew, Arabic, or another language that supports reading order alignment, the vertical scroll bar (if present) is to the left of the client area. For other languages, the style is ignored.">LeftScrollBar</span></li>
+<li class='pubfield'><span title="The window text is displayed using left-to-right reading-order properties. This is the default.">LtrReading</span></li>
+<li class='pubfield'><span title="The window is a MDI child window.">MdiChild</span></li>
+<li class='pubfield'><span title="A top-level window created with this style does not become the foreground window when the user clicks it. The system does not bring this window to the foreground when the user minimizes or closes the foreground window.
+    The window should not be activated through programmatic access or via keyboard navigation by accessible technology, such as Narrator.
+    To activate the window, use the SetActiveWindow or SetForegroundWindow function.
+    The window does not appear on the taskbar by default. To force the window to appear on the taskbar, use the WS_EX_APPWINDOW style.">NoActivate</span></li>
+<li class='pubfield'><span title="The window does not pass its window layout to its child windows.">NoInheritLayout</span></li>
+<li class='pubfield'><span title="The child window created with this style does not send the WM_PARENTNOTIFY message to its parent window when it is created or destroyed.">NoParentNotify</span></li>
+<li class='pubfield'><span title="The window does not render to a redirection surface. This is for windows that do not have visible content or that use mechanisms other than surfaces to provide their visual.">NoRedirectionBitmap</span></li>
+<li class='pubfield'><span title="The window is an overlapped window.">OverlappedWindow</span></li>
+<li class='pubfield'><span title="The window is palette window, which is a modeless dialog box that presents an array of commands.">PaletteWindow</span></li>
+<li class='pubfield'><span title="The window has generic &quot;right-aligned&quot; properties. This depends on the window class. This style has an effect only if the shell language is Hebrew, Arabic, or another language that supports reading-order alignment; otherwise, the style is ignored.
+    Using the WS_EX_RIGHT style for static or edit controls has the same effect as using the SS_RIGHT or ES_RIGHT style, respectively. Using this style with button controls has the same effect as using BS_RIGHT and BS_RIGHTBUTTON styles.">Right</span></li>
+<li class='pubfield'><span title="The vertical scroll bar (if present) is to the right of the client area. This is the default.">RightScrollBar</span></li>
+<li class='pubfield'><span title="If the shell language is Hebrew, Arabic, or another language that supports reading-order alignment, the window text is displayed using right-to-left reading-order properties. For other languages, the style is ignored.">RtlReading</span></li>
+<li class='pubfield'><span title="The window has a three-dimensional border style intended to be used for items that do not accept user input.">StaticEdge</span></li>
+<li class='pubfield'><span title="The window is intended to be used as a floating toolbar. A tool window has a title bar that is shorter than a normal title bar, and the window title is drawn using a smaller font. A tool window does not appear in the taskbar or in the dialog that appears when the user presses ALT+TAB. If a tool window has a system menu, its icon is not displayed on the title bar. However, you can display the system menu by right-clicking or by typing ALT+SPACE.">ToolWindow</span></li>
+<li class='pubfield'><span title="The window should be placed above all non-topmost windows and should stay above them, even when the window is deactivated. To add or remove this style, use the SetWindowPos function.">TopMost</span></li>
+<li class='pubfield'><span title="The window should not be painted until siblings beneath the window (that were created by the same thread) have been painted. The window appears transparent because the bits of underlying sibling windows have already been painted.
+    To achieve transparency without these restrictions, use the SetWindowRgn function.">Transparent</span></li>
+<li class='pubfield'><span title="The window has a border with a raised edge.">WindowEdge</span></li>
+</ul>
+</div>
+<div class='objectBox' id='WinUIEx.HwndExtensions'>
+<div class='header class'>
+<span title="A set of HWND Helper Methods">HwndExtensions</span>
+</div>
+<div class='members'><h4>Methods</h4><ul>
+<li class='pubmethod'><span class='static'></span><span title="Centers the window on the current monitor">CenterOnScreen</span>(IntPtr <span title="Window handle">hwnd</span>, Double? <span title="Width of the window in device independent pixels, or null if keeping the current size">width</span> = null, Double? <span title="Height of the window in device independent pixels, or null if keeping the current size">height</span> = null)</li>
+<li class='pubmethod'><span class='static'></span><span title="Retrieves the window handle to the active window attached to the calling thread&#39;s message queue.">GetActiveWindow</span>() : IntPtr</li>
+<li class='pubmethod'><span class='static'></span><span title="Retrieves a handle to the desktop window. The desktop window covers the entire screen. The desktop window is the area on top of which other windows are painted.">GetDesktopWindow</span>() : IntPtr</li>
+<li class='pubmethod'><span class='static'></span><span title="Returns the dots per inch (dpi) value for the associated window.">GetDpiForWindow</span>(IntPtr <span title="The window you want to get information about.">hwnd</span>) : uint</li>
+<li class='pubmethod'><span class='static'></span><span title="Gets the DPI for the monitor that the Window is on">GetDpiForWindowsMonitor</span>(IntPtr hwnd) : uint</li>
+<li class='pubmethod'><span class='static'></span><span title="Gets the current window style">GetExtendedWindowStyle</span>(IntPtr hWnd) : <a href='#WinUIEx.ExtendedWindowStyle'>ExtendedWindowStyle</a></li>
+<li class='pubmethod'><span class='static'></span><span title="Gets the current window style">GetWindowStyle</span>(IntPtr hWnd) : <a href='#WinUIEx.WindowStyle'>WindowStyle</a></li>
+<li class='pubmethod'><span class='static'></span><span title="Hides the window and activates another window.">HideWindow</span>(IntPtr <span title="Window handle">hWnd</span>) : bool</li>
+<li class='pubmethod'><span class='static'></span><span title="Maximizes the specified window.">MaximizeWindow</span>(IntPtr <span title="Window handle">hWnd</span>) : bool</li>
+<li class='pubmethod'><span class='static'></span><span title="Minimizes the specified window and activates the next top-level window in the Z order.">MinimizeWindow</span>(IntPtr <span title="Window handle">hWnd</span>) : bool</li>
+<li class='pubmethod'><span class='static'></span><span title="Activates and displays the window. If the window is minimized or maximized, the system restores
+    it to its original size and position. An application should specify this flag when restoring a minimized window.">RestoreWindow</span>(IntPtr <span title="Window handle">hWnd</span>) : bool</li>
+<li class='pubmethod'><span class='static'></span><span title="Configures whether the window should always be displayed on top of other windows or not">SetAlwaysOnTop</span>(IntPtr <span title="Window handle">hwnd</span>, bool <span title="Whether to display on top">enable</span>)</li>
+<li class='pubmethod'><span class='static'></span><span title="Sets the current window style">SetExtendedWindowStyle</span>(IntPtr <span title="Window handle">hWnd</span>, <a href='#WinUIEx.ExtendedWindowStyle'>ExtendedWindowStyle</a> newStyle)</li>
+<li class='pubmethod'><span class='static'></span><span title="Brings the thread that created the specified window into the foreground and activates the window.">SetForegroundWindow</span>(IntPtr <span title="A handle to the window that should be activated and brought to the foreground.">hWnd</span>) : bool</li>
+<li class='pubmethod'><span class='static'></span><span title="Sets the icon for the window, using the specified icon ID.">SetIcon</span>(IntPtr <span title="Window handle">hwnd</span>, IconId <span title="The ID of the icon.">iconId</span>)</li>
+<li class='pubmethod'><span class='static'></span><span title="Sets the icon for the window, using the specified icon path.">SetIcon</span>(IntPtr <span title="Window handle">hwnd</span>, string <span title="The path of the icon.">iconPath</span>)</li>
+<li class='pubmethod'><span class='static'></span><span title="Sets the task bar icon to the provided icon">SetTaskBarIcon</span>(IntPtr <span title="Window handle">hWnd</span>, <a href='#WinUIEx.Icon'>Icon</a>? <span title="Icon">icon</span>)</li>
+<li class='pubmethod'><span class='static'></span><span title="Sets the opacity of a layered window.">SetWindowOpacity</span>(IntPtr <span title="Window handle">hWnd</span>, byte <span title="Alpha value used to describe the opacity of the layered window. When  is 0, the window is completely transparent. When  is 255, the window is opaque.">alpha</span>)</li>
+<li class='pubmethod'><span class='static'></span><span title="Positions and resizes the window">SetWindowPositionAndSize</span>(IntPtr <span title="Window handle">hwnd</span>, double <span title="Left side of the window in device independent pixels">x</span>, double <span title="Top  side of the window in device independent pixels">y</span>, double <span title="Width of the window in device independent pixels, or null if keeping the current size">width</span>, double <span title="Height of the window in device independent pixels, or null if keeping the current size">height</span>)</li>
+<li class='pubmethod'><span class='static'></span><span title="Sets the width and height of the window in device-independent pixels">SetWindowSize</span>(IntPtr hwnd, double width, double height)</li>
+<li class='pubmethod'><span class='static'></span><span title="Sets the current window style">SetWindowStyle</span>(IntPtr <span title="Window handle">hWnd</span>, <a href='#WinUIEx.WindowStyle'>WindowStyle</a> newStyle)</li>
+<li class='pubmethod'><span class='static'></span><span title="Activates the window and displays it in its current size and position.">ShowWindow</span>(IntPtr <span title="Window handle">hWnd</span>) : bool</li>
+<li class='pubmethod'><span class='static'></span><span title="Disables or enables the window style">ToggleExtendedWindowStyle</span>(IntPtr hWnd, bool visible, <a href='#WinUIEx.ExtendedWindowStyle'>ExtendedWindowStyle</a> style)</li>
+<li class='pubmethod'><span class='static'></span><span title="Disables or enables the window style">ToggleWindowStyle</span>(IntPtr hWnd, bool visible, <a href='#WinUIEx.WindowStyle'>WindowStyle</a> style)</li>
+</ul></div>
+</div>
+<div class='objectBox' id='WinUIEx.Icon'>
+<div class='header class'>
+<span title="Manages a native Windows Icon instance">Icon : IDisposable</span>
+</div>
+<div class='members'><h4>Methods</h4><ul>
+<li class='pubmethod'>Dispose()</li>
+<li class='protmethod'><span title="Disposes the icon">Dispose</span>(bool disposing)</li>
+<li class='protmethod'>Finalize()</li>
+<li class='pubmethod'><span class='static'></span><span title="Creates an icon from a raw icon byte array">FromByteArray</span>(Byte[] <span title="RGBA byte array">rgba</span>, uint <span title="The width and height of the image">size</span>) : <a href='#WinUIEx.Icon'>Icon</a></li>
+<li class='pubmethod'><span class='static'></span><span title="Loads an icon from an .ico file.">FromFile</span>(string <span title="Path to file">filename</span>) : <a href='#WinUIEx.Icon'>Icon</a></li>
+<li class='pubmethod'><span class='static'></span><span title="For testing - Creates a simple Yang icon">Yang</span>() : <a href='#WinUIEx.Icon'>Icon</a></li>
+</ul></div>
+</div>
+<div class='objectBox' id='WinUIEx.MicaSystemBackdrop'>
+<div class='header class obsolete'>
+<span title="Defines the Mica System Backdrop settings to apply to the window.
+    Note: requires Windows 11 and up - Windows 10 will use fallback colors.">MicaSystemBackdrop : <a href='#WinUIEx.SystemBackdrop'>SystemBackdrop</a></span>
+</div>
+<div class='members'>
+<h4>Constructors</h4>
+<ul>
+<li class='pubmethod'><span title="Initializes a new instance of the MicaSystemBackdrop class.">MicaSystemBackdrop</span>()</li>
+</ul></div>
+<div class='members'><h4>Properties</h4><ul>
+<li class='pubproperty'><span title="Gets or sets the Mica backdrop kind.">Kind</span> { get; set; } : MicaKind</li>
+</ul></div>
+</div>
+<div class='objectBox' id='WinUIEx.MonitorInfo'>
+<div class='header class'>
+<span title="Contains information about a display monitor.">MonitorInfo</span>
+</div>
+<div class='members'><h4>Properties</h4><ul>
+<li class='pubproperty'><span title="Gets the name of the display.">Name</span> { get; } : string</li>
+<li class='pubproperty'><span title="Gets the display monitor rectangle, expressed in virtual-screen coordinates.">RectMonitor</span> { get; } : Rect</li>
+<li class='pubproperty'><span title="Gets the work area rectangle of the display monitor, expressed in virtual-screen coordinates.">RectWork</span> { get; } : Rect</li>
+</ul></div>
+<div class='members'><h4>Methods</h4><ul>
+<li class='pubmethod'><span class='static'></span><span title="Gets the display monitors (including invisible pseudo-monitors associated with the mirroring drivers).">GetDisplayMonitors</span>() : IList&lt;<a href='#WinUIEx.MonitorInfo'>MonitorInfo</a>&gt;</li>
+</ul></div>
+</div>
+<div class='objectBox' id='WinUIEx.SplashScreen'>
+<div class='header class'>
+<span title="A splash screen window that shows with no chrome, and once OnLoading has completed,
+    opens a new window">SplashScreen : Window</span>
+</div>
+<div class='members'>
+<h4>Constructors</h4>
+<ul>
+<li class='pubmethod'><span title="Creates and activates a new splashscreen, and opens the specified window once complete.">SplashScreen</span>(Window <span title="Window to open once splash screen is complete">window</span>)</li>
+<li class='pubmethod'><span title="Creates and activates a new splashscreen, and creates and opens the specified window type once complete.">SplashScreen</span>(Type <span title="Type of window to create. Must have an empty constructor">window</span>)</li>
+</ul></div>
+<div class='members'><h4>Properties</h4><ul>
+<li class='pubproperty'><span class='obsolete'><span title="Gets or sets the system backdrop of the window.
+    Note: Windows 10 doesn&#39;t support these, so will fall back to default backdrop .">Backdrop</span> { get; set; } : <a href='#WinUIEx.SystemBackdrop'>SystemBackdrop</a>?</span></li>
+<li class='pubproperty'><span title="Gets or sets the height of the splash screen. Set to NaN to size for content">Height</span> { get; set; } : double</li>
+<li class='pubproperty'><span title="Gets or sets a value indicating whether the splash screen should be top-most">IsAlwaysOnTop</span> { get; set; } : bool</li>
+<li class='pubproperty'><span title="Gets or sets the width of the splash screen. Set to NaN to size for content">Width</span> { get; set; } : double</li>
+</ul></div>
+<div class='members'><h4>Methods</h4><ul>
+<li class='protmethod'><span title="Override to display loading progress or delay loading of main window">OnLoading</span>() : Task</li>
+</ul></div>
+<div class='members'><h4>Events</h4><ul>
+<li class='pubevent'><span title="Raised once the splash screen has completed OnLoading.">Completed</span> : EventHandler&lt;Window?&gt;?</li>
+</ul></div>
+</div>
+<div class='objectBox' id='WinUIEx.SystemBackdrop'>
+<div class='header class obsolete'>
+<span title="The backdrop configuration for applying a backdrop.">SystemBackdrop</span>
+</div>
+<div class='members'>
+<h4>Constructors</h4>
+<ul>
+<li class='protmethod'>SystemBackdrop()</li>
+</ul></div>
+<div class='members'><h4>Properties</h4><ul>
+<li class='pubproperty'><span title="Gets or sets the solid color to use when system conditions prevent rendering the backdrop material.">DarkFallbackColor</span> { get; set; } : Color</li>
+<li class='pubproperty'><span title="Gets or sets the degree of opacity of the color&#39;s luminosity.">DarkLuminosityOpacity</span> { get; set; } : double</li>
+<li class='pubproperty'><span title="Gets or sets the color tint for the backdrop material.">DarkTintColor</span> { get; set; } : Color</li>
+<li class='pubproperty'><span title="Gets or sets the degree of opacity of the color tint.">DarkTintOpacity</span> { get; set; } : double</li>
+<li class='pubproperty'><span title="Gets a proper indicating whether the system supports this backdrop.">IsSupported</span> { get; } : bool</li>
+<li class='pubproperty'><span title="Gets or sets the solid color to use when system conditions prevent rendering the backdrop material.">LightFallbackColor</span> { get; set; } : Color</li>
+<li class='pubproperty'><span title="Gets or sets the degree of opacity of the color&#39;s luminosity.">LightLuminosityOpacity</span> { get; set; } : double</li>
+<li class='pubproperty'><span title="Gets or sets the color tint for the backdrop material.">LightTintColor</span> { get; set; } : Color</li>
+<li class='pubproperty'><span title="Gets or sets the degree of opacity of the color tint.">LightTintOpacity</span> { get; set; } : double</li>
+</ul></div>
+<div class='members'><h4>Methods</h4><ul>
+<li class='method'><span title="Applies the controller to the system backdrop.">ApplyController</span>(ISystemBackdropController controller, ICompositionSupportsSystemBackdrop target, SystemBackdropConfiguration configuration)</li>
+<li class='method'><span title="Creates the backdrop controller.">CreateController</span>() : ISystemBackdropController</li>
+<li class='protmethod'><span title="Notifies the backdrops that properties have changed and the controller needs updating.">NotifyDirty</span>()</li>
+<li class='pubmethod'><span title="Resets any customized properties to their system defaults and reverts to automatic light/dark theme handling.">ResetProperties</span>()</li>
+<li class='method'><span title="Updates the properties of the backdrop controller.">UpdateController</span>(ISystemBackdropController controller, SystemBackdropTheme theme)</li>
+</ul></div>
+</div>
+<div class='objectBox' id='WinUIEx.TransparentTintBackdrop'>
+<div class='header class'>
+<span title="A custom backdrop that make the window completely transparent.">TransparentTintBackdrop : <a href='#WinUIEx.CompositionBrushBackdrop'>CompositionBrushBackdrop</a></span>
+</div>
+<div class='members'>
+<h4>Constructors</h4>
+<ul>
+<li class='pubmethod'><span title="Initializes a new instance of the TransparentTintBackdrop class.">TransparentTintBackdrop</span>()</li>
+<li class='pubmethod'><span title="Initializes a new instance of the TransparentTintBackdrop class.">TransparentTintBackdrop</span>(Color <span title="Color for the background. The Alpha value defines the opacity of the window">tintColor</span>)</li>
+</ul></div>
+<div class='members'><h4>Properties</h4><ul>
+<li class='pubproperty'><span title="Gets or sets the color used for the backdrop. The Alpha value defines the opacity of the window.">TintColor</span> { get; set; } : Color</li>
+</ul></div>
+</div>
+<div class='objectBox' id='WinUIEx.WebAuthenticator'>
+<div class='header class'>
+<span title="Handles OAuth redirection to the system browser and re-activation.">WebAuthenticator</span>
+</div>
+<div class='members'><h4>Methods</h4><ul>
+<li class='pubmethod'><span class='static'></span><span title="Begin an authentication flow by navigating to the specified url and waiting for a callback/redirect to the callbackUrl scheme.">AuthenticateAsync</span>(Uri <span title="Url to navigate to, beginning the authentication flow.">authorizeUri</span>, Uri <span title="Expected callback url that the navigation flow will eventually redirect to.">callbackUri</span>) : Task&lt;<a href='#WinUIEx.WebAuthenticatorResult'>WebAuthenticatorResult</a>&gt;</li>
+<li class='pubmethod'><span class='static'></span><span title="Begin an authentication flow by navigating to the specified url and waiting for a callback/redirect to the callbackUrl scheme.">AuthenticateAsync</span>(Uri <span title="Url to navigate to, beginning the authentication flow.">authorizeUri</span>, Uri <span title="Expected callback url that the navigation flow will eventually redirect to.">callbackUri</span>, CancellationToken <span title="Cancellation token.">cancellationToken</span>) : Task&lt;<a href='#WinUIEx.WebAuthenticatorResult'>WebAuthenticatorResult</a>&gt;</li>
+<li class='pubmethod'><span class='static'></span><span title="Performs an OAuth protocol activation check and redirects activation to the correct application instance.">CheckOAuthRedirectionActivation</span>(AppActivationArguments? <span title="The activation arguments">activatedEventArgs</span>, bool <span title="If true, this application instance will not automatically be shut down. If set to
+    true ensure you handle instance exit, or you&#39;ll end up with multiple instances running.">skipShutDownOnActivation</span> = False) : bool</li>
+<li class='pubmethod'><span class='static'></span><span title="Performs an OAuth protocol activation check and redirects activation to the correct application instance.">CheckOAuthRedirectionActivation</span>(bool <span title="If true, this application instance will not automatically be shut down. If set to
+    true ensure you handle instance exit, or you&#39;ll end up with multiple instances running.">skipShutDownOnActivation</span> = False) : bool</li>
+</ul></div>
+</div>
+<div class='objectBox' id='WinUIEx.WebAuthenticatorResult'>
+<div class='header class'>
+<span title="Web Authenticator result parsed from the callback Url.">WebAuthenticatorResult</span>
+</div>
+<div class='members'>
+<h4>Constructors</h4>
+<ul>
+<li class='pubmethod'><span title="Initializes a new instance of the WebAuthenticatorResult class.">WebAuthenticatorResult</span>(Uri <span title="Callback url">callbackUrl</span>)</li>
+<li class='pubmethod'><span title="Initializes a new instance of the WebAuthenticatorResult class.">WebAuthenticatorResult</span>(Dictionary&lt;String, String&gt; <span title="Values from the authentication callback url">values</span>)</li>
+</ul></div>
+<div class='members'><h4>Properties</h4><ul>
+<li class='pubproperty'><span title="Gets the value for the access_token key.">AccessToken</span> { get; } : string</li>
+<li class='pubproperty'><span title="The expiry date as calculated by the timestamp of when the result was created plus the value in seconds for the expires_in key.">ExpiresIn</span> { get; } : DateTimeOffset?</li>
+<li class='pubproperty'><span title="Gets the value for the id_token key.">IdToken</span> { get; } : string</li>
+<li class='pubproperty'><span title="The dictionary of key/value pairs parsed form the callback URI&#39;s querystring.">Properties</span> { get; } : Dictionary&lt;String, String&gt;</li>
+<li class='pubproperty'><span title="Gets the value for the refresh_token key.">RefreshToken</span> { get; } : string</li>
+<li class='pubproperty'><span title="Gets the expiry date as calculated by the timestamp of when the result was created plus the value in seconds for the expires_in key.">RefreshTokenExpiresIn</span> { get; } : DateTimeOffset?</li>
+</ul></div>
+</div>
+<div class='objectBox' id='WinUIEx.WindowEx'>
+<div class='header class'>
+<span title="A custom WinUI Window with more convenience methods">WindowEx : Window</span>
+</div>
+<div class='members'>
+<h4>Constructors</h4>
+<ul>
+<li class='pubmethod'><span title="Initializes a new instance of the WindowEx class.">WindowEx</span>()</li>
+</ul></div>
+<div class='members'><h4>Properties</h4><ul>
+<li class='pubproperty'><span title="Gets a reference to the AppWindow for the app">AppWindow</span> { get; } : AppWindow</li>
+<li class='pubproperty'><span class='obsolete'><span title="Gets or sets the system backdrop for the window.
+    Note: Windows 10 doesn&#39;t support these, so will fall back to default backdrop.">Backdrop</span> { get; set; } : <a href='#WinUIEx.SystemBackdrop'>SystemBackdrop</a>?</span></li>
+<li class='pubproperty'><span title="Gets or sets the height of the window">Height</span> { get; set; } : double</li>
+<li class='pubproperty'><span title="Gets or sets a value indicating whether this window is always on top.">IsAlwaysOnTop</span> { get; set; } : bool</li>
+<li class='pubproperty'><span title="Gets or sets a value indicating whether the maximimze button is visible">IsMaximizable</span> { get; set; } : bool</li>
+<li class='pubproperty'><span title="Gets or sets a value indicating whether the minimize button is visible">IsMinimizable</span> { get; set; } : bool</li>
+<li class='pubproperty'><span title="Gets or sets a value indicating whether the window can be resized.">IsResizable</span> { get; set; } : bool</li>
+<li class='pubproperty'><span title="Gets or sets a value indicating whether this window is shown in task switchers.">IsShownInSwitchers</span> { get; set; } : bool</li>
+<li class='pubproperty'><span title="Gets or sets a value indicating whether the default title bar is visible or not.">IsTitleBarVisible</span> { get; set; } : bool</li>
+<li class='pubproperty'><span title="Gets or sets the maximum height of this window">MaxHeight</span> { get; set; } : double</li>
+<li class='pubproperty'><span title="Gets or sets the maximum width of this window">MaxWidth</span> { get; set; } : double</li>
+<li class='pubproperty'><span title="Gets or sets the minimum height of this window">MinHeight</span> { get; set; } : double</li>
+<li class='pubproperty'><span title="Gets or sets the minimum width of this window">MinWidth</span> { get; set; } : double</li>
+<li class='pubproperty'><span title="Gets or sets a unique ID used for saving and restoring window size and position
+    across sessions.">PersistenceId</span> { get; set; } : String?</li>
+<li class='pubproperty'><span title="Gets the presenter for the current window">Presenter</span> { get; } : AppWindowPresenter</li>
+<li class='pubproperty'><span title="Gets or sets the presenter kind for the current window">PresenterKind</span> { get; set; } : AppWindowPresenterKind</li>
+<li class='pubproperty'><span title="Gets or sets the task bar icon.">TaskBarIcon</span> { get; set; } : <a href='#WinUIEx.Icon'>Icon</a>?</li>
+<li class='pubproperty'><span title="Gets or sets the window title.">Title</span> { get; set; } : string</li>
+<li class='pubproperty'><span title="Gets or sets the width of the window">Width</span> { get; set; } : double</li>
+<li class='pubproperty'><span title="Gets or sets the Window content">WindowContent</span> { get; set; } : Object?</li>
+<li class='pubproperty'><span title="Gets or sets the current window state.">WindowState</span> { get; set; } : <a href='#WinUIEx.WindowState'>WindowState</a></li>
+</ul></div>
+<div class='members'><h4>Methods</h4><ul>
+<li class='pubmethod'><span title="Brings the window to the front">BringToFront</span>() : bool</li>
+<li class='protmethod'><span title="Called when the window position changed.">OnPositionChanged</span>(PointInt32 <span title="The current position of the window in screen coordinates.">position</span>)</li>
+<li class='protmethod'><span title="Called when the presenter for the window changed.">OnPresenterChanged</span>(AppWindowPresenter <span title="The new presenter.">newPresenter</span>)</li>
+<li class='protmethod'><span title="Called when the size of the window changes.">OnSizeChanged</span>(Size <span title="The new size of the window in device independent units.">newSize</span>) : bool</li>
+<li class='protmethod'><span title="Called when the WindowState changed.">OnStateChanged</span>(<a href='#WinUIEx.WindowState'>WindowState</a> <span title="The new window state">state</span>)</li>
+<li class='protmethod'><span title="Called when the Z order of the window changed.">OnZOrderChanged</span>(<a href='#WinUIEx.ZOrderInfo'>ZOrderInfo</a> <span title="Object describing the current new ZOrder of the window">info</span>)</li>
+<li class='pubmethod'><span title="Shows a message dialog">ShowMessageDialogAsync</span>(string <span title="The message displayed to the user.">content</span>, IList&lt;IUICommand&gt;? <span title="an array of commands that appear in the command bar of the message dialog. These commands makes the dialog actionable.">commands</span>, uint <span title="The index of the command you want to use as the default. This is the command that fires by default when users press the ENTER key.">defaultCommandIndex</span> = null, uint <span title="The index of the command you want to use as the cancel command. This is the command that fires when users press the ESC key.">cancelCommandIndex</span> = null, string <span title="The title to display on the dialog, if any.">title</span> = ) : Task&lt;IUICommand&gt;</li>
+<li class='pubmethod'><span title="Shows a message dialog">ShowMessageDialogAsync</span>(string <span title="The message displayed to the user.">content</span>, string <span title="The title to display on the dialog, if any.">title</span> = ) : Task</li>
+</ul></div>
+<div class='members'><h4>Events</h4><ul>
+<li class='pubevent'><span title="Raised if the window position changes.">PositionChanged</span> : EventHandler&lt;PointInt32&gt;?</li>
+<li class='pubevent'><span title="Raised if the presenter for the window changed.">PresenterChanged</span> : EventHandler&lt;AppWindowPresenter&gt;?</li>
+<li class='pubevent'><span title="Occurs when the window&#39;s WindowState property changes.">WindowStateChanged</span> : EventHandler&lt;<a href='#WinUIEx.WindowState'>WindowState</a>&gt;?</li>
+<li class='pubevent'><span title="Raised if the Z order of the window changed.">ZOrderChanged</span> : EventHandler&lt;<a href='#WinUIEx.ZOrderInfo'>ZOrderInfo</a>&gt;?</li>
+</ul></div>
+</div>
+<div class='objectBox' id='WinUIEx.WindowExtensions'>
+<div class='header class'>
+<span title="WinUI Window Extension Methods">WindowExtensions</span>
+</div>
+<div class='members'><h4>Methods</h4><ul>
+<li class='pubmethod'><span class='static'></span><span title="Centers the window on the current monitor">CenterOnScreen</span>(Window <span title="Window">window</span>, Double? <span title="Width of the window in device independent pixels, or null if keeping the current size">width</span> = null, Double? <span title="Height of the window in device independent pixels, or null if keeping the current size">height</span> = null)</li>
+<li class='pubmethod'><span class='static'></span><span title="Initializes a new instance of the MessageDialog class with the provided window as a parent to display a titled message
+    dialog that can be used to ask your user simple questions.">CreateMessageDialog</span>(Window <span title="Parent window">window</span>, string <span title="The message displayed to the user.">content</span>, string <span title="The title you want displayed on the dialog.">title</span> = ) : MessageDialog</li>
+<li class='pubmethod'><span class='static'></span><span title="Creates a new instance of a FileOpenPicker with the provided window as a parent.">CreateOpenFilePicker</span>(Window <span title="Parent window">window</span>) : FileOpenPicker</li>
+<li class='pubmethod'><span class='static'></span><span title="Creates a new instance of a FileSavePicker with the provided window as a parent.">CreateSaveFilePicker</span>(Window <span title="Parent window">window</span>) : FileSavePicker</li>
+<li class='pubmethod'><span class='static'></span><span class='obsolete'><span title="Gets the AppWindow from the handle">GetAppWindow</span>(Window window) : AppWindow</span></li>
+<li class='pubmethod'><span class='static'></span><span title="Gets the AppWindow from an HWND">GetAppWindowFromWindowHandle</span>(IntPtr hwnd) : AppWindow</li>
+<li class='pubmethod'><span class='static'></span><span title="Returns the dots per inch (dpi) value for the associated window.">GetDpiForWindow</span>(Window <span title="The window you want to get information about.">window</span>) : uint</li>
+<li class='pubmethod'><span class='static'></span><span title="Gets the current window style">GetExtendedWindowStyle</span>(Window <span title="Window">window</span>) : <a href='#WinUIEx.ExtendedWindowStyle'>ExtendedWindowStyle</a></li>
+<li class='pubmethod'><span class='static'></span><span title="Gets a value indicating whether this window is on top or not.">GetIsAlwaysOnTop</span>(Window <span title="window">window</span>) : bool</li>
+<li class='pubmethod'><span class='static'></span><span title="Gets a value indicating whether this window is maximizeable or not.">GetIsMaximizable</span>(Window <span title="window">window</span>) : bool</li>
+<li class='pubmethod'><span class='static'></span><span title="Gets a value indicating whether this window is minimizeable or not.">GetIsMinimizable</span>(Window <span title="window">window</span>) : bool</li>
+<li class='pubmethod'><span class='static'></span><span title="Gets a value indicating whether this resizable or not.">GetIsResizable</span>(Window <span title="window">window</span>) : bool</li>
+<li class='pubmethod'><span class='static'></span><span title="Gets the native HWND pointer handle for the window">GetWindowHandle</span>(Window <span title="The window to return the handle for">window</span>) : IntPtr</li>
+<li class='pubmethod'><span class='static'></span><span title="Gets the window HWND handle from a Window ID.">GetWindowHandle</span>(WindowId <span title="Window ID to get handle from">windowId</span>) : IntPtr</li>
+<li class='pubmethod'><span class='static'></span><span title="Gets the current window style">GetWindowStyle</span>(Window <span title="Window">window</span>) : <a href='#WinUIEx.WindowStyle'>WindowStyle</a></li>
+<li class='pubmethod'><span class='static'></span><span title="Hides the window and activates another window.">Hide</span>(Window <span title="Window">window</span>) : bool</li>
+<li class='pubmethod'><span class='static'></span><span title="Maximizes the specified window.">Maximize</span>(Window <span title="Window">window</span>)</li>
+<li class='pubmethod'><span class='static'></span><span title="Minimizes the specified window and activates the next top-level window in the Z order.">Minimize</span>(Window <span title="Window">window</span>)</li>
+<li class='pubmethod'><span class='static'></span><span title="Positions the window">Move</span>(Window <span title="Window">window</span>, int <span title="Left side of the window">x</span>, int <span title="Top side of the window">y</span>)</li>
+<li class='pubmethod'><span class='static'></span><span title="Positions and resizes the window">MoveAndResize</span>(Window <span title="Window">window</span>, double <span title="Left side of the window">x</span>, double <span title="Top side of the window">y</span>, double <span title="Width of the window in device independent pixels.">width</span>, double <span title="Height of the window in device independent pixels.">height</span>)</li>
+<li class='pubmethod'><span class='static'></span><span title="Activates and displays the window. If the window is minimized or maximized, the system restores
+    it to its original size and position.">Restore</span>(Window <span title="Window">window</span>)</li>
+<li class='pubmethod'><span class='static'></span><span title="Sets the current window style">SetExtendedWindowStyle</span>(Window <span title="Window">window</span>, <a href='#WinUIEx.ExtendedWindowStyle'>ExtendedWindowStyle</a> newStyle)</li>
+<li class='pubmethod'><span class='static'></span><span title="Brings the thread that created the specified window into the foreground and activates the window.">SetForegroundWindow</span>(Window <span title="The window that should be activated and brought to the foreground.">window</span>) : bool</li>
+<li class='pubmethod'><span class='static'></span><span title="Sets the icon for the window, using the specified icon ID.">SetIcon</span>(Window <span title="Window">window</span>, IconId <span title="The ID of the icon.">iconId</span>)</li>
+<li class='pubmethod'><span class='static'></span><span title="Sets the icon for the window, using the specified icon path.">SetIcon</span>(Window <span title="Window">window</span>, string <span title="The path of the icon.">iconPath</span>)</li>
+<li class='pubmethod'><span class='static'></span><span title="Configures whether the window should always be displayed on top of other windows or not">SetIsAlwaysOnTop</span>(Window <span title="Window">window</span>, bool <span title="Whether to display on top">enable</span>)</li>
+<li class='pubmethod'><span class='static'></span>SetIsMaximizable(Window <span title="window">window</span>, bool <span title="true if this window should be maximizable.">enable</span>)</li>
+<li class='pubmethod'><span class='static'></span>SetIsMinimizable(Window <span title="window">window</span>, bool <span title="true if this window should be minimizable.">enable</span>)</li>
+<li class='pubmethod'><span class='static'></span><span title="Enables or disables the ability to resize the window.">SetIsResizable</span>(Window window, bool enable)</li>
+<li class='pubmethod'><span class='static'></span><span title="Enables or disables showing the window in the task switchers.">SetIsShownInSwitchers</span>(Window <span title="window">window</span>, bool <span title="true if this window should be shown in the task switchers, otherwise false.">enable</span>)</li>
+<li class='pubmethod'><span class='static'></span><span title="Sets the task bar icon to the provided icon">SetTaskBarIcon</span>(Window <span title="Window">window</span>, <a href='#WinUIEx.Icon'>Icon</a>? <span title="Icon">icon</span>)</li>
+<li class='pubmethod'><span class='static'></span><span title="Gets the background color for the title bar and all its buttons and their states.">SetTitleBarBackgroundColors</span>(Window <span title="window">window</span>, Color <span title="color">color</span>)</li>
+<li class='pubmethod'><span class='static'></span><span title="Sets the opacity of a layered window.">SetWindowOpacity</span>(Window <span title="window">window</span>, byte <span title="Alpha value used to describe the opacity of the layered window. When  is 0, the window is completely transparent. When  is 255, the window is opaque.">alpha</span>)</li>
+<li class='pubmethod'><span class='static'></span><span title="Sets the window presenter kind used.">SetWindowPresenter</span>(Window window, AppWindowPresenterKind kind)</li>
+<li class='pubmethod'><span class='static'></span><span title="Sets the width and height of the window in device-independent pixels.">SetWindowSize</span>(Window <span title="Window to set the size for.">window</span>, double <span title="Width of the window in device-independent units.">width</span>, double <span title="Height of the window in device-independent units.">height</span>)</li>
+<li class='pubmethod'><span class='static'></span><span title="Sets the current window style">SetWindowStyle</span>(Window <span title="Window">window</span>, <a href='#WinUIEx.WindowStyle'>WindowStyle</a> newStyle)</li>
+<li class='pubmethod'><span class='static'></span><span title="Activates the window and displays it in its current size and position.">Show</span>(Window <span title="Window">window</span>) : bool</li>
+<li class='pubmethod'><span class='static'></span><span title="Disables or enables the window style">ToggleExtendedWindowStyle</span>(Window <span title="Window">window</span>, bool visible, <a href='#WinUIEx.ExtendedWindowStyle'>ExtendedWindowStyle</a> style)</li>
+<li class='pubmethod'><span class='static'></span><span title="Disables or enables the window style">ToggleWindowStyle</span>(Window <span title="Window">window</span>, bool visible, <a href='#WinUIEx.WindowStyle'>WindowStyle</a> style)</li>
+</ul></div>
+</div>
+<div class='objectBox' id='WinUIEx.WindowManager'>
+<div class='header class'>
+<span title="Manages Window size, and ensures window correctly resizes during DPI changes to keep consistent
+    DPI-independent sizing.">WindowManager : IDisposable</span>
+</div>
+<div class='members'><h4>Properties</h4><ul>
+<li class='pubproperty'><span class='obsolete'><span title="Gets the currently active window backdrop.">ActiveBackdropController</span> { get; } : ISystemBackdropController?</span></li>
+<li class='pubproperty'><span title="Gets a reference to the AppWindow for the app">AppWindow</span> { get; } : AppWindow</li>
+<li class='pubproperty'><span class='obsolete'><span title="Gets or sets the system backdrop for the window.
+    Note: Windows 10 doesn&#39;t support Acrylic, so will fall back to default backdrop.">Backdrop</span> { get; set; } : <a href='#WinUIEx.SystemBackdrop'>SystemBackdrop</a>?</span></li>
+<li class='pubproperty'><span title="Gets or sets the height of the window.">Height</span> { get; set; } : double</li>
+<li class='pubproperty'><span title="Gets or sets a value indicating whether this window is always on top.">IsAlwaysOnTop</span> { get; set; } : bool</li>
+<li class='pubproperty'><span title="Gets or sets a value indicating whether the maximimze button is visible">IsMaximizable</span> { get; set; } : bool</li>
+<li class='pubproperty'><span title="Gets or sets a value indicating whether the minimize button is visible">IsMinimizable</span> { get; set; } : bool</li>
+<li class='pubproperty'><span title="Gets or sets a value indicating whether the window can be resized.">IsResizable</span> { get; set; } : bool</li>
+<li class='pubproperty'><span title="Gets or sets a value indicating whether the default title bar is visible or not.">IsTitleBarVisible</span> { get; set; } : bool</li>
+<li class='pubproperty'><span title="Gets or sets the maximum height of this window">MaxHeight</span> { get; set; } : double</li>
+<li class='pubproperty'><span title="Gets or sets the maximum width of this window">MaxWidth</span> { get; set; } : double</li>
+<li class='pubproperty'><span title="Gets or sets the minimum height of this window">MinHeight</span> { get; set; } : double</li>
+<li class='pubproperty'><span title="Gets or sets the minimum width of this window">MinWidth</span> { get; set; } : double</li>
+<li class='pubproperty'>PersistenceId { get; set; } : String?</li>
+<li class='pubproperty'><span class='static'></span><span title="Gets or sets the persistence storage for maintaining window settings across application settings.">PersistenceStorage</span> { get; set; } : IDictionary&lt;String, Object&gt;?</li>
+<li class='pubproperty'><span title="Gets or sets the presenter kind for the current window">PresenterKind</span> { get; set; } : AppWindowPresenterKind</li>
+<li class='pubproperty'><span title="Gets or sets the width of the window.">Width</span> { get; set; } : double</li>
+<li class='pubproperty'><span title="Gets or sets the current window state.">WindowState</span> { get; set; } : <a href='#WinUIEx.WindowState'>WindowState</a></li>
+</ul></div>
+<div class='members'><h4>Methods</h4><ul>
+<li class='pubmethod'>Dispose()</li>
+<li class='protmethod'><span title="Finalizer">Finalize</span>()</li>
+<li class='pubmethod'><span class='static'></span><span title="Gets (or creates) a window manager for the specific window.">Get</span>(Window window) : <a href='#WinUIEx.WindowManager'>WindowManager</a></li>
+</ul></div>
+<div class='members'><h4>Events</h4><ul>
+<li class='pubevent'><span title="Raised if the window position changes.">PositionChanged</span> : EventHandler&lt;PointInt32&gt;?</li>
+<li class='pubevent'><span title="Raised if the presenter for the window changes.">PresenterChanged</span> : EventHandler&lt;AppWindowPresenter&gt;?</li>
+<li class='pubevent'><span title="Event raised when a windows message is received.">WindowMessageReceived</span> : EventHandler&lt;<a href='#WinUIEx.WinUIEx.Messaging.WindowMessageEventArgs'>WindowMessageEventArgs</a>&gt;?</li>
+<li class='pubevent'><span title="Occurs when the window&#39;s WindowState property changes.">WindowStateChanged</span> : EventHandler&lt;<a href='#WinUIEx.WindowState'>WindowState</a>&gt;?</li>
+<li class='pubevent'><span title="Raised if the Z order of the window changes.">ZOrderChanged</span> : EventHandler&lt;<a href='#WinUIEx.ZOrderInfo'>ZOrderInfo</a>&gt;?</li>
+</ul></div>
+</div>
+<div class='objectBox' id='WinUIEx.WindowState'>
+<div class='header enum'>
+<span title="Specifies whether a window is minimized, maximized, or restored. Used by the WindowState property.">WindowState : int</span>
+</div>
+<ul class='members'>
+<li class='pubfield'><span title="The window is restored.">Normal</span></li>
+<li class='pubfield'><span title="The window is minimized.">Minimized</span></li>
+<li class='pubfield'><span title="The window is maximized.">Maximized</span></li>
+</ul>
+</div>
+<div class='objectBox' id='WinUIEx.WindowStyle'>
+<div class='header enum'>
+<span title="Flags used for ToggleWindowStyle method">WindowStyle : int</span>
+</div>
+<ul class='members'>
+<li class='pubfield'><span title="The window has a thin-line border.">Border</span></li>
+<li class='pubfield'><span title="The window has a title bar (includes the BORDER style).">Caption</span></li>
+<li class='pubfield'><span title="The window is a child window. A window with this style cannot have a menu bar. This style cannot be used with the POPUP style.">Child</span></li>
+<li class='pubfield'><span title="Same as the Child style.">ChildWindow</span></li>
+<li class='pubfield'><span title="Excludes the area occupied by child windows when drawing occurs within the parent window. This style is used when creating the parent window.">ChildChildren</span></li>
+<li class='pubfield'><span title="Clips child windows relative to each other; that is, when a particular child window receives a WM_PAINT message, the CLIPSIBLINGS style clips all other overlapping child windows out of the region of the child window to be updated. If CLIPSIBLINGS is not specified and child windows overlap, it is possible, when drawing within the client area of a child window, to draw within the client area of a neighboring child window.">ClipSiblings</span></li>
+<li class='pubfield'><span title="The window is initially disabled. A disabled window cannot receive input from the user. To change this after a window has been created, use the EnableWindow function.">Disabled</span></li>
+<li class='pubfield'><span title="The window has a border of a style typically used with dialog boxes. A window with this style cannot have a title bar.">DlgFrame</span></li>
+<li class='pubfield'><span title="The window is the first control of a group of controls. The group consists of this first control and all controls defined after it, up to the next control with the GROUP style. The first control in each group usually has the TABSTOP style so that the user can move from group to group. The user can subsequently change the keyboard focus from one control in the group to the next control in the group by using the direction keys.
+    You can turn this style on and off to change dialog box navigation. To change this style after a window has been created, use the SetWindowLong function.">Group</span></li>
+<li class='pubfield'><span title="The window has a horizontal scroll bar.">HScroll</span></li>
+<li class='pubfield'><span title="The window is initially minimized. Same as the MINIMIZE style.">Iconic</span></li>
+<li class='pubfield'><span title="The window is initially maximized.">Maximize</span></li>
+<li class='pubfield'><span title="The window has a maximize button. Cannot be combined with the EX_CONTEXTHELP style. The SYSMENU style must also be specified.">MaximizeBox</span></li>
+<li class='pubfield'><span title="The window is initially minimized. Same as the ICONIC style.">Minimize</span></li>
+<li class='pubfield'><span title="The window has a minimize button. Cannot be combined with the EX_CONTEXTHELP style. The SYSMENU style must also be specified.">MinimizeBox</span></li>
+<li class='pubfield'><span title="The window is an overlapped window. An overlapped window has a title bar and a border. Same as the TILED style.">Overlapped</span></li>
+<li class='pubfield'><span title="The window is an overlapped window. Same as the TILEDWINDOW style.">OverlappedWindow</span></li>
+<li class='pubfield'><span title="The window has a sizing border. Same as the THICKFRAME style.">SizeBox</span></li>
+<li class='pubfield'><span title="The window has a window menu on its title bar. The CAPTION style must also be specified.">SysMenu</span></li>
+<li class='pubfield'><span title="The window is a control that can receive the keyboard focus when the user presses the TAB key. Pressing the TAB key changes the keyboard focus to the next control with the TABSTOP style.
+    You can turn this style on and off to change dialog box navigation. To change this style after a window has been created, use the SetWindowLong function. For user-created windows and modeless dialogs to work with tab stops, alter the message loop to call the IsDialogMessage function.">TabStop</span></li>
+<li class='pubfield'><span title="The window has a sizing border. Same as the SIZEBOX style.">ThickFrame</span></li>
+<li class='pubfield'><span title="The window is an overlapped window. An overlapped window has a title bar and a border. Same as the OVERLAPPED style.">Tiled</span></li>
+<li class='pubfield'><span title="The window is an overlapped window. Same as the OVERLAPPEDWINDOW style.">TiledWindow</span></li>
+<li class='pubfield'><span title="The window is initially visible.
+    This style can be turned on and off by using the ShowWindow or SetWindowPos function.">Visible</span></li>
+<li class='pubfield'><span title="The window has a vertical scroll bar.">VScroll</span></li>
+</ul>
+</div>
+<div class='objectBox' id='WinUIEx.ZOrderInfo'>
+<div class='header class'>
+<span title="Information about the ZOrder of the window">ZOrderInfo : ValueType</span>
+</div>
+<div class='members'>
+<h4>Constructors</h4>
+<ul>
+<li class='pubmethod'>ZOrderInfo()</li>
+</ul></div>
+<div class='members'><h4>Properties</h4><ul>
+<li class='pubproperty'><span title="Gets a value indicating whether the window&#39;s Z Order is at the bottom.">IsZOrderAtBottom</span> { get; } : bool</li>
+<li class='pubproperty'><span title="Gets a value indicating whether the window&#39;s Z Order is at the top.">IsZOrderAtTop</span> { get; } : bool</li>
+<li class='pubproperty'><span title="Gets the id of the window this window is below.">ZOrderBelowWindowId</span> { get; } : WindowId</li>
+</ul></div>
+</div>
+</div></section>
+<section id='WinUIEx.Messaging'>
+<h3 class='expander active'>WinUIEx.Messaging</h3><div>
+<div class='objectBox' id='WinUIEx.WinUIEx.Messaging.Message'>
+<div class='header class'>
+<span title="Represents a Windows Message.">Message : ValueType</span>
+</div>
+<div class='members'>
+<h4>Constructors</h4>
+<ul>
+<li class='pubmethod'>Message()</li>
+</ul></div>
+<div class='members'><h4>Properties</h4><ul>
+<li class='pubproperty'><span title="Gets the window handle of the message.">Hwnd</span> { get; } : IntPtr</li>
+<li class='pubproperty'><span title="Specifies the LParam field of the message.">LParam</span> { get; } : nint</li>
+<li class='pubproperty'><span title="Gets the ID number for the message.">MessageId</span> { get; } : uint</li>
+<li class='pubproperty'><span title="Gets or sets the WParam field of the message.">WParam</span> { get; } : nuint</li>
+</ul></div>
+</div>
+<div class='objectBox' id='WinUIEx.WinUIEx.Messaging.WindowMessageEventArgs'>
+<div class='header class'>
+<span title="Event arguments for the WindowMessageReceived event.">WindowMessageEventArgs : EventArgs</span>
+</div>
+<div class='members'><h4>Properties</h4><ul>
+<li class='pubproperty'><span title="Indicates whether this message was handled and the Result value should be returned.">Handled</span> { get; set; } : bool</li>
+<li class='pubproperty'><span title="The Windows WM Message">Message</span> { get; } : <a href='#WinUIEx.WinUIEx.Messaging.Message'>Message</a></li>
+<li class='pubproperty'><span title="The result after processing the message. Use this to set the return result, after also setting Handled to true.">Result</span> { get; set; } : nint</li>
+</ul></div>
+</div>
+<div class='objectBox' id='WinUIEx.WinUIEx.Messaging.WindowMessageMonitor'>
+<div class='header class'>
+<span title="The message monitor allows you to monitor all WM_MESSAGE events for a given window.">WindowMessageMonitor : IDisposable</span>
+</div>
+<div class='members'>
+<h4>Constructors</h4>
+<ul>
+<li class='pubmethod'><span title="Initialize a new instance of the WindowMessageMonitor class.">WindowMessageMonitor</span>(IntPtr <span title="The window handle to listen to messages for">hwnd</span>)</li>
+<li class='pubmethod'><span title="Initialize a new instance of the WindowMessageMonitor class.">WindowMessageMonitor</span>(Window <span title="The window to listen to messages for">window</span>)</li>
+</ul></div>
+<div class='members'><h4>Methods</h4><ul>
+<li class='pubmethod'><span title="Disposes this instance">Dispose</span>()</li>
+<li class='protmethod'><span title="Finalizer">Finalize</span>()</li>
+</ul></div>
+<div class='members'><h4>Events</h4><ul>
+<li class='pubevent'><span title="Event raised when a windows message is received.">WindowMessageReceived</span> : EventHandler&lt;<a href='#WinUIEx.WinUIEx.Messaging.WindowMessageEventArgs'>WindowMessageEventArgs</a>&gt;</li>
+</ul></div>
+</div>
+</div></section>
+<hr style="clear: both; " />Command line:<br/>
+<pre style="padding: 5px; background-color:#eee">
+dotnet tool install --global dotMorten.OmdGenerator
+generateomd D:\a\WinUIEx\WinUIEx\.tools\omd\.store\dotmorten.omdgenerator\1.4.0\dotmorten.omdgenerator\1.4.0\tools\net5.0\any\generateomd.dll /source=src/WinUIEx/. /output=artifacts/docs/api/omd.html
+</pre>
+﻿<br /><br /><hr style="clear:both;" />
+Generated with <a href="https://github.com/dotMorten/DotNetOMDGenerator">.NET Object Model Diagram Generator</a><br /><br />
+<script>var acc = document.getElementsByClassName("expander"); var i; for (i = 0; i < acc.length; i++) { acc[i].addEventListener("click", function () { var active = this.classList.toggle("active"); var panel = this.nextElementSibling; panel.classList.toggle("collapse"); }); }</script>
+</body>
+</html>

@@ -1,0 +1,218 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Using WinUIEx with .NET MAUI </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Using WinUIEx with .NET MAUI ">
+    <meta name="generator" content="docfx 2.59.4.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/logo.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h2 id="using-winuiex-with-net-maui">Using WinUIEx with .NET MAUI</h2>
+
+<h3 id="include-winuiex-package-in-windows-target">Include WinUIEx package in Windows target</h3>
+<p>Add WinUIEx to the Windows build target by adding a package reference in the <code>.csproj</code> file:</p>
+<pre><code class="lang-xml">  &lt;ItemGroup&gt;
+    &lt;PackageReference Include=&quot;WinUIEx&quot; Version=&quot;2.3.0&quot; Condition=&quot;$([MSBuild]::GetTargetPlatformIdentifier(&#39;$(TargetFramework)&#39;)) == &#39;windows&#39;&quot; /&gt;
+  &lt;/ItemGroup&gt;
+</code></pre><p>If the referenced version of WinUIEx relies on a newer version of the Windows App SDK than .NET MAUI implicitly references, you&#39;ll likely see errors like this:</p>
+<pre><code>Error   NU1605  Warning As Error: Detected package downgrade: Microsoft.WindowsAppSDK from 1.4.230822000 to 1.2.221209.1.
+Reference the package directly from the project to select a different version. MauiApp8 -&gt; WinUIEx 2.3.0 -&gt; Microsoft.WindowsAppSDK (&gt;= 1.4.230822000) 
+</code></pre><p>To address that, explicitly reference the Windows App SDK package with the version mentioned in the error. For example:</p>
+<pre><code class="lang-xml">&lt;ItemGroup&gt;
+    &lt;PackageReference Include=&quot;Microsoft.WindowsAppSDK&quot; Version=&quot;1.4.230822000&quot; Condition=&quot;$([MSBuild]::GetTargetPlatformIdentifier(&#39;$(TargetFramework)&#39;)) == &#39;windows&#39;&quot; /&gt;
+&lt;/ItemGroup&gt;
+</code></pre><h3 id="use-winuiexs-webauthenticator-instead-of-net-mauis">Use WinUIEx&#39;s WebAuthenticator instead of .NET MAUI&#39;s</h3>
+<p>.NET MAUI does not support the WebAuthenticator out of the box on Windows. Instead you can use WinUIEx to get the same capability.
+First in <code>\Platforms\Windows\App.xaml.cs</code>, add the <code>WebAuthenticator.CheckOAuthRedirectionActivation</code> to the App constructor and return if it returns <code>true</code>:</p>
+<pre><code class="lang-cs">    public App()
+    {
+        if (WinUIEx.WebAuthenticator.CheckOAuthRedirectionActivation())
+            return;
+        this.InitializeComponent();
+    }
+</code></pre><p>When you want to perform an OAuth request, on Windows use WinUIEx&#39;s authenticator, instead of .NET MAUI&#39;s:</p>
+<pre><code class="lang-cs">#if WINDOWS
+    var result = await WinUIEx.WebAuthenticator.AuthenticateAsync(new Uri(authUri), new Uri(redirectUri));
+#else
+    var result = await WebAuthenticator.AuthenticateAsync(new Uri(authUri), new Uri(redirectUri));
+#endif
+</code></pre><p>Lastly, make sure you&#39;ve registered the redirect uri-scheme in <code>Platforms\Windows\Package.appxmanifest</code>, as described in <a href="WebAuthenticator.html">WebAuthenticator</a>.</p>
+<h3 id="perform-operations-when-windows-are-created">Perform operations when Windows are created</h3>
+<p>Use the <code>ConfigureLifecycleEvents</code> to be notified of new windows getting created, which you can then extend with WinUIEx.</p>
+<pre><code class="lang-cs">using Microsoft.Maui.LifecycleEvents;
+
+#if WINDOWS
+using WinUIEx;
+#endif
+
+namespace MyApp.Maui
+{
+    public static class MauiProgram
+    {
+        public static MauiApp CreateMauiApp()
+        {
+            var builder = MauiApp.CreateBuilder();
+            builder
+                .UseMauiApp&lt;App&gt;()
+                .ConfigureFonts(fonts =&gt;
+                {
+                    fonts.AddFont(&quot;OpenSans-Regular.ttf&quot;, &quot;OpenSansRegular&quot;);
+                    fonts.AddFont(&quot;OpenSans-Semibold.ttf&quot;, &quot;OpenSansSemibold&quot;);
+                });
+
+#if WINDOWS
+            builder.ConfigureLifecycleEvents(events =&gt;
+            {
+                events.AddWindows(wndLifeCycleBuilder =&gt;
+                {
+                    wndLifeCycleBuilder.OnWindowCreated(window =&gt;
+                    {
+                        window.CenterOnScreen(1024,768); //Set size and center on screen using WinUIEx extension method
+
+                        var manager = WinUIEx.WindowManager.Get(window);
+                        manager.PersistenceId = &quot;MainWindowPersistanceId&quot;; // Remember window position and size across runs
+                        manager.MinWidth = 640;
+                        manager.MinHeight = 480;
+                    });
+                });
+            });
+#endif
+
+            return builder.Build();
+        }
+    }
+}
+</code></pre><h3 id="interact-with-the-pages-containing-window">Interact with the Page&#39;s containing window:</h3>
+<pre><code class="lang-cs">namespace MyApp.Maui;
+#if WINDOWS
+using WinUIEx;
+#endif
+
+public partial class MainPage : ContentPage
+{
+    public MainPage()
+    {
+        InitializeComponent();
+    }
+
+    private void OnMaximizeClicked(object sender, EventArgs e)
+    {
+#if WINDOWS
+        var window = this.Window.Handler.PlatformView as Microsoft.UI.Xaml.Window;
+        window.Maximize(); // Use WinUIEx Extension method to maximize window
+#endif
+    }
+
+
+    private void OnFullScreenClicked(object sender, EventArgs e)
+    {
+#if WINDOWS
+        // Get the window manager
+        var manager = WinUIEx.WindowManager.Get(this.Window.Handler.PlatformView as Microsoft.UI.Xaml.Window);
+        if (manager.PresenterKind == Microsoft.UI.Windowing.AppWindowPresenterKind.Overlapped)
+            manager.PresenterKind = Microsoft.UI.Windowing.AppWindowPresenterKind.FullScreen;
+        else
+            manager.PresenterKind = Microsoft.UI.Windowing.AppWindowPresenterKind.Overlapped;
+#endif
+    }
+}
+</code></pre></article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/dotMorten/WinUIEx/blob/main/docs/concepts/Maui.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

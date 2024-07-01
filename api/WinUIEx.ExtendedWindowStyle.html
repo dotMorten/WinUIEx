@@ -1,0 +1,283 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Enum ExtendedWindowStyle
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Enum ExtendedWindowStyle
+   ">
+    <meta name="generator" content="docfx 2.59.4.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/logo.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="WinUIEx.ExtendedWindowStyle">
+  
+  
+  <h1 id="WinUIEx_ExtendedWindowStyle" data-uid="WinUIEx.ExtendedWindowStyle" class="text-break">Enum ExtendedWindowStyle
+  </h1>
+  <div class="markdown level0 summary"><p>Flags used for ToggleExtendedWindowStyle method</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="WinUIEx.html">WinUIEx</a></h6>
+  <h6><strong>Assembly</strong>: WinUIEx.dll</h6>
+  <h5 id="WinUIEx_ExtendedWindowStyle_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Flags]
+public enum ExtendedWindowStyle</code></pre>
+  </div>
+  <h3 id="fields">Fields
+  </h3>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    <thead>
+    <tbody>
+      <tr>
+        <td id="WinUIEx_ExtendedWindowStyle_AcceptFiles">AcceptFiles</td>
+        <td><p>The window accepts drag-drop files.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="WinUIEx_ExtendedWindowStyle_AppWindow">AppWindow</td>
+        <td><p>Forces a top-level window onto the taskbar when the window is visible.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="WinUIEx_ExtendedWindowStyle_ClientEdge">ClientEdge</td>
+        <td><p>The window has a border with a sunken edge.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="WinUIEx_ExtendedWindowStyle_Composited">Composited</td>
+        <td><p>Paints all descendants of a window in bottom-to-top painting order using double-buffering. Bottom-to-top painting order allows a descendent window to have translucency (alpha) and transparency (color-key) effects, but only if the descendent window also has the WS_EX_TRANSPARENT bit set. Double-buffering allows the window and its descendents to be painted without flicker. This cannot be used if the window has a class style of either CS_OWNDC or CS_CLASSDC.
+Windows 2000: This style is not supported.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="WinUIEx_ExtendedWindowStyle_ContextHelp">ContextHelp</td>
+        <td><p>The title bar of the window includes a question mark. When the user clicks the question mark, the cursor changes to a question mark with a pointer. If the user then clicks a child window, the child receives a WM_HELP message. The child window should pass the message to the parent window procedure, which should call the WinHelp function using the HELP_WM_HELP command. The Help application displays a pop-up window that typically contains help for the child window.
+WS_EX_CONTEXTHELP cannot be used with the WS_MAXIMIZEBOX or WS_MINIMIZEBOX styles.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="WinUIEx_ExtendedWindowStyle_ControlParent">ControlParent</td>
+        <td><p>The window itself contains child windows that should take part in dialog box navigation. If this style is specified, the dialog manager recurses into children of this window when performing navigation operations such as handling the TAB key, an arrow key, or a keyboard mnemonic.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="WinUIEx_ExtendedWindowStyle_DlgModalFrame">DlgModalFrame</td>
+        <td><p>The window has a double border; the window can, optionally, be created with a title bar by specifying the WS_CAPTION style in the dwStyle parameter.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="WinUIEx_ExtendedWindowStyle_Layered">Layered</td>
+        <td><p>The window is a layered window. This style cannot be used if the window has a class style of either CS_OWNDC or CS_CLASSDC.
+Windows 8: The WS_EX_LAYERED style is supported for top-level windows and child windows. Previous Windows versions support WS_EX_LAYERED only for top-level windows.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="WinUIEx_ExtendedWindowStyle_LayoutRtl">LayoutRtl</td>
+        <td><p>If the shell language is Hebrew, Arabic, or another language that supports reading order alignment, the horizontal origin of the window is on the right edge. Increasing horizontal values advance to the left.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="WinUIEx_ExtendedWindowStyle_Left">Left</td>
+        <td><p>The window has generic left-aligned properties. This is the default.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="WinUIEx_ExtendedWindowStyle_LeftScrollBar">LeftScrollBar</td>
+        <td><p>If the shell language is Hebrew, Arabic, or another language that supports reading order alignment, the vertical scroll bar (if present) is to the left of the client area. For other languages, the style is ignored.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="WinUIEx_ExtendedWindowStyle_LtrReading">LtrReading</td>
+        <td><p>The window text is displayed using left-to-right reading-order properties. This is the default.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="WinUIEx_ExtendedWindowStyle_MdiChild">MdiChild</td>
+        <td><p>The window is a MDI child window.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="WinUIEx_ExtendedWindowStyle_NoActivate">NoActivate</td>
+        <td><p>A top-level window created with this style does not become the foreground window when the user clicks it. The system does not bring this window to the foreground when the user minimizes or closes the foreground window.
+The window should not be activated through programmatic access or via keyboard navigation by accessible technology, such as Narrator.
+To activate the window, use the SetActiveWindow or SetForegroundWindow function.
+The window does not appear on the taskbar by default. To force the window to appear on the taskbar, use the WS_EX_APPWINDOW style.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="WinUIEx_ExtendedWindowStyle_NoInheritLayout">NoInheritLayout</td>
+        <td><p>The window does not pass its window layout to its child windows.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="WinUIEx_ExtendedWindowStyle_NoParentNotify">NoParentNotify</td>
+        <td><p>The child window created with this style does not send the WM_PARENTNOTIFY message to its parent window when it is created or destroyed.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="WinUIEx_ExtendedWindowStyle_NoRedirectionBitmap">NoRedirectionBitmap</td>
+        <td><p>The window does not render to a redirection surface. This is for windows that do not have visible content or that use mechanisms other than surfaces to provide their visual.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="WinUIEx_ExtendedWindowStyle_OverlappedWindow">OverlappedWindow</td>
+        <td><p>The window is an overlapped window.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="WinUIEx_ExtendedWindowStyle_PaletteWindow">PaletteWindow</td>
+        <td><p>The window is palette window, which is a modeless dialog box that presents an array of commands.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="WinUIEx_ExtendedWindowStyle_Right">Right</td>
+        <td><p>The window has generic &quot;right-aligned&quot; properties. This depends on the window class. This style has an effect only if the shell language is Hebrew, Arabic, or another language that supports reading-order alignment; otherwise, the style is ignored.
+Using the WS_EX_RIGHT style for static or edit controls has the same effect as using the SS_RIGHT or ES_RIGHT style, respectively. Using this style with button controls has the same effect as using BS_RIGHT and BS_RIGHTBUTTON styles.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="WinUIEx_ExtendedWindowStyle_RightScrollBar">RightScrollBar</td>
+        <td><p>The vertical scroll bar (if present) is to the right of the client area. This is the default.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="WinUIEx_ExtendedWindowStyle_RtlReading">RtlReading</td>
+        <td><p>If the shell language is Hebrew, Arabic, or another language that supports reading-order alignment, the window text is displayed using right-to-left reading-order properties. For other languages, the style is ignored.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="WinUIEx_ExtendedWindowStyle_StaticEdge">StaticEdge</td>
+        <td><p>The window has a three-dimensional border style intended to be used for items that do not accept user input.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="WinUIEx_ExtendedWindowStyle_ToolWindow">ToolWindow</td>
+        <td><p>The window is intended to be used as a floating toolbar. A tool window has a title bar that is shorter than a normal title bar, and the window title is drawn using a smaller font. A tool window does not appear in the taskbar or in the dialog that appears when the user presses ALT+TAB. If a tool window has a system menu, its icon is not displayed on the title bar. However, you can display the system menu by right-clicking or by typing ALT+SPACE.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="WinUIEx_ExtendedWindowStyle_TopMost">TopMost</td>
+        <td><p>The window should be placed above all non-topmost windows and should stay above them, even when the window is deactivated. To add or remove this style, use the SetWindowPos function.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="WinUIEx_ExtendedWindowStyle_Transparent">Transparent</td>
+        <td><p>The window should not be painted until siblings beneath the window (that were created by the same thread) have been painted. The window appears transparent because the bits of underlying sibling windows have already been painted.
+To achieve transparency without these restrictions, use the SetWindowRgn function.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="WinUIEx_ExtendedWindowStyle_WindowEdge">WindowEdge</td>
+        <td><p>The window has a border with a raised edge.</p>
+</td>
+      </tr>
+    </tbody>
+  </thead></thead></table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/dotMorten/WinUIEx/new/main/docs/api_overwrites/new?filename=WinUIEx_ExtendedWindowStyle.md&amp;value=---%0Auid%3A%20WinUIEx.ExtendedWindowStyle%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/dotMorten/WinUIEx/blob/main/src/WinUIEx/HwndExtensions.cs/#L442" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

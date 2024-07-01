@@ -1,0 +1,268 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Enum WindowStyle
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Enum WindowStyle
+   ">
+    <meta name="generator" content="docfx 2.59.4.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/logo.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="WinUIEx.WindowStyle">
+  
+  
+  <h1 id="WinUIEx_WindowStyle" data-uid="WinUIEx.WindowStyle" class="text-break">Enum WindowStyle
+  </h1>
+  <div class="markdown level0 summary"><p>Flags used for ToggleWindowStyle method</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="WinUIEx.html">WinUIEx</a></h6>
+  <h6><strong>Assembly</strong>: WinUIEx.dll</h6>
+  <h5 id="WinUIEx_WindowStyle_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Flags]
+public enum WindowStyle</code></pre>
+  </div>
+  <h3 id="fields">Fields
+  </h3>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    <thead>
+    <tbody>
+      <tr>
+        <td id="WinUIEx_WindowStyle_Border">Border</td>
+        <td><p>The window has a thin-line border.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="WinUIEx_WindowStyle_Caption">Caption</td>
+        <td><p>The window has a title bar (includes the BORDER style).</p>
+</td>
+      </tr>
+      <tr>
+        <td id="WinUIEx_WindowStyle_Child">Child</td>
+        <td><p>The window is a child window. A window with this style cannot have a menu bar. This style cannot be used with the POPUP style.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="WinUIEx_WindowStyle_ChildChildren">ChildChildren</td>
+        <td><p>Excludes the area occupied by child windows when drawing occurs within the parent window. This style is used when creating the parent window.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="WinUIEx_WindowStyle_ChildWindow">ChildWindow</td>
+        <td><p>Same as the <a class="xref" href="WinUIEx.WindowStyle.html#WinUIEx_WindowStyle_Child">Child</a> style.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="WinUIEx_WindowStyle_ClipSiblings">ClipSiblings</td>
+        <td><p>Clips child windows relative to each other; that is, when a particular child window receives a WM_PAINT message, the CLIPSIBLINGS style clips all other overlapping child windows out of the region of the child window to be updated. If CLIPSIBLINGS is not specified and child windows overlap, it is possible, when drawing within the client area of a child window, to draw within the client area of a neighboring child window.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="WinUIEx_WindowStyle_Disabled">Disabled</td>
+        <td><p>The window is initially disabled. A disabled window cannot receive input from the user. To change this after a window has been created, use the EnableWindow function.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="WinUIEx_WindowStyle_DlgFrame">DlgFrame</td>
+        <td><p>The window has a border of a style typically used with dialog boxes. A window with this style cannot have a title bar.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="WinUIEx_WindowStyle_Group">Group</td>
+        <td><p>The window is the first control of a group of controls. The group consists of this first control and all controls defined after it, up to the next control with the GROUP style. The first control in each group usually has the TABSTOP style so that the user can move from group to group. The user can subsequently change the keyboard focus from one control in the group to the next control in the group by using the direction keys.
+You can turn this style on and off to change dialog box navigation. To change this style after a window has been created, use the SetWindowLong function.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="WinUIEx_WindowStyle_HScroll">HScroll</td>
+        <td><p>The window has a horizontal scroll bar.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="WinUIEx_WindowStyle_Iconic">Iconic</td>
+        <td><p>The window is initially minimized. Same as the MINIMIZE style.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="WinUIEx_WindowStyle_Maximize">Maximize</td>
+        <td><p>The window is initially maximized.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="WinUIEx_WindowStyle_MaximizeBox">MaximizeBox</td>
+        <td><p>The window has a maximize button. Cannot be combined with the EX_CONTEXTHELP style. The SYSMENU style must also be specified.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="WinUIEx_WindowStyle_Minimize">Minimize</td>
+        <td><p>The window is initially minimized. Same as the ICONIC style.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="WinUIEx_WindowStyle_MinimizeBox">MinimizeBox</td>
+        <td><p>The window has a minimize button. Cannot be combined with the EX_CONTEXTHELP style. The SYSMENU style must also be specified.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="WinUIEx_WindowStyle_Overlapped">Overlapped</td>
+        <td><p>The window is an overlapped window. An overlapped window has a title bar and a border. Same as the TILED style.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="WinUIEx_WindowStyle_OverlappedWindow">OverlappedWindow</td>
+        <td><p>The window is an overlapped window. Same as the TILEDWINDOW style.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="WinUIEx_WindowStyle_SizeBox">SizeBox</td>
+        <td><p>The window has a sizing border. Same as the THICKFRAME style.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="WinUIEx_WindowStyle_SysMenu">SysMenu</td>
+        <td><p>The window has a window menu on its title bar. The CAPTION style must also be specified.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="WinUIEx_WindowStyle_TabStop">TabStop</td>
+        <td><p>The window is a control that can receive the keyboard focus when the user presses the TAB key. Pressing the TAB key changes the keyboard focus to the next control with the TABSTOP style.
+You can turn this style on and off to change dialog box navigation. To change this style after a window has been created, use the SetWindowLong function. For user-created windows and modeless dialogs to work with tab stops, alter the message loop to call the IsDialogMessage function.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="WinUIEx_WindowStyle_ThickFrame">ThickFrame</td>
+        <td><p>The window has a sizing border. Same as the SIZEBOX style.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="WinUIEx_WindowStyle_Tiled">Tiled</td>
+        <td><p>The window is an overlapped window. An overlapped window has a title bar and a border. Same as the OVERLAPPED style.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="WinUIEx_WindowStyle_TiledWindow">TiledWindow</td>
+        <td><p>The window is an overlapped window. Same as the OVERLAPPEDWINDOW style.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="WinUIEx_WindowStyle_Visible">Visible</td>
+        <td><p>The window is initially visible.
+This style can be turned on and off by using the ShowWindow or SetWindowPos function.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="WinUIEx_WindowStyle_VScroll">VScroll</td>
+        <td><p>The window has a vertical scroll bar.</p>
+</td>
+      </tr>
+    </tbody>
+  </thead></thead></table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/dotMorten/WinUIEx/new/main/docs/api_overwrites/new?filename=WinUIEx_WindowStyle.md&amp;value=---%0Auid%3A%20WinUIEx.WindowStyle%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/dotMorten/WinUIEx/blob/main/src/WinUIEx/HwndExtensions.cs/#L377" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

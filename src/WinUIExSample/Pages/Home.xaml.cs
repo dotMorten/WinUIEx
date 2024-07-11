@@ -10,8 +10,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.Devices.Enumeration;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Media.Capture;
 using WinUIEx;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -27,7 +29,31 @@ namespace WinUIExSample.Pages
         public Home()
         {
             this.InitializeComponent();
+            LoadWebcam();
         }
+
+        Windows.Media.Capture.MediaCapture mediaCapture;
+        private async void LoadWebcam()
+        {
+            var allVideoDevices = await DeviceInformation.FindAllAsync(DeviceClass.VideoCapture);
+            DeviceInformation cameraDevice = allVideoDevices.FirstOrDefault(x => x.EnclosureLocation != null && x.EnclosureLocation.Panel == Windows.Devices.Enumeration.Panel.Front) ?? allVideoDevices.FirstOrDefault();
+
+            var frameSourceGroups = await Windows.Media.Capture.Frames.MediaFrameSourceGroup.FindAllAsync();
+            var selectedFrameSourceGroup = frameSourceGroups.First();
+            mediaCapture = new Windows.Media.Capture.MediaCapture();
+            var settings = new MediaCaptureInitializationSettings
+            {
+                VideoDeviceId = cameraDevice.Id,
+                SourceGroup = selectedFrameSourceGroup,
+                SharingMode = MediaCaptureSharingMode.SharedReadOnly,
+                StreamingCaptureMode = StreamingCaptureMode.Video,
+                MemoryPreference = MediaCaptureMemoryPreference.Cpu
+            };
+            await mediaCapture.InitializeAsync(settings);
+            elm.Source = mediaCapture;
+            //await mediaCapture.StartPreviewAsync();
+        }
+
         public MainWindow MainWindow => (MainWindow)((App)Application.Current).MainWindow;
 
         private void OpenLogWindow_Click(object sender, RoutedEventArgs e) => MainWindow.ShowLogWindow();

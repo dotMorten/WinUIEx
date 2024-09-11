@@ -24,9 +24,7 @@
     <PackageId>WinUIEx</PackageId>
     <Product>WinUI Extensions</Product>
     <PackageReleaseNotes>
-      - Can't change TransparentTintBackdrop.TintColor at runtime (#149)
-      - Avoid first-chance exception in Window Persistence
-      - Allow resetting MaxWidth/MaxHeight back to the default value of 0
+      - Added TitleBar control
     </PackageReleaseNotes>
   </PropertyGroup>
 

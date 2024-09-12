@@ -25,6 +25,7 @@ namespace WinUIEx
     /// </remarks>
     public sealed class WebAuthenticator
     {
+        private static Window? _window;
         /// <summary>
         /// Begin an authentication flow by navigating to the specified url and waiting for a callback/redirect to the callbackUrl scheme.
         /// </summary>
@@ -33,7 +34,15 @@ namespace WinUIEx
         /// <returns>Returns a result parsed out from the callback url.</returns>
         /// <remarks>Prior to calling this, a call to <see cref="CheckOAuthRedirectionActivation(bool)"/> must be made during application startup.</remarks>
         /// <seealso cref="CheckOAuthRedirectionActivation(bool)"/>
-        public static Task<WebAuthenticatorResult> AuthenticateAsync(Uri authorizeUri, Uri callbackUri) => Instance.Authenticate(authorizeUri, callbackUri, CancellationToken.None);
+        public static async Task<WebAuthenticatorResult> AuthenticateAsync(Uri authorizeUri, Uri callbackUri, bool useEmbeddedWebView = false)
+        {
+            var result = await Instance.Authenticate(authorizeUri, callbackUri, CancellationToken.None, useEmbeddedWebView);
+            if (_window != null && Application.Current != null)
+            {
+                Application.Current.CloseWindow(_window);
+            }
+            return result;
+        }
 
         /// <summary>
         /// Begin an authentication flow by navigating to the specified url and waiting for a callback/redirect to the callbackUrl scheme.
@@ -44,7 +53,15 @@ namespace WinUIEx
         /// <returns>Returns a result parsed out from the callback url.</returns>
         /// <remarks>Prior to calling this, a call to <see cref="CheckOAuthRedirectionActivation(bool)"/> must be made during application startup.</remarks>
         /// <seealso cref="CheckOAuthRedirectionActivation(bool)"/>
-        public static Task<WebAuthenticatorResult> AuthenticateAsync(Uri authorizeUri, Uri callbackUri, CancellationToken cancellationToken) => Instance.Authenticate(authorizeUri, callbackUri, cancellationToken);
+        public static async Task<WebAuthenticatorResult> AuthenticateAsync(Uri authorizeUri, Uri callbackUri, CancellationToken cancellationToken, bool useEmbeddedWebView = false)
+        {
+            var result = await Instance.Authenticate(authorizeUri, callbackUri, cancellationToken, useEmbeddedWebView);
+            if (_window != null && Application.Current != null)
+            {
+                Application.Current.CloseWindow(_window);
+            }
+            return result;
+        }
 
         private static readonly WebAuthenticator Instance = new WebAuthenticator();
 
@@ -210,7 +227,7 @@ namespace WinUIEx
             }
         }
 
-        private async Task<WebAuthenticatorResult> Authenticate(Uri authorizeUri, Uri callbackUri, CancellationToken cancellationToken)
+        private async Task<WebAuthenticatorResult> Authenticate(Uri authorizeUri, Uri callbackUri, CancellationToken cancellationToken, bool useEmbeddedWebView)
         {
             if(!_oauthCheckWasPerformed)
             {
@@ -258,11 +275,28 @@ namespace WinUIEx
                 }
             }
 
-            var process = new System.Diagnostics.Process();
-            process.StartInfo.FileName = "rundll32.exe";
-            process.StartInfo.Arguments = $"url.dll,FileProtocolHandler \"{authorizeUri.OriginalString}\"";
-            process.StartInfo.UseShellExecute = true;
-            process.Start();
+            if(!useEmbeddedWebView)
+            {
+                var process = new System.Diagnostics.Process();
+                process.StartInfo.FileName = "rundll32.exe";
+                process.StartInfo.Arguments = $"url.dll,FileProtocolHandler \"{authorizeUri.OriginalString}\"";
+                process.StartInfo.UseShellExecute = true;
+                process.Start();
+            }
+            else
+            {
+                _window = new Window()
+                {
+                    Page = new ContentPage
+                    {
+                        Content = new WebView
+                        {
+                            Source = authorizeUri.OriginalString
+                        }
+                    }
+                };
+                Application.Current?.OpenWindow(_window);
+            }
             tasks.Add(taskId, tcs);
             var uri = await tcs.Task.ConfigureAwait(false);
             return new WebAuthenticatorResult(uri);

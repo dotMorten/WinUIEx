@@ -49,6 +49,7 @@ namespace WinUIExSample
             if (args.IsSettingsSelected)
             {
                 contentFrame.Navigate(typeof(Pages.Settings));
+                titleBar.Subtitle = "Settings";
             }
             else
             {
@@ -57,6 +58,7 @@ namespace WinUIExSample
                 {
                     string selectedItemTag = ((string)selectedItem.Tag);
                     sender.Header = selectedItem.Content;
+                    titleBar.Subtitle = selectedItem.Content as string;
                     string pageName = "WinUIExSample.Pages." + selectedItemTag;
                     Type pageType = Type.GetType(pageName);
                     contentFrame.Navigate(pageType);
@@ -102,11 +104,11 @@ namespace WinUIExSample
             if (logWindow is null || logWindow.AppWindow is null)
             {
                 logWindow = new LogWindow();
-                logWindow.Closed += (s,e) => this.logWindow = null;
+                logWindow.Closed += (s, e) => this.logWindow = null;
             }
             logWindow.Activate();
         }
-        
+
 
         public void ToggleWMMessages(bool isOn)
         {
@@ -119,7 +121,7 @@ namespace WinUIExSample
         private void WindowMessageReceived(object sender, WindowMessageEventArgs e)
         {
             Log(e.Message.ToString());
-            if(e.Message.MessageId == 0x0005) //WM_SIZE
+            if (e.Message.MessageId == 0x0005) //WM_SIZE
             {
                 // https://learn.microsoft.com/en-us/windows/win32/winmsg/wm-size
                 switch (e.Message.WParam)
@@ -135,7 +137,18 @@ namespace WinUIExSample
 
         private void NavigationView_BackRequested(NavigationView sender, NavigationViewBackRequestedEventArgs args)
         {
-            if(contentFrame.CanGoBack)
+            if (contentFrame.CanGoBack)
+                contentFrame.GoBack();
+        }
+
+        private void TitleBar_PaneToggleRequested(TitleBar sender, object args)
+        {
+            navigationView.IsPaneOpen = !navigationView.IsPaneOpen;
+        }
+
+        private void TitleBar_BackRequested(TitleBar sender, object args)
+        {
+            if (contentFrame.CanGoBack)
                 contentFrame.GoBack();
         }
     }

@@ -10,7 +10,7 @@
     <Platforms>AnyCPU</Platforms>
     <Nullable>enable</Nullable>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <LangVersion>10</LangVersion>
+    <LangVersion>12</LangVersion>
     <IsTrimmable>true</IsTrimmable>
     <TreatWarningsAsErrors Condition="'$(Configuration)'=='Release'">true</TreatWarningsAsErrors>
     <IncludeSymbols>true</IncludeSymbols>
@@ -24,9 +24,7 @@
     <PackageId>WinUIEx</PackageId>
     <Product>WinUI Extensions</Product>
     <PackageReleaseNotes>
-      - Can't change TransparentTintBackdrop.TintColor at runtime (#149)
-      - Avoid first-chance exception in Window Persistence
-      - Allow resetting MaxWidth/MaxHeight back to the default value of 0
+      - Added TitleBar control
     </PackageReleaseNotes>
   </PropertyGroup>
 

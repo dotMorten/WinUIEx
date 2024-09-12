@@ -36,7 +36,7 @@ jobs:
         vstest.console.exe src\WinUIEx.Analyzers\WinUIEx.Analyzers.Test\bin\Release\net6.0-windows10.0.19041.0\WinUIEx.Analyzers.Test.dll --logger:"console;verbosity=normal" /InIsolation
       
     - name: Upload artifacts
-      uses: actions/upload-artifact@v1
+      uses: actions/upload-artifact@v4
       with:
         name: NuGet Packages
         path: artifacts\NuGet\Release

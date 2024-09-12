@@ -15,6 +15,7 @@ A set of extension methods and classes to fill some gaps in WinUI 3, mostly arou
   - [Splash screen](concepts/Splashscreen.md)
   - [OAuth Web Authenticator](concepts/WebAuthenticator.md)
   - [Custom Backdrops](concepts/CustomBackdrops.md)
+  - TitleBar
 
 
 And more to come...

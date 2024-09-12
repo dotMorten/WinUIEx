@@ -11,20 +11,24 @@
     Width="1024" Height="768"
     MinWidth="500" MinHeight="250"
     mc:Ignorable="d" >
-    <Grid>      
+    <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="44" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="42" />
+            <RowDefinition />
         </Grid.RowDefinitions>
-        <Border VerticalAlignment="Stretch" Background="{StaticResource SemiTransparentBackgroundBrush}" >
-            <StackPanel Orientation="Horizontal" Margin="30,0" >
-                <ImageIcon Source="ms-appx:///Images/logo.png" Margin="12" />
-                <TextBlock Text="WinUI EX Test App" VerticalAlignment="Center" />
-            </StackPanel>
-        </Border>
+        
+        <winex:TitleBar x:Name="titleBar" Title="WinUI EX Test App" IsPaneToggleButtonVisible="True" IsBackButtonVisible="True"
+                        IsBackEnabled="True" PaneToggleRequested="TitleBar_PaneToggleRequested" BackRequested="TitleBar_BackRequested">
+            <winex:TitleBar.IconSource>
+                <ImageIconSource ImageSource="ms-appx:///Images/logo.png" />
+            </winex:TitleBar.IconSource>
+            <winex:TitleBar.Footer>
+                <HyperlinkButton Content="WinUIEx on GitHub" NavigateUri="https://github.com/dotMorten/WinUIEx" />
+            </winex:TitleBar.Footer>
+        </winex:TitleBar>
         <NavigationView IsPaneOpen="True" AlwaysShowHeader="False" BackRequested="NavigationView_BackRequested"
-                        IsPaneToggleButtonVisible="True" CompactModeThresholdWidth="0" x:Name="navigationView"
-                        OpenPaneLength="250" Grid.RowSpan="2" PaneDisplayMode="Auto" SelectionChanged="NavigationView_SelectionChanged">
+                        IsPaneToggleButtonVisible="False" CompactModeThresholdWidth="0" x:Name="navigationView"
+                        OpenPaneLength="250" Grid.Row="1" IsBackButtonVisible="Collapsed" PaneDisplayMode="Auto" SelectionChanged="NavigationView_SelectionChanged">
             <NavigationView.MenuItems>
                 <NavigationViewItem Content="Home" Tag="Home" Icon="Home" />
                 <NavigationViewItem Content="Window Control" Tag="WindowControl" Icon="ViewAll" />

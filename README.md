@@ -23,6 +23,7 @@ Watch WinUIEx covered in the On .NET Live show:
   - [Splash Screens](https://dotmorten.github.io/WinUIEx/concepts/Splashscreen.html)
   - [OAuth Web Authentication](https://dotmorten.github.io/WinUIEx/concepts/WebAuthenticator.html)
   - [Custom Window Backdrops](https://dotmorten.github.io/WinUIEx/concepts/CustomBackdrops.html)
+  - TitleBar control
   - Code analyzers for Windows App SDK APIs to guide the developer.
 
 

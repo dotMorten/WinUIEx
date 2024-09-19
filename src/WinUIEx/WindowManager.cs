@@ -267,20 +267,20 @@ namespace WinUIEx
                         {
                             // Only restrict maxsize during restore
                             if (!double.IsNaN(MaxWidth) && MaxWidth > 0)
-                                rect2->ptMaxSize.x = (int)(Math.Min(Math.Max(MaxWidth, MinWidth) * (currentDpi / 96f), rect2->ptMaxSize.x)); // If minwidth<maxwidth, minwidth will take presedence
+                                rect2->ptMaxSize.X = (int)(Math.Min(Math.Max(MaxWidth, MinWidth) * (currentDpi / 96f), rect2->ptMaxSize.X)); // If minwidth<maxwidth, minwidth will take presedence
                             if (!double.IsNaN(MaxHeight) && MaxHeight > 0)
-                                rect2->ptMaxSize.y = (int)(Math.Min(Math.Max(MaxHeight, MinHeight) * (currentDpi / 96f), rect2->ptMaxSize.y)); // If minheight<maxheight, minheight will take presedence
+                                rect2->ptMaxSize.Y = (int)(Math.Min(Math.Max(MaxHeight, MinHeight) * (currentDpi / 96f), rect2->ptMaxSize.Y)); // If minheight<maxheight, minheight will take presedence
                         }
                         else
                         {
                             // Restrict min-size
-                            rect2->ptMinTrackSize.x = (int)(Math.Max(MinWidth * (currentDpi / 96f), rect2->ptMinTrackSize.x));
-                            rect2->ptMinTrackSize.y = (int)(Math.Max(MinHeight * (currentDpi / 96f), rect2->ptMinTrackSize.y));
+                            rect2->ptMinTrackSize.X = (int)(Math.Max(MinWidth * (currentDpi / 96f), rect2->ptMinTrackSize.X));
+                            rect2->ptMinTrackSize.Y = (int)(Math.Max(MinHeight * (currentDpi / 96f), rect2->ptMinTrackSize.Y));
                             // Restrict max-size
                             if (!double.IsNaN(MaxWidth) && MaxWidth > 0)
-                                rect2->ptMaxTrackSize.x = (int)(Math.Min(Math.Max(MaxWidth, MinWidth) * (currentDpi / 96f), rect2->ptMaxTrackSize.x)); // If minwidth<maxwidth, minwidth will take presedence
+                                rect2->ptMaxTrackSize.X = (int)(Math.Min(Math.Max(MaxWidth, MinWidth) * (currentDpi / 96f), rect2->ptMaxTrackSize.X)); // If minwidth<maxwidth, minwidth will take presedence
                             if (!double.IsNaN(MaxHeight) && MaxHeight > 0)
-                                rect2->ptMaxTrackSize.y = (int)(Math.Min(Math.Max(MaxHeight, MinHeight) * (currentDpi / 96f), rect2->ptMaxTrackSize.y)); // If minheight<maxheight, minheight will take presedence
+                                rect2->ptMaxTrackSize.Y = (int)(Math.Min(Math.Max(MaxHeight, MinHeight) * (currentDpi / 96f), rect2->ptMaxTrackSize.Y)); // If minheight<maxheight, minheight will take presedence
                         }
                     }
                     break;
@@ -365,12 +365,17 @@ namespace WinUIEx
         private struct MINMAXINFO
         {
 #pragma warning disable CS0649
-            public Windows.Win32.Foundation.POINT ptReserved;
-            public Windows.Win32.Foundation.POINT ptMaxSize;
-            public Windows.Win32.Foundation.POINT ptMaxPosition;
-            public Windows.Win32.Foundation.POINT ptMinTrackSize;
-            public Windows.Win32.Foundation.POINT ptMaxTrackSize;
+            public POINT ptReserved;
+            public POINT ptMaxSize;
+            public POINT ptMaxPosition;
+            public POINT ptMinTrackSize;
+            public POINT ptMaxTrackSize;
 #pragma warning restore CS0649
+        }
+        private struct POINT
+        {
+            public int X;
+            public int Y;
         }
 
         #region Persistence
@@ -460,7 +465,7 @@ namespace WinUIEx
                     var retobj = (WINDOWPLACEMENT)Marshal.PtrToStructure(buffer, typeof(WINDOWPLACEMENT))!;
                     Marshal.FreeHGlobal(buffer);
                     // Ignore anything by maximized or normal
-                    if (retobj.showCmd == SHOW_WINDOW_CMD.SW_INVALIDATE && retobj.flags == WINDOWPLACEMENT_FLAGS.WPF_RESTORETOMAXIMIZED)
+                    if (retobj.showCmd == SHOW_WINDOW_CMD.SW_SHOWMINIMIZED && retobj.flags == WINDOWPLACEMENT_FLAGS.WPF_RESTORETOMAXIMIZED)
                         retobj.showCmd = SHOW_WINDOW_CMD.SW_MAXIMIZE;
                     else if (retobj.showCmd != SHOW_WINDOW_CMD.SW_MAXIMIZE)
                         retobj.showCmd = SHOW_WINDOW_CMD.SW_NORMAL;

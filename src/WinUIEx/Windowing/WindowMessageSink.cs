@@ -139,7 +139,7 @@ namespace WinUIEx
         {
             return new WindowMessageSink(true)
             {
-                MessageWindowHandle = new HWND(0),
+                MessageWindowHandle = new HWND(IntPtr.Zero),
             };
         }
 

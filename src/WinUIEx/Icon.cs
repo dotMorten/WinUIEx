@@ -44,7 +44,7 @@ namespace WinUIEx
         /// <returns>Icon</returns>
         public static Icon FromFile(string filename)
         {
-            var handle = PInvoke.LoadImage(null, filename, GDI_IMAGE_TYPE.IMAGE_ICON, 16, 16, Windows.Win32.UI.Controls.IMAGE_FLAGS.LR_LOADFROMFILE);
+            var handle = PInvoke.LoadImage(null, filename, GDI_IMAGE_TYPE.IMAGE_ICON, 16, 16, IMAGE_FLAGS.LR_LOADFROMFILE);
             ThrowIfInvalid(handle);
             return new Icon(handle);
         }

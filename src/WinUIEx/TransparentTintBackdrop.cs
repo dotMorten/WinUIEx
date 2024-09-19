@@ -104,7 +104,7 @@ namespace WinUIEx
         {
             if (PInvoke.GetClientRect(new Windows.Win32.Foundation.HWND(hwnd), out var rect))
             {
-                var brush = PInvoke.CreateSolidBrush(0);
+                var brush = PInvoke.CreateSolidBrush(new Windows.Win32.Foundation.COLORREF(0));
                 FillRect(hdc, ref rect, brush);
                 return true;
             }

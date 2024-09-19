@@ -19,7 +19,6 @@ namespace WinUIEx
         /// <returns>A list of display monitors</returns>
         public unsafe static IList<MonitorInfo> GetDisplayMonitors()
         {
-            
             int monitorCount = PInvoke.GetSystemMetrics(Windows.Win32.UI.WindowsAndMessaging.SYSTEM_METRICS_INDEX.SM_CMONITORS);
             List<MonitorInfo> list = new List<MonitorInfo>(monitorCount);
             var cbhandle = GCHandle.Alloc(list);

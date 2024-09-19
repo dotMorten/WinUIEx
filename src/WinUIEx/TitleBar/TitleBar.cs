@@ -10,7 +10,7 @@ namespace WinUIEx;
 /// <summary>
 /// TitleBar control.
 /// </summary>
-public class TitleBar : Control
+public partial class TitleBar : Control
 {
     private double m_compactModeThresholdWidth = 0.0;
     const string s_leftPaddingColumnName = "LeftPaddingColumn";

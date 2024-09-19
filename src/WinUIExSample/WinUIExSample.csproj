@@ -1,12 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0-windows10.0.19041.0</TargetFramework>
+    <TargetFramework>net8.0-windows10.0.22621.0</TargetFramework>
     <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
     <RootNamespace>WinUIExSample</RootNamespace>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <Platforms>x86;x64;ARM64</Platforms>
-    <RuntimeIdentifiers>win10-x86;win10-x64;win10-arm64</RuntimeIdentifiers>
+    <RuntimeIdentifiers Condition="$([MSBuild]::GetTargetFrameworkVersion('$(TargetFramework)')) &gt;= 8">win-x86;win-x64;win-arm64</RuntimeIdentifiers>
+    <RuntimeIdentifiers Condition="$([MSBuild]::GetTargetFrameworkVersion('$(TargetFramework)')) &lt; 8">win10-x86;win10-x64;win10-arm64</RuntimeIdentifiers>
     <PublishProfile>win10-$(Platform).pubxml</PublishProfile>
     <UseWinUI>true</UseWinUI>
     <EnableMsixTooling>true</EnableMsixTooling>
@@ -14,6 +15,8 @@
     <LangVersion>11</LangVersion>
     <!-- Uncomment to run unpackaged: -->
     <!--<WindowsPackageType>None</WindowsPackageType>-->
+    <WindowsSdkPackageVersion>10.0.22621.38</WindowsSdkPackageVersion>
+    <PublishAot>true</PublishAot>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)'=='Experimental'">
@@ -29,8 +32,9 @@
 
   <Import Project="..\Dependencies.targets" Condition="'$(WinAppSDKVersion)'==''" />
   <ItemGroup>
-    <PackageReference Include="Microsoft.WindowsAppSDK" Version="$(WinAppSDKVersion)" />
-    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="$(WinAppSDKToolsVersion)" />
+      <PackageReference Include="Microsoft.WindowsAppSDK" Version="$(WinAppSDKVersion)" />
+      <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="$(WinAppSDKToolsVersion)" />
+      <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.1.3" />
     <Manifest Include="$(ApplicationManifest)" />
   </ItemGroup>
 

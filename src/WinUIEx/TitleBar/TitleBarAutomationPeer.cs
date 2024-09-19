@@ -5,7 +5,7 @@ namespace WinUIEx;
 /// <summary>
 /// Automation peer for the <see cref="TitleBar"/> control.
 /// </summary>
-public class TitleBarAutomationPeer : FrameworkElementAutomationPeer
+public partial class TitleBarAutomationPeer : FrameworkElementAutomationPeer
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="TitleBar"/> class.

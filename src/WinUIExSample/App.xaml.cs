@@ -43,9 +43,8 @@ namespace WinUIExSample
         /// <param name="args">Details about the launch request and process.</param>
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
-            // m_window = new MainWindow();
-            // m_window.Activate();
-            var splash = new SplashScreen(typeof(MainWindow));
+            var window = new MainWindow();
+            var splash = new SplashScreen(window);
             splash.Completed += (s, e) => m_window = (WindowEx)e;
         }
 

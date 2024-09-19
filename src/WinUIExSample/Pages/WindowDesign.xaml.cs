@@ -82,7 +82,7 @@ namespace WinUIExSample.Pages
             }
         }
 
-        private class ColorAnimatedBackdrop : CompositionBrushBackdrop
+        private partial class ColorAnimatedBackdrop : CompositionBrushBackdrop
         {
             protected override Windows.UI.Composition.CompositionBrush CreateBrush(Windows.UI.Composition.Compositor compositor)
             {
@@ -101,7 +101,7 @@ namespace WinUIExSample.Pages
             }
         }
 
-        private class BlurredBackdrop : CompositionBrushBackdrop
+        private partial class BlurredBackdrop : CompositionBrushBackdrop
         {
             protected override Windows.UI.Composition.CompositionBrush CreateBrush(Windows.UI.Composition.Compositor compositor)
                 => compositor.CreateHostBackdropBrush();

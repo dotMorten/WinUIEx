@@ -17,8 +17,8 @@
     <Authors>Morten Nielsen - https://xaml.dev</Authors>
     <Company>Morten Nielsen - https://xaml.dev</Company>
     <PackageIcon>logo.png</PackageIcon>
-    <Version>2.4.0</Version>
-    <PackageValidationBaselineVersion>2.3.4</PackageValidationBaselineVersion>
+    <Version>2.4.1</Version>
+    <!--<PackageValidationBaselineVersion>2.3.4</PackageValidationBaselineVersion>-->
   </PropertyGroup>
 
   <ItemGroup Condition="'$(PackageId)'!=''">

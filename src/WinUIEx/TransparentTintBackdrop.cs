@@ -12,7 +12,7 @@ namespace WinUIEx
     /// <summary>
     /// A custom backdrop that make the window completely transparent.
     /// </summary>
-    public class TransparentTintBackdrop : CompositionBrushBackdrop
+    public partial class TransparentTintBackdrop : CompositionBrushBackdrop
     {
         private WindowMessageMonitor? monitor;
         private Windows.UI.Composition.CompositionColorBrush? brush;

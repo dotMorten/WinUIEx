@@ -124,7 +124,7 @@ protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs ar
 Lastly, override OnLoading, to create some long-running setup work - once this method completes, the splash screen will close and the window in the type parameter will launch.
 
 Example:
-```
+```cs
 protected override async Task OnLoading()
 {
   //TODO: Do some actual work

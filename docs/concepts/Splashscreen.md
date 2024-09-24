@@ -87,20 +87,20 @@ Before:
 ```cs
 public sealed partial class SplashScreen : Window
 {
-public SplashScreen()
-{
+  public SplashScreen()
+  {
     this.InitializeComponent();
-}
+  }
 }
 ```
 After:
 ```cs
 public sealed partial class SplashScreen : WinUIEx.SplashScreen
 {
-public SplashScreen(Type window) : base(window)
-{
+  public SplashScreen(Type window) : base(window)
+  {
     this.InitializeComponent();
-}
+  }
 }
 ```
 
@@ -108,16 +108,16 @@ Next in App.xaml.cs, change OnLaunched from:
 ```cs
 protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
 {
-    m_window = new MainWindow();
-    m_window.Activate();
+  m_window = new MainWindow();
+  m_window.Activate();
 }
 ```
 To:
 ```cs
 protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
 {
-     var splash = new SplashScreen(typeof(MainWindow));
-     splash.Completed += (s, e) => m_window = e;
+  var splash = new SplashScreen(typeof(MainWindow));
+  splash.Completed += (s, e) => m_window = e;
 }
 ```
 
@@ -127,12 +127,12 @@ Example:
 ```
 protected override async Task OnLoading()
 {
-     //TODO: Do some actual work
-     for (int i = 0; i < 100; i+=5)
-     {
-         statusText.Text = $"Loading {i}%...";
-         progressBar.Value = i;
-         await Task.Delay(50);
-     }
+  //TODO: Do some actual work
+  for (int i = 0; i < 100; i+=5)
+  {
+    statusText.Text = $"Loading {i}%...";
+    progressBar.Value = i;
+    await Task.Delay(50);
+  }
 }
 ```

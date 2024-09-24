@@ -25,6 +25,7 @@ namespace WinUIExSample
         {
             if (WebAuthenticator.CheckOAuthRedirectionActivation())
                 return;
+            fss = FastSplashScreen.ShowDefaultSplashScreen();
             this.InitializeComponent();
             int length = 0;
             var sb = new System.Text.StringBuilder(0);
@@ -34,8 +35,9 @@ namespace WinUIExSample
                 // Not a packaged app. Configure file-based persistence instead
                 WinUIEx.WindowManager.PersistenceStorage = new FilePersistence("WinUIExPersistence.json");
             }
+
         }
-        
+        FastSplashScreen fss;
         /// <summary>
         /// Invoked when the application is launched normally by the end user.  Other entry points
         /// will be used such as when the application is launched to open a specific file.
@@ -45,7 +47,18 @@ namespace WinUIExSample
         {
             var window = new MainWindow();
             var splash = new SplashScreen(window);
-            splash.Completed += (s, e) => m_window = (WindowEx)e;
+            splash.Completed += (s, e) =>
+            {
+                m_window = (WindowEx)e;
+            };
+            splash.Activated += Splash_Activated;
+        }
+
+        private void Splash_Activated(object sender, WindowActivatedEventArgs args)
+        {
+            ((Window)sender).Activated -= Splash_Activated;
+            fss?.Hide(TimeSpan.FromSeconds(1));
+            fss = null;
         }
 
         private WindowEx m_window;

@@ -30,7 +30,6 @@ namespace WinUIEx
         private TimeSpan tsFadeoutDuration;
         private DateTime tsFadeoutEnd;
         Windows.Win32.Foundation.HWND hWndSplash = Windows.Win32.Foundation.HWND.Null;
-        // private Windows.Win32.UI.WindowsAndMessaging.WNDPROC delegateWndProc;
         private Windows.Win32.Graphics.Gdi.HGDIOBJ hBitmap = Windows.Win32.Graphics.Gdi.HGDIOBJ.Null;
         private nuint initToken = 0;
 #if MEDIAPLAYER
@@ -309,10 +308,6 @@ namespace WinUIEx
             else
             {
                 double nProgress = (tsFadeoutEnd - dtNow).TotalMilliseconds / tsFadeoutDuration.TotalMilliseconds;
-                // BLENDFUNCTION bf = new BLENDFUNCTION();
-                // bf.BlendOp = AC_SRC_OVER;
-                // bf.AlphaFormat = AC_SRC_ALPHA;
-                // bf.SourceConstantAlpha = (byte)(255 * nProgress);
                 var bf = new Windows.Win32.Graphics.Gdi.BLENDFUNCTION()
                 {
                     BlendOp = AC_SRC_OVER,
@@ -355,7 +350,6 @@ namespace WinUIEx
                 hDCMem, ptSrc, new Windows.Win32.Foundation.COLORREF(0), bf, UPDATE_LAYERED_WINDOW_FLAGS.ULW_ALPHA);
 
             PInvoke.ReleaseDC(Windows.Win32.Foundation.HWND.Null, hDCScreen);
-
         }
 
         private unsafe void CenterToScreen(IntPtr hWnd)

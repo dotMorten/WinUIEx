@@ -1,0 +1,993 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class WindowManager
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class WindowManager
+   ">
+    <meta name="generator" content="docfx 2.59.4.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/logo.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="WinUIEx.WindowManager">
+  
+  
+  <h1 id="WinUIEx_WindowManager" data-uid="WinUIEx.WindowManager" class="text-break">Class WindowManager
+  </h1>
+  <div class="markdown level0 summary"><p>Manages Window size, and ensures window correctly resizes during DPI changes to keep consistent
+DPI-independent sizing.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><span class="xref">WindowManager</span></div>
+  </div>
+  <div class="implements">
+    <h5>Implements</h5>
+    <div><span class="xref">System.IDisposable</span></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetHashCode()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetType()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.MemberwiseClone()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.ToString()</span>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="WinUIEx.html">WinUIEx</a></h6>
+  <h6><strong>Assembly</strong>: WinUIEx.dll</h6>
+  <h5 id="WinUIEx_WindowManager_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class WindowManager : IDisposable</code></pre>
+  </div>
+  <h3 id="properties">Properties
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/dotMorten/WinUIEx/new/main/docs/api_overwrites/new?filename=WinUIEx_WindowManager_AppWindow.md&amp;value=---%0Auid%3A%20WinUIEx.WindowManager.AppWindow%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/dotMorten/WinUIEx/blob/main/src/WinUIEx/WindowManager.cs/#L135">View Source</a>
+  </span>
+  <a id="WinUIEx_WindowManager_AppWindow_" data-uid="WinUIEx.WindowManager.AppWindow*"></a>
+  <h4 id="WinUIEx_WindowManager_AppWindow" data-uid="WinUIEx.WindowManager.AppWindow">AppWindow</h4>
+  <div class="markdown level1 summary"><p>Gets a reference to the AppWindow for the app</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public UI.Windowing.AppWindow AppWindow { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Microsoft.UI.Windowing.AppWindow</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/dotMorten/WinUIEx/new/main/docs/api_overwrites/new?filename=WinUIEx_WindowManager_Height.md&amp;value=---%0Auid%3A%20WinUIEx.WindowManager.Height%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/dotMorten/WinUIEx/blob/main/src/WinUIEx/WindowManager.cs/#L155">View Source</a>
+  </span>
+  <a id="WinUIEx_WindowManager_Height_" data-uid="WinUIEx.WindowManager.Height*"></a>
+  <h4 id="WinUIEx_WindowManager_Height" data-uid="WinUIEx.WindowManager.Height">Height</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the height of the window.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double Height { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Double</span></td>
+        <td><p>The window height in device independent pixels.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="WinUIEx_WindowManager_Height_seealso">See Also</h5>
+  <div class="seealso">
+      <div><a class="xref" href="WinUIEx.WindowManager.html#WinUIEx_WindowManager_MinHeight">MinHeight</a></div>
+      <div><a class="xref" href="WinUIEx.WindowManager.html#WinUIEx_WindowManager_MaxHeight">MaxHeight</a></div>
+  </div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/dotMorten/WinUIEx/new/main/docs/api_overwrites/new?filename=WinUIEx_WindowManager_IsAlwaysOnTop.md&amp;value=---%0Auid%3A%20WinUIEx.WindowManager.IsAlwaysOnTop%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/dotMorten/WinUIEx/blob/main/src/WinUIEx/WindowManager.cs/#L579">View Source</a>
+  </span>
+  <a id="WinUIEx_WindowManager_IsAlwaysOnTop_" data-uid="WinUIEx.WindowManager.IsAlwaysOnTop*"></a>
+  <h4 id="WinUIEx_WindowManager_IsAlwaysOnTop" data-uid="WinUIEx.WindowManager.IsAlwaysOnTop">IsAlwaysOnTop</h4>
+  <div class="markdown level1 summary"><p>Gets or sets a value indicating whether this window is always on top.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsAlwaysOnTop { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/dotMorten/WinUIEx/new/main/docs/api_overwrites/new?filename=WinUIEx_WindowManager_IsMaximizable.md&amp;value=---%0Auid%3A%20WinUIEx.WindowManager.IsMaximizable%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/dotMorten/WinUIEx/blob/main/src/WinUIEx/WindowManager.cs/#L561">View Source</a>
+  </span>
+  <a id="WinUIEx_WindowManager_IsMaximizable_" data-uid="WinUIEx.WindowManager.IsMaximizable*"></a>
+  <h4 id="WinUIEx_WindowManager_IsMaximizable" data-uid="WinUIEx.WindowManager.IsMaximizable">IsMaximizable</h4>
+  <div class="markdown level1 summary"><p>Gets or sets a value indicating whether the maximimze button is visible</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsMaximizable { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/dotMorten/WinUIEx/new/main/docs/api_overwrites/new?filename=WinUIEx_WindowManager_IsMinimizable.md&amp;value=---%0Auid%3A%20WinUIEx.WindowManager.IsMinimizable%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/dotMorten/WinUIEx/blob/main/src/WinUIEx/WindowManager.cs/#L552">View Source</a>
+  </span>
+  <a id="WinUIEx_WindowManager_IsMinimizable_" data-uid="WinUIEx.WindowManager.IsMinimizable*"></a>
+  <h4 id="WinUIEx_WindowManager_IsMinimizable" data-uid="WinUIEx.WindowManager.IsMinimizable">IsMinimizable</h4>
+  <div class="markdown level1 summary"><p>Gets or sets a value indicating whether the minimize button is visible</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsMinimizable { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/dotMorten/WinUIEx/new/main/docs/api_overwrites/new?filename=WinUIEx_WindowManager_IsResizable.md&amp;value=---%0Auid%3A%20WinUIEx.WindowManager.IsResizable%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/dotMorten/WinUIEx/blob/main/src/WinUIEx/WindowManager.cs/#L570">View Source</a>
+  </span>
+  <a id="WinUIEx_WindowManager_IsResizable_" data-uid="WinUIEx.WindowManager.IsResizable*"></a>
+  <h4 id="WinUIEx_WindowManager_IsResizable" data-uid="WinUIEx.WindowManager.IsResizable">IsResizable</h4>
+  <div class="markdown level1 summary"><p>Gets or sets a value indicating whether the window can be resized.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsResizable { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/dotMorten/WinUIEx/new/main/docs/api_overwrites/new?filename=WinUIEx_WindowManager_IsTitleBarVisible.md&amp;value=---%0Auid%3A%20WinUIEx.WindowManager.IsTitleBarVisible%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/dotMorten/WinUIEx/blob/main/src/WinUIEx/WindowManager.cs/#L539">View Source</a>
+  </span>
+  <a id="WinUIEx_WindowManager_IsTitleBarVisible_" data-uid="WinUIEx.WindowManager.IsTitleBarVisible*"></a>
+  <h4 id="WinUIEx_WindowManager_IsTitleBarVisible" data-uid="WinUIEx.WindowManager.IsTitleBarVisible">IsTitleBarVisible</h4>
+  <div class="markdown level1 summary"><p>Gets or sets a value indicating whether the default title bar is visible or not.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsTitleBarVisible { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/dotMorten/WinUIEx/new/main/docs/api_overwrites/new?filename=WinUIEx_WindowManager_MaxHeight.md&amp;value=---%0Auid%3A%20WinUIEx.WindowManager.MaxHeight%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/dotMorten/WinUIEx/blob/main/src/WinUIEx/WindowManager.cs/#L231">View Source</a>
+  </span>
+  <a id="WinUIEx_WindowManager_MaxHeight_" data-uid="WinUIEx.WindowManager.MaxHeight*"></a>
+  <h4 id="WinUIEx_WindowManager_MaxHeight" data-uid="WinUIEx.WindowManager.MaxHeight">MaxHeight</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the maximum height of this window</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double MaxHeight { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Double</span></td>
+        <td><p>The maximum window height in device independent pixels.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="WinUIEx_WindowManager_MaxHeight_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The default is 0, which means no limit. If the value is less than <a class="xref" href="WinUIEx.WindowManager.html#WinUIEx_WindowManager_MinHeight">MinHeight</a>, the <code>MinHeight</code> will also be used as the maximum height.</p>
+</div>
+  <h5 id="WinUIEx_WindowManager_MaxHeight_seealso">See Also</h5>
+  <div class="seealso">
+      <div><a class="xref" href="WinUIEx.WindowManager.html#WinUIEx_WindowManager_MaxWidth">MaxWidth</a></div>
+      <div><a class="xref" href="WinUIEx.WindowManager.html#WinUIEx_WindowManager_MinHeight">MinHeight</a></div>
+  </div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/dotMorten/WinUIEx/new/main/docs/api_overwrites/new?filename=WinUIEx_WindowManager_MaxWidth.md&amp;value=---%0Auid%3A%20WinUIEx.WindowManager.MaxWidth%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/dotMorten/WinUIEx/blob/main/src/WinUIEx/WindowManager.cs/#L210">View Source</a>
+  </span>
+  <a id="WinUIEx_WindowManager_MaxWidth_" data-uid="WinUIEx.WindowManager.MaxWidth*"></a>
+  <h4 id="WinUIEx_WindowManager_MaxWidth" data-uid="WinUIEx.WindowManager.MaxWidth">MaxWidth</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the maximum width of this window</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double MaxWidth { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Double</span></td>
+        <td><p>The maximum window width in device independent pixels.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="WinUIEx_WindowManager_MaxWidth_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The default is 0, which means no limit. If the value is less than <a class="xref" href="WinUIEx.WindowManager.html#WinUIEx_WindowManager_MinWidth">MinWidth</a>, the <code>MinWidth</code> will also be used as the maximum width.</p>
+</div>
+  <h5 id="WinUIEx_WindowManager_MaxWidth_seealso">See Also</h5>
+  <div class="seealso">
+      <div><a class="xref" href="WinUIEx.WindowManager.html#WinUIEx_WindowManager_MaxHeight">MaxHeight</a></div>
+      <div><a class="xref" href="WinUIEx.WindowManager.html#WinUIEx_WindowManager_MinWidth">MinWidth</a></div>
+  </div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/dotMorten/WinUIEx/new/main/docs/api_overwrites/new?filename=WinUIEx_WindowManager_MinHeight.md&amp;value=---%0Auid%3A%20WinUIEx.WindowManager.MinHeight%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/dotMorten/WinUIEx/blob/main/src/WinUIEx/WindowManager.cs/#L190">View Source</a>
+  </span>
+  <a id="WinUIEx_WindowManager_MinHeight_" data-uid="WinUIEx.WindowManager.MinHeight*"></a>
+  <h4 id="WinUIEx_WindowManager_MinHeight" data-uid="WinUIEx.WindowManager.MinHeight">MinHeight</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the minimum height of this window</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double MinHeight { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Double</span></td>
+        <td><p>The minimum window height in device independent pixels.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="WinUIEx_WindowManager_MinHeight_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>A window is currently set to a minimum of 39 pixels.</p>
+</div>
+  <h5 id="WinUIEx_WindowManager_MinHeight_seealso">See Also</h5>
+  <div class="seealso">
+      <div><a class="xref" href="WinUIEx.WindowManager.html#WinUIEx_WindowManager_MaxHeight">MaxHeight</a></div>
+      <div><a class="xref" href="WinUIEx.WindowManager.html#WinUIEx_WindowManager_MinWidth">MinWidth</a></div>
+  </div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/dotMorten/WinUIEx/new/main/docs/api_overwrites/new?filename=WinUIEx_WindowManager_MinWidth.md&amp;value=---%0Auid%3A%20WinUIEx.WindowManager.MinWidth%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/dotMorten/WinUIEx/blob/main/src/WinUIEx/WindowManager.cs/#L170">View Source</a>
+  </span>
+  <a id="WinUIEx_WindowManager_MinWidth_" data-uid="WinUIEx.WindowManager.MinWidth*"></a>
+  <h4 id="WinUIEx_WindowManager_MinWidth" data-uid="WinUIEx.WindowManager.MinWidth">MinWidth</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the minimum width of this window</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double MinWidth { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Double</span></td>
+        <td><p>The minimum window width in device independent pixels.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="WinUIEx_WindowManager_MinWidth_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>A window is currently set to a minimum of 139 pixels.</p>
+</div>
+  <h5 id="WinUIEx_WindowManager_MinWidth_seealso">See Also</h5>
+  <div class="seealso">
+      <div><a class="xref" href="WinUIEx.WindowManager.html#WinUIEx_WindowManager_MaxWidth">MaxWidth</a></div>
+      <div><a class="xref" href="WinUIEx.WindowManager.html#WinUIEx_WindowManager_MinHeight">MinHeight</a></div>
+  </div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/dotMorten/WinUIEx/new/main/docs/api_overwrites/new?filename=WinUIEx_WindowManager_PersistenceId.md&amp;value=---%0Auid%3A%20WinUIEx.WindowManager.PersistenceId%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/dotMorten/WinUIEx/blob/main/src/WinUIEx/WindowManager.cs/#L393">View Source</a>
+  </span>
+  <a id="WinUIEx_WindowManager_PersistenceId_" data-uid="WinUIEx.WindowManager.PersistenceId*"></a>
+  <h4 id="WinUIEx_WindowManager_PersistenceId" data-uid="WinUIEx.WindowManager.PersistenceId">PersistenceId</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string PersistenceId { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="WinUIEx_WindowManager_PersistenceId_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The ID must be set before the window activates. The window size and position
+will only be restored if the monitor layout hasn&apos;t changed between application settings.
+The property uses ApplicationData storage, and therefore is currently only functional for
+packaged applications.
+By default the property uses <see cref="!:ApplicationData"></see> storage, and therefore is currently only functional for
+packaged applications. If you&apos;re using an unpackaged application, you must also set the <a class="xref" href="WinUIEx.WindowManager.html#WinUIEx_WindowManager_PersistenceStorage">PersistenceStorage</a>
+property and manage persisting this across application settings.</p>
+</div>
+  <h5 id="WinUIEx_WindowManager_PersistenceId_seealso">See Also</h5>
+  <div class="seealso">
+      <div><a class="xref" href="WinUIEx.WindowManager.html#WinUIEx_WindowManager_PersistenceStorage">PersistenceStorage</a></div>
+  </div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/dotMorten/WinUIEx/new/main/docs/api_overwrites/new?filename=WinUIEx_WindowManager_PersistenceStorage.md&amp;value=---%0Auid%3A%20WinUIEx.WindowManager.PersistenceStorage%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/dotMorten/WinUIEx/blob/main/src/WinUIEx/WindowManager.cs/#L407">View Source</a>
+  </span>
+  <a id="WinUIEx_WindowManager_PersistenceStorage_" data-uid="WinUIEx.WindowManager.PersistenceStorage*"></a>
+  <h4 id="WinUIEx_WindowManager_PersistenceStorage" data-uid="WinUIEx.WindowManager.PersistenceStorage">PersistenceStorage</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the persistence storage for maintaining window settings across application settings.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IDictionary&lt;string, object&gt; PersistenceStorage { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IDictionary</span>&lt;<span class="xref">System.String</span>, <span class="xref">System.Object</span>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="WinUIEx_WindowManager_PersistenceStorage_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>For a packaged application, this will be initialized automatically for you, and saved with the application identity using <see cref="!:ApplicationData"></see>.
+However for an unpackaged application, you will need to set this and serialize the property to/from disk between
+application sessions. The provided dictionary is automatically written to when the window closes, and should be initialized
+before any window with persistence opens.</p>
+</div>
+  <h5 id="WinUIEx_WindowManager_PersistenceStorage_seealso">See Also</h5>
+  <div class="seealso">
+      <div><a class="xref" href="WinUIEx.WindowManager.html#WinUIEx_WindowManager_PersistenceId">PersistenceId</a></div>
+  </div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/dotMorten/WinUIEx/new/main/docs/api_overwrites/new?filename=WinUIEx_WindowManager_PresenterKind.md&amp;value=---%0Auid%3A%20WinUIEx.WindowManager.PresenterKind%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/dotMorten/WinUIEx/blob/main/src/WinUIEx/WindowManager.cs/#L590">View Source</a>
+  </span>
+  <a id="WinUIEx_WindowManager_PresenterKind_" data-uid="WinUIEx.WindowManager.PresenterKind*"></a>
+  <h4 id="WinUIEx_WindowManager_PresenterKind" data-uid="WinUIEx.WindowManager.PresenterKind">PresenterKind</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the presenter kind for the current window</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public UI.Windowing.AppWindowPresenterKind PresenterKind { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Microsoft.UI.Windowing.AppWindowPresenterKind</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="WinUIEx_WindowManager_PresenterKind_seealso">See Also</h5>
+  <div class="seealso">
+      <div><a class="xref" href="WinUIEx.WindowManager.html#WinUIEx_WindowManager_PresenterChanged">PresenterChanged</a></div>
+  </div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/dotMorten/WinUIEx/new/main/docs/api_overwrites/new?filename=WinUIEx_WindowManager_Width.md&amp;value=---%0Auid%3A%20WinUIEx.WindowManager.Width%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/dotMorten/WinUIEx/blob/main/src/WinUIEx/WindowManager.cs/#L143">View Source</a>
+  </span>
+  <a id="WinUIEx_WindowManager_Width_" data-uid="WinUIEx.WindowManager.Width*"></a>
+  <h4 id="WinUIEx_WindowManager_Width" data-uid="WinUIEx.WindowManager.Width">Width</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the width of the window.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double Width { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Double</span></td>
+        <td><p>The window width in device independent pixels.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="WinUIEx_WindowManager_Width_seealso">See Also</h5>
+  <div class="seealso">
+      <div><a class="xref" href="WinUIEx.WindowManager.html#WinUIEx_WindowManager_MinWidth">MinWidth</a></div>
+      <div><a class="xref" href="WinUIEx.WindowManager.html#WinUIEx_WindowManager_MaxWidth">MaxWidth</a></div>
+  </div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/dotMorten/WinUIEx/new/main/docs/api_overwrites/new?filename=WinUIEx_WindowManager_WindowState.md&amp;value=---%0Auid%3A%20WinUIEx.WindowManager.WindowState%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/dotMorten/WinUIEx/blob/main/src/WinUIEx/WindowManager.cs/#L331">View Source</a>
+  </span>
+  <a id="WinUIEx_WindowManager_WindowState_" data-uid="WinUIEx.WindowManager.WindowState*"></a>
+  <h4 id="WinUIEx_WindowManager_WindowState" data-uid="WinUIEx.WindowManager.WindowState">WindowState</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the current window state.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public WindowState WindowState { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="WinUIEx.WindowState.html">WindowState</a></td>
+        <td><p>A <a class="xref" href="WinUIEx.WindowManager.html#WinUIEx_WindowManager_WindowState">WindowState</a> that determines whether a window is restored, minimized, or maximized.
+The default is <a class="xref" href="WinUIEx.WindowState.html#WinUIEx_WindowState_Normal">Normal</a> (restored).</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="WinUIEx_WindowManager_WindowState_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p><p>When the <a class="xref" href="WinUIEx.WindowManager.html#WinUIEx_WindowManager_WindowState">WindowState</a> property is changed, <a class="xref" href="WinUIEx.WindowManager.html#WinUIEx_WindowManager_WindowStateChanged">WindowStateChanged</a> is raised.</p>
+<div class="NOTE"><h5>note</h5><p>
+This property only has affect when using the OverlappedPresenter.
+</p></div></p>
+</div>
+  <h5 id="WinUIEx_WindowManager_WindowState_seealso">See Also</h5>
+  <div class="seealso">
+      <div><a class="xref" href="WinUIEx.WindowManager.html#WinUIEx_WindowManager_WindowStateChanged">WindowStateChanged</a></div>
+      <div><a class="xref" href="WinUIEx.WindowManager.html#WinUIEx_WindowManager_PresenterKind">PresenterKind</a></div>
+  </div>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/dotMorten/WinUIEx/new/main/docs/api_overwrites/new?filename=WinUIEx_WindowManager_Dispose.md&amp;value=---%0Auid%3A%20WinUIEx.WindowManager.Dispose%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/dotMorten/WinUIEx/blob/main/src/WinUIEx/WindowManager.cs/#L114">View Source</a>
+  </span>
+  <a id="WinUIEx_WindowManager_Dispose_" data-uid="WinUIEx.WindowManager.Dispose*"></a>
+  <h4 id="WinUIEx_WindowManager_Dispose" data-uid="WinUIEx.WindowManager.Dispose">Dispose()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Dispose()</code></pre>
+  </div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/dotMorten/WinUIEx/new/main/docs/api_overwrites/new?filename=WinUIEx_WindowManager_Finalize.md&amp;value=---%0Auid%3A%20WinUIEx.WindowManager.Finalize%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/dotMorten/WinUIEx/blob/main/src/WinUIEx/WindowManager.cs/#L109">View Source</a>
+  </span>
+  <a id="WinUIEx_WindowManager_Finalize_" data-uid="WinUIEx.WindowManager.Finalize*"></a>
+  <h4 id="WinUIEx_WindowManager_Finalize" data-uid="WinUIEx.WindowManager.Finalize">Finalize()</h4>
+  <div class="markdown level1 summary"><p>Finalizer</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected void Finalize()</code></pre>
+  </div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/dotMorten/WinUIEx/new/main/docs/api_overwrites/new?filename=WinUIEx_WindowManager_Get_Window_.md&amp;value=---%0Auid%3A%20WinUIEx.WindowManager.Get(Window)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/dotMorten/WinUIEx/blob/main/src/WinUIEx/WindowManager.cs/#L45">View Source</a>
+  </span>
+  <a id="WinUIEx_WindowManager_Get_" data-uid="WinUIEx.WindowManager.Get*"></a>
+  <h4 id="WinUIEx_WindowManager_Get_Window_" data-uid="WinUIEx.WindowManager.Get(Window)">Get(Window)</h4>
+  <div class="markdown level1 summary"><p>Gets (or creates) a window manager for the specific window.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static WindowManager Get(Window window)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Window</span></td>
+        <td><span class="parametername">window</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="WinUIEx.WindowManager.html">WindowManager</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="events">Events
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/dotMorten/WinUIEx/new/main/docs/api_overwrites/new?filename=WinUIEx_WindowManager_PositionChanged.md&amp;value=---%0Auid%3A%20WinUIEx.WindowManager.PositionChanged%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/dotMorten/WinUIEx/blob/main/src/WinUIEx/WindowManager.cs/#L605">View Source</a>
+  </span>
+  <h4 id="WinUIEx_WindowManager_PositionChanged" data-uid="WinUIEx.WindowManager.PositionChanged">PositionChanged</h4>
+  <div class="markdown level1 summary"><p>Raised if the window position changes.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public event EventHandler&lt;Graphics.PointInt32&gt; PositionChanged</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.EventHandler</span>&lt;<span class="xref">Windows.Graphics.PointInt32</span>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/dotMorten/WinUIEx/new/main/docs/api_overwrites/new?filename=WinUIEx_WindowManager_PresenterChanged.md&amp;value=---%0Auid%3A%20WinUIEx.WindowManager.PresenterChanged%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/dotMorten/WinUIEx/blob/main/src/WinUIEx/WindowManager.cs/#L610">View Source</a>
+  </span>
+  <h4 id="WinUIEx_WindowManager_PresenterChanged" data-uid="WinUIEx.WindowManager.PresenterChanged">PresenterChanged</h4>
+  <div class="markdown level1 summary"><p>Raised if the presenter for the window changes.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public event EventHandler&lt;AppWindowPresenter&gt; PresenterChanged</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.EventHandler</span>&lt;<span class="xref">AppWindowPresenter</span>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/dotMorten/WinUIEx/new/main/docs/api_overwrites/new?filename=WinUIEx_WindowManager_WindowMessageReceived.md&amp;value=---%0Auid%3A%20WinUIEx.WindowManager.WindowMessageReceived%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/dotMorten/WinUIEx/blob/main/src/WinUIEx/WindowManager.cs/#L363">View Source</a>
+  </span>
+  <h4 id="WinUIEx_WindowManager_WindowMessageReceived" data-uid="WinUIEx.WindowManager.WindowMessageReceived">WindowMessageReceived</h4>
+  <div class="markdown level1 summary"><p>Event raised when a windows message is received.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public event EventHandler&lt;WindowMessageEventArgs&gt; WindowMessageReceived</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.EventHandler</span>&lt;<a class="xref" href="WinUIEx.Messaging.WindowMessageEventArgs.html">WindowMessageEventArgs</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/dotMorten/WinUIEx/new/main/docs/api_overwrites/new?filename=WinUIEx_WindowManager_WindowStateChanged.md&amp;value=---%0Auid%3A%20WinUIEx.WindowManager.WindowStateChanged%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/dotMorten/WinUIEx/blob/main/src/WinUIEx/WindowManager.cs/#L358">View Source</a>
+  </span>
+  <h4 id="WinUIEx_WindowManager_WindowStateChanged" data-uid="WinUIEx.WindowManager.WindowStateChanged">WindowStateChanged</h4>
+  <div class="markdown level1 summary"><p>Occurs when the window&apos;s <a class="xref" href="WinUIEx.WindowManager.html#WinUIEx_WindowManager_WindowState">WindowState</a> property changes.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public event EventHandler&lt;WindowState&gt; WindowStateChanged</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.EventHandler</span>&lt;<a class="xref" href="WinUIEx.WindowState.html">WindowState</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="WinUIEx_WindowManager_WindowStateChanged_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><div class="NOTE"><h5>note</h5><p>
+This event only has affect when using the OverlappedPresenter.
+</p></div>
+</div>
+  <h5 id="WinUIEx_WindowManager_WindowStateChanged_seealso">See Also</h5>
+  <div class="seealso">
+      <div><a class="xref" href="WinUIEx.WindowManager.html#WinUIEx_WindowManager_WindowState">WindowState</a></div>
+      <div><a class="xref" href="WinUIEx.WindowManager.html#WinUIEx_WindowManager_PresenterChanged">PresenterChanged</a></div>
+  </div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/dotMorten/WinUIEx/new/main/docs/api_overwrites/new?filename=WinUIEx_WindowManager_ZOrderChanged.md&amp;value=---%0Auid%3A%20WinUIEx.WindowManager.ZOrderChanged%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/dotMorten/WinUIEx/blob/main/src/WinUIEx/WindowManager.cs/#L615">View Source</a>
+  </span>
+  <h4 id="WinUIEx_WindowManager_ZOrderChanged" data-uid="WinUIEx.WindowManager.ZOrderChanged">ZOrderChanged</h4>
+  <div class="markdown level1 summary"><p>Raised if the Z order of the window changes.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public event EventHandler&lt;ZOrderInfo&gt; ZOrderChanged</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.EventHandler</span>&lt;<a class="xref" href="WinUIEx.ZOrderInfo.html">ZOrderInfo</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <span class="xref">System.IDisposable</span>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/dotMorten/WinUIEx/new/main/docs/api_overwrites/new?filename=WinUIEx_WindowManager.md&amp;value=---%0Auid%3A%20WinUIEx.WindowManager%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/dotMorten/WinUIEx/blob/main/src/WinUIEx/WindowManager.cs/#L18" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

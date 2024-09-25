@@ -1,0 +1,594 @@
+{
+  "homepages": [],
+  "source_base_path": "D:/a/WinUIEx/WinUIEx/docs",
+  "xrefmap": "xrefmap.yml",
+  "files": [
+    {
+      "type": "Resource",
+      "source_relative_path": "../artifacts/docs/api/omd.html",
+      "output": {
+        "resource": {
+          "relative_path": "api/omd.html"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "log_codes": [
+        "InvalidFileLink"
+      ],
+      "type": "Conceptual",
+      "source_relative_path": "api/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "api/index.html",
+          "hash": "dcwfClZdykDjwUnVq5LSdEeN/8dYLacvne9aLjIN4ho="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "concepts/CustomBackdrops.md",
+      "output": {
+        ".html": {
+          "relative_path": "concepts/CustomBackdrops.html",
+          "hash": "X6up9RxdtIqmL3YMzapdOdODh+1RllgnccX70eRPVxM="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "concepts/HwndExtensions.md",
+      "output": {
+        ".html": {
+          "relative_path": "concepts/HwndExtensions.html",
+          "hash": "f1V7kAEsyLcSoP8nI7xhpi6tprh/bPUzXs4E0zwI/mc="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "concepts/Maui.md",
+      "output": {
+        ".html": {
+          "relative_path": "concepts/Maui.html",
+          "hash": "Ujw1aPnXOQK1dBttHQpkgmW1zlLUpvXK//pbwb/BYPk="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "concepts/MediaPlayer.md",
+      "output": {
+        ".html": {
+          "relative_path": "concepts/MediaPlayer.html",
+          "hash": "2hW833R1fSYefP7J7MAliwVtCsJ2oUfZdEf/ERjz5Mk="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "concepts/Splashscreen.md",
+      "output": {
+        ".html": {
+          "relative_path": "concepts/Splashscreen.html",
+          "hash": "6RFvXqh+aVS27fad45CJif8E+XWxXI9TCZ6sj4wVDCs="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "concepts/WebAuthenticator.md",
+      "output": {
+        ".html": {
+          "relative_path": "concepts/WebAuthenticator.html",
+          "hash": "7ZLNQwg2VXIGrA+P37GwjQ4Ppz0ETWjHPck24e/OsYM="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "concepts/WindowEx.md",
+      "output": {
+        ".html": {
+          "relative_path": "concepts/WindowEx.html",
+          "hash": "nUKEyxCBLBC5a7b0uDOr1LTcVge/LuyNHzi7mFLOkxM="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "concepts/WindowExtensions.md",
+      "output": {
+        ".html": {
+          "relative_path": "concepts/WindowExtensions.html",
+          "hash": "jlxyJPyD7pn6+gxS6p0Ec5RckO0Iw8kgjt3jxpHKTqg="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "concepts/WindowManager.md",
+      "output": {
+        ".html": {
+          "relative_path": "concepts/WindowManager.html",
+          "hash": "bbblUqW9/kEEWOiD694taeewArIu6aTofcKcWPzmbBs="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "concepts/WindowMessageMonitor.md",
+      "output": {
+        ".html": {
+          "relative_path": "concepts/WindowMessageMonitor.html",
+          "hash": "He3uA2bExYAL8bn6Re5I6JbvWbWhziEJ0tolhR4XM20="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "concepts/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "concepts/index.html",
+          "hash": "nCYSq6CzeLCih4NdwOj9vtY52/TOL61ca2Ai3P+g0OI="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "log_codes": [
+        "InvalidFileLink"
+      ],
+      "type": "Toc",
+      "source_relative_path": "concepts/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "concepts/toc.html",
+          "hash": "Y4H1PtBkzA3Fj8tb52erIR0PAfEXZa2PxEUJM5iyGbI="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "favicon.ico",
+      "output": {
+        "resource": {
+          "relative_path": "favicon.ico"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/logo.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/logo.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "index.md",
+      "output": {
+        ".html": {
+          "relative_path": "index.html",
+          "hash": "Zuz1TisH6sps1s4mkPXymywzkVPY4BmyRwaF3uP2zfg="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.CompositionBrushBackdrop.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.CompositionBrushBackdrop.html",
+          "hash": "KEkHONK9Mw6pZ8E2Hcgn0MfM0CQOaYJYlYes4B2c0w4="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.ExtendedWindowStyle.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.ExtendedWindowStyle.html",
+          "hash": "k2oxtxDf8dGOtB/v9JgDd0AiFvkN4JovZP4WS6Ll+Dg="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.HwndExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.HwndExtensions.html",
+          "hash": "G99HUNKBfZWCCflUkDQQ//5/lBA+klnaqJByBVukOkE="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.Icon.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.Icon.html",
+          "hash": "6P0iRGwyuAf1iJQ4cnu2DUbhTn01/9v98sOMPQ9+dYA="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.Messaging.Message.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.Messaging.Message.html",
+          "hash": "jSM98VXnzZKa2baDR+7CcqYiB/j18FkM5uk5cj5Lq38="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.Messaging.WindowMessageEventArgs.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.Messaging.WindowMessageEventArgs.html",
+          "hash": "PyIVZ7S3qWeSSCjZQNFFlAujljGHDqkb4u/cxE3AqgE="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.Messaging.WindowMessageMonitor.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.Messaging.WindowMessageMonitor.html",
+          "hash": "NYCGt8jXCHXnmYUtXYOERSRPHBdWqCmLAPgsx6SlP7g="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.Messaging.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.Messaging.html",
+          "hash": "i9Uv/p3Zlk6NcvdHC4THfYPQ5fF0mgZxDzPIRonqdWU="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.MonitorInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.MonitorInfo.html",
+          "hash": "3lRKYKLc2Mt4hQllfUP22bXKZK5vYe7zyQHYMD/+yiM="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.SplashScreen.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.SplashScreen.html",
+          "hash": "NIEm+5kGeFJzujCJROFPzah2BacTb5vt5roCb8vIDWk="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.TitleBar.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.TitleBar.html",
+          "hash": "T6+BcQLoHAMmLt0zQQikhiX+db/IV/oz+fd0Pqmwmj4="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.TitleBarAutomationPeer.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.TitleBarAutomationPeer.html",
+          "hash": "u25D4KWM+n8WqFg3x9V81i7LsFZVVfeIo9obLTWB1uA="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.TitleBarTemplateSettings.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.TitleBarTemplateSettings.html",
+          "hash": "C/YnwtypL2ajD+EOY5SDv7Y5ZiF5AG+fCKYuD2lyp/o="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.TransparentTintBackdrop.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.TransparentTintBackdrop.html",
+          "hash": "f1jsxGbkKWwZcmveCcgPoNOcTs7YNcrhgfMt7vwyMAs="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WebAuthenticator.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WebAuthenticator.html",
+          "hash": "wPH7FRWwjjjXZyspJfPHwdE5oMqi8vyXHl0WWznGLqY="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WebAuthenticatorResult.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WebAuthenticatorResult.html",
+          "hash": "5MB2s+i1JG2QX9Qm8GnrVyFHv6aXOkP2sITNvWbsFTI="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowEx.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowEx.html",
+          "hash": "ecPbdkidDT2i+vdDBbGjbqZVU4KPy3bGNRBmVeMNLKs="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowExtensions.html",
+          "hash": "UH6J9eph3DnBcs9eSfy6BKQ9NMu7UInw1JqoAFv2CNI="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowManager.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowManager.html",
+          "hash": "f/EsYbfgBkthyguiPP/tQue4m6lCOFRt+ksJ7TSgqKg="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowState.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowState.html",
+          "hash": "YSX6XAttW6g5ogLjeqMD5C0ub7HFZa1v0gO1IQsh2V8="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowStyle.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowStyle.html",
+          "hash": "ReYWH9BKQMB42UKKCPlYyTRlevbMaWAXMp9f5UzzrBc="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.ZOrderInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.ZOrderInfo.html",
+          "hash": "vm3flsHT1uK3tq4tFwv3igyhyNP6gY+8NAivE/qt1cU="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.html",
+          "hash": "anih0H3cFsMLZ9+vZgVHSo6PU0E8fXZJ7mkkOgKl8dE="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "obj/api/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/toc.html",
+          "hash": "2Bpl9+BsPa1aF/W/xZNZ7TMIyX7NZMvN/XZfyeBeUHA="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "rules/WinUIEx1001.md",
+      "output": {
+        ".html": {
+          "relative_path": "rules/WinUIEx1001.html",
+          "hash": "VZjdNVRZj1lXgHr9f2pMqpdUOFn6/r3nvzT0TJtkMb8="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "rules/WinUIEx1002.md",
+      "output": {
+        ".html": {
+          "relative_path": "rules/WinUIEx1002.html",
+          "hash": "6dNXEeq0fFoEBhMCCIQUlQDb9EhKj5cZUChlFJpa62c="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "toc.html",
+          "hash": "qrwER3U4LCBkAlOf2pjNv2dQAvwofCErUMa6Rmt74dg="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    }
+  ],
+  "incremental_info": [
+    {
+      "status": {
+        "can_incremental": false,
+        "details": "Cannot build incrementally because last build info is missing.",
+        "incrementalPhase": "build",
+        "total_file_count": 0,
+        "skipped_file_count": 0,
+        "full_build_reason_code": "NoAvailableBuildCache"
+      },
+      "processors": {
+        "ConceptualDocumentProcessor": {
+          "can_incremental": false,
+          "incrementalPhase": "build",
+          "total_file_count": 15,
+          "skipped_file_count": 0
+        },
+        "ManagedReferenceDocumentProcessor": {
+          "can_incremental": false,
+          "incrementalPhase": "build",
+          "total_file_count": 23,
+          "skipped_file_count": 0
+        },
+        "ResourceDocumentProcessor": {
+          "can_incremental": false,
+          "details": "Processor ResourceDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
+          "incrementalPhase": "build",
+          "total_file_count": 0,
+          "skipped_file_count": 0
+        },
+        "TocDocumentProcessor": {
+          "can_incremental": false,
+          "details": "Processor TocDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
+          "incrementalPhase": "build",
+          "total_file_count": 0,
+          "skipped_file_count": 0
+        }
+      }
+    },
+    {
+      "status": {
+        "can_incremental": false,
+        "details": "Cannot support incremental post processing, the reason is: last post processor info is null.",
+        "incrementalPhase": "postProcessing",
+        "total_file_count": 0,
+        "skipped_file_count": 0
+      },
+      "processors": {}
+    }
+  ],
+  "version_info": {},
+  "groups": [
+    {
+      "xrefmap": "xrefmap.yml"
+    }
+  ]
+}

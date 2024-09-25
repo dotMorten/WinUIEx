@@ -7,9 +7,10 @@ using Microsoft.UI.Xaml;
 namespace WinUIEx
 {
     /// <summary>
-    /// A splash screen window that shows with no chrome, and once <see cref="SplashScreen.OnLoading"/> has completed,
-    /// opens a new window
+    /// A splash screen window for rendering XAML that shows with no chrome, and once <see cref="SplashScreen.OnLoading"/> has completed,
+    /// opens a new window.
     /// </summary>
+    /// <seealso cref="FastSplashScreen"/>
     public class SplashScreen : Window
     {
         private Window? _window;

@@ -37,33 +37,40 @@
                     <Slider Visibility="{x:Bind limitMaxCheckbox.IsOn, Mode=OneWay}" Header="Maximum Height" Maximum="1200" Minimum="250" Value="{x:Bind MainWindow.MaxHeight, Mode=TwoWay}" x:Name="sliderMaxHeight" />
                     <Button Content="Get Display Info" Click="DisplayInfo_Click" />
                 </StackPanel>
-                <StackPanel Background="{StaticResource SemiTransparentBackgroundBrush}" CornerRadius="10" Padding="10" Margin="0,10,0,0">                  
+                <StackPanel Background="{StaticResource SemiTransparentBackgroundBrush}" CornerRadius="10" Padding="10" Margin="0,10,0,0">
                     <TextBlock Text="Window Operations" FontSize="24" FontFamily="Segoe UI" FontWeight="Light" Margin="0,0,0,10" />
-                    <GridView>
-                        <GridView.Resources>
-                            <Style TargetType="Button">
-                                <Setter Property="Width" Value="245" />
+                    <ItemsControl>
+                        <ItemsControl.Resources>
+                            <x:Double x:Key="ItemWidth">255</x:Double>
+                            <Style TargetType="Button" BasedOn="{StaticResource DefaultButtonStyle}">
+                                <Setter Property="Margin" Value="4" />
+                                <Setter Property="HorizontalAlignment" Value="Stretch" />
                             </Style>
-                        </GridView.Resources>
-                        <GridView.ItemsPanel>
+                            <Style TargetType="ComboBox" BasedOn="{StaticResource DefaultComboBoxStyle}">
+                                <Setter Property="Margin" Value="4" />
+                                <Setter Property="HorizontalAlignment" Value="Stretch" />
+                                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                            </Style>
+                        </ItemsControl.Resources>
+                        <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <ItemsWrapGrid ItemHeight="40" Orientation="Horizontal" />
+                                <ItemsWrapGrid Orientation="Horizontal" ItemWidth="{StaticResource ItemWidth}" />
                             </ItemsPanelTemplate>
-                        </GridView.ItemsPanel>
+                        </ItemsControl.ItemsPanel>
                         <Button Content="Center On Screen" Click="Center_Click" />
                         <Button Content="Maximize" Click="MaximizeWindow_Click" />
                         <Button Content="Restore" Click="RestoreWindow_Click" />
                         <Button Content="Minimize + Restore (2 second delay)" Click="MinimizeWindow_Click" />
                         <Button Content="Hide + Restore (2 second delay)" Click="HideWindow_Click" />
                         <Button Content="Bring to front (2 second delay)" Click="BringToFront_Click" />
-                        <ComboBox x:Name="windowState" SelectionChanged="windowState_SelectionChanged" Width="245" >
+                        <ComboBox x:Name="windowState" SelectionChanged="windowState_SelectionChanged" >
                             <ComboBox.Items>
                                 <ComboBoxItem>Window State: Normal</ComboBoxItem>
                                 <ComboBoxItem>Window State: Minimized</ComboBoxItem>
                                 <ComboBoxItem>Window State: Maximized</ComboBoxItem>
                             </ComboBox.Items>
                         </ComboBox>
-                    </GridView>
+                    </ItemsControl>
                 </StackPanel>
                 <!--
                 <StackPanel Background="{StaticResource SemiTransparentBackgroundBrush}" CornerRadius="10" Padding="10" Margin="0,10,0,0">

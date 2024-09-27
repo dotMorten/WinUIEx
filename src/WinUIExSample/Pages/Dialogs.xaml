@@ -17,9 +17,9 @@
             <TextBlock Text="Dialog Helpers" FontSize="32" FontFamily="Segoe UI" FontWeight="Light" Margin="0,-10,0,0" />
         </StackPanel>
         <StackPanel Background="{ThemeResource SemiTransparentBackgroundBrush}" CornerRadius="10" Padding="10" Margin="0,10,0,0" Grid.Row="1">
-            <Button Content="Show dialog" Click="ShowDialog_Click" />
-            <Button Content="Show OK/Cancel" Click="ShowDialog2_Click" />
-            <Button Content="Show 3-option dialog" Click="ShowDialog3_Click" />
+            <Button Content="Show dialog" Click="ShowDialog_Click" Margin="4" />
+            <Button Content="Show OK/Cancel" Click="ShowDialog2_Click" Margin="4" />
+            <Button Content="Show 3-option dialog" Click="ShowDialog3_Click" Margin="4" />
             <TextBlock x:Name="resultText" />
         </StackPanel>
     </Grid>

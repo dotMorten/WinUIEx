@@ -33,14 +33,14 @@ namespace WinUIExMauiSample
             {
                 Content = new Label() { Text = $"Waiting for sign in in your browser\n Username: 'pleasant-koala@example.com'\n Password: Modern-Seahorse-66" }
             });
-#if WINDOWS
-            var result = await WinUIEx.WebAuthenticator.AuthenticateAsync(authorizeUri, callbackUri);
-#else
+// #if WINDOWS
+//             var result = await WinUIEx.WebAuthenticator.AuthenticateAsync(authorizeUri, callbackUri);
+// #else
             var result = await Microsoft.Maui.Authentication.WebAuthenticator.AuthenticateAsync(new WebAuthenticatorOptions()
             {
                 Url = authorizeUri, CallbackUrl = callbackUri
             });
-#endif
+// #endif
             if (Navigation.ModalStack.Count > 0)
                 _ = Navigation.PopModalAsync();
             await DisplayAlert("Success!", "Signed in", "OK");

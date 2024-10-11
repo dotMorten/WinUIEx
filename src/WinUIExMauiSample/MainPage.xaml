@@ -36,7 +36,7 @@
                 HorizontalOptions="Center" />
 
             <Button 
-                Text="Perform oauth siging"
+                Text="Perform oauth sign-in"
                 SemanticProperties.Hint="OAuth Test"
                 Clicked="OnOAuthClicked"
                 HorizontalOptions="Center" />

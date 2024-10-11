@@ -33,7 +33,7 @@ namespace WinUIExMauiSample
                          });
                      });
                  })
-                 .Services.AddSingleton<IWebAuthenticator>(WinUIExWebAuthenticator.Default) // Register the WinUIEx-based WebAuthenticator to work around the limitation in .NET MAUI
+                 .Services.AddSingleton<IWebAuthenticator>(s => WinUIExWebAuthenticator.Default) // Register the WinUIEx-based WebAuthenticator to work around the limitation in .NET MAUI
 
 #endif
                  ;

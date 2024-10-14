@@ -177,6 +177,14 @@ namespace WinUIEx
         }
 
         /// <summary>
+        /// Get the bounding rectangle of the window in device independent pixels
+        /// </summary>
+        /// <param name="window">Window</param>
+        /// <returns>The bounding rectangle of the window</returns>
+        public static Windows.Foundation.Rect GetWindowRect(this Microsoft.UI.Xaml.Window window)
+            => HwndExtensions.GetWindowRect(window.GetWindowHandle());
+
+        /// <summary>
         /// Sets the window presenter kind used.
         /// </summary>
         /// <param name="window"></param>

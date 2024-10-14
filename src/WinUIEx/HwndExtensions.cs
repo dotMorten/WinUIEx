@@ -81,6 +81,27 @@ namespace WinUIEx
         public static void SetAlwaysOnTop(IntPtr hwnd, bool enable)
             => SetWindowPosOrThrow(new HWND(hwnd), new HWND(new IntPtr(enable ? -1 : -2)), 0, 0, 0, 0, SET_WINDOW_POS_FLAGS.SWP_NOSIZE | SET_WINDOW_POS_FLAGS.SWP_NOMOVE);
 
+        /// <summary>
+        /// Get the bounding rectangle of the window in device independent pixels
+        /// </summary>
+        /// <param name="hwnd">Window handle</param>
+        /// <returns>The bounding rectangle of the window</returns>
+        public static Windows.Foundation.Rect GetWindowRect(IntPtr hwnd)
+        {
+            var rect = GetWindowRectOrThrow(new HWND(hwnd));
+            var dpi = GetDpiForWindow(hwnd);
+            var scalingFactor = 96d / dpi;
+            return new Windows.Foundation.Rect(rect.left, rect.top, (int)((rect.right - rect.left) * scalingFactor), (int)((rect.bottom - rect.top) * scalingFactor));
+        }
+
+        private static RECT GetWindowRectOrThrow(HWND hWnd)
+        {
+            bool result = PInvoke.GetWindowRect(hWnd, out RECT rect);
+            if (!result)
+                Marshal.ThrowExceptionForHR(Marshal.GetLastWin32Error());
+            return rect;
+        }
+
         private static void SetWindowPosOrThrow(HWND hWnd, HWND hWndInsertAfter, int X, int Y, int cx, int cy, SET_WINDOW_POS_FLAGS uFlags)
         {
             bool result = PInvoke.SetWindowPos(hWnd, hWndInsertAfter, X, Y, cx, cy, uFlags);

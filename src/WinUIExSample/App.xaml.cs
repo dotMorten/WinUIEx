@@ -23,8 +23,11 @@ namespace WinUIExSample
         /// </summary>
         public App()
         {
+#if !DISABLE_XAML_GENERATED_MAIN // With custom main, we'd rather want to do this code in main
             if (WebAuthenticator.CheckOAuthRedirectionActivation())
                 return;
+            fss = SimpleSplashScreen.ShowDefaultSplashScreen();
+#endif
             this.InitializeComponent();
             int length = 0;
             var sb = new System.Text.StringBuilder(0);
@@ -34,8 +37,9 @@ namespace WinUIExSample
                 // Not a packaged app. Configure file-based persistence instead
                 WinUIEx.WindowManager.PersistenceStorage = new FilePersistence("WinUIExPersistence.json");
             }
+
         }
-        
+        internal SimpleSplashScreen fss { get; set; }
         /// <summary>
         /// Invoked when the application is launched normally by the end user.  Other entry points
         /// will be used such as when the application is launched to open a specific file.
@@ -45,7 +49,18 @@ namespace WinUIExSample
         {
             var window = new MainWindow();
             var splash = new SplashScreen(window);
-            splash.Completed += (s, e) => m_window = (WindowEx)e;
+            splash.Completed += (s, e) =>
+            {
+                m_window = (WindowEx)e;
+            };
+            splash.Activated += Splash_Activated;
+        }
+
+        private void Splash_Activated(object sender, WindowActivatedEventArgs args)
+        {
+            ((Window)sender).Activated -= Splash_Activated;
+            fss?.Hide(TimeSpan.FromSeconds(1));
+            fss = null;
         }
 
         private WindowEx m_window;
@@ -129,4 +144,26 @@ namespace WinUIExSample
             IEnumerator IEnumerable.GetEnumerator() => throw new NotImplementedException(); // TODO
         }
     }
+
+#if DISABLE_XAML_GENERATED_MAIN
+    /// <summary>
+    /// Program class
+    /// </summary>
+    public static class Program
+    {
+        [global::System.STAThreadAttribute]
+        static void Main(string[] args)
+        {
+            if (WebAuthenticator.CheckOAuthRedirectionActivation(true))
+                return;
+            var fss = SimpleSplashScreen.ShowDefaultSplashScreen();
+            global::WinRT.ComWrappersSupport.InitializeComWrappers();
+            global::Microsoft.UI.Xaml.Application.Start((p) => {
+                var context = new global::Microsoft.UI.Dispatching.DispatcherQueueSynchronizationContext(global::Microsoft.UI.Dispatching.DispatcherQueue.GetForCurrentThread());
+                global::System.Threading.SynchronizationContext.SetSynchronizationContext(context);
+                new App() { fss = fss };
+            });
+        }
+    }
+#endif
 }

@@ -49,8 +49,16 @@ namespace WinUIEx
             var manager = new Microsoft.Windows.ApplicationModel.Resources.ResourceManager();
             var context = manager.CreateResourceContext();
 
-            var dpi = PInvoke.GetDpiForWindow(PInvoke.GetDesktopWindow());
+            uint dpi = 96;
+            var monitor = PInvoke.MonitorFromPoint(new System.Drawing.Point(0, 0), Windows.Win32.Graphics.Gdi.MONITOR_FROM_FLAGS.MONITOR_DEFAULTTOPRIMARY);
+            
+            if(monitor != IntPtr.Zero)
+            {
+                PInvoke.GetDpiForMonitor(monitor, Windows.Win32.UI.HiDpi.MONITOR_DPI_TYPE.MDT_EFFECTIVE_DPI, out var dpiX, out var dpiy);
+                dpi = dpiX;
+            }
             var scale = (int)(dpi / 96d * 100);
+            if (scale == 0) scale = 100;
             context.QualifierValues["Scale"] = scale.ToString();
             var splashScreenImageResource = manager.MainResourceMap.TryGetValue("Files/" + image.Replace('\\','/'), context);
             if (splashScreenImageResource is not null && splashScreenImageResource.Kind == Microsoft.Windows.ApplicationModel.Resources.ResourceCandidateKind.FilePath)

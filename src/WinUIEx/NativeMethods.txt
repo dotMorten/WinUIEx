@@ -65,3 +65,4 @@ WNDCLASSEXW
 RegisterClassEx
 CreateCompatibleDC
 SelectObject
+MonitorFromPoint

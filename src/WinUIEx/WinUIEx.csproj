@@ -25,10 +25,7 @@
     <PackageId>WinUIEx</PackageId>
     <Product>WinUI Extensions</Product>
     <PackageReleaseNotes>
-      - Added full support for Native AOT
-      - Upgraded Windows App SDK to 1.6.0
-      - Upgraded CSWinRT to 2.1.3
-      - Changed required target framework to 10.0.19041.0
+      - Workaround package bug in WebView2 nuget package. (Issue #188)
     </PackageReleaseNotes>
   </PropertyGroup>
 
@@ -38,6 +35,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="$(WinAppSDKVersion)" />
+	<PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2651.64" IncludeAssets="none" /> <!-- Work around bug in webview package, and we don't really need this anyway -->
     <None Include="README.md" Pack="true" PackagePath="\" />
     <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.1.3" >
       <PrivateAssets>all</PrivateAssets>

@@ -1,4 +1,4 @@
-﻿using Microsoft.UI.Composition;
+using Microsoft.UI.Composition;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Hosting;
 using System;
@@ -85,6 +85,9 @@ namespace WinUIEx
             backdrop?.Dispose();
             brush?.Dispose();
             brush = null;
+            if (!backgroundBrush.IsNull)
+                PInvoke.DeleteObject(backgroundBrush);
+            backgroundBrush = Windows.Win32.Graphics.Gdi.HBRUSH.Null;
             base.OnTargetDisconnected(disconnectedTarget);
         }
 
@@ -100,12 +103,15 @@ namespace WinUIEx
             });
         }
 
+        private Windows.Win32.Graphics.Gdi.HBRUSH backgroundBrush = Windows.Win32.Graphics.Gdi.HBRUSH.Null;
+
         private bool ClearBackground(nint hwnd, nint hdc)
         {
             if (PInvoke.GetClientRect(new Windows.Win32.Foundation.HWND(hwnd), out var rect))
             {
-                var brush = PInvoke.CreateSolidBrush(new Windows.Win32.Foundation.COLORREF(0));
-                FillRect(hdc, ref rect, brush);
+                if (backgroundBrush.IsNull)
+                    backgroundBrush = PInvoke.CreateSolidBrush(new Windows.Win32.Foundation.COLORREF(0));
+                FillRect(hdc, ref rect, backgroundBrush);
                 return true;
             }
             return false;

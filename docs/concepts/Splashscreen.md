@@ -10,7 +10,7 @@ WinUIEx provides two kinds of splash screens:
 `SimpleSplashScreen` will show an image while the app is loading. To use it, create a new `SimpleSplashScreen` in App.xaml.cs:
 
 ```cs
-private SimpleSplashScreen vss { get; set; }
+private SimpleSplashScreen fss { get; set; }
 
 public App()
 {

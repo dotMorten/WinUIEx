@@ -195,8 +195,8 @@ namespace WinUIEx
                 new DestroyIconSafeHandle(wcex.hInstance), null);
             if (hBitmap != IntPtr.Zero)
             {
-                SetPictureToLayeredWindow(hWndSplash, hBitmap);
                 CenterToScreen(hWndSplash);
+                SetPictureToLayeredWindow(hWndSplash, hBitmap);
             }
 #if MEDIAPLAYER
             if (sVideo != null)

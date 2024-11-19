@@ -26,7 +26,7 @@ namespace WinUIExSample
 #if !DISABLE_XAML_GENERATED_MAIN // With custom main, we'd rather want to do this code in main
             if (WebAuthenticator.CheckOAuthRedirectionActivation())
                 return;
-            fss = FastSplashScreen.ShowDefaultSplashScreen();
+            fss = SimpleSplashScreen.ShowDefaultSplashScreen();
 #endif
             this.InitializeComponent();
             int length = 0;
@@ -39,7 +39,7 @@ namespace WinUIExSample
             }
 
         }
-        internal FastSplashScreen fss { get; set; }
+        internal SimpleSplashScreen fss { get; set; }
         /// <summary>
         /// Invoked when the application is launched normally by the end user.  Other entry points
         /// will be used such as when the application is launched to open a specific file.
@@ -156,7 +156,7 @@ namespace WinUIExSample
         {
             if (WebAuthenticator.CheckOAuthRedirectionActivation(true))
                 return;
-            var fss = FastSplashScreen.ShowDefaultSplashScreen();
+            var fss = SimpleSplashScreen.ShowDefaultSplashScreen();
             global::WinRT.ComWrappersSupport.InitializeComWrappers();
             global::Microsoft.UI.Xaml.Application.Start((p) => {
                 var context = new global::Microsoft.UI.Dispatching.DispatcherQueueSynchronizationContext(global::Microsoft.UI.Dispatching.DispatcherQueue.GetForCurrentThread());

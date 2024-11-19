@@ -10,7 +10,7 @@ namespace WinUIEx
     /// A splash screen window for rendering XAML that shows with no chrome, and once <see cref="SplashScreen.OnLoading"/> has completed,
     /// opens a new window.
     /// </summary>
-    /// <seealso cref="FastSplashScreen"/>
+    /// <seealso cref="SimpleSplashScreen"/>
     public class SplashScreen : Window
     {
         private Window? _window;

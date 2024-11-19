@@ -22,7 +22,7 @@ namespace WinUIEx
     /// Once your application window has launched/loaded, The splashscreen should be removed by either disposing this instance or calling <see cref="Hide(TimeSpan)"/>.
     /// </remarks>
     /// <seealso cref="SplashScreen"/>
-    public sealed class FastSplashScreen : IDisposable
+    public sealed class SimpleSplashScreen : IDisposable
     {
         private const nint COLOR_BACKGROUND = 1;
 
@@ -41,7 +41,7 @@ namespace WinUIEx
         /// </summary>
         /// <returns></returns>
         /// <exception cref="InvalidOperationException"></exception>
-        public static FastSplashScreen ShowDefaultSplashScreen()
+        public static SimpleSplashScreen ShowDefaultSplashScreen()
         {
             var image = GetManifestSplashScreen();
             if (image is null)
@@ -55,7 +55,7 @@ namespace WinUIEx
             var splashScreenImageResource = manager.MainResourceMap.TryGetValue("Files/" + image.Replace('\\','/'), context);
             if (splashScreenImageResource is not null && splashScreenImageResource.Kind == Microsoft.Windows.ApplicationModel.Resources.ResourceCandidateKind.FilePath)
             {
-                return FastSplashScreen.ShowSplashScreenImage(splashScreenImageResource.ValueAsString);
+                return SimpleSplashScreen.ShowSplashScreenImage(splashScreenImageResource.ValueAsString);
             }
             throw new InvalidOperationException("Splash screen image not found in resources");
         }
@@ -82,18 +82,18 @@ namespace WinUIEx
         /// </summary>
         /// <param name="image"></param>
         /// <returns></returns>
-        public static FastSplashScreen ShowSplashScreenImage(string image)
+        public static SimpleSplashScreen ShowSplashScreenImage(string image)
         {
-            var s = new FastSplashScreen();
+            var s = new SimpleSplashScreen();
             s.Initialize();
             var hBitmap = s.GetBitmap(image);
             s.DisplaySplash(Windows.Win32.Foundation.HWND.Null, hBitmap, null);
             return s;
         }
 #if MEDIAPLAYER
-        public static FastSplashScreen ShowSplashScreenVideo(string video)
+        public static SimpleSplashScreen ShowSplashScreenVideo(string video)
         {
-            var s = new FastSplashScreen();
+            var s = new SimpleSplashScreen();
             s.Initialize();
             s.DisplaySplash(Windows.Win32.Foundation.HWND.Null, Windows.Win32.Graphics.Gdi.HBITMAP.Null, video);
             return s;
@@ -145,7 +145,7 @@ namespace WinUIEx
         /// <summary>
         /// Finalizer
         /// </summary>
-        ~FastSplashScreen() => Dispose(false);
+        ~SimpleSplashScreen() => Dispose(false);
 
         private unsafe void DisplaySplash(Windows.Win32.Foundation.HWND hWnd, Windows.Win32.Graphics.Gdi.HBITMAP bitmap, string? sVideo)
         {
@@ -212,11 +212,11 @@ namespace WinUIEx
 #if MEDIAPLAYER
         private class MFPlayer : IMFPMediaPlayerCallback, IDisposable
         {
-            private readonly FastSplashScreen m_ss;
+            private readonly SimpleSplashScreen m_ss;
             private readonly Windows.Win32.Foundation.HWND m_hWndParent;
             private readonly IMFPMediaPlayer m_pMediaPlayer;
 
-            internal unsafe MFPlayer(FastSplashScreen ss, Windows.Win32.Foundation.HWND hWnd, string sVideo)
+            internal unsafe MFPlayer(SimpleSplashScreen ss, Windows.Win32.Foundation.HWND hWnd, string sVideo)
             {
                 GlobalStructures.HRESULT hr = MFPlayTools.MFPCreateMediaPlayer(sVideo, false, MFPlay.MFPlayTools.MFP_CREATION_OPTIONS.MFP_OPTION_NONE, this, hWnd, out m_pMediaPlayer);
                 m_hWndParent = hWnd;

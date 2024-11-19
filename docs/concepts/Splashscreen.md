@@ -1,21 +1,21 @@
 ## Splash Screen
 
 WinUIEx provides two kinds of splash screens:
- - `FastSplashScreen`: A simple splash screen that shows just an image and can be launched before any UI loads.
+ - `SimpleSplashScreen`: A simple splash screen that shows just an image and can be launched before any UI loads.
  - `SplashScreen`: A more advanced splash screen that can show any XAML including a progress bar and status text.
 
 
-### FastSplashScreen
+### SimpleSplashScreen
 
-`FastSplashScreen` will show an image while the app is loading. To use it, create a new `FastSplashScreen` in App.xaml.cs:
+`SimpleSplashScreen` will show an image while the app is loading. To use it, create a new `SimpleSplashScreen` in App.xaml.cs:
 
 ```cs
-private FastSplashScreen vss { get; set; }
+private SimpleSplashScreen vss { get; set; }
 
 public App()
 {
-  fss = FastSplashScreen.ShowDefaultSplashScreen(); // Shows the splash screen you already defined in your app manifest. For unpackaged apps use .ShowSplashScreenImage(imagepath):
-  // fss = FastSplashScreen.ShowSplashScreenImage(full_path_to_image_); // Shows a custom splash screen image. Must be a full-path (no relative paths)
+  fss = SimpleSplashScreen.ShowDefaultSplashScreen(); // Shows the splash screen you already defined in your app manifest. For unpackaged apps use .ShowSplashScreenImage(imagepath):
+  // fss = SimpleSplashScreen.ShowSplashScreenImage(full_path_to_image_); // Shows a custom splash screen image. Must be a full-path (no relative paths)
   this.InitializeComponent();
 }
 ```
@@ -52,7 +52,7 @@ and instead defining your own start method. You'll then be able to display the s
       // If you're using the WebAuthenticator, make sure you call this method first before the splashscreen shows
       if (WebAuthenticator.CheckOAuthRedirectionActivation(true))
         return;
-      var fss = FastSplashScreen.ShowDefaultSplashScreen();
+      var fss = SimpleSplashScreen.ShowDefaultSplashScreen();
       WinRT.ComWrappersSupport.InitializeComWrappers();
       Microsoft.UI.Xaml.Application.Start((p) => {
         var context = new Microsoft.UI.Dispatching.DispatcherQueueSynchronizationContext(Microsoft.UI.Dispatching.DispatcherQueue.GetForCurrentThread());

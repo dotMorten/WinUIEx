@@ -29,16 +29,12 @@ namespace WinUIExSample
             fss = SimpleSplashScreen.ShowDefaultSplashScreen();
 #endif
             this.InitializeComponent();
-            int length = 0;
-            var sb = new System.Text.StringBuilder(0);
-            int result = GetCurrentPackageFullName(ref length, sb);
-            if(result == 15700L)
-            {
-                // Not a packaged app. Configure file-based persistence instead
-                WinUIEx.WindowManager.PersistenceStorage = new FilePersistence("WinUIExPersistence.json");
-            }
-
+#if UNPACKAGED
+            // Use file-based persistence since we can't rely on default storage for window persistence when unpackaged
+            WinUIEx.WindowManager.PersistenceStorage = new FilePersistence("WinUIExPersistence.json");
+#endif
         }
+
         internal SimpleSplashScreen fss { get; set; }
         /// <summary>
         /// Invoked when the application is launched normally by the end user.  Other entry points
@@ -67,9 +63,7 @@ namespace WinUIExSample
 
         public WindowEx MainWindow => m_window;
 
-        [DllImport("kernel32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
-        private static extern int GetCurrentPackageFullName(ref int packageFullNameLength, System.Text.StringBuilder packageFullName);
-
+#if UNPACKAGED
         private class FilePersistence : IDictionary<string, object>
         {
             private readonly Dictionary<string, object> _data = new Dictionary<string, object>();
@@ -143,6 +137,7 @@ namespace WinUIExSample
 
             IEnumerator IEnumerable.GetEnumerator() => throw new NotImplementedException(); // TODO
         }
+#endif
     }
 
 #if DISABLE_XAML_GENERATED_MAIN
@@ -156,7 +151,11 @@ namespace WinUIExSample
         {
             if (WebAuthenticator.CheckOAuthRedirectionActivation(true))
                 return;
+#if UNPACKAGED
+            var fss = SimpleSplashScreen.ShowSplashScreenImage("Assets\\SplashScreen.scale-100.png");
+#else
             var fss = SimpleSplashScreen.ShowDefaultSplashScreen();
+#endif
             global::WinRT.ComWrappersSupport.InitializeComWrappers();
             global::Microsoft.UI.Xaml.Application.Start((p) => {
                 var context = new global::Microsoft.UI.Dispatching.DispatcherQueueSynchronizationContext(global::Microsoft.UI.Dispatching.DispatcherQueue.GetForCurrentThread());
@@ -166,4 +165,5 @@ namespace WinUIExSample
         }
     }
 #endif
+        }
 }

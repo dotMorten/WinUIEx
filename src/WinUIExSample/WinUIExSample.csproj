@@ -18,6 +18,7 @@
     <!--<WindowsPackageType>None</WindowsPackageType>-->
     <WindowsSdkPackageVersion>10.0.22621.38</WindowsSdkPackageVersion>
     <DefineConstants>DISABLE_XAML_GENERATED_MAIN;$(DefineConstants)</DefineConstants>
+    <DefineConstants Condition="'$(WindowsPackageType)'=='None'">UNPACKAGED;$(DefineConstants)</DefineConstants>
     <PublishAot Condition="'$(RuntimeIdentifier)'=='win-x64'">true</PublishAot>
   </PropertyGroup>
 

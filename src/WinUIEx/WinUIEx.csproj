@@ -25,7 +25,7 @@
     <PackageId>WinUIEx</PackageId>
     <Product>WinUI Extensions</Product>
     <PackageReleaseNotes>
-      - Added `SimpleSplashScreen` for display application launch splash screens
+      - WebAuthenticator: Added support for unpackaged apps.
     </PackageReleaseNotes>
   </PropertyGroup>
 

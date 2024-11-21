@@ -165,5 +165,4 @@ namespace WinUIExSample
         }
     }
 #endif
-        }
 }

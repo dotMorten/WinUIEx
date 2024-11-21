@@ -16,6 +16,7 @@ using Windows.Graphics;
 using WinUIEx;
 using WinUIEx.Messaging;
 using WinUIExSample.Pages;
+using TitleBar = WinUIEx.TitleBar;
 
 namespace WinUIExSample
 {

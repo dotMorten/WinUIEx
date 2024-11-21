@@ -65,6 +65,10 @@ namespace WinUIExSample.Pages
             OAuthWindow.Visibility = Visibility.Visible;
             try
             {
+#if UNPACKAGED
+                // Packaged app uses appxmanifest for protocol activation. Unpackaged apps must manually register
+                Microsoft.Windows.AppLifecycle.ActivationRegistrationManager.RegisterForProtocolActivation("winuiex", "Assets\\Square150x150Logo.scale-100", "WinUI EX", null);
+#endif
                 var result = await WebAuthenticator.AuthenticateAsync(new Uri(authorizeUri), new Uri(callbackUri), oauthCancellationSource.Token);
                 MainWindow.BringToFront();
                 OAuthWindow.Visibility = Visibility.Collapsed;
@@ -74,6 +78,12 @@ namespace WinUIExSample.Pages
             }
             catch (TaskCanceledException) {
                 Result.Text = "Sign in cancelled";
+            }
+            finally
+            {
+#if UNPACKAGED
+                Microsoft.Windows.AppLifecycle.ActivationRegistrationManager.UnregisterForProtocolActivation("winuiex", null);
+#endif
             }
         }
 

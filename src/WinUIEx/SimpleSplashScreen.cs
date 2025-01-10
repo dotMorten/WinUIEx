@@ -3,6 +3,7 @@
 //#define MEDIAPLAYER
 using Microsoft.UI.Xaml;
 using System;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Xml.Linq;
 using System.Xml.XPath;
@@ -164,7 +165,7 @@ namespace WinUIEx
             wcex.hbrBackground = new Windows.Win32.Graphics.Gdi.HBRUSH(COLOR_BACKGROUND + 1);
             wcex.cbClsExtra = 0;
             wcex.cbWndExtra = 0;
-            wcex.hInstance = new Windows.Win32.Foundation.HINSTANCE(Marshal.GetHINSTANCE(this.GetType().Module));
+            wcex.hInstance = new Windows.Win32.Foundation.HINSTANCE(Process.GetCurrentProcess().Handle);
             wcex.hIcon = HICON.Null;
             wcex.hCursor = HCURSOR.Null;
             wcex.lpszMenuName = null;

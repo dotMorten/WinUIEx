@@ -1,7 +1,6 @@
 using Microsoft.UI.Composition;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Hosting;
-using Microsoft.UI;
 using System;
 using System.Runtime.InteropServices;
 using Windows.Win32;
@@ -61,7 +60,7 @@ namespace WinUIEx
         /// <inheritdoc />
         protected override void OnTargetConnected(ICompositionSupportsSystemBackdrop connectedTarget, XamlRoot xamlRoot)
         {
-            ulong hWnd = (ulong)Win32Interop.GetWindowFromWindowId(xamlRoot.ContentIslandEnvironment.AppWindowId);
+            ulong hWnd = xamlRoot.ContentIslandEnvironment.AppWindowId.Value;
 
             monitor = new WindowMessageMonitor((IntPtr)hWnd);
             monitor.WindowMessageReceived += Monitor_WindowMessageReceived;

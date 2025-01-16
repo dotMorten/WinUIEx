@@ -11,13 +11,15 @@ namespace WinUIEx.Messaging
         private GCHandle? _monitorGCHandle;
         private IntPtr _hwnd = IntPtr.Zero;
         private readonly object _lockObject = new object();
-
+        private static nuint classidcounter = 101;
+        private readonly nuint classid;
         /// <summary>
         /// Initialize a new instance of the <see cref="WindowMessageMonitor"/> class.
         /// </summary>
         /// <param name="window">The window to listen to messages for</param>
         public WindowMessageMonitor(Microsoft.UI.Xaml.Window window) : this(window.GetWindowHandle())
         {
+            classid = classidcounter++;
         }
 
         /// <summary>
@@ -97,7 +99,7 @@ namespace WinUIEx.Messaging
                 if (!_monitorGCHandle.HasValue)
                 {
                     _monitorGCHandle = GCHandle.Alloc(this);
-                    bool ok = Windows.Win32.PInvoke.SetWindowSubclass(new Windows.Win32.Foundation.HWND(_hwnd), &NewWindowProc, 101, (nuint)GCHandle.ToIntPtr(_monitorGCHandle.Value).ToPointer());
+                    bool ok = Windows.Win32.PInvoke.SetWindowSubclass(new Windows.Win32.Foundation.HWND(_hwnd), &NewWindowProc, classid, (nuint)GCHandle.ToIntPtr(_monitorGCHandle.Value).ToPointer());
                 }
         }
 
@@ -106,7 +108,7 @@ namespace WinUIEx.Messaging
             lock (_lockObject)
                 if (_monitorGCHandle.HasValue)
                 {
-                    Windows.Win32.PInvoke.RemoveWindowSubclass(new Windows.Win32.Foundation.HWND(_hwnd), &NewWindowProc, 101);
+                    Windows.Win32.PInvoke.RemoveWindowSubclass(new Windows.Win32.Foundation.HWND(_hwnd), &NewWindowProc, classid);
                     _monitorGCHandle?.Free();
                     _monitorGCHandle = null;
                 }

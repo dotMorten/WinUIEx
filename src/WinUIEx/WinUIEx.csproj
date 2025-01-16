@@ -27,6 +27,7 @@
     <PackageReleaseNotes>
       - WebAuthenticator: Added support for unpackaged apps.
       - Fixes TitleBar button colors #210
+      - WinAppSDK 1.7exp2: TransparentTintBackdrop System.InvalidCastException: 'Specified cast is not valid.' #207
     </PackageReleaseNotes>
   </PropertyGroup>
 

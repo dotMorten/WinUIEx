@@ -60,9 +60,7 @@ namespace WinUIEx
         /// <inheritdoc />
         protected override void OnTargetConnected(ICompositionSupportsSystemBackdrop connectedTarget, XamlRoot xamlRoot)
         {
-            var inspectable = connectedTarget.As<IInspectable>();
-            var xamlSource = DesktopWindowXamlSource.FromAbi(inspectable.ThisPtr);
-            var hWnd = xamlSource.SiteBridge.SiteView.EnvironmentView.AppWindowId.Value;
+            ulong hWnd = xamlRoot.ContentIslandEnvironment.AppWindowId.Value;
 
             monitor = new WindowMessageMonitor((IntPtr)hWnd);
             monitor.WindowMessageReceived += Monitor_WindowMessageReceived;

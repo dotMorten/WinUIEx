@@ -1,0 +1,439 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class WebAuthenticator
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class WebAuthenticator
+   ">
+    <meta name="generator" content="docfx 2.59.4.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/logo.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="WinUIEx.WebAuthenticator">
+  
+  
+  <h1 id="WinUIEx_WebAuthenticator" data-uid="WinUIEx.WebAuthenticator" class="text-break">Class WebAuthenticator
+  </h1>
+  <div class="markdown level0 summary"><p>Handles OAuth redirection to the system browser and re-activation.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><span class="xref">WebAuthenticator</span></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetHashCode()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetType()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.MemberwiseClone()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.ToString()</span>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="WinUIEx.html">WinUIEx</a></h6>
+  <h6><strong>Assembly</strong>: WinUIEx.dll</h6>
+  <h5 id="WinUIEx_WebAuthenticator_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public sealed class WebAuthenticator</code></pre>
+  </div>
+  <h5 id="WinUIEx_WebAuthenticator_remarks"><strong>Remarks</strong></h5>
+  <div class="markdown level0 remarks"><p><p>
+Your app must be configured for OAuth with schema activation. The scheme must be the first part of the url, ie if your
+oauth redirection url starts with for instance <code>myappscheme://signin/</code>, the scheme would be <code>myappscheme</code>.
+Note that http(s) schemes are not supported here.
+</p>
+<p>
+If your app is packaged, in your app&apos;s <code>Package.appxmanifest</code> under <code>Declarations</code>, add a 
+Protocol declaration and add the scheme you registered for your application&apos;s oauth redirect url under &quot;Name&quot;.
+</p>
+<p>
+If your app is unpackaged, make sure you register the application for protocol activation.
+</p> 
+<example><p>
+<pre><code>try
+{
+    Microsoft.Windows.AppLifecycle.ActivationRegistrationManager.RegisterForProtocolActivation(&quot;myappscheme&quot;, &quot;Assets\\Square150x150Logo.scale-100&quot;, &quot;My App Name&quot;, null);
+    var result = await WebAuthenticator.AuthenticateAsync(authorizeUri, callbackUri, cancellationToken);
+}
+finally
+{
+    Microsoft.Windows.AppLifecycle.ActivationRegistrationManager.UnregisterForProtocolActivation(&quot;myappscheme&quot;, null);
+}</code></pre>
+<p></example></p>
+</div>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/dotMorten/WinUIEx/new/main/docs/api_overwrites/new?filename=WinUIEx_WebAuthenticator_AuthenticateAsync_System_Uri_System_Uri_.md&amp;value=---%0Auid%3A%20WinUIEx.WebAuthenticator.AuthenticateAsync(System.Uri%2CSystem.Uri)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/dotMorten/WinUIEx/blob/main/src/WinUIEx/WebAuthenticator.cs/#L57">View Source</a>
+  </span>
+  <a id="WinUIEx_WebAuthenticator_AuthenticateAsync_" data-uid="WinUIEx.WebAuthenticator.AuthenticateAsync*"></a>
+  <h4 id="WinUIEx_WebAuthenticator_AuthenticateAsync_System_Uri_System_Uri_" data-uid="WinUIEx.WebAuthenticator.AuthenticateAsync(System.Uri,System.Uri)">AuthenticateAsync(Uri, Uri)</h4>
+  <div class="markdown level1 summary"><p>Begin an authentication flow by navigating to the specified url and waiting for a callback/redirect to the callbackUrl scheme.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Task&lt;WebAuthenticatorResult&gt; AuthenticateAsync(Uri authorizeUri, Uri callbackUri)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Uri</span></td>
+        <td><span class="parametername">authorizeUri</span></td>
+        <td><p>Url to navigate to, beginning the authentication flow.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Uri</span></td>
+        <td><span class="parametername">callbackUri</span></td>
+        <td><p>Expected callback url that the navigation flow will eventually redirect to.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;<a class="xref" href="WinUIEx.WebAuthenticatorResult.html">WebAuthenticatorResult</a>&gt;</td>
+        <td><p>Returns a result parsed out from the callback url.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="WinUIEx_WebAuthenticator_AuthenticateAsync_System_Uri_System_Uri__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Prior to calling this, a call to <a class="xref" href="WinUIEx.WebAuthenticator.html#WinUIEx_WebAuthenticator_CheckOAuthRedirectionActivation_System_Boolean_">CheckOAuthRedirectionActivation(Boolean)</a> must be made during application startup.</p>
+</div>
+  <h5 id="WinUIEx_WebAuthenticator_AuthenticateAsync_System_Uri_System_Uri__seealso">See Also</h5>
+  <div class="seealso">
+      <div><a class="xref" href="WinUIEx.WebAuthenticator.html#WinUIEx_WebAuthenticator_CheckOAuthRedirectionActivation_System_Boolean_">CheckOAuthRedirectionActivation(Boolean)</a></div>
+  </div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/dotMorten/WinUIEx/new/main/docs/api_overwrites/new?filename=WinUIEx_WebAuthenticator_AuthenticateAsync_System_Uri_System_Uri_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20WinUIEx.WebAuthenticator.AuthenticateAsync(System.Uri%2CSystem.Uri%2CSystem.Threading.CancellationToken)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/dotMorten/WinUIEx/blob/main/src/WinUIEx/WebAuthenticator.cs/#L68">View Source</a>
+  </span>
+  <a id="WinUIEx_WebAuthenticator_AuthenticateAsync_" data-uid="WinUIEx.WebAuthenticator.AuthenticateAsync*"></a>
+  <h4 id="WinUIEx_WebAuthenticator_AuthenticateAsync_System_Uri_System_Uri_System_Threading_CancellationToken_" data-uid="WinUIEx.WebAuthenticator.AuthenticateAsync(System.Uri,System.Uri,System.Threading.CancellationToken)">AuthenticateAsync(Uri, Uri, CancellationToken)</h4>
+  <div class="markdown level1 summary"><p>Begin an authentication flow by navigating to the specified url and waiting for a callback/redirect to the callbackUrl scheme.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Task&lt;WebAuthenticatorResult&gt; AuthenticateAsync(Uri authorizeUri, Uri callbackUri, CancellationToken cancellationToken)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Uri</span></td>
+        <td><span class="parametername">authorizeUri</span></td>
+        <td><p>Url to navigate to, beginning the authentication flow.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Uri</span></td>
+        <td><span class="parametername">callbackUri</span></td>
+        <td><p>Expected callback url that the navigation flow will eventually redirect to.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Threading.CancellationToken</span></td>
+        <td><span class="parametername">cancellationToken</span></td>
+        <td><p>Cancellation token.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;<a class="xref" href="WinUIEx.WebAuthenticatorResult.html">WebAuthenticatorResult</a>&gt;</td>
+        <td><p>Returns a result parsed out from the callback url.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="WinUIEx_WebAuthenticator_AuthenticateAsync_System_Uri_System_Uri_System_Threading_CancellationToken__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Prior to calling this, a call to <a class="xref" href="WinUIEx.WebAuthenticator.html#WinUIEx_WebAuthenticator_CheckOAuthRedirectionActivation_System_Boolean_">CheckOAuthRedirectionActivation(Boolean)</a> must be made during application startup.</p>
+</div>
+  <h5 id="WinUIEx_WebAuthenticator_AuthenticateAsync_System_Uri_System_Uri_System_Threading_CancellationToken__seealso">See Also</h5>
+  <div class="seealso">
+      <div><a class="xref" href="WinUIEx.WebAuthenticator.html#WinUIEx_WebAuthenticator_CheckOAuthRedirectionActivation_System_Boolean_">CheckOAuthRedirectionActivation(Boolean)</a></div>
+  </div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/dotMorten/WinUIEx/new/main/docs/api_overwrites/new?filename=WinUIEx_WebAuthenticator_CheckOAuthRedirectionActivation_System_Boolean_.md&amp;value=---%0Auid%3A%20WinUIEx.WebAuthenticator.CheckOAuthRedirectionActivation(System.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/dotMorten/WinUIEx/blob/main/src/WinUIEx/WebAuthenticator.cs/#L159">View Source</a>
+  </span>
+  <a id="WinUIEx_WebAuthenticator_CheckOAuthRedirectionActivation_" data-uid="WinUIEx.WebAuthenticator.CheckOAuthRedirectionActivation*"></a>
+  <h4 id="WinUIEx_WebAuthenticator_CheckOAuthRedirectionActivation_System_Boolean_" data-uid="WinUIEx.WebAuthenticator.CheckOAuthRedirectionActivation(System.Boolean)">CheckOAuthRedirectionActivation(Boolean)</h4>
+  <div class="markdown level1 summary"><p>Performs an OAuth protocol activation check and redirects activation to the correct application instance.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool CheckOAuthRedirectionActivation(bool skipShutDownOnActivation = false)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">skipShutDownOnActivation</span></td>
+        <td><p>If <code>true</code>, this application instance will not automatically be shut down. If set to
+<code>true</code> ensure you handle instance exit, or you&apos;ll end up with multiple instances running.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p><code>true</code> if the activation was redirected and this instance should be shut down, otherwise <code>false</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="WinUIEx_WebAuthenticator_CheckOAuthRedirectionActivation_System_Boolean__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The call to this method should be done preferably in the Program.Main method, or the application constructor. It must be called
+prior to using <a class="xref" href="WinUIEx.WebAuthenticator.html#WinUIEx_WebAuthenticator_AuthenticateAsync_System_Uri_System_Uri_System_Threading_CancellationToken_">AuthenticateAsync(Uri, Uri, CancellationToken)</a></p>
+</div>
+  <h5 id="WinUIEx_WebAuthenticator_CheckOAuthRedirectionActivation_System_Boolean__seealso">See Also</h5>
+  <div class="seealso">
+      <div><a class="xref" href="WinUIEx.WebAuthenticator.html#WinUIEx_WebAuthenticator_AuthenticateAsync_System_Uri_System_Uri_System_Threading_CancellationToken_">AuthenticateAsync(Uri, Uri, CancellationToken)</a></div>
+  </div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/dotMorten/WinUIEx/new/main/docs/api_overwrites/new?filename=WinUIEx_WebAuthenticator_CheckOAuthRedirectionActivation_System_Nullable_AppActivationArguments__System_Boolean_.md&amp;value=---%0Auid%3A%20WinUIEx.WebAuthenticator.CheckOAuthRedirectionActivation(System.Nullable%7BAppActivationArguments%7D%2CSystem.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/dotMorten/WinUIEx/blob/main/src/WinUIEx/WebAuthenticator.cs/#L177">View Source</a>
+  </span>
+  <a id="WinUIEx_WebAuthenticator_CheckOAuthRedirectionActivation_" data-uid="WinUIEx.WebAuthenticator.CheckOAuthRedirectionActivation*"></a>
+  <h4 id="WinUIEx_WebAuthenticator_CheckOAuthRedirectionActivation_System_Nullable_AppActivationArguments__System_Boolean_" data-uid="WinUIEx.WebAuthenticator.CheckOAuthRedirectionActivation(System.Nullable{AppActivationArguments},System.Boolean)">CheckOAuthRedirectionActivation(Nullable&lt;AppActivationArguments&gt;, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Performs an OAuth protocol activation check and redirects activation to the correct application instance.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool CheckOAuthRedirectionActivation(AppActivationArguments? activatedEventArgs, bool skipShutDownOnActivation = false)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">AppActivationArguments</span>&gt;</td>
+        <td><span class="parametername">activatedEventArgs</span></td>
+        <td><p>The activation arguments</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">skipShutDownOnActivation</span></td>
+        <td><p>If <code>true</code>, this application instance will not automatically be shut down. If set to
+<code>true</code> ensure you handle instance exit, or you&apos;ll end up with multiple instances running.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p><code>true</code> if the activation was redirected and this instance should be shut down, otherwise <code>false</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="WinUIEx_WebAuthenticator_CheckOAuthRedirectionActivation_System_Nullable_AppActivationArguments__System_Boolean__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The call to this method should be done preferably in the Program.Main method, or the application constructor. It must be called
+prior to using <a class="xref" href="WinUIEx.WebAuthenticator.html#WinUIEx_WebAuthenticator_AuthenticateAsync_System_Uri_System_Uri_System_Threading_CancellationToken_">AuthenticateAsync(Uri, Uri, CancellationToken)</a></p>
+</div>
+  <h5 id="WinUIEx_WebAuthenticator_CheckOAuthRedirectionActivation_System_Nullable_AppActivationArguments__System_Boolean__seealso">See Also</h5>
+  <div class="seealso">
+      <div><a class="xref" href="WinUIEx.WebAuthenticator.html#WinUIEx_WebAuthenticator_AuthenticateAsync_System_Uri_System_Uri_System_Threading_CancellationToken_">AuthenticateAsync(Uri, Uri, CancellationToken)</a></div>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/dotMorten/WinUIEx/new/main/docs/api_overwrites/new?filename=WinUIEx_WebAuthenticator.md&amp;value=---%0Auid%3A%20WinUIEx.WebAuthenticator%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/dotMorten/WinUIEx/blob/main/src/WinUIEx/WebAuthenticator.cs/#L47" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

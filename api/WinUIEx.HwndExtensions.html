@@ -1,0 +1,1241 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class HwndExtensions
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class HwndExtensions
+   ">
+    <meta name="generator" content="docfx 2.59.4.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/logo.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="WinUIEx.HwndExtensions">
+  
+  
+  <h1 id="WinUIEx_HwndExtensions" data-uid="WinUIEx.HwndExtensions" class="text-break">Class HwndExtensions
+  </h1>
+  <div class="markdown level0 summary"><p>A set of HWND Helper Methods</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><span class="xref">HwndExtensions</span></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetHashCode()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetType()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.MemberwiseClone()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.ToString()</span>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="WinUIEx.html">WinUIEx</a></h6>
+  <h6><strong>Assembly</strong>: WinUIEx.dll</h6>
+  <h5 id="WinUIEx_HwndExtensions_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static class HwndExtensions</code></pre>
+  </div>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/dotMorten/WinUIEx/new/main/docs/api_overwrites/new?filename=WinUIEx_HwndExtensions_CenterOnScreen_System_IntPtr_System_Nullable_System_Double__System_Nullable_System_Double__.md&amp;value=---%0Auid%3A%20WinUIEx.HwndExtensions.CenterOnScreen(System.IntPtr%2CSystem.Nullable%7BSystem.Double%7D%2CSystem.Nullable%7BSystem.Double%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/dotMorten/WinUIEx/blob/main/src/WinUIEx/HwndExtensions.cs/#L102">View Source</a>
+  </span>
+  <a id="WinUIEx_HwndExtensions_CenterOnScreen_" data-uid="WinUIEx.HwndExtensions.CenterOnScreen*"></a>
+  <h4 id="WinUIEx_HwndExtensions_CenterOnScreen_System_IntPtr_System_Nullable_System_Double__System_Nullable_System_Double__" data-uid="WinUIEx.HwndExtensions.CenterOnScreen(System.IntPtr,System.Nullable{System.Double},System.Nullable{System.Double})">CenterOnScreen(IntPtr, Nullable&lt;Double&gt;, Nullable&lt;Double&gt;)</h4>
+  <div class="markdown level1 summary"><p>Centers the window on the current monitor</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void CenterOnScreen(IntPtr hwnd, double? width = null, double? height = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.IntPtr</span></td>
+        <td><span class="parametername">hwnd</span></td>
+        <td><p>Window handle</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">System.Double</span>&gt;</td>
+        <td><span class="parametername">width</span></td>
+        <td><p>Width of the window in device independent pixels, or <code>null</code> if keeping the current size</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">System.Double</span>&gt;</td>
+        <td><span class="parametername">height</span></td>
+        <td><p>Height of the window in device independent pixels, or <code>null</code> if keeping the current size</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/dotMorten/WinUIEx/new/main/docs/api_overwrites/new?filename=WinUIEx_HwndExtensions_GetActiveWindow.md&amp;value=---%0Auid%3A%20WinUIEx.HwndExtensions.GetActiveWindow%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/dotMorten/WinUIEx/blob/main/src/WinUIEx/HwndExtensions.cs/#L59">View Source</a>
+  </span>
+  <a id="WinUIEx_HwndExtensions_GetActiveWindow_" data-uid="WinUIEx.HwndExtensions.GetActiveWindow*"></a>
+  <h4 id="WinUIEx_HwndExtensions_GetActiveWindow" data-uid="WinUIEx.HwndExtensions.GetActiveWindow">GetActiveWindow()</h4>
+  <div class="markdown level1 summary"><p>Retrieves the window handle to the active window attached to the calling thread&apos;s message queue.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IntPtr GetActiveWindow()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.IntPtr</span></td>
+        <td><p>The return value is the handle to the active window attached to the calling thread&apos;s message queue. Otherwise, the return value is <strong>IntPtr.Zero</strong>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="WinUIEx_HwndExtensions_GetActiveWindow_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p><a href="https://docs.microsoft.com/windows/win32/api//winuser/nf-winuser-getactivewindow">Learn more about this API from docs.microsoft.com</a>.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/dotMorten/WinUIEx/new/main/docs/api_overwrites/new?filename=WinUIEx_HwndExtensions_GetDesktopWindow.md&amp;value=---%0Auid%3A%20WinUIEx.HwndExtensions.GetDesktopWindow%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/dotMorten/WinUIEx/blob/main/src/WinUIEx/HwndExtensions.cs/#L71">View Source</a>
+  </span>
+  <a id="WinUIEx_HwndExtensions_GetDesktopWindow_" data-uid="WinUIEx.HwndExtensions.GetDesktopWindow*"></a>
+  <h4 id="WinUIEx_HwndExtensions_GetDesktopWindow" data-uid="WinUIEx.HwndExtensions.GetDesktopWindow">GetDesktopWindow()</h4>
+  <div class="markdown level1 summary"><p>Retrieves a handle to the desktop window. The desktop window covers the entire screen. The desktop window is the area on top of which other windows are painted.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IntPtr GetDesktopWindow()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.IntPtr</span></td>
+        <td><p>The return value is a handle to the desktop window.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="WinUIEx_HwndExtensions_GetDesktopWindow_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p><a href="https://docs.microsoft.com/windows/win32/api//winuser/nf-winuser-getdesktopwindow">Learn more about this API from docs.microsoft.com</a>.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/dotMorten/WinUIEx/new/main/docs/api_overwrites/new?filename=WinUIEx_HwndExtensions_GetDpiForWindow_System_IntPtr_.md&amp;value=---%0Auid%3A%20WinUIEx.HwndExtensions.GetDpiForWindow(System.IntPtr)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/dotMorten/WinUIEx/blob/main/src/WinUIEx/HwndExtensions.cs/#L26">View Source</a>
+  </span>
+  <a id="WinUIEx_HwndExtensions_GetDpiForWindow_" data-uid="WinUIEx.HwndExtensions.GetDpiForWindow*"></a>
+  <h4 id="WinUIEx_HwndExtensions_GetDpiForWindow_System_IntPtr_" data-uid="WinUIEx.HwndExtensions.GetDpiForWindow(System.IntPtr)">GetDpiForWindow(IntPtr)</h4>
+  <div class="markdown level1 summary"><p>Returns the dots per inch (dpi) value for the associated window.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static uint GetDpiForWindow(IntPtr hwnd)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.IntPtr</span></td>
+        <td><span class="parametername">hwnd</span></td>
+        <td><p>The window you want to get information about.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.UInt32</span></td>
+        <td><p>The DPI for the window which depends on the <a href="/windows/desktop/api/windef/ne-windef-dpi_awareness">DPI_AWARENESS</a> of the window. See the Remarks for more information. An invalid <em>hwnd</em> value will result in a return value of 0.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="WinUIEx_HwndExtensions_GetDpiForWindow_System_IntPtr__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p><a href="https://docs.microsoft.com/windows/win32/api//winuser/nf-winuser-getdpiforwindow">Learn more about this API from docs.microsoft.com</a>.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/dotMorten/WinUIEx/new/main/docs/api_overwrites/new?filename=WinUIEx_HwndExtensions_GetDpiForWindowsMonitor_System_IntPtr_.md&amp;value=---%0Auid%3A%20WinUIEx.HwndExtensions.GetDpiForWindowsMonitor(System.IntPtr)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/dotMorten/WinUIEx/blob/main/src/WinUIEx/HwndExtensions.cs/#L33">View Source</a>
+  </span>
+  <a id="WinUIEx_HwndExtensions_GetDpiForWindowsMonitor_" data-uid="WinUIEx.HwndExtensions.GetDpiForWindowsMonitor*"></a>
+  <h4 id="WinUIEx_HwndExtensions_GetDpiForWindowsMonitor_System_IntPtr_" data-uid="WinUIEx.HwndExtensions.GetDpiForWindowsMonitor(System.IntPtr)">GetDpiForWindowsMonitor(IntPtr)</h4>
+  <div class="markdown level1 summary"><p>Gets the DPI for the monitor that the Window is on</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static uint GetDpiForWindowsMonitor(IntPtr hwnd)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.IntPtr</span></td>
+        <td><span class="parametername">hwnd</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.UInt32</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/dotMorten/WinUIEx/new/main/docs/api_overwrites/new?filename=WinUIEx_HwndExtensions_GetExtendedWindowStyle_System_IntPtr_.md&amp;value=---%0Auid%3A%20WinUIEx.HwndExtensions.GetExtendedWindowStyle(System.IntPtr)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/dotMorten/WinUIEx/blob/main/src/WinUIEx/HwndExtensions.cs/#L270">View Source</a>
+  </span>
+  <a id="WinUIEx_HwndExtensions_GetExtendedWindowStyle_" data-uid="WinUIEx.HwndExtensions.GetExtendedWindowStyle*"></a>
+  <h4 id="WinUIEx_HwndExtensions_GetExtendedWindowStyle_System_IntPtr_" data-uid="WinUIEx.HwndExtensions.GetExtendedWindowStyle(System.IntPtr)">GetExtendedWindowStyle(IntPtr)</h4>
+  <div class="markdown level1 summary"><p>Gets the current window style</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static ExtendedWindowStyle GetExtendedWindowStyle(IntPtr hWnd)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.IntPtr</span></td>
+        <td><span class="parametername">hWnd</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="WinUIEx.ExtendedWindowStyle.html">ExtendedWindowStyle</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/dotMorten/WinUIEx/new/main/docs/api_overwrites/new?filename=WinUIEx_HwndExtensions_GetWindowStyle_System_IntPtr_.md&amp;value=---%0Auid%3A%20WinUIEx.HwndExtensions.GetWindowStyle(System.IntPtr)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/dotMorten/WinUIEx/blob/main/src/WinUIEx/HwndExtensions.cs/#L222">View Source</a>
+  </span>
+  <a id="WinUIEx_HwndExtensions_GetWindowStyle_" data-uid="WinUIEx.HwndExtensions.GetWindowStyle*"></a>
+  <h4 id="WinUIEx_HwndExtensions_GetWindowStyle_System_IntPtr_" data-uid="WinUIEx.HwndExtensions.GetWindowStyle(System.IntPtr)">GetWindowStyle(IntPtr)</h4>
+  <div class="markdown level1 summary"><p>Gets the current window style</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static WindowStyle GetWindowStyle(IntPtr hWnd)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.IntPtr</span></td>
+        <td><span class="parametername">hWnd</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="WinUIEx.WindowStyle.html">WindowStyle</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/dotMorten/WinUIEx/new/main/docs/api_overwrites/new?filename=WinUIEx_HwndExtensions_HideWindow_System_IntPtr_.md&amp;value=---%0Auid%3A%20WinUIEx.HwndExtensions.HideWindow(System.IntPtr)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/dotMorten/WinUIEx/blob/main/src/WinUIEx/HwndExtensions.cs/#L193">View Source</a>
+  </span>
+  <a id="WinUIEx_HwndExtensions_HideWindow_" data-uid="WinUIEx.HwndExtensions.HideWindow*"></a>
+  <h4 id="WinUIEx_HwndExtensions_HideWindow_System_IntPtr_" data-uid="WinUIEx.HwndExtensions.HideWindow(System.IntPtr)">HideWindow(IntPtr)</h4>
+  <div class="markdown level1 summary"><p>Hides the window and activates another window.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool HideWindow(IntPtr hWnd)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.IntPtr</span></td>
+        <td><span class="parametername">hWnd</span></td>
+        <td><p>Window handle</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p><code>true</code> if the window was previously visible, or <code>false</code> if the window was previously hidden.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/dotMorten/WinUIEx/new/main/docs/api_overwrites/new?filename=WinUIEx_HwndExtensions_MaximizeWindow_System_IntPtr_.md&amp;value=---%0Auid%3A%20WinUIEx.HwndExtensions.MaximizeWindow(System.IntPtr)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/dotMorten/WinUIEx/blob/main/src/WinUIEx/HwndExtensions.cs/#L200">View Source</a>
+  </span>
+  <a id="WinUIEx_HwndExtensions_MaximizeWindow_" data-uid="WinUIEx.HwndExtensions.MaximizeWindow*"></a>
+  <h4 id="WinUIEx_HwndExtensions_MaximizeWindow_System_IntPtr_" data-uid="WinUIEx.HwndExtensions.MaximizeWindow(System.IntPtr)">MaximizeWindow(IntPtr)</h4>
+  <div class="markdown level1 summary"><p>Maximizes the specified window.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool MaximizeWindow(IntPtr hWnd)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.IntPtr</span></td>
+        <td><span class="parametername">hWnd</span></td>
+        <td><p>Window handle</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p><code>true</code> if the window was previously visible, or <code>false</code> if the window was previously hidden.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/dotMorten/WinUIEx/new/main/docs/api_overwrites/new?filename=WinUIEx_HwndExtensions_MinimizeWindow_System_IntPtr_.md&amp;value=---%0Auid%3A%20WinUIEx.HwndExtensions.MinimizeWindow(System.IntPtr)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/dotMorten/WinUIEx/blob/main/src/WinUIEx/HwndExtensions.cs/#L207">View Source</a>
+  </span>
+  <a id="WinUIEx_HwndExtensions_MinimizeWindow_" data-uid="WinUIEx.HwndExtensions.MinimizeWindow*"></a>
+  <h4 id="WinUIEx_HwndExtensions_MinimizeWindow_System_IntPtr_" data-uid="WinUIEx.HwndExtensions.MinimizeWindow(System.IntPtr)">MinimizeWindow(IntPtr)</h4>
+  <div class="markdown level1 summary"><p>Minimizes the specified window and activates the next top-level window in the Z order.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool MinimizeWindow(IntPtr hWnd)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.IntPtr</span></td>
+        <td><span class="parametername">hWnd</span></td>
+        <td><p>Window handle</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p><code>true</code> if the window was previously visible, or <code>false</code> if the window was previously hidden.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/dotMorten/WinUIEx/new/main/docs/api_overwrites/new?filename=WinUIEx_HwndExtensions_RestoreWindow_System_IntPtr_.md&amp;value=---%0Auid%3A%20WinUIEx.HwndExtensions.RestoreWindow(System.IntPtr)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/dotMorten/WinUIEx/blob/main/src/WinUIEx/HwndExtensions.cs/#L215">View Source</a>
+  </span>
+  <a id="WinUIEx_HwndExtensions_RestoreWindow_" data-uid="WinUIEx.HwndExtensions.RestoreWindow*"></a>
+  <h4 id="WinUIEx_HwndExtensions_RestoreWindow_System_IntPtr_" data-uid="WinUIEx.HwndExtensions.RestoreWindow(System.IntPtr)">RestoreWindow(IntPtr)</h4>
+  <div class="markdown level1 summary"><p>Activates and displays the window. If the window is minimized or maximized, the system restores
+it to its original size and position. An application should specify this flag when restoring a minimized window.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool RestoreWindow(IntPtr hWnd)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.IntPtr</span></td>
+        <td><span class="parametername">hWnd</span></td>
+        <td><p>Window handle</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p><code>true</code> if the window was previously visible, or <code>false</code> if the window was previously hidden.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/dotMorten/WinUIEx/new/main/docs/api_overwrites/new?filename=WinUIEx_HwndExtensions_SetAlwaysOnTop_System_IntPtr_System_Boolean_.md&amp;value=---%0Auid%3A%20WinUIEx.HwndExtensions.SetAlwaysOnTop(System.IntPtr%2CSystem.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/dotMorten/WinUIEx/blob/main/src/WinUIEx/HwndExtensions.cs/#L81">View Source</a>
+  </span>
+  <a id="WinUIEx_HwndExtensions_SetAlwaysOnTop_" data-uid="WinUIEx.HwndExtensions.SetAlwaysOnTop*"></a>
+  <h4 id="WinUIEx_HwndExtensions_SetAlwaysOnTop_System_IntPtr_System_Boolean_" data-uid="WinUIEx.HwndExtensions.SetAlwaysOnTop(System.IntPtr,System.Boolean)">SetAlwaysOnTop(IntPtr, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Configures whether the window should always be displayed on top of other windows or not</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void SetAlwaysOnTop(IntPtr hwnd, bool enable)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.IntPtr</span></td>
+        <td><span class="parametername">hwnd</span></td>
+        <td><p>Window handle</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">enable</span></td>
+        <td><p>Whether to display on top</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/dotMorten/WinUIEx/new/main/docs/api_overwrites/new?filename=WinUIEx_HwndExtensions_SetExtendedWindowStyle_System_IntPtr_WinUIEx_ExtendedWindowStyle_.md&amp;value=---%0Auid%3A%20WinUIEx.HwndExtensions.SetExtendedWindowStyle(System.IntPtr%2CWinUIEx.ExtendedWindowStyle)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/dotMorten/WinUIEx/blob/main/src/WinUIEx/HwndExtensions.cs/#L281">View Source</a>
+  </span>
+  <a id="WinUIEx_HwndExtensions_SetExtendedWindowStyle_" data-uid="WinUIEx.HwndExtensions.SetExtendedWindowStyle*"></a>
+  <h4 id="WinUIEx_HwndExtensions_SetExtendedWindowStyle_System_IntPtr_WinUIEx_ExtendedWindowStyle_" data-uid="WinUIEx.HwndExtensions.SetExtendedWindowStyle(System.IntPtr,WinUIEx.ExtendedWindowStyle)">SetExtendedWindowStyle(IntPtr, ExtendedWindowStyle)</h4>
+  <div class="markdown level1 summary"><p>Sets the current window style</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void SetExtendedWindowStyle(IntPtr hWnd, ExtendedWindowStyle newStyle)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.IntPtr</span></td>
+        <td><span class="parametername">hWnd</span></td>
+        <td><p>Window handle</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="WinUIEx.ExtendedWindowStyle.html">ExtendedWindowStyle</a></td>
+        <td><span class="parametername">newStyle</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/dotMorten/WinUIEx/new/main/docs/api_overwrites/new?filename=WinUIEx_HwndExtensions_SetForegroundWindow_System_IntPtr_.md&amp;value=---%0Auid%3A%20WinUIEx.HwndExtensions.SetForegroundWindow(System.IntPtr)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/dotMorten/WinUIEx/blob/main/src/WinUIEx/HwndExtensions.cs/#L50">View Source</a>
+  </span>
+  <a id="WinUIEx_HwndExtensions_SetForegroundWindow_" data-uid="WinUIEx.HwndExtensions.SetForegroundWindow*"></a>
+  <h4 id="WinUIEx_HwndExtensions_SetForegroundWindow_System_IntPtr_" data-uid="WinUIEx.HwndExtensions.SetForegroundWindow(System.IntPtr)">SetForegroundWindow(IntPtr)</h4>
+  <div class="markdown level1 summary"><p>Brings the thread that created the specified window into the foreground and activates the window.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool SetForegroundWindow(IntPtr hWnd)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.IntPtr</span></td>
+        <td><span class="parametername">hWnd</span></td>
+        <td><p>A handle to the window that should be activated and brought to the foreground.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p><code>true</code> if the window was brought to the foreground.</p>
+<p><code>false</code> if the window was not brought to the foreground.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="WinUIEx_HwndExtensions_SetForegroundWindow_System_IntPtr__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p><a href="https://docs.microsoft.com/windows/win32/api//winuser/nf-winuser-setforegroundwindow">Learn more about this API from docs.microsoft.com</a>.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/dotMorten/WinUIEx/new/main/docs/api_overwrites/new?filename=WinUIEx_HwndExtensions_SetIcon_System_IntPtr_IconId_.md&amp;value=---%0Auid%3A%20WinUIEx.HwndExtensions.SetIcon(System.IntPtr%2CIconId)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/dotMorten/WinUIEx/blob/main/src/WinUIEx/HwndExtensions.cs/#L125">View Source</a>
+  </span>
+  <a id="WinUIEx_HwndExtensions_SetIcon_" data-uid="WinUIEx.HwndExtensions.SetIcon*"></a>
+  <h4 id="WinUIEx_HwndExtensions_SetIcon_System_IntPtr_IconId_" data-uid="WinUIEx.HwndExtensions.SetIcon(System.IntPtr,IconId)">SetIcon(IntPtr, IconId)</h4>
+  <div class="markdown level1 summary"><p>Sets the icon for the window, using the specified icon ID.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void SetIcon(IntPtr hwnd, IconId iconId)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.IntPtr</span></td>
+        <td><span class="parametername">hwnd</span></td>
+        <td><p>Window handle</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">IconId</span></td>
+        <td><span class="parametername">iconId</span></td>
+        <td><p>The ID of the icon.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/dotMorten/WinUIEx/new/main/docs/api_overwrites/new?filename=WinUIEx_HwndExtensions_SetIcon_System_IntPtr_System_String_.md&amp;value=---%0Auid%3A%20WinUIEx.HwndExtensions.SetIcon(System.IntPtr%2CSystem.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/dotMorten/WinUIEx/blob/main/src/WinUIEx/HwndExtensions.cs/#L136">View Source</a>
+  </span>
+  <a id="WinUIEx_HwndExtensions_SetIcon_" data-uid="WinUIEx.HwndExtensions.SetIcon*"></a>
+  <h4 id="WinUIEx_HwndExtensions_SetIcon_System_IntPtr_System_String_" data-uid="WinUIEx.HwndExtensions.SetIcon(System.IntPtr,System.String)">SetIcon(IntPtr, String)</h4>
+  <div class="markdown level1 summary"><p>Sets the icon for the window, using the specified icon path.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void SetIcon(IntPtr hwnd, string iconPath)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.IntPtr</span></td>
+        <td><span class="parametername">hwnd</span></td>
+        <td><p>Window handle</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">iconPath</span></td>
+        <td><p>The path of the icon.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/dotMorten/WinUIEx/new/main/docs/api_overwrites/new?filename=WinUIEx_HwndExtensions_SetTaskBarIcon_System_IntPtr_WinUIEx_Icon_.md&amp;value=---%0Auid%3A%20WinUIEx.HwndExtensions.SetTaskBarIcon(System.IntPtr%2CWinUIEx.Icon)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/dotMorten/WinUIEx/blob/main/src/WinUIEx/HwndExtensions.cs/#L176">View Source</a>
+  </span>
+  <a id="WinUIEx_HwndExtensions_SetTaskBarIcon_" data-uid="WinUIEx.HwndExtensions.SetTaskBarIcon*"></a>
+  <h4 id="WinUIEx_HwndExtensions_SetTaskBarIcon_System_IntPtr_WinUIEx_Icon_" data-uid="WinUIEx.HwndExtensions.SetTaskBarIcon(System.IntPtr,WinUIEx.Icon)">SetTaskBarIcon(IntPtr, Icon)</h4>
+  <div class="markdown level1 summary"><p>Sets the task bar icon to the provided icon</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void SetTaskBarIcon(IntPtr hWnd, Icon icon)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.IntPtr</span></td>
+        <td><span class="parametername">hWnd</span></td>
+        <td><p>Window handle</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="WinUIEx.Icon.html">Icon</a></td>
+        <td><span class="parametername">icon</span></td>
+        <td><p>Icon</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/dotMorten/WinUIEx/new/main/docs/api_overwrites/new?filename=WinUIEx_HwndExtensions_SetWindowOpacity_System_IntPtr_System_Byte_.md&amp;value=---%0Auid%3A%20WinUIEx.HwndExtensions.SetWindowOpacity(System.IntPtr%2CSystem.Byte)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/dotMorten/WinUIEx/blob/main/src/WinUIEx/HwndExtensions.cs/#L320">View Source</a>
+  </span>
+  <a id="WinUIEx_HwndExtensions_SetWindowOpacity_" data-uid="WinUIEx.HwndExtensions.SetWindowOpacity*"></a>
+  <h4 id="WinUIEx_HwndExtensions_SetWindowOpacity_System_IntPtr_System_Byte_" data-uid="WinUIEx.HwndExtensions.SetWindowOpacity(System.IntPtr,System.Byte)">SetWindowOpacity(IntPtr, Byte)</h4>
+  <div class="markdown level1 summary"><p>Sets the opacity of a layered window.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void SetWindowOpacity(IntPtr hWnd, byte alpha)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.IntPtr</span></td>
+        <td><span class="parametername">hWnd</span></td>
+        <td><p>Window handle</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td><span class="parametername">alpha</span></td>
+        <td><p>Alpha value used to describe the opacity of the layered window. When <code data-dev-comment-type="paramref" class="paramref">alpha</code> is 0, the window is completely transparent. When <code data-dev-comment-type="paramref" class="paramref">alpha</code> is 255, the window is opaque.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/dotMorten/WinUIEx/new/main/docs/api_overwrites/new?filename=WinUIEx_HwndExtensions_SetWindowPositionAndSize_System_IntPtr_System_Double_System_Double_System_Double_System_Double_.md&amp;value=---%0Auid%3A%20WinUIEx.HwndExtensions.SetWindowPositionAndSize(System.IntPtr%2CSystem.Double%2CSystem.Double%2CSystem.Double%2CSystem.Double)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/dotMorten/WinUIEx/blob/main/src/WinUIEx/HwndExtensions.cs/#L150">View Source</a>
+  </span>
+  <a id="WinUIEx_HwndExtensions_SetWindowPositionAndSize_" data-uid="WinUIEx.HwndExtensions.SetWindowPositionAndSize*"></a>
+  <h4 id="WinUIEx_HwndExtensions_SetWindowPositionAndSize_System_IntPtr_System_Double_System_Double_System_Double_System_Double_" data-uid="WinUIEx.HwndExtensions.SetWindowPositionAndSize(System.IntPtr,System.Double,System.Double,System.Double,System.Double)">SetWindowPositionAndSize(IntPtr, Double, Double, Double, Double)</h4>
+  <div class="markdown level1 summary"><p>Positions and resizes the window</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void SetWindowPositionAndSize(IntPtr hwnd, double x, double y, double width, double height)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.IntPtr</span></td>
+        <td><span class="parametername">hwnd</span></td>
+        <td><p>Window handle</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Double</span></td>
+        <td><span class="parametername">x</span></td>
+        <td><p>Left side of the window in device independent pixels</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Double</span></td>
+        <td><span class="parametername">y</span></td>
+        <td><p>Top  side of the window in device independent pixels</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Double</span></td>
+        <td><span class="parametername">width</span></td>
+        <td><p>Width of the window in device independent pixels, or <code>null</code> if keeping the current size</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Double</span></td>
+        <td><span class="parametername">height</span></td>
+        <td><p>Height of the window in device independent pixels, or <code>null</code> if keeping the current size</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/dotMorten/WinUIEx/new/main/docs/api_overwrites/new?filename=WinUIEx_HwndExtensions_SetWindowSize_System_IntPtr_System_Double_System_Double_.md&amp;value=---%0Auid%3A%20WinUIEx.HwndExtensions.SetWindowSize(System.IntPtr%2CSystem.Double%2CSystem.Double)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/dotMorten/WinUIEx/blob/main/src/WinUIEx/HwndExtensions.cs/#L163">View Source</a>
+  </span>
+  <a id="WinUIEx_HwndExtensions_SetWindowSize_" data-uid="WinUIEx.HwndExtensions.SetWindowSize*"></a>
+  <h4 id="WinUIEx_HwndExtensions_SetWindowSize_System_IntPtr_System_Double_System_Double_" data-uid="WinUIEx.HwndExtensions.SetWindowSize(System.IntPtr,System.Double,System.Double)">SetWindowSize(IntPtr, Double, Double)</h4>
+  <div class="markdown level1 summary"><p>Sets the width and height of the window in device-independent pixels</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void SetWindowSize(IntPtr hwnd, double width, double height)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.IntPtr</span></td>
+        <td><span class="parametername">hwnd</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Double</span></td>
+        <td><span class="parametername">width</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Double</span></td>
+        <td><span class="parametername">height</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/dotMorten/WinUIEx/new/main/docs/api_overwrites/new?filename=WinUIEx_HwndExtensions_SetWindowStyle_System_IntPtr_WinUIEx_WindowStyle_.md&amp;value=---%0Auid%3A%20WinUIEx.HwndExtensions.SetWindowStyle(System.IntPtr%2CWinUIEx.WindowStyle)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/dotMorten/WinUIEx/blob/main/src/WinUIEx/HwndExtensions.cs/#L255">View Source</a>
+  </span>
+  <a id="WinUIEx_HwndExtensions_SetWindowStyle_" data-uid="WinUIEx.HwndExtensions.SetWindowStyle*"></a>
+  <h4 id="WinUIEx_HwndExtensions_SetWindowStyle_System_IntPtr_WinUIEx_WindowStyle_" data-uid="WinUIEx.HwndExtensions.SetWindowStyle(System.IntPtr,WinUIEx.WindowStyle)">SetWindowStyle(IntPtr, WindowStyle)</h4>
+  <div class="markdown level1 summary"><p>Sets the current window style</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void SetWindowStyle(IntPtr hWnd, WindowStyle newStyle)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.IntPtr</span></td>
+        <td><span class="parametername">hWnd</span></td>
+        <td><p>Window handle</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="WinUIEx.WindowStyle.html">WindowStyle</a></td>
+        <td><span class="parametername">newStyle</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/dotMorten/WinUIEx/new/main/docs/api_overwrites/new?filename=WinUIEx_HwndExtensions_ShowWindow_System_IntPtr_.md&amp;value=---%0Auid%3A%20WinUIEx.HwndExtensions.ShowWindow(System.IntPtr)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/dotMorten/WinUIEx/blob/main/src/WinUIEx/HwndExtensions.cs/#L186">View Source</a>
+  </span>
+  <a id="WinUIEx_HwndExtensions_ShowWindow_" data-uid="WinUIEx.HwndExtensions.ShowWindow*"></a>
+  <h4 id="WinUIEx_HwndExtensions_ShowWindow_System_IntPtr_" data-uid="WinUIEx.HwndExtensions.ShowWindow(System.IntPtr)">ShowWindow(IntPtr)</h4>
+  <div class="markdown level1 summary"><p>Activates the window and displays it in its current size and position.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool ShowWindow(IntPtr hWnd)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.IntPtr</span></td>
+        <td><span class="parametername">hWnd</span></td>
+        <td><p>Window handle</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p><code>true</code> if the window was previously visible, or <code>false</code> if the window was previously hidden.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/dotMorten/WinUIEx/new/main/docs/api_overwrites/new?filename=WinUIEx_HwndExtensions_ToggleExtendedWindowStyle_System_IntPtr_System_Boolean_WinUIEx_ExtendedWindowStyle_.md&amp;value=---%0Auid%3A%20WinUIEx.HwndExtensions.ToggleExtendedWindowStyle(System.IntPtr%2CSystem.Boolean%2CWinUIEx.ExtendedWindowStyle)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/dotMorten/WinUIEx/blob/main/src/WinUIEx/HwndExtensions.cs/#L298">View Source</a>
+  </span>
+  <a id="WinUIEx_HwndExtensions_ToggleExtendedWindowStyle_" data-uid="WinUIEx.HwndExtensions.ToggleExtendedWindowStyle*"></a>
+  <h4 id="WinUIEx_HwndExtensions_ToggleExtendedWindowStyle_System_IntPtr_System_Boolean_WinUIEx_ExtendedWindowStyle_" data-uid="WinUIEx.HwndExtensions.ToggleExtendedWindowStyle(System.IntPtr,System.Boolean,WinUIEx.ExtendedWindowStyle)">ToggleExtendedWindowStyle(IntPtr, Boolean, ExtendedWindowStyle)</h4>
+  <div class="markdown level1 summary"><p>Disables or enables the window style</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void ToggleExtendedWindowStyle(IntPtr hWnd, bool visible, ExtendedWindowStyle style)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.IntPtr</span></td>
+        <td><span class="parametername">hWnd</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">visible</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="WinUIEx.ExtendedWindowStyle.html">ExtendedWindowStyle</a></td>
+        <td><span class="parametername">style</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/dotMorten/WinUIEx/new/main/docs/api_overwrites/new?filename=WinUIEx_HwndExtensions_ToggleWindowStyle_System_IntPtr_System_Boolean_WinUIEx_WindowStyle_.md&amp;value=---%0Auid%3A%20WinUIEx.HwndExtensions.ToggleWindowStyle(System.IntPtr%2CSystem.Boolean%2CWinUIEx.WindowStyle)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/dotMorten/WinUIEx/blob/main/src/WinUIEx/HwndExtensions.cs/#L234">View Source</a>
+  </span>
+  <a id="WinUIEx_HwndExtensions_ToggleWindowStyle_" data-uid="WinUIEx.HwndExtensions.ToggleWindowStyle*"></a>
+  <h4 id="WinUIEx_HwndExtensions_ToggleWindowStyle_System_IntPtr_System_Boolean_WinUIEx_WindowStyle_" data-uid="WinUIEx.HwndExtensions.ToggleWindowStyle(System.IntPtr,System.Boolean,WinUIEx.WindowStyle)">ToggleWindowStyle(IntPtr, Boolean, WindowStyle)</h4>
+  <div class="markdown level1 summary"><p>Disables or enables the window style</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void ToggleWindowStyle(IntPtr hWnd, bool visible, WindowStyle style)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.IntPtr</span></td>
+        <td><span class="parametername">hWnd</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">visible</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="WinUIEx.WindowStyle.html">WindowStyle</a></td>
+        <td><span class="parametername">style</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/dotMorten/WinUIEx/new/main/docs/api_overwrites/new?filename=WinUIEx_HwndExtensions.md&amp;value=---%0Auid%3A%20WinUIEx.HwndExtensions%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/dotMorten/WinUIEx/blob/main/src/WinUIEx/HwndExtensions.cs/#L18" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

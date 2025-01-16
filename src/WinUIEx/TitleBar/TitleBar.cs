@@ -52,13 +52,13 @@ public partial class TitleBar : Control
     const string s_footerVisibleVisualStateName = "FooterVisible";
     const string s_footerCollapsedVisualStateName = "FooterCollapsed";
     const string s_footerDeactivatedVisualStateName = "FooterDeactivated";
-    const string s_titleBarButtonForegroundColorName = "TitleBarButtonForegroundColor";
-    const string s_titleBarButtonBackgroundColorName = "TitleBarButtonBackgroundColor";
-    const string s_titleBarButtonHoverForegroundColorName = "TitleBarButtonHoverForegroundColor";
-    const string s_titleBarButtonHoverBackgroundColorName = "TitleBarButtonHoverBackgroundColor";
-    const string s_titleBarButtonPressedForegroundColorName = "TitleBarButtonPressedForegroundColor";
-    const string s_titleBarButtonPressedBackgroundColorName = "TitleBarButtonPressedBackgroundColor";
-    const string s_titleBarButtonInactiveForegroundColorName = "TitleBarButtonInactiveForegroundColor";
+    const string s_titleBarCaptionButtonForegroundColorName = "TitleBarCaptionButtonForegroundColor";
+    const string s_titleBarCaptionButtonBackgroundColorName = "TitleBarCaptionButtonBackgroundColor";
+    const string s_titleBarCaptionButtonHoverForegroundColorName = "TitleBarCaptionButtonHoverForegroundColor";
+    const string s_titleBarCaptionButtonHoverBackgroundColorName = "TitleBarCaptionButtonHoverBackgroundColor";
+    const string s_titleBarCaptionButtonPressedForegroundColorName = "TitleBarCaptionButtonPressedForegroundColor";
+    const string s_titleBarCaptionButtonPressedBackgroundColorName = "TitleBarCaptionButtonPressedBackgroundColor";
+    const string s_titleBarCaptionButtonInactiveForegroundColorName = "TitleBarCaptionButtonInactiveForegroundColor";
 
     private ColumnDefinition? m_leftPaddingColumn;
     private ColumnDefinition? m_rightPaddingColumn;
@@ -392,7 +392,33 @@ public partial class TitleBar : Control
 
     private object? ResourceLookup(string key)
     {
-        return this.Resources.ContainsKey(key) ? this.Resources[key] : Application.Current.Resources.ContainsKey(key) ? Application.Current.Resources[key] : null;
+        // TODO: This method is generally not working since WinUI doesn't allow us to look up resources defined in Generic.xaml
+        return ResourceLookup(key, this, ActualTheme) ?? ResourceLookup(key, Application.Current.Resources, ActualTheme) ?? null;
+    }
+    private static object? ResourceLookup(string key, FrameworkElement control, ElementTheme theme)
+    {
+        var resource = ResourceLookup(key, control.Resources, theme);
+        if (resource is not null)
+            return resource;
+        if(control.Parent is FrameworkElement parent)
+        {
+            return ResourceLookup(key, parent, theme);
+        }
+        return null;
+    }
+    private static object? ResourceLookup(string key, ResourceDictionary dictionary, ElementTheme theme)
+    {
+        if (dictionary.ContainsKey(key))
+            return dictionary[key];
+        if(dictionary.ThemeDictionaries.TryGetValue(theme.ToString(), out var themeDictionary) && themeDictionary is ResourceDictionary d && d.ContainsKey(key))
+            return d[key];
+        foreach (var mdictionary in dictionary.MergedDictionaries)
+        {
+            var resource = ResourceLookup(key, mdictionary, theme);
+            if (resource is not null)
+                return resource;
+        }
+        return null;
     }
 
     private void UpdateTheme()
@@ -403,33 +429,40 @@ public partial class TitleBar : Control
             var appTitleBar = Microsoft.UI.Windowing.AppWindow.GetFromWindowId(appWindowId)?.TitleBar;
             // AppWindow TitleBar's caption buttons does not update colors with theme change.
             // We need to set them here.
+            
             if (appTitleBar is not null)
             {
+                // Define fallback colors because WinUI doesn't give us full resource lookup support, so the lookups generally fail
+                var theme = this.ActualTheme;
+                Windows.UI.Color defaultForeground = ActualTheme == ElementTheme.Dark ? Microsoft.UI.Colors.White : Microsoft.UI.Colors.Black;
+                Windows.UI.Color defaultHoverBackground = ActualTheme == ElementTheme.Dark ? Windows.UI.Color.FromArgb(0x0f,0xff,0xff,0xff) : Windows.UI.Color.FromArgb(0x09, 0x00, 0x00, 0x00);
+                Windows.UI.Color defaultPressedBackground = ActualTheme == ElementTheme.Dark ? Windows.UI.Color.FromArgb(0x0a, 0xff, 0xff, 0xff) : Windows.UI.Color.FromArgb(0x06, 0x00, 0x00, 0x00);
+                
                 // Rest colors.
-                var buttonForegroundColor = (Windows.UI.Color?)ResourceLookup(s_titleBarButtonForegroundColorName);
-                appTitleBar.ButtonForegroundColor = buttonForegroundColor;
+                var buttonForegroundColor = (Windows.UI.Color?)ResourceLookup(s_titleBarCaptionButtonForegroundColorName);
+                appTitleBar.ButtonForegroundColor = buttonForegroundColor ?? defaultForeground;
 
-                var buttonBackgroundColor = (Windows.UI.Color?)ResourceLookup(s_titleBarButtonBackgroundColorName);
-                appTitleBar.ButtonBackgroundColor = buttonBackgroundColor;
-                appTitleBar.ButtonInactiveBackgroundColor = buttonBackgroundColor;
+                var buttonBackgroundColor = (Windows.UI.Color?)ResourceLookup(s_titleBarCaptionButtonBackgroundColorName);
+                appTitleBar.ButtonBackgroundColor = buttonBackgroundColor ?? Microsoft.UI.Colors.Transparent;
+                appTitleBar.ButtonInactiveBackgroundColor = buttonBackgroundColor ?? Microsoft.UI.Colors.Transparent;
 
                 // Hover colors.
-                var buttonHoverForegroundColor = (Windows.UI.Color?)ResourceLookup(s_titleBarButtonHoverForegroundColorName);
-                appTitleBar.ButtonHoverForegroundColor = buttonHoverForegroundColor;
+                var buttonHoverForegroundColor = (Windows.UI.Color?)ResourceLookup(s_titleBarCaptionButtonHoverForegroundColorName);
+                appTitleBar.ButtonHoverForegroundColor = buttonHoverForegroundColor ?? defaultForeground;
 
-                var buttonHoverBackgroundColor = (Windows.UI.Color?)ResourceLookup(s_titleBarButtonHoverBackgroundColorName);
-                appTitleBar.ButtonHoverBackgroundColor = buttonHoverBackgroundColor;
+                var buttonHoverBackgroundColor = (Windows.UI.Color?)ResourceLookup(s_titleBarCaptionButtonHoverBackgroundColorName);
+                appTitleBar.ButtonHoverBackgroundColor = buttonHoverBackgroundColor ?? defaultHoverBackground;
 
                 // Pressed colors.
-                var buttonPressedForegroundColor = (Windows.UI.Color?)ResourceLookup(s_titleBarButtonPressedForegroundColorName);
-                appTitleBar.ButtonPressedForegroundColor = buttonPressedForegroundColor;
+                var buttonPressedForegroundColor = (Windows.UI.Color?)ResourceLookup(s_titleBarCaptionButtonPressedForegroundColorName);
+                appTitleBar.ButtonPressedForegroundColor = buttonPressedForegroundColor ?? defaultForeground;
 
-                var buttonPressedBackgroundColor = (Windows.UI.Color?)ResourceLookup(s_titleBarButtonPressedBackgroundColorName);
-                appTitleBar.ButtonPressedBackgroundColor= buttonPressedBackgroundColor;
-
+                var buttonPressedBackgroundColor = (Windows.UI.Color?)ResourceLookup(s_titleBarCaptionButtonPressedBackgroundColorName);
+                appTitleBar.ButtonPressedBackgroundColor = buttonPressedBackgroundColor ?? defaultPressedBackground;
+                
                 // Inactive foreground.
-                var buttonInactiveForegroundColor = (Windows.UI.Color?)ResourceLookup(s_titleBarButtonInactiveForegroundColorName);
-                appTitleBar.ButtonInactiveForegroundColor =buttonInactiveForegroundColor;
+                var buttonInactiveForegroundColor = (Windows.UI.Color?)ResourceLookup(s_titleBarCaptionButtonInactiveForegroundColorName);
+                appTitleBar.ButtonInactiveForegroundColor = buttonInactiveForegroundColor ?? (ActualTheme == ElementTheme.Dark ? Windows.UI.Color.FromArgb(255, 0x71, 0x71, 0x71) : Windows.UI.Color.FromArgb(255, 0x9b, 0x9b, 0x9b));
             }
         }
     }

@@ -26,6 +26,7 @@
     <Product>WinUI Extensions</Product>
     <PackageReleaseNotes>
       - WebAuthenticator: Added support for unpackaged apps.
+      - Fixes TitleBar button colors #210
     </PackageReleaseNotes>
   </PropertyGroup>
 

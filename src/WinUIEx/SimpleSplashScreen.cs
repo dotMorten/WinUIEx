@@ -164,7 +164,7 @@ namespace WinUIEx
             wcex.hbrBackground = new Windows.Win32.Graphics.Gdi.HBRUSH(COLOR_BACKGROUND + 1);
             wcex.cbClsExtra = 0;
             wcex.cbWndExtra = 0;
-            wcex.hInstance = new Windows.Win32.Foundation.HINSTANCE(Marshal.GetHINSTANCE(this.GetType().Module));
+            wcex.hInstance = Windows.Win32.Foundation.HINSTANCE.Null;
             wcex.hIcon = HICON.Null;
             wcex.hCursor = HCURSOR.Null;
             wcex.lpszMenuName = null;

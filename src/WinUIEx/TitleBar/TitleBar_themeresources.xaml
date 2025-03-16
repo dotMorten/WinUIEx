@@ -1,9 +1,9 @@
-﻿<!-- Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT License. See LICENSE in the project root for license information. -->
+﻿<!--  Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT License. See LICENSE in the project root for license information.  -->
 <ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:controls="using:Microsoft.UI.Xaml.Controls"
     xmlns:animatedvisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+    xmlns:controls="using:Microsoft.UI.Xaml.Controls">
 
     <ResourceDictionary.ThemeDictionaries>
         <ResourceDictionary x:Key="Default">
@@ -18,7 +18,7 @@
             <StaticResource x:Key="TitleBarBackButtonForeground" ResourceKey="TextFillColorPrimaryBrush" />
             <StaticResource x:Key="TitleBarBackButtonForegroundPointerOver" ResourceKey="TextFillColorPrimaryBrush" />
             <StaticResource x:Key="TitleBarBackButtonForegroundPressed" ResourceKey="TextFillColorSecondaryBrush" />
-            <StaticResource x:Key="TitleBarBackForegroundDisabled" ResourceKey="TextFillColorDisabledBrush" />
+            <StaticResource x:Key="TitleBarBackButtonForegroundDisabled" ResourceKey="TextFillColorDisabledBrush" />
             <StaticResource x:Key="TitleBarPaneToggleButtonBackground" ResourceKey="SubtleFillColorTransparentBrush" />
             <StaticResource x:Key="TitleBarPaneToggleButtonBackgroundPointerOver" ResourceKey="SubtleFillColorSecondaryBrush" />
             <StaticResource x:Key="TitleBarPaneToggleButtonBackgroundPressed" ResourceKey="SubtleFillColorTertiaryBrush" />
@@ -26,7 +26,7 @@
             <StaticResource x:Key="TitleBarPaneToggleButtonForeground" ResourceKey="TextFillColorPrimaryBrush" />
             <StaticResource x:Key="TitleBarPaneToggleButtonForegroundPointerOver" ResourceKey="TextFillColorPrimaryBrush" />
             <StaticResource x:Key="TitleBarPaneToggleButtonForegroundPressed" ResourceKey="TextFillColorSecondaryBrush" />
-            <StaticResource x:Key="TitleBarPaneToggleForegroundDisabled" ResourceKey="TextFillColorDisabledBrush" />
+            <StaticResource x:Key="TitleBarPaneToggleButtonForegroundDisabled" ResourceKey="TextFillColorDisabledBrush" />
             <Color x:Key="TitleBarCaptionButtonForegroundColor">#FFFFFF</Color>
             <Color x:Key="TitleBarCaptionButtonHoverForegroundColor">#FFFFFF</Color>
             <Color x:Key="TitleBarCaptionButtonPressedForegroundColor">#CFCFCF</Color>
@@ -51,7 +51,7 @@
             <StaticResource x:Key="TitleBarBackButtonForeground" ResourceKey="TextFillColorPrimaryBrush" />
             <StaticResource x:Key="TitleBarBackButtonForegroundPointerOver" ResourceKey="TextFillColorPrimaryBrush" />
             <StaticResource x:Key="TitleBarBackButtonForegroundPressed" ResourceKey="TextFillColorSecondaryBrush" />
-            <StaticResource x:Key="TitleBarBackForegroundDisabled" ResourceKey="TextFillColorDisabledBrush" />
+            <StaticResource x:Key="TitleBarBackButtonForegroundDisabled" ResourceKey="TextFillColorDisabledBrush" />
             <StaticResource x:Key="TitleBarPaneToggleButtonBackground" ResourceKey="SubtleFillColorTransparentBrush" />
             <StaticResource x:Key="TitleBarPaneToggleButtonBackgroundPointerOver" ResourceKey="SubtleFillColorSecondaryBrush" />
             <StaticResource x:Key="TitleBarPaneToggleButtonBackgroundPressed" ResourceKey="SubtleFillColorTertiaryBrush" />
@@ -59,7 +59,7 @@
             <StaticResource x:Key="TitleBarPaneToggleButtonForeground" ResourceKey="TextFillColorPrimaryBrush" />
             <StaticResource x:Key="TitleBarPaneToggleButtonForegroundPointerOver" ResourceKey="TextFillColorPrimaryBrush" />
             <StaticResource x:Key="TitleBarPaneToggleButtonForegroundPressed" ResourceKey="TextFillColorSecondaryBrush" />
-            <StaticResource x:Key="TitleBarPaneToggleForegroundDisabled" ResourceKey="TextFillColorDisabledBrush" />
+            <StaticResource x:Key="TitleBarPaneToggleButtonForegroundDisabled" ResourceKey="TextFillColorDisabledBrush" />
             <Color x:Key="TitleBarCaptionButtonForegroundColor">#191919</Color>
             <Color x:Key="TitleBarCaptionButtonHoverForegroundColor">#191919</Color>
             <Color x:Key="TitleBarCaptionButtonPressedForegroundColor">#606060</Color>
@@ -84,7 +84,7 @@
             <StaticResource x:Key="TitleBarBackButtonForeground" ResourceKey="SystemControlForegroundBaseHighBrush" />
             <StaticResource x:Key="TitleBarBackButtonForegroundPointerOver" ResourceKey="SystemControlHighlightAltBaseHighBrush" />
             <StaticResource x:Key="TitleBarBackButtonForegroundPressed" ResourceKey="SystemControlHighlightAltBaseHighBrush" />
-            <StaticResource x:Key="TitleBarBackForegroundDisabled" ResourceKey="SystemControlDisabledBaseMediumLowBrush" />
+            <StaticResource x:Key="TitleBarBackButtonForegroundDisabled" ResourceKey="SystemControlDisabledBaseMediumLowBrush" />
             <StaticResource x:Key="TitleBarPaneToggleButtonBackground" ResourceKey="SystemControlBackgroundBaseLowBrush" />
             <StaticResource x:Key="TitleBarPaneToggleButtonBackgroundPointerOver" ResourceKey="SystemControlHighlightListLowBrush" />
             <StaticResource x:Key="TitleBarPaneToggleButtonBackgroundPressed" ResourceKey="SystemControlHighlightListMediumBrush" />
@@ -92,7 +92,7 @@
             <StaticResource x:Key="TitleBarPaneToggleButtonForeground" ResourceKey="SystemControlForegroundBaseHighBrush" />
             <StaticResource x:Key="TitleBarPaneToggleButtonForegroundPointerOver" ResourceKey="SystemControlHighlightAltBaseHighBrush" />
             <StaticResource x:Key="TitleBarPaneToggleButtonForegroundPressed" ResourceKey="SystemControlHighlightAltBaseHighBrush" />
-            <StaticResource x:Key="TitleBarPaneToggleForegroundDisabled" ResourceKey="SystemControlDisabledBaseMediumLowBrush" />
+            <StaticResource x:Key="TitleBarPaneToggleButtonForegroundDisabled" ResourceKey="SystemControlDisabledBaseMediumLowBrush" />
             <StaticResource x:Key="TitleBarCaptionButtonForegroundColor" ResourceKey="TextFillColorPrimary" />
             <StaticResource x:Key="TitleBarCaptionButtonHoverForegroundColor" ResourceKey="TextFillColorPrimary" />
             <StaticResource x:Key="TitleBarCaptionButtonPressedForegroundColor" ResourceKey="TextFillColorSecondary" />
@@ -125,7 +125,27 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Grid x:Name="RootGrid" Background="{TemplateBinding Background}" CornerRadius="{TemplateBinding CornerRadius}">
+                    <Grid
+                        x:Name="RootGrid"
+                        Background="{TemplateBinding Background}"
+                        CornerRadius="{TemplateBinding CornerRadius}">
+                        <controls:AnimatedIcon
+                            x:Name="Content"
+                            Width="16"
+                            Height="16"
+                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                            controls:AnimatedIcon.State="Normal"
+                            AutomationProperties.AccessibilityView="Raw">
+                            <animatedvisuals:AnimatedBackVisualSource />
+                            <controls:AnimatedIcon.FallbackIconSource>
+                                <controls:FontIconSource
+                                    FontFamily="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=FontFamily}"
+                                    FontSize="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=FontSize}"
+                                    Glyph="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Content}"
+                                    MirroredWhenRightToLeft="True" />
+                            </controls:AnimatedIcon.FallbackIconSource>
+                        </controls:AnimatedIcon>
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
                                 <VisualState x:Name="Normal" />
@@ -167,12 +187,6 @@
                                 </VisualState>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
-                        <controls:AnimatedIcon x:Name="Content" Height="16" Width="16" controls:AnimatedIcon.State="Normal" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" AutomationProperties.AccessibilityView="Raw">
-                            <animatedvisuals:AnimatedBackVisualSource />
-                            <controls:AnimatedIcon.FallbackIconSource>
-                                <controls:FontIconSource FontSize="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=FontSize}" FontFamily="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=FontFamily}" Glyph="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Content}" MirroredWhenRightToLeft="True" />
-                            </controls:AnimatedIcon.FallbackIconSource>
-                        </controls:AnimatedIcon>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
@@ -195,7 +209,27 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Grid x:Name="RootGrid" Background="{TemplateBinding Background}" CornerRadius="{TemplateBinding CornerRadius}">
+                    <Grid
+                        x:Name="RootGrid"
+                        Background="{TemplateBinding Background}"
+                        CornerRadius="{TemplateBinding CornerRadius}">
+                        <controls:AnimatedIcon
+                            x:Name="Content"
+                            Width="16"
+                            Height="16"
+                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                            controls:AnimatedIcon.State="Normal"
+                            AutomationProperties.AccessibilityView="Raw">
+                            <animatedvisuals:AnimatedGlobalNavigationButtonVisualSource />
+                            <controls:AnimatedIcon.FallbackIconSource>
+                                <controls:FontIconSource
+                                    FontFamily="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=FontFamily}"
+                                    FontSize="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=FontSize}"
+                                    Glyph="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Content}"
+                                    MirroredWhenRightToLeft="True" />
+                            </controls:AnimatedIcon.FallbackIconSource>
+                        </controls:AnimatedIcon>
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
                                 <VisualState x:Name="Normal" />
@@ -237,12 +271,6 @@
                                 </VisualState>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
-                        <controls:AnimatedIcon x:Name="Content" Height="16" Width="16" controls:AnimatedIcon.State="Normal" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" AutomationProperties.AccessibilityView="Raw">
-                            <animatedvisuals:AnimatedGlobalNavigationButtonVisualSource />
-                            <controls:AnimatedIcon.FallbackIconSource>
-                                <controls:FontIconSource FontSize="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=FontSize}" FontFamily="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=FontFamily}" Glyph="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Content}" MirroredWhenRightToLeft="True" />
-                            </controls:AnimatedIcon.FallbackIconSource>
-                        </controls:AnimatedIcon>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>

@@ -25,9 +25,9 @@
     <PackageId>WinUIEx</PackageId>
     <Product>WinUI Extensions</Product>
     <PackageReleaseNotes>
-      - Updated to Windows App SDK 1.7.0
-      - Deprecated TitleBar (Replaced by Windows App SDK TitleBar)
-      
+      - Updated to Windows App SDK 1.7.0.
+      - Deprecated TitleBar Use Windows App SDK TitleBar instead.
+      - Deprecated WebAuthenticator APIs. Use Windows App SDK's Microsoft.Security.Authentication.OAuth APIs instead.
     </PackageReleaseNotes>
   </PropertyGroup>
 

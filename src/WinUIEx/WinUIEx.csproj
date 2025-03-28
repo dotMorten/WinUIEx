@@ -25,11 +25,7 @@
     <PackageId>WinUIEx</PackageId>
     <Product>WinUI Extensions</Product>
     <PackageReleaseNotes>
-      - WebAuthenticator: Added support for unpackaged apps
-      - Avoid SplashScreen compile aot warning #206
-      - WinAppSDK 1.7exp2: TransparentTintBackdrop System.InvalidCastException: 'Specified cast is not valid.' #207
-      - When creating a new WindowsMessageMonitor instance, min/max width/height restrictions no longer works #209
-      - Fixes TitleBar button colors #210
+      - Updated to Windows App SDK 1.7.0
     </PackageReleaseNotes>
   </PropertyGroup>
 
@@ -39,12 +35,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="$(WinAppSDKVersion)" />
-	<PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2651.64" IncludeAssets="none" /> <!-- Work around bug in webview package, and we don't really need this anyway -->
     <None Include="README.md" Pack="true" PackagePath="\" />
-    <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.2.0" >
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
   </ItemGroup>
 
   <!-- Analyzer stuff -->

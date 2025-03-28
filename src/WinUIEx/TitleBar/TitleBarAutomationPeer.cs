@@ -5,6 +5,7 @@ namespace WinUIEx;
 /// <summary>
 /// Automation peer for the <see cref="TitleBar"/> control.
 /// </summary>
+[System.Obsolete("Use Windows App SDK's TitleBar control instead.")]
 public partial class TitleBarAutomationPeer : FrameworkElementAutomationPeer
 {
     /// <summary>

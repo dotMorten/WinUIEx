@@ -10,6 +10,7 @@ namespace WinUIEx;
 /// <summary>
 /// TitleBar control.
 /// </summary>
+[System.Obsolete("Use Windows App SDK's TitleBar control instead.")]
 public partial class TitleBar : Control
 {
     private double m_compactModeThresholdWidth = 0.0;

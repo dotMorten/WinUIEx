@@ -142,12 +142,12 @@ namespace WinUIExSample
                 contentFrame.GoBack();
         }
 
-        private void TitleBar_PaneToggleRequested(TitleBar sender, object args)
+        private void TitleBar_PaneToggleRequested(Microsoft.UI.Xaml.Controls.TitleBar sender, object args)
         {
             navigationView.IsPaneOpen = !navigationView.IsPaneOpen;
         }
 
-        private void TitleBar_BackRequested(TitleBar sender, object args)
+        private void TitleBar_BackRequested(Microsoft.UI.Xaml.Controls.TitleBar sender, object args)
         {
             if (contentFrame.CanGoBack)
                 contentFrame.GoBack();

@@ -26,6 +26,8 @@
     <Product>WinUI Extensions</Product>
     <PackageReleaseNotes>
       - Updated to Windows App SDK 1.7.0
+      - Deprecated TitleBar (Replaced by Windows App SDK TitleBar)
+      
     </PackageReleaseNotes>
   </PropertyGroup>
 

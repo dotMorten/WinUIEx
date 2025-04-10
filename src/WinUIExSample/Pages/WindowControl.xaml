@@ -24,6 +24,7 @@
                     <ToggleSwitch Header="Can Minimize" IsOn="{x:Bind MainWindow.IsMinimizable, Mode=TwoWay}" />
                     <ToggleSwitch Header="Can Maximize" IsOn="{x:Bind MainWindow.IsMaximizable, Mode=TwoWay}" />
                     <ToggleSwitch Header="Can Resize" IsOn="{x:Bind MainWindow.IsResizable, Mode=TwoWay}" />
+                    <ToggleSwitch Header="Is Visible in Tray" IsOn="{x:Bind MainWindow.IsVisibleInTray, Mode=TwoWay}" />
                     <ToggleSwitch Header="Is Titlebar Visible" IsOn="{x:Bind MainWindow.IsTitleBarVisible, Mode=TwoWay}" />
                     <ToggleSwitch Header="Always On Top" IsOn="{x:Bind MainWindow.IsAlwaysOnTop, Mode=TwoWay}" />
                     </GridView>

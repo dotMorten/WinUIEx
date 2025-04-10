@@ -244,6 +244,21 @@ namespace WinUIEx
         }
 
         /// <summary>
+        /// Gets or sets a value indicating whether the window is shown in the system tray.
+        /// </summary>
+        /// <remarks>
+        /// <para>The system tray icon will use the same icon as Window's Taskbar icon, and tooltip will match the AppWindow.Title value. Double-clicking the icon restores the window if minimized and brings it to the front.</para>
+        /// <para>See <see cref="WindowExtensions.SetIsShownInSwitchers" /> to hide the window from the Alt+Tab switcher and task bar.
+        /// If you want to minimize the window to the tray, set this to <c>true</c> and on <see cref="WindowManager.WindowStateChanged"/> changes to minimized,
+        /// hide it from the switcher.</para>
+        /// </remarks>
+        public bool IsVisibleInTray
+        {
+            get => _manager.IsVisibleInTray;
+            set => _manager.IsVisibleInTray = value;
+        }
+
+        /// <summary>
         /// Gets or sets the current window state.
         /// </summary>
         /// <remarks>

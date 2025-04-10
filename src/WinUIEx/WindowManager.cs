@@ -271,7 +271,7 @@ namespace WinUIEx
         {
             // See https://learn.microsoft.com/en-us/windows/win32/api/shellapi/nf-shellapi-shell_notifyicona
             const uint NIM_ADD = 0x00000000;
-            const uint NIM_MODIFY = 0x00000001;
+            // const uint NIM_MODIFY = 0x00000001;
             const uint NIF_MESSAGE = 0x00000001;
             const uint NIF_ICON = 0x00000002;
             const uint NIF_TIP = 0x00000004;

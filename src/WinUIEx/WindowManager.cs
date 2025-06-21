@@ -489,8 +489,6 @@ namespace WinUIEx
         /// <seealso cref="PresenterChanged"/>
         public event EventHandler<WindowState>? WindowStateChanged;
 
-        internal event EventHandler<SizeChangedEventArgs>? SizeChanged;
-
         /// <summary>
         /// Event raised when a windows message is received.
         /// </summary>

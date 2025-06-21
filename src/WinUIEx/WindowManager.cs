@@ -71,6 +71,7 @@ namespace WinUIEx
             _window.Closed += Window_Closed;
             _window.VisibilityChanged += Window_VisibilityChanged;
             AppWindow.Changed += AppWindow_Changed;
+            AppWindow.Destroying += AppWindow_Destroying;
 
             overlappedPresenter = AppWindow.Presenter as OverlappedPresenter ?? Microsoft.UI.Windowing.OverlappedPresenter.Create();
             managers[window.GetWindowHandle()] = new WeakReference<WindowManager>(this);
@@ -111,7 +112,11 @@ namespace WinUIEx
         private bool _isDisposed;
 
         /// <inheritdoc />
-        public void Dispose() => Dispose(true);
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
 
         private void Dispose(bool disposing)
         {
@@ -121,12 +126,22 @@ namespace WinUIEx
                 if (managers.ContainsKey(handle))
                     managers.Remove(handle);
                 AppWindow.Changed -= AppWindow_Changed;
+                AppWindow.Destroying -= AppWindow_Destroying;
                 _window.Activated -= Window_Activated;
                 _window.Closed -= Window_Closed;
+                _window.VisibilityChanged -= Window_VisibilityChanged;
                 _monitor.WindowMessageReceived -= OnWindowMessage;
                 _monitor.Dispose();
             }
             _isDisposed = true;
+        }
+
+        private void AppWindow_Destroying(AppWindow sender, object args)
+        {
+            // Workaround leak caused by https://github.com/microsoft/microsoft-ui-xaml/issues/9960
+            _window.Activated -= Window_Activated;
+            _window.Closed -= Window_Closed;
+            _window.VisibilityChanged -= Window_VisibilityChanged;
         }
 
         /// <summary>
@@ -473,6 +488,8 @@ namespace WinUIEx
         /// <seealso cref="WindowState"/>
         /// <seealso cref="PresenterChanged"/>
         public event EventHandler<WindowState>? WindowStateChanged;
+
+        internal event EventHandler<SizeChangedEventArgs>? SizeChanged;
 
         /// <summary>
         /// Event raised when a windows message is received.

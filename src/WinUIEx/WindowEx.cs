@@ -34,8 +34,9 @@ namespace WinUIEx
             _manager.PositionChanged += (s, e) => { OnPositionChanged(e); PositionChanged?.Invoke(this, e); };
             _manager.ZOrderChanged += (s, e) => { OnZOrderChanged(e); ZOrderChanged?.Invoke(this, e); };
             _manager.WindowStateChanged += (s, e) => { OnStateChanged(e); WindowStateChanged?.Invoke(this, e); };
-            SizeChanged += (s, e) => { OnSizeChanged(e); };
-            
+            SizeChanged += WindowEx_SizeChanged;
+            AppWindow.Destroying += (s,e) => SizeChanged -= WindowEx_SizeChanged; // Workaround for https://github.com/microsoft/microsoft-ui-xaml/issues/9960
+ 
             var rootContent = new Grid();
             rootContent.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Auto), MinHeight = 0 });
             rootContent.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Star) });
@@ -61,6 +62,8 @@ namespace WinUIEx
 
             this.Content = rootContent;
         }
+
+        private void WindowEx_SizeChanged(object sender, WindowSizeChangedEventArgs args) => OnSizeChanged(args);
 
         /// <summary>
         /// Shows a message dialog

@@ -41,9 +41,7 @@ namespace WinUIExMauiSample
 #endif
             try
             {
-#pragma warning disable CS0618 // Type or member is obsolete
                 var result = await WinUIEx.WebAuthenticator.AuthenticateAsync(new Uri(authorizeUri), new Uri(callbackUri));
-#pragma warning restore CS0618 // Type or member is obsolete
             }
             finally
             {

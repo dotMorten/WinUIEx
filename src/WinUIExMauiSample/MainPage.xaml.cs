@@ -13,11 +13,14 @@ namespace WinUIExMauiSample
         private void OnFullScreenClicked(object sender, EventArgs e)
         {
 #if WINDOWS
-            var manager = WinUIEx.WindowManager.Get(this.Window.Handler.PlatformView as Microsoft.UI.Xaml.Window);
-            if (manager.PresenterKind == Microsoft.UI.Windowing.AppWindowPresenterKind.Overlapped)
-                manager.PresenterKind = Microsoft.UI.Windowing.AppWindowPresenterKind.FullScreen;
-            else
-                manager.PresenterKind = Microsoft.UI.Windowing.AppWindowPresenterKind.Overlapped;
+            if (this.Window.Handler.PlatformView is Microsoft.UI.Xaml.Window window)
+            {
+                var manager = WinUIEx.WindowManager.Get(window);
+                if (manager.PresenterKind == Microsoft.UI.Windowing.AppWindowPresenterKind.Overlapped)
+                    manager.PresenterKind = Microsoft.UI.Windowing.AppWindowPresenterKind.FullScreen;
+                else
+                    manager.PresenterKind = Microsoft.UI.Windowing.AppWindowPresenterKind.Overlapped;
+            }
 #endif
         }
 

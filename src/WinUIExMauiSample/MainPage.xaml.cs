@@ -23,27 +23,50 @@ namespace WinUIExMauiSample
 
         private async void OnOAuthClicked(object sender, EventArgs e)
         {
-            string clientId = "VxIw33TIRCi1Tbk6pjh2i";
-            string clientSecret = "eEkUe5e9gUpO6KOYdL5pKTi683LADpi5_izZdHCI8Mndy32B";
-            string state = DateTime.Now.Ticks.ToString();
-            Uri callbackUri = new Uri("mauiex://");
-            Uri authorizeUri = new Uri($"https://www.oauth.com/playground/auth-dialog.html?response_type=code&client_id={clientId}&redirect_uri={Uri.EscapeDataString(callbackUri.OriginalString)}&scope=photo+offline_access");// &state={state}";
+            using var server = new WinUIExSample.MockOAuthServer();
+
+            string clientId = "imIwo061j9SUOQYm7O8Oe4HK";
+            string callbackUri = "mauiex://";
+            string authorizeUri = $"{server.Url}?response_type=code&client_id={clientId}&redirect_uri={Uri.EscapeDataString(callbackUri)}&scope=photo+offline_access";
 
             _ = Navigation.PushModalAsync(new ContentPage()
             {
-                Content = new Label() { Text = $"Waiting for sign in in your browser\n Username: 'pleasant-koala@example.com'\n Password: Modern-Seahorse-66" }
+                Content = new Label() { Text = $"Waiting for sign in in your browser..." }
             });
+            string code = "";
 #if WINDOWS
-            var result = await WinUIEx.WebAuthenticator.AuthenticateAsync(authorizeUri, callbackUri);
+#if UNPACKAGED
+            // Packaged app uses appxmanifest for protocol activation. Unpackaged apps must manually register
+            Microsoft.Windows.AppLifecycle.ActivationRegistrationManager.RegisterForProtocolActivation("mauiex", "Assets\\Square150x150Logo.scale-100", "WinUI EX Maui", null);
+#endif
+            try
+            {
+#pragma warning disable CS0618 // Type or member is obsolete
+                var result = await WinUIEx.WebAuthenticator.AuthenticateAsync(new Uri(authorizeUri), new Uri(callbackUri));
+#pragma warning restore CS0618 // Type or member is obsolete
+            }
+            finally
+            {
+#if UNPACKAGED
+                Microsoft.Windows.AppLifecycle.ActivationRegistrationManager.UnregisterForProtocolActivation("mauiex", null);
+#endif
+            }
+
 #else
             var result = await Microsoft.Maui.Authentication.WebAuthenticator.AuthenticateAsync(new WebAuthenticatorOptions()
             {
                 Url = authorizeUri, CallbackUrl = callbackUri
             });
+            code = result.Properties["code"];
 #endif
             if (Navigation.ModalStack.Count > 0)
                 _ = Navigation.PopModalAsync();
-            await DisplayAlert("Success!", "Signed in", "OK");
+#if WINDOWS
+            // On Windows, we can bring the main window to the front after authentication in the browser
+            var window = this.Window?.Handler?.PlatformView as Microsoft.UI.Xaml.Window;
+            window?.SetForegroundWindow();
+#endif
+            await DisplayAlert("Success!", $"Signed in. Access code: {code}", "OK");
         }
 
         private void Picker_SelectedIndexChanged(object sender, EventArgs e)

@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>$(TargetFrameworks);net8.0-windows10.0.19041.0</TargetFrameworks>
+		<TargetFrameworks>$(TargetFrameworks);net9.0-windows10.0.19041.0</TargetFrameworks>
 		<OutputType>Exe</OutputType>
 		<RootNamespace>WinUIExMauiSample</RootNamespace>
 		<UseMaui>true</UseMaui>
@@ -41,7 +41,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\WinUIEx\WinUIEx.csproj" />
+	  <Compile Include="..\WinUIExSample\MockOAuthServer.cs" Link="MockOAuthServer.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\WinUIEx\WinUIEx.csproj" AdditionalProperties="TargetFramework=net6.0-windows10.0.19041.0" />
       <PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
     </ItemGroup>

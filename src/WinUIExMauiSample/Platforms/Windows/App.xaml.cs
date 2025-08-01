@@ -16,8 +16,10 @@ public partial class App : MauiWinUIApplication
     /// </summary>
     public App()
     {
+#pragma warning disable CS0618 // Type or member is obsolete
         if (WinUIEx.WebAuthenticator.CheckOAuthRedirectionActivation())
             return;
+#pragma warning restore CS0618 // Type or member is obsolete
         this.InitializeComponent();
     }
 

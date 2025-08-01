@@ -26,7 +26,7 @@ namespace WinUIEx
         private static bool TryGetWindowManager(Window window, [MaybeNullWhen(false)] out WindowManager manager)
         {
             if (window is null)
-                throw new ArgumentNullException();
+                throw new ArgumentNullException(nameof(window));
             var handle = window.GetWindowHandle();
             if (managers.TryGetValue(handle, out var weakHandle) && weakHandle.TryGetTarget(out manager))
             {

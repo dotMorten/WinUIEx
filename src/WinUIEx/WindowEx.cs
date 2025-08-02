@@ -55,7 +55,8 @@ namespace WinUIEx
             windowArea = new ContentControl()
             {
                 HorizontalContentAlignment = HorizontalAlignment.Stretch,
-                VerticalContentAlignment = VerticalAlignment.Stretch
+                VerticalContentAlignment = VerticalAlignment.Stretch,
+                IsTabStop = false
             };
             Grid.SetRow(windowArea, 1);
             rootContent.Children.Add(windowArea);

@@ -50,7 +50,7 @@
                         <x:String>Transparent</x:String>
                         <x:String>None</x:String>
                     </Picker.Items>
-                    <Picker.SelectedIndex>2</Picker.SelectedIndex>
+                    <Picker.SelectedIndex>0</Picker.SelectedIndex>
                 </Picker>
             </HorizontalStackLayout>
         </VerticalStackLayout>

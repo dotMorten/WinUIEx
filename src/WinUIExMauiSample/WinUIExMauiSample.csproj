@@ -20,6 +20,7 @@
 		<ApplicationVersion>1</ApplicationVersion>
 		<TargetPlatformMinVersion>10.0.18362.0</TargetPlatformMinVersion>
 		<WindowsSdkPackageVersion>10.0.19041.38</WindowsSdkPackageVersion>
+    <DefineConstants>DISABLE_XAML_GENERATED_MAIN;$(DefineConstants)</DefineConstants>
     <NoWarn>CS0618</NoWarn>
 	</PropertyGroup>
 

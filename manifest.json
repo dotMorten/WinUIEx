@@ -1,0 +1,300 @@
+{
+  "homepages": [],
+  "source_base_path": "D:/a/WinUIEx/WinUIEx/docs",
+  "xrefmap": "xrefmap.yml",
+  "files": [
+    {
+      "type": "Resource",
+      "source_relative_path": "../artifacts/docs/api/omd.html",
+      "output": {
+        "resource": {
+          "relative_path": "api/omd.html"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "log_codes": [
+        "InvalidFileLink"
+      ],
+      "type": "Conceptual",
+      "source_relative_path": "api/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "api/index.html",
+          "hash": "mef6WENkkaVxBm5owu6sPNkfcRvUf3sxUpFyCIOYqu0="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "concepts/CustomBackdrops.md",
+      "output": {
+        ".html": {
+          "relative_path": "concepts/CustomBackdrops.html",
+          "hash": "X6up9RxdtIqmL3YMzapdOdODh+1RllgnccX70eRPVxM="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "concepts/HwndExtensions.md",
+      "output": {
+        ".html": {
+          "relative_path": "concepts/HwndExtensions.html",
+          "hash": "f1V7kAEsyLcSoP8nI7xhpi6tprh/bPUzXs4E0zwI/mc="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "concepts/Maui.md",
+      "output": {
+        ".html": {
+          "relative_path": "concepts/Maui.html",
+          "hash": "Ujw1aPnXOQK1dBttHQpkgmW1zlLUpvXK//pbwb/BYPk="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "concepts/MediaPlayer.md",
+      "output": {
+        ".html": {
+          "relative_path": "concepts/MediaPlayer.html",
+          "hash": "2hW833R1fSYefP7J7MAliwVtCsJ2oUfZdEf/ERjz5Mk="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "concepts/Splashscreen.md",
+      "output": {
+        ".html": {
+          "relative_path": "concepts/Splashscreen.html",
+          "hash": "xHwOPBbZLpBRt4MhFXPNIgArWHtdrwClNdr5V/gQIE8="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "concepts/WebAuthenticator.md",
+      "output": {
+        ".html": {
+          "relative_path": "concepts/WebAuthenticator.html",
+          "hash": "ca6tsHIG5TAxNXUYTtaPJjyOuFiuT8GvSOW/IlfZuN0="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "concepts/WindowEx.md",
+      "output": {
+        ".html": {
+          "relative_path": "concepts/WindowEx.html",
+          "hash": "nUKEyxCBLBC5a7b0uDOr1LTcVge/LuyNHzi7mFLOkxM="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "concepts/WindowExtensions.md",
+      "output": {
+        ".html": {
+          "relative_path": "concepts/WindowExtensions.html",
+          "hash": "jlxyJPyD7pn6+gxS6p0Ec5RckO0Iw8kgjt3jxpHKTqg="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "concepts/WindowManager.md",
+      "output": {
+        ".html": {
+          "relative_path": "concepts/WindowManager.html",
+          "hash": "bbblUqW9/kEEWOiD694taeewArIu6aTofcKcWPzmbBs="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "concepts/WindowMessageMonitor.md",
+      "output": {
+        ".html": {
+          "relative_path": "concepts/WindowMessageMonitor.html",
+          "hash": "He3uA2bExYAL8bn6Re5I6JbvWbWhziEJ0tolhR4XM20="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "concepts/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "concepts/index.html",
+          "hash": "nCYSq6CzeLCih4NdwOj9vtY52/TOL61ca2Ai3P+g0OI="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "log_codes": [
+        "InvalidFileLink"
+      ],
+      "type": "Toc",
+      "source_relative_path": "concepts/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "concepts/toc.html",
+          "hash": "Y4H1PtBkzA3Fj8tb52erIR0PAfEXZa2PxEUJM5iyGbI="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "favicon.ico",
+      "output": {
+        "resource": {
+          "relative_path": "favicon.ico"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/logo.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/logo.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "index.md",
+      "output": {
+        ".html": {
+          "relative_path": "index.html",
+          "hash": "Zuz1TisH6sps1s4mkPXymywzkVPY4BmyRwaF3uP2zfg="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "rules/WinUIEx1001.md",
+      "output": {
+        ".html": {
+          "relative_path": "rules/WinUIEx1001.html",
+          "hash": "VZjdNVRZj1lXgHr9f2pMqpdUOFn6/r3nvzT0TJtkMb8="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "rules/WinUIEx1002.md",
+      "output": {
+        ".html": {
+          "relative_path": "rules/WinUIEx1002.html",
+          "hash": "6dNXEeq0fFoEBhMCCIQUlQDb9EhKj5cZUChlFJpa62c="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "toc.html",
+          "hash": "qrwER3U4LCBkAlOf2pjNv2dQAvwofCErUMa6Rmt74dg="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    }
+  ],
+  "incremental_info": [
+    {
+      "status": {
+        "can_incremental": false,
+        "details": "Cannot build incrementally because last build info is missing.",
+        "incrementalPhase": "build",
+        "total_file_count": 0,
+        "skipped_file_count": 0,
+        "full_build_reason_code": "NoAvailableBuildCache"
+      },
+      "processors": {
+        "ConceptualDocumentProcessor": {
+          "can_incremental": false,
+          "incrementalPhase": "build",
+          "total_file_count": 15,
+          "skipped_file_count": 0
+        },
+        "ResourceDocumentProcessor": {
+          "can_incremental": false,
+          "details": "Processor ResourceDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
+          "incrementalPhase": "build",
+          "total_file_count": 0,
+          "skipped_file_count": 0
+        },
+        "TocDocumentProcessor": {
+          "can_incremental": false,
+          "details": "Processor TocDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
+          "incrementalPhase": "build",
+          "total_file_count": 0,
+          "skipped_file_count": 0
+        }
+      }
+    },
+    {
+      "status": {
+        "can_incremental": false,
+        "details": "Cannot support incremental post processing, the reason is: last post processor info is null.",
+        "incrementalPhase": "postProcessing",
+        "total_file_count": 0,
+        "skipped_file_count": 0
+      },
+      "processors": {}
+    }
+  ],
+  "version_info": {},
+  "groups": [
+    {
+      "xrefmap": "xrefmap.yml"
+    }
+  ]
+}

@@ -2,27 +2,22 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Automation.Peers;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Documents;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Globalization.NumberFormatting;
 
 namespace WinUIEx
 {
-    public sealed partial class NumberBox : Control
+    public abstract partial class NumberBox<T>
     {
         /// <summary>
         /// Gets or sets the numeric value of a <see cref="NumberBox"/>.
         /// </summary>
         /// <value>The numeric value of a NumberBox.</value>
-        public double Value
+        public T Value
         {
-            get { return (double)GetValue(ValueProperty); }
+            get { return (T)GetValue(ValueProperty); }
             set
             {
                 // When using two way bindings to Value using x:Bind, we could end up with a stack overflow because
@@ -30,7 +25,7 @@ namespace WinUIEx
                 // and that can happen quite often. We can avoid the stack overflow by breaking the cycle here. This is possible
                 // for x:Bind since the generated code goes through this property setter. This is not the case for Binding
                 // unfortunately. x:Bind is recommended over Binding anyway due to its perf and debuggability benefits.
-                if (!double.IsNaN(value) || !double.IsNaN(Value))
+                if (!T.IsNaN(value) || !T.IsNaN(Value))
                 {
                     SetValue(ValueProperty, value);
                 }
@@ -39,14 +34,14 @@ namespace WinUIEx
 
         /// <summary>Identifies the <see cref="Value"/> dependency property.</summary>
         public static readonly DependencyProperty ValueProperty =
-            DependencyProperty.Register(nameof(Value), typeof(double), typeof(NumberBox), new PropertyMetadata(double.NaN, (s, e) => ((NumberBox)s).OnValuePropertyChanged(e)));
+            DependencyProperty.Register(nameof(Value), typeof(double), typeof(NumberBox<T>), new PropertyMetadata(T.Zero, (s, e) => ((NumberBox<T>)s).OnValuePropertyChanged(e)));
 
         private void OnValuePropertyChanged(DependencyPropertyChangedEventArgs args)
         {
             // This handler may change Value; don't send extra events in that case.
             if (!m_valueUpdating)
             {
-                double oldValue = (double)args.OldValue;
+                T oldValue = (T)args.OldValue;
 
                 m_valueUpdating = true;
                 try
@@ -54,14 +49,14 @@ namespace WinUIEx
 
                     CoerceValue();
 
-                    double newValue = (double)Value;
-                    if (newValue != oldValue && !(double.IsNaN(newValue) && double.IsNaN(oldValue)))
+                    T newValue = (T)Value;
+                    if (newValue != oldValue && !(T.IsNaN(newValue) && T.IsNaN(oldValue)))
                     {
                         // Fire ValueChanged event
-                        ValueChanged?.Invoke(this, new NumberBoxValueChangedEventArgs(oldValue, newValue));
+                        ValueChanged?.Invoke(this, new NumberBoxValueChangedEventArgs<T>(oldValue, newValue));
 
                         // Fire value property change for UIA
-                        if (FrameworkElementAutomationPeer.FromElement(this) is NumberBoxAutomationPeer peer)
+                        if (FrameworkElementAutomationPeer.FromElement(this) is NumberBoxAutomationPeer<T> peer)
                         {
                             peer.RaiseValueChangedEvent(oldValue, newValue);
                         }
@@ -81,15 +76,15 @@ namespace WinUIEx
         /// Gets or sets the numerical minimum for <see cref="Value"/>.
         /// </summary>
         /// <value>The numerical minimum for <see cref="Value"/>.</value>
-        public double Minimum
+        public T Minimum
         {
-            get { return (double)GetValue(MinimumProperty); }
+            get { return (T)GetValue(MinimumProperty); }
             set { SetValue(MinimumProperty, value); }
         }
 
         /// <summary>Identifies the <see cref="Minimum"/> dependency property.</summary>
         public static readonly DependencyProperty MinimumProperty =
-            DependencyProperty.Register(nameof(Minimum), typeof(double), typeof(NumberBox), new PropertyMetadata(double.MinValue, (s, e) => ((NumberBox)s).OnMinimumPropertyChanged(e)));
+            DependencyProperty.Register(nameof(Minimum), typeof(T), typeof(NumberBox<T>), new PropertyMetadata(T.MinValue, (s, e) => ((NumberBox<T>)s).OnMinimumPropertyChanged(e)));
 
         private void OnMinimumPropertyChanged(DependencyPropertyChangedEventArgs e)
         {
@@ -104,15 +99,15 @@ namespace WinUIEx
         /// Gets or sets the numerical maximum for <see cref="Value"/>.
         /// </summary>
         /// <value>The numerical maximum for <see cref="Value"/>.</value>
-        public double Maximum
+        public T Maximum
         {
-            get { return (double)GetValue(MaximumProperty); }
+            get { return (T)GetValue(MaximumProperty); }
             set { SetValue(MaximumProperty, value); }
         }
 
         /// <summary>Identifies the <see cref="Maximum"/> dependency property.</summary>
         public static readonly DependencyProperty MaximumProperty =
-            DependencyProperty.Register(nameof(Maximum), typeof(double), typeof(NumberBox), new PropertyMetadata(double.MaxValue, (s, e) => ((NumberBox)s).OnMaximumPropertyChanged(e)));
+            DependencyProperty.Register(nameof(Maximum), typeof(T), typeof(NumberBox<T>), new PropertyMetadata(T.MaxValue, (s, e) => ((NumberBox<T>)s).OnMaximumPropertyChanged(e)));
 
         private void OnMaximumPropertyChanged(DependencyPropertyChangedEventArgs e)
         {
@@ -129,15 +124,15 @@ namespace WinUIEx
         /// </summary>
         /// <value>A number that is added to or subtracted from <see cref="Value"/> when a small change is made,
         /// such as with an arrow key or scrolling. The default is 1.</value>
-        public double SmallChange
+        public T SmallChange
         {
-            get { return (double)GetValue(SmallChangeProperty); }
+            get { return (T)GetValue(SmallChangeProperty); }
             set { SetValue(SmallChangeProperty, value); }
         }
 
         /// <summary>Identifies the <see cref="SmallChange"/> dependency property.</summary>
         public static readonly DependencyProperty SmallChangeProperty =
-            DependencyProperty.Register(nameof(SmallChange), typeof(double), typeof(NumberBox), new PropertyMetadata(1d, (s, e) => ((NumberBox)s).OnSmallChangePropertyChanged(e)));
+            DependencyProperty.Register(nameof(SmallChange), typeof(T), typeof(NumberBox<T>), new PropertyMetadata(T.One, (s, e) => ((NumberBox<T>)s).OnSmallChangePropertyChanged(e)));
 
         private void OnSmallChangePropertyChanged(DependencyPropertyChangedEventArgs e)
         {
@@ -150,15 +145,15 @@ namespace WinUIEx
         /// </summary>
         /// <value>A number that is added to or subtracted from <see cref="Value"/> when a large change is made, such as
         /// with the PageUp and PageDown keys. The default is 10.</value>
-        public double LargeChange
+        public T LargeChange
         {
-            get { return (double)GetValue(LargeChangeProperty); }
+            get { return (T)GetValue(LargeChangeProperty); }
             set { SetValue(LargeChangeProperty, value); }
         }
 
         /// <summary>Identifies the <see cref="LargeChange"/> dependency property.</summary>
         public static readonly DependencyProperty LargeChangeProperty =
-            DependencyProperty.Register(nameof(LargeChange), typeof(double), typeof(NumberBox), new PropertyMetadata(10d));
+            DependencyProperty.Register(nameof(LargeChange), typeof(T), typeof(NumberBox<T>), new PropertyMetadata(T.CreateSaturating<double>(10d)));
 
         /// <summary>
         /// Gets or sets the string type representation of the <see cref="Value"/> property.
@@ -172,7 +167,7 @@ namespace WinUIEx
 
         /// <summary>Identifies the <see cref="Text"/> dependency property.</summary>
         public static readonly DependencyProperty TextProperty =
-            DependencyProperty.Register(nameof(Text), typeof(string), typeof(NumberBox), new PropertyMetadata(string.Empty, (s, e) => ((NumberBox)s).OnTextPropertyChanged(e)));
+            DependencyProperty.Register(nameof(Text), typeof(string), typeof(NumberBox<T>), new PropertyMetadata(string.Empty, (s, e) => ((NumberBox<T>)s).OnTextPropertyChanged(e)));
 
         private void OnTextPropertyChanged(DependencyPropertyChangedEventArgs e)
         {
@@ -194,7 +189,7 @@ namespace WinUIEx
 
         /// <summary>Identifies the <see cref="Header"/> dependency property.</summary>
         public static readonly DependencyProperty HeaderProperty =
-            DependencyProperty.Register(nameof(Header), typeof(object), typeof(NumberBox), new PropertyMetadata(null, (s, e) => ((NumberBox)s).OnHeaderPropertyChanged(e)));
+            DependencyProperty.Register(nameof(Header), typeof(object), typeof(NumberBox<T>), new PropertyMetadata(null, (s, e) => ((NumberBox<T>)s).OnHeaderPropertyChanged(e)));
 
         private void OnHeaderPropertyChanged(DependencyPropertyChangedEventArgs e)
         {
@@ -213,7 +208,7 @@ namespace WinUIEx
 
         /// <summary>Identifies the <see cref="HeaderTemplate"/> dependency property.</summary>
         public static readonly DependencyProperty HeaderTemplateProperty =
-            DependencyProperty.Register(nameof(HeaderTemplate), typeof(DataTemplate), typeof(NumberBox), new PropertyMetadata(null, (s, e) => ((NumberBox)s).OnHeaderTemplatePropertyChanged(e)));
+            DependencyProperty.Register(nameof(HeaderTemplate), typeof(DataTemplate), typeof(NumberBox<T>), new PropertyMetadata(null, (s, e) => ((NumberBox<T>)s).OnHeaderTemplatePropertyChanged(e)));
 
         private void OnHeaderTemplatePropertyChanged(DependencyPropertyChangedEventArgs e)
         {
@@ -231,7 +226,7 @@ namespace WinUIEx
 
         /// <summary>Identifies the <see cref="InputScope"/> dependency property.</summary>
         public static readonly DependencyProperty InputScopeProperty =
-            DependencyProperty.Register(nameof(InputScope), typeof(InputScope), typeof(NumberBox), new PropertyMetadata(null));
+            DependencyProperty.Register(nameof(InputScope), typeof(InputScope), typeof(NumberBox<T>), new PropertyMetadata(null));
 
         /// <summary>
         /// Gets or sets the text that is displayed in the data entry field of the control until the
@@ -247,7 +242,7 @@ namespace WinUIEx
 
         /// <summary>Identifies the <see cref="PlaceholderText"/> dependency property.</summary>
         public static readonly DependencyProperty PlaceholderTextProperty =
-            DependencyProperty.Register(nameof(PlaceholderText), typeof(string), typeof(NumberBox), new PropertyMetadata(string.Empty));
+            DependencyProperty.Register(nameof(PlaceholderText), typeof(string), typeof(NumberBox<T>), new PropertyMetadata(string.Empty));
 
         /// <summary>
         /// Gets or sets the flyout that is shown when text is selected, or <c>null</c> if no flyout is shown.
@@ -262,7 +257,7 @@ namespace WinUIEx
 
         /// <summary>Identifies the <see cref="SelectionFlyout"/> dependency property.</summary>
         public static readonly DependencyProperty SelectionFlyoutProperty =
-            DependencyProperty.Register(nameof(SelectionFlyout), typeof(int), typeof(NumberBox), new PropertyMetadata(null));
+            DependencyProperty.Register(nameof(SelectionFlyout), typeof(int), typeof(NumberBox<T>), new PropertyMetadata(null));
 
         /// <summary>
         /// Gets or sets the brush used to highlight the selected text.
@@ -277,7 +272,7 @@ namespace WinUIEx
 
         /// <summary>Identifies the <see cref="SelectionHighlightColor"/> dependency property.</summary>
         public static readonly DependencyProperty SelectionHighlightColorProperty =
-            DependencyProperty.Register(nameof(SelectionHighlightColor), typeof(SolidColorBrush), typeof(NumberBox), new PropertyMetadata(null));
+            DependencyProperty.Register(nameof(SelectionHighlightColor), typeof(SolidColorBrush), typeof(NumberBox<T>), new PropertyMetadata(null));
 
         /// <summary>
         /// Gets or sets the text alignment of the text in the control.
@@ -290,7 +285,7 @@ namespace WinUIEx
 
         /// <summary>Identifies the <see cref="TextAlignment"/> dependency property.</summary>
         public static readonly DependencyProperty TextAlignmentProperty =
-            DependencyProperty.Register(nameof(TextAlignment), typeof(TextAlignment), typeof(NumberBox), new PropertyMetadata(TextAlignment.Left));
+            DependencyProperty.Register(nameof(TextAlignment), typeof(TextAlignment), typeof(NumberBox<T>), new PropertyMetadata(TextAlignment.Left));
 
         /// <summary>
         /// Gets or sets a value that indicates how the reading order is determined for the <see cref="NumberBox"/>.
@@ -304,7 +299,7 @@ namespace WinUIEx
 
         /// <summary>Identifies the <see cref="TextReadingOrder"/> dependency property.</summary>
         public static readonly DependencyProperty TextReadingOrderProperty =
-            DependencyProperty.Register(nameof(TextReadingOrder), typeof(TextReadingOrder), typeof(NumberBox), new PropertyMetadata(TextReadingOrder.Default));
+            DependencyProperty.Register(nameof(TextReadingOrder), typeof(TextReadingOrder), typeof(NumberBox<T>), new PropertyMetadata(TextReadingOrder.Default));
 
         /// <summary>
         /// Gets or sets a value that indicates whether the on-screen keyboard is shown when the control receives focus programmatically.
@@ -318,7 +313,7 @@ namespace WinUIEx
 
         /// <summary>Identifies the <see cref="PreventKeyboardDisplayOnProgrammaticFocus"/> dependency property.</summary>
         public static readonly DependencyProperty PreventKeyboardDisplayOnProgrammaticFocusProperty =
-            DependencyProperty.Register(nameof(PreventKeyboardDisplayOnProgrammaticFocus), typeof(bool), typeof(NumberBox), new PropertyMetadata(false));
+            DependencyProperty.Register(nameof(PreventKeyboardDisplayOnProgrammaticFocus), typeof(bool), typeof(NumberBox<T>), new PropertyMetadata(false));
 
         /// <summary>
         /// Gets or sets content that is shown below the control. The content should provide guidance 
@@ -333,7 +328,8 @@ namespace WinUIEx
 
         /// <summary>Identifies the <see cref="Description"/> dependency property.</summary>
         public static readonly DependencyProperty DescriptionProperty =
-            DependencyProperty.Register(nameof(Description), typeof(object), typeof(NumberBox), new PropertyMetadata(null));
+            DependencyProperty.Register(nameof(Description), typeof(object), typeof(NumberBox<T>), new PropertyMetadata(null));
+
 
         /// <summary>
         /// Gets or sets a value that specifies the input validation behavior to invoke when invalid input is entered.
@@ -347,7 +343,7 @@ namespace WinUIEx
 
         /// <summary>Identifies the <see cref="ValidationMode"/> dependency property.</summary>
         public static readonly DependencyProperty ValidationModeProperty =
-            DependencyProperty.Register(nameof(ValidationMode), typeof(NumberBoxValidationMode), typeof(NumberBox), new PropertyMetadata(NumberBoxValidationMode.InvalidInputOverwritten, (s, e) => ((NumberBox)s).OnValidationModePropertyChanged(e)));
+            DependencyProperty.Register(nameof(ValidationMode), typeof(NumberBoxValidationMode), typeof(NumberBox<T>), new PropertyMetadata(NumberBoxValidationMode.InvalidInputOverwritten, (s, e) => ((NumberBox<T>)s).OnValidationModePropertyChanged(e)));
 
         private void OnValidationModePropertyChanged(DependencyPropertyChangedEventArgs e)
         {
@@ -368,7 +364,7 @@ namespace WinUIEx
 
         /// <summary>Identifies the <see cref="SpinButtonPlacementMode"/> dependency property.</summary>
         public static readonly DependencyProperty SpinButtonPlacementModeProperty =
-            DependencyProperty.Register(nameof(SpinButtonPlacementMode), typeof(NumberBoxSpinButtonPlacementMode), typeof(NumberBox), new PropertyMetadata(NumberBoxSpinButtonPlacementMode.Hidden, (s, e) => ((NumberBox)s).OnSpinButtonPlacementModePropertyChanged(e)));
+            DependencyProperty.Register(nameof(SpinButtonPlacementMode), typeof(NumberBoxSpinButtonPlacementMode), typeof(NumberBox<T>), new PropertyMetadata(NumberBoxSpinButtonPlacementMode.Hidden, (s, e) => ((NumberBox<T>)s).OnSpinButtonPlacementModePropertyChanged(e)));
 
         private void OnSpinButtonPlacementModePropertyChanged(DependencyPropertyChangedEventArgs e)
         {
@@ -389,7 +385,7 @@ namespace WinUIEx
 
         /// <summary>Identifies the <see cref="IsWrapEnabled"/> dependency property.</summary>
         public static readonly DependencyProperty IsWrapEnabledProperty =
-            DependencyProperty.Register(nameof(IsWrapEnabled), typeof(bool), typeof(NumberBox), new PropertyMetadata(false, (s, e) => ((NumberBox)s).OnIsWrapEnabledPropertyChanged(e)));
+            DependencyProperty.Register(nameof(IsWrapEnabled), typeof(bool), typeof(NumberBox<T>), new PropertyMetadata(false, (s, e) => ((NumberBox<T>)s).OnIsWrapEnabledPropertyChanged(e)));
 
         private void OnIsWrapEnabledPropertyChanged(DependencyPropertyChangedEventArgs e)
         {
@@ -409,7 +405,7 @@ namespace WinUIEx
 
         /// <summary>Identifies the <see cref="AcceptsExpression"/> dependency property.</summary>
         public static readonly DependencyProperty AcceptsExpressionProperty =
-            DependencyProperty.Register(nameof(AcceptsExpression), typeof(bool), typeof(NumberBox), new PropertyMetadata(false));
+            DependencyProperty.Register(nameof(AcceptsExpression), typeof(bool), typeof(NumberBox<T>), new PropertyMetadata(false));
 
         /// <summary>
         /// Gets or sets the object used to specify the formatting of <see cref="Value"/>.
@@ -423,7 +419,7 @@ namespace WinUIEx
 
         /// <summary>Identifies the <see cref="NumberFormatter"/> dependency property.</summary>
         public static readonly DependencyProperty NumberFormatterProperty =
-            DependencyProperty.Register(nameof(NumberFormatter), typeof(INumberFormatter2), typeof(NumberBox), new PropertyMetadata(null, (s,e) => ((NumberBox)s).OnNumberFormatterChanged()));
+            DependencyProperty.Register(nameof(NumberFormatter), typeof(INumberFormatter2), typeof(NumberBox<T>), new PropertyMetadata(null, (s,e) => ((NumberBox<T>)s).OnNumberFormatterChanged()));
 
         private void OnNumberFormatterChanged()
         {
@@ -447,7 +443,7 @@ namespace WinUIEx
         /// <summary>
         /// Occurs after the user triggers evaluation of new input by pressing the Enter key, clicking a spin button, or by changing focus.
         /// </summary>
-        public event Windows.Foundation.TypedEventHandler<NumberBox, NumberBoxValueChangedEventArgs>? ValueChanged;
+        public event Windows.Foundation.TypedEventHandler<NumberBox<T>, NumberBoxValueChangedEventArgs<T>>? ValueChanged;
 
     }
 }

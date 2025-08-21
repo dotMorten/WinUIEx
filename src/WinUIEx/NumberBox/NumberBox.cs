@@ -1,3 +1,4 @@
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Automation;
 using Microsoft.UI.Xaml.Automation.Peers;
@@ -7,17 +8,47 @@ using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using System;
 using System.Collections.Generic;
+using System.Numerics;
 using Windows.Globalization.NumberFormatting;
 using Windows.System;
 
 namespace WinUIEx
 {
     /// <summary>
-    /// Represents a control that can be used to display and edit numbers.
+    /// Represents a control that can be used to display and edit floating point <see cref="decimal"/> numbers.
+    /// </summary>
+    public sealed class NumberBoxDecimal : NumberBox<decimal>
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NumberBoxDecimal"/> class.
+        /// </summary>
+        public NumberBoxDecimal() : base()
+        {
+            DefaultStyleKey = typeof(NumberBoxDecimal);
+        }
+    }
+
+    /// <summary>
+    /// Represents a control that can be used to display and edit <see cref="int">integer</see> numbers.
+    /// </summary>
+    public sealed class NumberBoxInt32 : NumberBox<int>
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NumberBoxInt32"/> class.
+        /// </summary>
+        public NumberBoxInt32() : base()
+        {
+            DefaultStyleKey = typeof(NumberBoxInt32);
+        }
+    }
+
+    /// <summary>
+    /// Represents an abstract control that can be used to display and edit numbers.
     /// </summary>
     /// <remarks>This control supports validation, increment stepping, and computing inline
     /// calculations of basic equations such as multiplication, division, addition, and subtraction.</remarks>
-    public sealed partial class NumberBox : Control
+    public abstract partial class NumberBox<T> : Control
+        where T: INumber<T>, IMinMaxValue<T>
     {
         const string c_numberBoxHeaderName = "HeaderContentPresenter";
         const string c_numberBoxDownButtonName = "DownSpinButton";
@@ -93,7 +124,7 @@ namespace WinUIEx
         }
 
         /// <inheritdoc />
-        protected override AutomationPeer OnCreateAutomationPeer() => new NumberBoxAutomationPeer(this);
+        protected override AutomationPeer OnCreateAutomationPeer() => new NumberBoxAutomationPeer<T>(this);
 
         /// <inheritdoc />
         protected override void OnApplyTemplate()
@@ -218,10 +249,11 @@ namespace WinUIEx
             {
                 // UIA Name
                 var name = AutomationProperties.GetName(this);
-                var minimum = Minimum == double.MinValue ?
-                    string.Empty : " " + ResourceAccessor.GetLocalizedStringResource("NumberBoxMinimumValueStatus") + Minimum.ToString();
+                var minimum = Minimum == T.MinValue ?
+                    string.Empty : 
+                    " " + ResourceAccessor.GetLocalizedStringResource("NumberBoxMinimumValueStatus") + Minimum.ToString();
                 ;
-                var maximum = Maximum == double.MaxValue ?
+                var maximum = Maximum == T.MaxValue ?
                     string.Empty :
                     " " + ResourceAccessor.GetLocalizedStringResource("NumberBoxMaximumValueStatus") + Maximum.ToString();
                 ;
@@ -294,7 +326,7 @@ namespace WinUIEx
         {
             // Validate that the value is in bounds
             var value = Value;
-            if (!double.IsNaN(value) && !IsInBounds(value) && ValidationMode == NumberBoxValidationMode.InvalidInputOverwritten)
+            if (!T.IsNaN(value) && !IsInBounds(value) && ValidationMode == NumberBoxValidationMode.InvalidInputOverwritten)
             {
                 // Coerce value to be within range
                 var max = Maximum;
@@ -319,18 +351,33 @@ namespace WinUIEx
                 // Handles empty TextBox case, set text to current value
                 if (string.IsNullOrEmpty(text))
                 {
-                    Value = double.NaN;
+                    Value = T.Zero;
                 }
                 else
                 {
                     // Setting NumberFormatter to something that isn't an INumberParser will throw an exception, so this should be safe
                     var numberParser = (INumberParser)NumberFormatter;
+                    T value = default;
+                    bool hasValue = false;
+                    if (AcceptsExpression)
+                    {
+                        value = NumberBoxParser<T>.Compute(text, numberParser, out bool success);
+                        if (!success) {
+                            var d = numberParser.ParseDouble(text);
+                            if (d.HasValue)
+                            {
+                                value = T.CreateSaturating<double>(d.Value);
+                                hasValue = true;
+                            }
+                        }
+                        else hasValue = true;
 
-                    double? value = AcceptsExpression
-                        ? NumberBoxParser.Compute(text, numberParser)
-                        : numberParser.ParseDouble(text);
+                    }
+                    //T? value = AcceptsExpression
+                    //    ? NumberBoxParser<T>.Compute(text, numberParser, bool success)
+                    //    : numberParser.ParseDouble(text);
 
-                    if (!value.HasValue)
+                    if (!hasValue)
                     {
                         if (ValidationMode == NumberBoxValidationMode.InvalidInputOverwritten)
                         {
@@ -340,14 +387,14 @@ namespace WinUIEx
                     }
                     else
                     {
-                        if (value.Value == Value)
+                        if (value == Value)
                         {
                             // Even if the value hasn't changed, we still want to update the text (e.g. Value is 3, user types 1 + 2, we want to replace the text with 3)
                             UpdateTextToValue();
                         }
                         else
                         {
-                            Value = value.Value;
+                            Value = value;
                         }
                     }
                 }
@@ -430,13 +477,13 @@ namespace WinUIEx
             }
         }
 
-        private void StepValue(double change)
+        private void StepValue(T change)
         {
             // Before adjusting the value, validate the contents of the textbox so we don't override it.
             ValidateInput();
 
             var newVal = Value;
-            if (!double.IsNaN(newVal))
+            if (!T.IsNaN(newVal))
             {
                 newVal += change;
 
@@ -471,10 +518,10 @@ namespace WinUIEx
                 string newText = "";
 
                 var value = Value;
-                if (!double.IsNaN(value))
+                if (!T.IsNaN(value))
                 {
                     // Rounding the value here will prevent displaying digits caused by floating point imprecision.
-                    var roundedValue = m_displayRounder.RoundDouble(value);
+                    var roundedValue = m_displayRounder.RoundDouble(double.CreateSaturating(value));
                     newText = NumberFormatter.FormatDouble(roundedValue);
                 }
 
@@ -519,7 +566,7 @@ namespace WinUIEx
             bool isUpButtonEnabled = false;
             bool isDownButtonEnabled = false;
 
-            if (!double.IsNaN(value))
+            if (!T.IsNaN(value))
             {
                 if (IsWrapEnabled || ValidationMode != NumberBoxValidationMode.InvalidInputOverwritten)
                 {
@@ -544,7 +591,7 @@ namespace WinUIEx
             VisualStateManager.GoToState(this, isDownButtonEnabled ? "DownSpinButtonEnabled" : "DownSpinButtonDisabled", false);
         }
 
-        bool IsInBounds(double value)
+        bool IsInBounds(T value)
         {
             return (value >= Minimum && value <= Maximum);
         }
@@ -615,9 +662,9 @@ namespace WinUIEx
     /// <summary>
     /// Provides event data for the <see cref="NumberBox.ValueChanged">NumberBox.ValueChanged</see> event.
     /// </summary>
-    public sealed class NumberBoxValueChangedEventArgs : EventArgs
+    public sealed class NumberBoxValueChangedEventArgs<T> : EventArgs
     {
-        internal NumberBoxValueChangedEventArgs(double oldValue, double newValue)
+        internal NumberBoxValueChangedEventArgs(T oldValue, T newValue)
         {
             OldValue = oldValue;
             NewValue = newValue;
@@ -626,12 +673,11 @@ namespace WinUIEx
         /// <summary>
         /// Contains the old <see cref="NumberBox.Value"/> being replaced for a <see cref="NumberBox"/>.
         /// </summary>
-        public double OldValue { get; }
+        public T OldValue { get; }
 
         /// <summary>
         /// Contains the new <see cref="NumberBox.Value"/> to be set for a <see cref="NumberBox"/>.
         /// </summary>
-        public double NewValue { get; }
+        public T NewValue { get; }
     }
-
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.UI.Xaml.Input;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,13 +16,13 @@ namespace WinUIEx
         Parenthesis
     }
 
-    internal sealed class MathToken
+    internal sealed class MathToken<T> where T : System.Numerics.INumber<T>
     {
         public MathTokenType Type { get; }
-        public double Value { get; }      // used when Type == Numeric
+        public T Value { get; }      // used when Type == Numeric
         public char Char { get; }         // used when Type == Operator or Parenthesis
 
-        public MathToken(MathTokenType type, double value)
+        public MathToken(MathTokenType type, T value)
         {
             Type = type;
             Value = value;
@@ -34,14 +35,14 @@ namespace WinUIEx
         }
     }
 
-    internal static class NumberBoxParser
+    internal static class NumberBoxParser<T> where T : System.Numerics.INumber<T>
     {
         private const string Operators = "+-*/^";
 
         // Returns list of MathTokens from expression input string. If there are any parsing errors, it returns an empty list.
-        public static List<MathToken> GetTokens(string input, INumberParser numberParser)
+        public static List<MathToken<T>> GetTokens(string input, INumberParser numberParser)
         {
-            var tokens = new List<MathToken>();
+            var tokens = new List<MathToken<T>>();
             if (input is null) return tokens;
 
             bool expectNumber = true;
@@ -59,7 +60,7 @@ namespace WinUIEx
                         if (nextChar == '(')
                         {
                             // Open paren allowed; doesn't change expectation
-                            tokens.Add(new MathToken(MathTokenType.Parenthesis, nextChar));
+                            tokens.Add(new MathToken<T>(MathTokenType.Parenthesis, nextChar));
                         }
                         else
                         {
@@ -69,14 +70,14 @@ namespace WinUIEx
 
                             if (charLength > 0)
                             {
-                                tokens.Add(new MathToken(MathTokenType.Numeric, value));
+                                tokens.Add(new MathToken<T>(MathTokenType.Numeric, value));
                                 i += charLength - 1; // advance to end of token (loop will +1)
                                 expectNumber = false; // next should be operator
                             }
                             else
                             {
                                 // Not a number where one was expected -> error
-                                return new List<MathToken>();
+                                return new List<MathToken<T>>();
                             }
                         }
                     }
@@ -84,18 +85,18 @@ namespace WinUIEx
                     {
                         if (Operators.IndexOf(nextChar) >= 0)
                         {
-                            tokens.Add(new MathToken(MathTokenType.Operator, nextChar));
+                            tokens.Add(new MathToken<T>(MathTokenType.Operator, nextChar));
                             expectNumber = true; // next should be number (or '(')
                         }
                         else if (nextChar == ')')
                         {
                             // Close paren allowed; doesn't change expectation
-                            tokens.Add(new MathToken(MathTokenType.Parenthesis, nextChar));
+                            tokens.Add(new MathToken<T>(MathTokenType.Parenthesis, nextChar));
                         }
                         else
                         {
                             // Unrecognized where operator/close-paren expected
-                            return new List<MathToken>();
+                            return new List<MathToken<T>>();
                         }
                     }
                 }
@@ -107,8 +108,8 @@ namespace WinUIEx
         }
 
         // Attempts to parse a number from the beginning of the given input string.
-        // Returns (value, matchedLength). If parsing fails, returns (NaN, 0).
-        public static (double value, int matchedLength) GetNextNumber(string input, INumberParser numberParser)
+        // Returns (value, matchedLength). If parsing fails, returns (0, -1).
+        public static (T value, int matchedLength) GetNextNumber(string input, INumberParser numberParser)
         {
             // Attempt to parse anything before an operator or space as a number
             // Equivalent to L"^-?([^-+/*\\(\\)\\^\\s]+)"
@@ -118,14 +119,15 @@ namespace WinUIEx
             if (match.Success)
             {
                 int len = match.Groups[0].Length;
+                // IParsable<T>.TryParse(input.Substring(0, len), numberParser, out T? value);
                 var parsed = numberParser.ParseDouble(input.Substring(0, len));
                 if (parsed.HasValue)
                 {
-                    return (parsed.Value, len);
+                    return (T.CreateSaturating(parsed.Value), len);
                 }
             }
 
-            return (double.NaN, 0);
+            return (T.Zero, -1);
         }
 
         private static int GetPrecedenceValue(char c)
@@ -136,10 +138,10 @@ namespace WinUIEx
         }
 
         // Converts a list of tokens from infix format (e.g. "3 + 5") to postfix (e.g. "3 5 +")
-        public static List<MathToken> ConvertInfixToPostfix(List<MathToken> infixTokens)
+        public static List<MathToken<T>> ConvertInfixToPostfix(List<MathToken<T>> infixTokens)
         {
-            var postfixTokens = new List<MathToken>();
-            var operatorStack = new Stack<MathToken>();
+            var postfixTokens = new List<MathToken<T>>();
+            var operatorStack = new Stack<MathToken<T>>();
 
             foreach (var token in infixTokens)
             {
@@ -181,7 +183,7 @@ namespace WinUIEx
                         if (operatorStack.Count == 0)
                         {
                             // Broken parenthesis
-                            return new List<MathToken>();
+                            return new List<MathToken<T>>();
                         }
 
                         // Discard the '('
@@ -196,7 +198,7 @@ namespace WinUIEx
                 if (operatorStack.Peek().Type == MathTokenType.Parenthesis)
                 {
                     // Broken parenthesis
-                    return new List<MathToken>();
+                    return new List<MathToken<T>>();
                 }
                 postfixTokens.Add(operatorStack.Pop());
             }
@@ -204,20 +206,21 @@ namespace WinUIEx
             return postfixTokens;
         }
 
-        public static double? ComputePostfixExpression(List<MathToken> tokens)
+        public static T ComputePostfixExpression(List<MathToken<T>> tokens, out bool success)
         {
-            var stack = new Stack<double>();
+            success = false;
+            var stack = new Stack<T>();
 
             foreach (var token in tokens)
             {
                 if (token.Type == MathTokenType.Operator)
                 {
                     // Need at least two operands
-                    if (stack.Count < 2) return null;
+                    if (stack.Count < 2) return T.Zero;
 
-                    double op1 = stack.Pop();
-                    double op2 = stack.Pop();
-                    double result;
+                    T op1 = stack.Pop();
+                    T op2 = stack.Pop();
+                    T result;
 
                     switch (token.Char)
                     {
@@ -231,18 +234,18 @@ namespace WinUIEx
                             result = op2 * op1;
                             break;
                         case '/':
-                            if (op1 == 0)
+                            if (op1 == T.Zero)
                             {
                                 // divide by zero
-                                return double.NaN;
+                                return T.Zero;
                             }
                             result = op2 / op1;
                             break;
                         case '^':
-                            result = Math.Pow(op2, op1);
+                            result = T.CreateSaturating(Math.Pow(double.CreateSaturating(op2), double.CreateSaturating(op1)));
                             break;
                         default:
-                            return null;
+                            return T.Zero;
                     }
 
                     stack.Push(result);
@@ -254,24 +257,27 @@ namespace WinUIEx
             }
 
             // Must end with exactly one value
-            if (stack.Count != 1) return null;
+            if (stack.Count != 1) return T.Zero;
+            success = true;
             return stack.Peek();
         }
 
-        public static double? Compute(string expr, INumberParser numberParser)
+        public static T Compute(string expr, INumberParser numberParser, out bool success)
         {
-            if (expr is null) return null;
+            success = false;
+            if (expr is null) return T.Zero;
 
             // Tokenize
             var tokens = GetTokens(expr, numberParser);
-            if (tokens.Count == 0) return null;
+            if (tokens.Count == 0) return T.Zero;
 
             // Infix -> Postfix
             var postfix = ConvertInfixToPostfix(tokens);
-            if (postfix.Count == 0) return null;
+            if (postfix.Count == 0) return T.Zero;
 
             // Evaluate
-            return ComputePostfixExpression(postfix);
+            var result = ComputePostfixExpression(postfix, out success);
+            return result;
         }
     }
 }

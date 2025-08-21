@@ -11,9 +11,10 @@ using Windows.Foundation;
 
 namespace WinUIEx
 {
-    internal class NumberBoxAutomationPeer : FrameworkElementAutomationPeer, IRangeValueProvider
+    internal class NumberBoxAutomationPeer<T> : FrameworkElementAutomationPeer, IRangeValueProvider
+        where T : System.Numerics.INumber<T>, System.Numerics.IMinMaxValue<T>
     {
-        public NumberBoxAutomationPeer(NumberBox numberBox) : base(numberBox)
+        public NumberBoxAutomationPeer(NumberBox<T> numberBox) : base(numberBox)
         {
         }
 
@@ -35,7 +36,7 @@ namespace WinUIEx
             var name = base.GetNameCore();
             if (string.IsNullOrEmpty(name))
             {
-                if (Owner is NumberBox numberBox)
+                if (Owner is NumberBox<T> numberBox)
                 {
                     name = TryGetStringRepresentationFromObject(numberBox.Header);
                 }
@@ -57,29 +58,30 @@ namespace WinUIEx
             return string.Empty;
         }
 
-        private NumberBox NumberBox => (NumberBox)Owner;
+        private NumberBox<T> NumberBox => (NumberBox<T>)Owner;
 
         protected override AutomationControlType GetAutomationControlTypeCore() => AutomationControlType.Spinner;
 
         public bool IsReadOnly => throw new NotImplementedException();
 
-        public double LargeChange => NumberBox.LargeChange;
+        public double LargeChange => double.CreateTruncating(NumberBox.LargeChange);
 
-        public double Maximum => NumberBox.Maximum;
+        public double Maximum => double.CreateTruncating(NumberBox.Maximum);
 
-        public double Minimum => NumberBox.Minimum;
+        public double Minimum => double.CreateTruncating(NumberBox.Minimum);
 
-        public double SmallChange => NumberBox.SmallChange;
+        public double SmallChange => double.CreateTruncating(NumberBox.SmallChange);
 
-        public double Value => NumberBox.Value;
+        public double Value => double.CreateTruncating(NumberBox.Value);
 
-        public void SetValue(double value) => NumberBox.Value = value;
+        public void SetValue(double value) => NumberBox.Value = T.CreateTruncating(value);
 
-        public void RaiseValueChangedEvent(double oldValue, double newValue)
+        public void RaiseValueChangedEvent(T oldValue, T newValue)
         {
-            base.RaisePropertyChangedEvent(RangeValuePatternIdentifiers.ValueProperty,
-                PropertyValue.CreateDouble(oldValue),
-                PropertyValue.CreateDouble(newValue));
+            base.RaisePropertyChangedEvent(RangeValuePatternIdentifiers.ValueProperty, oldValue, newValue);
+            //base.RaisePropertyChangedEvent(RangeValuePatternIdentifiers.ValueProperty,
+            //    PropertyValue.CreateDouble(oldValue),
+            //    PropertyValue.CreateDouble(newValue));
         }
     }
 }

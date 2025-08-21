@@ -12,8 +12,6 @@ namespace WinUIEx
         private const string LOC_PREFIX = "WinUIEx";
         private const string LOC_PREFIX_WINUI = "WinUIEx";
         private static string c_resourceLoc = "WinUIEx/Resources";
-        private static string c_assetLoc = "Files/" + LOC_PREFIX  +"/Assets";
-        private static string c_resourceLocWinUI = LOC_PREFIX_WINUI  +"/Resources";
         private static ResourceManager? m_resourceManagerWinRT;
 
         private static ResourceManager GetResourceManager()

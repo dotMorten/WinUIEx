@@ -12,9 +12,13 @@ using Windows.System;
 
 namespace WinUIEx
 {
+    /// <summary>
+    /// Represents a control that can be used to display and edit numbers.
+    /// </summary>
+    /// <remarks>This control supports validation, increment stepping, and computing inline
+    /// calculations of basic equations such as multiplication, division, addition, and subtraction.</remarks>
     public sealed partial class NumberBox : Control
     {
-
         const string c_numberBoxHeaderName = "HeaderContentPresenter";
         const string c_numberBoxDownButtonName = "DownSpinButton";
         const string c_numberBoxUpButtonName = "UpSpinButton";
@@ -34,6 +38,9 @@ namespace WinUIEx
 
         private SignificantDigitsNumberRounder m_displayRounder = new SignificantDigitsNumberRounder();
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NumberBox"/> class.
+        /// </summary>
         public NumberBox()
         {
             DefaultStyleKey = typeof(NumberBox);
@@ -605,6 +612,9 @@ namespace WinUIEx
 
     }
 
+    /// <summary>
+    /// Provides event data for the <see cref="NumberBox.ValueChanged">NumberBox.ValueChanged</see> event.
+    /// </summary>
     public sealed class NumberBoxValueChangedEventArgs : EventArgs
     {
         internal NumberBoxValueChangedEventArgs(double oldValue, double newValue)
@@ -613,7 +623,14 @@ namespace WinUIEx
             NewValue = newValue;
         }
 
+        /// <summary>
+        /// Contains the old <see cref="NumberBox.Value"/> being replaced for a <see cref="NumberBox"/>.
+        /// </summary>
         public double OldValue { get; }
+
+        /// <summary>
+        /// Contains the new <see cref="NumberBox.Value"/> to be set for a <see cref="NumberBox"/>.
+        /// </summary>
         public double NewValue { get; }
     }
 

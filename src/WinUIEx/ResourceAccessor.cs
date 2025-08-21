@@ -5,7 +5,6 @@ namespace WinUIEx
     internal static class ResourceAccessor
     {
         private const string LOC_PREFIX = "WinUIEx";
-        private const string LOC_PREFIX_WINUI = "WinUIEx";
         private static string c_resourceLoc = "WinUIEx/Resources";
         private static ResourceManager? m_resourceManagerWinRT;
 

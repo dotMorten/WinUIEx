@@ -361,21 +361,48 @@ namespace WinUIEx
                     bool hasValue = false;
                     if (AcceptsExpression)
                     {
-                        value = NumberBoxParser<T>.Compute(text, numberParser, out bool success);
-                        if (!success) {
-                            var d = numberParser.ParseDouble(text);
-                            if (d.HasValue)
+                        value = NumberBoxParser<T>.Compute(text, numberParser, out hasValue);
+                    }
+                    if (!hasValue)
+                    {
+                        // Special parsing logic for Decimal to ensure decimal consistency
+                        if (typeof(T) == typeof(Decimal) &&
+                            decimal.TryParse(text, System.Globalization.CultureInfo.CurrentCulture, out decimal result))
+                        {
+                            value = T.CreateChecked<decimal>(result);
+                            hasValue = true;
+                        }
+                        else
+                        {
+                            if (typeof(T) == typeof(Int32) || typeof(T) == typeof(Int64) || typeof(T) == typeof(sbyte))
                             {
-                                value = T.CreateSaturating<double>(d.Value);
-                                hasValue = true;
+                                var d = numberParser.ParseInt(text);
+                                if (d.HasValue)
+                                {
+                                    value = T.CreateSaturating<long>(d.Value);
+                                    hasValue = true;
+                                }
+                            }
+                            else if (typeof(T) == typeof(UInt32) || typeof(T) == typeof(UInt64) || typeof(T) == typeof(byte))
+                            {
+                                var d = numberParser.ParseUInt(text);
+                                if (d.HasValue)
+                                {
+                                    value = T.CreateSaturating<ulong>(d.Value);
+                                    hasValue = true;
+                                }
+                            }
+                            else
+                            {
+                                var d = numberParser.ParseDouble(text);
+                                if (d.HasValue)
+                                {
+                                    value = T.CreateSaturating<double>(d.Value);
+                                    hasValue = true;
+                                }
                             }
                         }
-                        else hasValue = true;
-
                     }
-                    //T? value = AcceptsExpression
-                    //    ? NumberBoxParser<T>.Compute(text, numberParser, bool success)
-                    //    : numberParser.ParseDouble(text);
 
                     if (!hasValue)
                     {

@@ -22,6 +22,10 @@ namespace WinUIEx
         /// <summary>
         /// Initializes a new instance of the <see cref="NumberBoxDecimal"/> class.
         /// </summary>
+        /// <remarks>
+        /// Note: It is recommended to NOT set <see cref="NumberBox{T}.AcceptsExpression"/> to <c>true</c>
+        /// when working with Decimals, since the calculations will be performed with double accuracy only.
+        /// </remarks>
         public NumberBoxDecimal() : base()
         {
             DefaultStyleKey = typeof(NumberBoxDecimal);
@@ -361,15 +365,16 @@ namespace WinUIEx
                     bool hasValue = false;
                     if (AcceptsExpression)
                     {
-                        value = NumberBoxParser<T>.Compute(text, numberParser, out hasValue);
+                        value = NumberBoxParser<T>.Compute(text, numberParser, formatterCulture, out hasValue);
                     }
                     if (!hasValue)
                     {
-                        // Special parsing logic for Decimal to ensure decimal consistency
-                        if (typeof(T) == typeof(Decimal) &&
-                            decimal.TryParse(text, System.Globalization.CultureInfo.CurrentCulture, out decimal result))
+                        // This will fail if using custom formats, but in most cases that isn't needed.
+                        // Note that this is only really needed for Decimal, as other types are handled by the INumberParser
+                        // It will also fallback to double parsing if the text is using custom formatting
+                        if (T.TryParse(text, formatterCulture ?? System.Globalization.CultureInfo.CurrentCulture, out T? result))
                         {
-                            value = T.CreateChecked<decimal>(result);
+                            value = result;
                             hasValue = true;
                         }
                         else

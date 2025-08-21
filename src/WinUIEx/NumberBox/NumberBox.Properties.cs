@@ -5,6 +5,7 @@ using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using System;
+using System.Globalization;
 using Windows.Globalization.NumberFormatting;
 
 namespace WinUIEx
@@ -421,8 +422,15 @@ namespace WinUIEx
         public static readonly DependencyProperty NumberFormatterProperty =
             DependencyProperty.Register(nameof(NumberFormatter), typeof(INumberFormatter2), typeof(NumberBox<T>), new PropertyMetadata(null, (s,e) => ((NumberBox<T>)s).OnNumberFormatterChanged()));
 
+
+        private CultureInfo? formatterCulture;
+
         private void OnNumberFormatterChanged()
         {
+            if (NumberFormatter is INumberFormatterOptions options)
+                formatterCulture = new CultureInfo(options.ResolvedLanguage);
+            else
+                formatterCulture = CultureInfo.CurrentCulture;
             // Update text with new formatting
             UpdateTextToValue();
         }

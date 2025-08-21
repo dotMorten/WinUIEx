@@ -357,7 +357,7 @@ namespace WinUIEx
                 {
                     // Setting NumberFormatter to something that isn't an INumberParser will throw an exception, so this should be safe
                     var numberParser = (INumberParser)NumberFormatter;
-                    T value = default;
+                    T value = T.Zero;
                     bool hasValue = false;
                     if (AcceptsExpression)
                     {

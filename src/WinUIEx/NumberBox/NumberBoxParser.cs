@@ -19,12 +19,12 @@ namespace WinUIEx
     internal sealed class MathToken<T> where T : System.Numerics.INumber<T>
     {
         public MathTokenType Type { get; }
-        public T Value { get; }      // used when Type == Numeric
+        public T? Value { get; }      // used when Type == Numeric
         public char Char { get; }         // used when Type == Operator or Parenthesis
 
-        public MathToken(MathTokenType type, T value)
+        public MathToken(T value)
         {
-            Type = type;
+            Type = MathTokenType.Numeric;
             Value = value;
         }
 
@@ -70,7 +70,7 @@ namespace WinUIEx
 
                             if (charLength > 0)
                             {
-                                tokens.Add(new MathToken<T>(MathTokenType.Numeric, value));
+                                tokens.Add(new MathToken<T>(value));
                                 i += charLength - 1; // advance to end of token (loop will +1)
                                 expectNumber = false; // next should be operator
                             }
@@ -252,7 +252,7 @@ namespace WinUIEx
                 }
                 else if (token.Type == MathTokenType.Numeric)
                 {
-                    stack.Push(token.Value);
+                    stack.Push(token.Value!);
                 }
             }
 

@@ -25,11 +25,8 @@
     <PackageId>WinUIEx</PackageId>
     <Product>WinUI Extensions</Product>
     <PackageReleaseNotes>
-      - Updated to Windows App SDK 1.7.0.
-      - Added IsVisibleInTray property to WindowManager and WindowEx that automatically adds a tray icon for the window.
-      - Deprecated TitleBar. Use Windows App SDK TitleBar instead.
-      - Deprecated WebAuthenticator APIs. Use Windows App SDK's Microsoft.Security.Authentication.OAuth APIs instead.
-      - WindowManager / WindowEx : Work around for memory leak caused by WinUI 3 bug (see https://github.com/microsoft/microsoft-ui-xaml/issues/9960) #222
+      - Require .NET 8
+      - Added NumberBox for Decimal and Integer types, as well as a generic version for easily extensibility with any number type.
     </PackageReleaseNotes>
   </PropertyGroup>
 

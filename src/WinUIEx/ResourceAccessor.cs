@@ -35,5 +35,5 @@ namespace WinUIEx
             var mrt_lifted_resourceContext = GetResourceContext();
             return mrt_lifted_resourceMap.GetValue(resourceName, mrt_lifted_resourceContext).ValueAsString;
         }
-}
+    }
 }

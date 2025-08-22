@@ -287,7 +287,7 @@ namespace WinUIEx
 
         private void UpdateVisualStateForIsEnabledChange()
         {
-            VisualStateManager.GoToState(this, IsEnabled ? "Norma" : "Disabled", false);
+            VisualStateManager.GoToState(this, IsEnabled ? "Normal" : "Disabled", false);
         }
 
         void OnNumberBoxGotFocus(object sender, RoutedEventArgs args)

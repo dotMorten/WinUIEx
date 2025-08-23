@@ -36,6 +36,7 @@
                 <NavigationViewItem Content="OAuth" Tag="OAuth" Icon="OtherUser" />
                 <NavigationViewItem Content="Window Messaging" Tag="Messaging" Icon="Message" />
                 <NavigationViewItem Content="Dialogs" Tag="Dialogs" Icon="Accept" />
+                <NavigationViewItem Content="NumberBox&lt;T>" Tag="NumberBoxes" Icon="SwitchApps" />
             </NavigationView.MenuItems>
             <Frame Margin="0,44,0,0" x:Name="contentFrame" Padding="10" Background="Transparent"/>
         </NavigationView>

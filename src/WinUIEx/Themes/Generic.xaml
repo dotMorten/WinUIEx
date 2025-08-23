@@ -5,5 +5,7 @@
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="ms-appx:///WinUIEx/TitleBar/TitleBar.xaml" />
+        <ResourceDictionary Source="ms-appx:///WinUIEx/NumberBox/NumberBox.xaml"  />
     </ResourceDictionary.MergedDictionaries>
+
 </ResourceDictionary>

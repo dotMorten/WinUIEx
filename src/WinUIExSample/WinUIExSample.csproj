@@ -13,7 +13,7 @@
     <UseWinUI>true</UseWinUI>
     <EnableMsixTooling>true</EnableMsixTooling>
     <Configurations>Debug;Release;Experimental</Configurations>
-    <LangVersion>11</LangVersion>
+    <LangVersion>preview</LangVersion>
     <!-- Uncomment to run unpackaged: -->
     <!--<WindowsPackageType>None</WindowsPackageType>-->
     <WindowsSdkPackageVersion>10.0.22621.38</WindowsSdkPackageVersion>
@@ -35,6 +35,7 @@
 
   <Import Project="..\Dependencies.targets" Condition="'$(WinAppSDKVersion)'==''" />
   <ItemGroup>
+      <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
       <PackageReference Include="Microsoft.WindowsAppSDK" Version="$(WinAppSDKVersion)" />
       <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="$(WinAppSDKToolsVersion)" />
       <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.1.3" />

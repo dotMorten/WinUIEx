@@ -49,7 +49,21 @@ namespace WinUIExSample.Pages
             return type.GetType().Name;
         }
     }
+    public partial class StringConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, string language)
+        {
+            var type = value.GetType();
+            if (type.IsEnum)
+                return value.ToString();
+            return type.Name;
+        }
 
+        public object ConvertBack(object value, Type targetType, object parameter, string language)
+        {
+            throw new NotImplementedException();
+        }
+    }
     public partial class NumberBoxVM : ObservableObject
     {
         public NumberBoxVM()
@@ -95,6 +109,7 @@ namespace WinUIExSample.Pages
 
         [ObservableProperty]
         public partial INumberFormatter2 Formatter { get; set; }
+
         public INumberFormatter2[] Formatters { get; set; } =
         {
             new DecimalFormatter() { FractionDigits = 0, IntegerDigits = 1 },
@@ -122,21 +137,16 @@ namespace WinUIExSample.Pages
         [ObservableProperty]
         public partial NumberBoxValidationMode ValidationMode { get; set; } = NumberBoxValidationMode.InvalidInputOverwritten;
 
-
-        public TextAlignment[] TextAlignments =
-        {
+        public List<TextAlignment> TextAlignments { get; } =
+        [
             TextAlignment.Center,
             TextAlignment.Left,
-            TextAlignment.Start,
             TextAlignment.Right,
-            TextAlignment.End,
             TextAlignment.Justify,
-            TextAlignment.DetectFromContent
-        };
+            TextAlignment.DetectFromContent,
+        ];
 
         [ObservableProperty]
         public partial TextAlignment TextAlignment { get; set; } = TextAlignment.Left;
-
-        
     }
 }

@@ -10,16 +10,19 @@
     xmlns:num="using:Windows.Globalization.NumberFormatting"
     mc:Ignorable="d">
 
+    <Page.Resources>
+        <local:StringConverter x:Key="converter" />
+    </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <StackPanel Background="{ThemeResource SemiTransparentBackgroundBrush}" CornerRadius="10" Padding="10">
+        <StackPanel Background="{ThemeResource SemiTransparentBackgroundBrush}" CornerRadius="10" Padding="10" Grid.ColumnSpan="2">
             <TextBlock Text="NumberBox" FontSize="32" FontFamily="Segoe UI" FontWeight="Light" Margin="0,-10,0,0" />
         </StackPanel>
 
@@ -57,9 +60,10 @@
                 Description="WinUI3's NumberBox (double)"
                 PlaceholderText="Enter number"  />
         </StackPanel>
-        
+
+        <ScrollView Grid.Row="1" Grid.Column="1">
         <StackPanel Background="{ThemeResource SemiTransparentBackgroundBrush}"
-                    CornerRadius="10" Padding="10" Margin="0,10,0,0" Grid.Row="1" Grid.Column="1">
+                    CornerRadius="10" Padding="10" Margin="8,10,0,0" >
             <ToggleSwitch Header="AcceptsExpressions" IsOn="{x:Bind VM.AcceptsExpressions, Mode=TwoWay}" />
             <ToggleSwitch Header="IsWrapEnabled" IsOn="{x:Bind VM.IsWrapEnabled, Mode=TwoWay}" />
             <NumberBox Header="Minimum" Value="{x:Bind VM.Minimum, Mode=TwoWay}" />
@@ -70,16 +74,22 @@
                       SelectedItem="{x:Bind VM.Formatter, Mode=TwoWay}" >
                 <ComboBox.ItemTemplate>
                     <DataTemplate x:DataType="num:INumberFormatter2">
-                        <TextBlock Text="{x:Bind}" HorizontalAlignment="Right" />
+                            <TextBlock Text="{x:Bind Converter={StaticResource converter}}" />
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
             </ComboBox>
             <ComboBox Header="ValidationMode" ItemsSource="{x:Bind VM.ValidationModes}"
                       SelectedItem="{x:Bind VM.ValidationMode, Mode=TwoWay}" />
-            <ComboBox Header="TextAlignment" ItemsSource="{x:Bind VM.TextAlignments}"
-                      SelectedItem="{x:Bind VM.TextAlignment, Mode=TwoWay}" />
+                <ComboBox Header="TextAlignment" ItemsSource="{x:Bind VM.TextAlignments}"
+                      SelectedItem="{x:Bind VM.TextAlignment, Mode=TwoWay}" >
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate x:DataType="TextAlignment">
+                            <TextBlock Text="{x:Bind Converter={StaticResource converter}}" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
 
-        </StackPanel>
-        
+            </StackPanel>
+        </ScrollView>
     </Grid>
 </Page>

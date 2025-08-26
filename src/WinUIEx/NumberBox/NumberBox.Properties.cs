@@ -15,10 +15,19 @@ namespace WinUIEx
         /// <summary>
         /// Gets or sets the numeric value of a <see cref="NumberBox"/>.
         /// </summary>
+        /// <remarks>
+        /// <para>
+        /// <note type="caution">
+        /// If you're two-way binding to a non-nullable value type, set <see cref="AllowNull"/> to false to avoid
+        /// resetting the value to null when the user clears the text and causing a binding error.
+        /// </note>
+        /// </para>
+        /// </remarks>
         /// <value>The numeric value of a NumberBox.</value>
-        public T Value
+        /// <seealso cref="AllowNull"/>
+        public T? Value
         {
-            get { return (T)GetValue(ValueProperty); }
+            get { return (T?)GetValue(ValueProperty); }
             set
             {
                 // When using two way bindings to Value using x:Bind, we could end up with a stack overflow because
@@ -26,7 +35,7 @@ namespace WinUIEx
                 // and that can happen quite often. We can avoid the stack overflow by breaking the cycle here. This is possible
                 // for x:Bind since the generated code goes through this property setter. This is not the case for Binding
                 // unfortunately. x:Bind is recommended over Binding anyway due to its perf and debuggability benefits.
-                if (!T.IsNaN(value) || !T.IsNaN(Value))
+                if (!value.HasValue || !T.IsNaN(value.Value) || !Value.HasValue || !T.IsNaN(Value.Value))
                 {
                     SetValue(ValueProperty, value);
                 }
@@ -35,14 +44,14 @@ namespace WinUIEx
 
         /// <summary>Identifies the <see cref="Value"/> dependency property.</summary>
         public static readonly DependencyProperty ValueProperty =
-            DependencyProperty.Register(nameof(Value), typeof(double), typeof(NumberBox<T>), new PropertyMetadata(T.Zero, (s, e) => ((NumberBox<T>)s).OnValuePropertyChanged(e)));
+            DependencyProperty.Register(nameof(Value), typeof(T?), typeof(NumberBox<T>), new PropertyMetadata(default(T?), (s, e) => ((NumberBox<T>)s).OnValuePropertyChanged(e)));
 
         private void OnValuePropertyChanged(DependencyPropertyChangedEventArgs args)
         {
             // This handler may change Value; don't send extra events in that case.
             if (!m_valueUpdating)
             {
-                T oldValue = (T)args.OldValue;
+                T? oldValue = (T?)args.OldValue;
 
                 m_valueUpdating = true;
                 try
@@ -50,8 +59,8 @@ namespace WinUIEx
 
                     CoerceValue();
 
-                    T newValue = (T)Value;
-                    if (newValue != oldValue && !(T.IsNaN(newValue) && T.IsNaN(oldValue)))
+                    T? newValue = (T?)args.NewValue;
+                    if (newValue != oldValue && !(newValue.HasValue && T.IsNaN(newValue.Value) && oldValue.HasValue && T.IsNaN(oldValue.Value)))
                     {
                         // Fire ValueChanged event
                         ValueChanged?.Invoke(this, new NumberBoxValueChangedEventArgs<T>(oldValue, newValue));
@@ -70,6 +79,30 @@ namespace WinUIEx
                 {
                     m_valueUpdating = false;
                 }
+            }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether a null value is allowed as input. Set to false if you're binding to a non-nullable value
+        /// </summary>
+        /// <remarks>
+        /// If clearing the result, the <c>default&lt;T></c> value will be inserted on clear. 
+        /// </remarks>
+        public bool AllowNull
+        {
+            get { return (bool)GetValue(AllowNullProperty); }
+            set { SetValue(AllowNullProperty, value); }
+        }
+
+        /// <summary>Identifies the <see cref="AllowNull"/> dependency property.</summary>
+        public static readonly DependencyProperty AllowNullProperty =
+            DependencyProperty.Register(nameof(AllowNull), typeof(bool), typeof(NumberBox), new PropertyMetadata(true, (s, e) => ((NumberBox<T>)s).OnAllowNullPropertyChanged(e)));
+
+        private void OnAllowNullPropertyChanged(DependencyPropertyChangedEventArgs e)
+        {
+            if (!AllowNull && Value is null)
+            {
+                Value = default(T);
             }
         }
 

@@ -27,9 +27,10 @@
         </StackPanel>
 
         <StackPanel Background="{ThemeResource SemiTransparentBackgroundBrush}" CornerRadius="10" Padding="10" Margin="0,10,0,0" Grid.Row="1">
-            <ex:NumberBoxInt32 Header="NumberBoxInt32" 
+            <ex:NumberBoxInt32 Header="NumberBoxInt32" AllowNull="True"
                 AcceptsExpression="{x:Bind VM.AcceptsExpressions, Mode=OneWay}" 
                 NumberFormatter="{x:Bind VM.Formatter, Mode=OneWay}"
+                Value="{x:Bind VM.NullableIntValue, Mode=TwoWay}"
                 Minimum="{x:Bind VM.MinimumInt32, Mode=OneWay}"
                 Maximum="{x:Bind VM.MaximumInt32, Mode=OneWay}"
                 SpinButtonPlacementMode="{x:Bind VM.SpinButtonPlacementMode, Mode=OneWay}"
@@ -38,9 +39,10 @@
                 IsWrapEnabled="{x:Bind VM.IsWrapEnabled, Mode=OneWay}"
                 Description="32bit Integer"
                 PlaceholderText="Enter number"  />
-            <ex:NumberBoxDecimal Header="NumberBoxDecimal" 
+            <ex:NumberBoxDecimal Header="NumberBoxDecimal" AllowNull="False"
                 AcceptsExpression="{x:Bind VM.AcceptsExpressions, Mode=OneWay}" 
                 NumberFormatter="{x:Bind VM.Formatter, Mode=OneWay}"
+                Value="{x:Bind VM.DecimalValue, Mode=TwoWay}"
                 Minimum="{x:Bind VM.MinimumDecimal, Mode=OneWay}"
                 Maximum="{x:Bind VM.MaximumDecimal, Mode=OneWay}"
                 SpinButtonPlacementMode="{x:Bind VM.SpinButtonPlacementMode, Mode=OneWay}" 

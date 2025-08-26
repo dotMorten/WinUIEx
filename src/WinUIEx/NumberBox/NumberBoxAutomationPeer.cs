@@ -12,7 +12,7 @@ using Windows.Foundation;
 namespace WinUIEx
 {
     internal class NumberBoxAutomationPeer<T> : FrameworkElementAutomationPeer, IRangeValueProvider
-        where T : System.Numerics.INumber<T>, System.Numerics.IMinMaxValue<T>
+        where T : struct, System.Numerics.INumber<T>, System.Numerics.IMinMaxValue<T>
     {
         public NumberBoxAutomationPeer(NumberBox<T> numberBox) : base(numberBox)
         {
@@ -72,13 +72,13 @@ namespace WinUIEx
 
         public double SmallChange => double.CreateTruncating(NumberBox.SmallChange);
 
-        public double Value => double.CreateTruncating(NumberBox.Value);
+        public double Value => NumberBox.Value.HasValue ? double.CreateTruncating(NumberBox.Value.Value) : double.NaN;
 
         public void SetValue(double value) => NumberBox.Value = T.CreateTruncating(value);
 
-        public void RaiseValueChangedEvent(T oldValue, T newValue)
+        public void RaiseValueChangedEvent(T? oldValue, T? newValue)
         {
-            base.RaisePropertyChangedEvent(RangeValuePatternIdentifiers.ValueProperty, oldValue, newValue);
+            base.RaisePropertyChangedEvent(RangeValuePatternIdentifiers.ValueProperty, oldValue.HasValue ? oldValue.Value : double.NaN, newValue.HasValue ? newValue.Value : double.NaN);
             //base.RaisePropertyChangedEvent(RangeValuePatternIdentifiers.ValueProperty,
             //    PropertyValue.CreateDouble(oldValue),
             //    PropertyValue.CreateDouble(newValue));

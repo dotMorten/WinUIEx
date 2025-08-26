@@ -52,7 +52,7 @@ namespace WinUIEx
     /// <remarks>This control supports validation, increment stepping, and computing inline
     /// calculations of basic equations such as multiplication, division, addition, and subtraction.</remarks>
     public abstract partial class NumberBox<T> : Control
-        where T: INumber<T>, IMinMaxValue<T>
+        where T: struct, INumber<T>, IMinMaxValue<T>
     {
         const string c_numberBoxHeaderName = "HeaderContentPresenter";
         const string c_numberBoxDownButtonName = "DownSpinButton";
@@ -330,7 +330,7 @@ namespace WinUIEx
         {
             // Validate that the value is in bounds
             var value = Value;
-            if (!T.IsNaN(value) && !IsInBounds(value) && ValidationMode == NumberBoxValidationMode.InvalidInputOverwritten)
+            if (value.HasValue && !T.IsNaN(value.Value) && !IsInBounds(value.Value) && ValidationMode == NumberBoxValidationMode.InvalidInputOverwritten)
             {
                 // Coerce value to be within range
                 var max = Maximum;
@@ -355,27 +355,25 @@ namespace WinUIEx
                 // Handles empty TextBox case, set text to current value
                 if (string.IsNullOrEmpty(text))
                 {
-                    Value = T.Zero;
+                    Value = AllowNull ? null : default(T);
                 }
                 else
                 {
                     // Setting NumberFormatter to something that isn't an INumberParser will throw an exception, so this should be safe
                     var numberParser = (INumberParser)NumberFormatter;
-                    T value = T.Zero;
-                    bool hasValue = false;
+                    T? value = null;
                     if (AcceptsExpression)
                     {
-                        value = NumberBoxParser<T>.Compute(text, numberParser, formatterCulture, out hasValue);
+                        value = NumberBoxParser<T>.Compute(text, numberParser, formatterCulture);
                     }
-                    if (!hasValue)
+                    if (!value.HasValue)
                     {
                         // This will fail if using custom formats, but in most cases that isn't needed.
                         // Note that this is only really needed for Decimal, as other types are handled by the INumberParser
                         // It will also fallback to double parsing if the text is using custom formatting
-                        if (T.TryParse(text, formatterCulture ?? System.Globalization.CultureInfo.CurrentCulture, out T? result))
+                        if (T.TryParse(text, formatterCulture ?? System.Globalization.CultureInfo.CurrentCulture, out T result))
                         {
                             value = result;
-                            hasValue = true;
                         }
                         else
                         {
@@ -385,7 +383,6 @@ namespace WinUIEx
                                 if (d.HasValue)
                                 {
                                     value = T.CreateSaturating<long>(d.Value);
-                                    hasValue = true;
                                 }
                             }
                             else if (typeof(T) == typeof(UInt32) || typeof(T) == typeof(UInt64) || typeof(T) == typeof(byte))
@@ -394,7 +391,6 @@ namespace WinUIEx
                                 if (d.HasValue)
                                 {
                                     value = T.CreateSaturating<ulong>(d.Value);
-                                    hasValue = true;
                                 }
                             }
                             else
@@ -403,13 +399,12 @@ namespace WinUIEx
                                 if (d.HasValue)
                                 {
                                     value = T.CreateSaturating<double>(d.Value);
-                                    hasValue = true;
                                 }
                             }
                         }
                     }
 
-                    if (!hasValue)
+                    if (!value.HasValue)
                     {
                         if (ValidationMode == NumberBoxValidationMode.InvalidInputOverwritten)
                         {
@@ -515,7 +510,7 @@ namespace WinUIEx
             ValidateInput();
 
             var newVal = Value;
-            if (!T.IsNaN(newVal))
+            if (newVal.HasValue && !T.IsNaN(newVal.Value))
             {
                 newVal += change;
 
@@ -550,10 +545,10 @@ namespace WinUIEx
                 string newText = "";
 
                 var value = Value;
-                if (!T.IsNaN(value))
+                if (value.HasValue && !T.IsNaN(value.Value))
                 {
                     // Rounding the value here will prevent displaying digits caused by floating point imprecision.
-                    var roundedValue = m_displayRounder.RoundDouble(double.CreateSaturating(value));
+                    var roundedValue = m_displayRounder.RoundDouble(double.CreateSaturating(value.Value));
                     newText = NumberFormatter.FormatDouble(roundedValue);
                 }
 
@@ -598,7 +593,7 @@ namespace WinUIEx
             bool isUpButtonEnabled = false;
             bool isDownButtonEnabled = false;
 
-            if (!T.IsNaN(value))
+            if (value.HasValue && !T.IsNaN(value.Value))
             {
                 if (IsWrapEnabled || ValidationMode != NumberBoxValidationMode.InvalidInputOverwritten)
                 {
@@ -695,8 +690,9 @@ namespace WinUIEx
     /// Provides event data for the <see cref="NumberBox.ValueChanged">NumberBox.ValueChanged</see> event.
     /// </summary>
     public sealed class NumberBoxValueChangedEventArgs<T> : EventArgs
+        where T : struct, INumber<T>, IMinMaxValue<T>
     {
-        internal NumberBoxValueChangedEventArgs(T oldValue, T newValue)
+        internal NumberBoxValueChangedEventArgs(T? oldValue, T? newValue)
         {
             OldValue = oldValue;
             NewValue = newValue;
@@ -705,11 +701,11 @@ namespace WinUIEx
         /// <summary>
         /// Contains the old <see cref="NumberBox.Value"/> being replaced for a <see cref="NumberBox"/>.
         /// </summary>
-        public T OldValue { get; }
+        public T? OldValue { get; }
 
         /// <summary>
         /// Contains the new <see cref="NumberBox.Value"/> to be set for a <see cref="NumberBox"/>.
         /// </summary>
-        public T NewValue { get; }
+        public T? NewValue { get; }
     }
 }

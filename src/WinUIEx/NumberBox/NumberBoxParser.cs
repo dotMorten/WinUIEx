@@ -36,7 +36,7 @@ namespace WinUIEx
         }
     }
 
-    internal static class NumberBoxParser<T> where T : System.Numerics.INumber<T>
+    internal static class NumberBoxParser<T> where T : struct, System.Numerics.INumber<T>
     {
         private const string Operators = "+-*/^";
 
@@ -212,9 +212,8 @@ namespace WinUIEx
             return postfixTokens;
         }
 
-        public static T ComputePostfixExpression(List<MathToken> tokens, out bool success)
+        public static T? ComputePostfixExpression(List<MathToken> tokens)
         {
-            success = false;
             var stack = new Stack<double>();
 
             foreach (var token in tokens)
@@ -243,7 +242,7 @@ namespace WinUIEx
                             if (op1 == 0d)
                             {
                                 // divide by zero
-                                return T.Zero;
+                                return null;
                             }
                             result = op2 / op1;
                             break;
@@ -251,7 +250,7 @@ namespace WinUIEx
                             result = Math.Pow(op2, op1);
                             break;
                         default:
-                            return T.Zero;
+                            return null;
                     }
 
                     stack.Push(result);
@@ -264,25 +263,23 @@ namespace WinUIEx
 
             // Must end with exactly one value
             if (stack.Count != 1) return T.Zero;
-            success = true;
             return T.CreateSaturating(stack.Peek());
         }
 
-        public static T Compute(string expr, INumberParser numberParser, CultureInfo? culture, out bool success)
+        public static T? Compute(string expr, INumberParser numberParser, CultureInfo? culture)
         {
-            success = false;
-            if (expr is null) return T.Zero;
+            if (expr is null) return null;
 
             // Tokenize
             var tokens = GetTokens(expr, numberParser, culture);
-            if (tokens.Count == 0) return T.Zero;
+            if (tokens.Count == 0) return null;
 
             // Infix -> Postfix
             var postfix = ConvertInfixToPostfix(tokens);
-            if (postfix.Count == 0) return T.Zero;
+            if (postfix.Count == 0) return null;
 
             // Evaluate
-            var result = ComputePostfixExpression(postfix, out success);
+            var result = ComputePostfixExpression(postfix);
             return result;
         }
     }

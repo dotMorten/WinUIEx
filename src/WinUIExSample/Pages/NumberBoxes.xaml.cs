@@ -72,6 +72,14 @@ namespace WinUIExSample.Pages
         }
 
         [ObservableProperty]
+        public partial double Value { get; set; } = double.NaN;
+        [ObservableProperty]
+        public partial decimal DecimalValue { get; set; }
+        [ObservableProperty]
+        public partial int? NullableIntValue { get; set; }
+
+
+        [ObservableProperty]
         public partial bool AcceptsExpressions { get; set; }
         
         [ObservableProperty]

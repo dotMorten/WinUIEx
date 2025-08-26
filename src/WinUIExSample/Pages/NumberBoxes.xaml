@@ -62,23 +62,32 @@
         </StackPanel>
 
         <ScrollView Grid.Row="1" Grid.Column="1">
-        <StackPanel Background="{ThemeResource SemiTransparentBackgroundBrush}"
+            <ScrollView.Resources>
+                <Style TargetType="NumberBox">
+                    <Setter Property="Margin" Value="0,8,0,0" />
+                </Style>
+                <Style TargetType="ComboBox">
+                    <Setter Property="Margin" Value="0,8,0,0" />
+                    <Setter Property="HorizontalAlignment" Value="Stretch" />
+                </Style>
+            </ScrollView.Resources>
+            <StackPanel Background="{ThemeResource SemiTransparentBackgroundBrush}"
                     CornerRadius="10" Padding="10" Margin="8,10,0,0" >
-            <ToggleSwitch Header="AcceptsExpressions" IsOn="{x:Bind VM.AcceptsExpressions, Mode=TwoWay}" />
-            <ToggleSwitch Header="IsWrapEnabled" IsOn="{x:Bind VM.IsWrapEnabled, Mode=TwoWay}" />
-            <NumberBox Header="Minimum" Value="{x:Bind VM.Minimum, Mode=TwoWay}" />
-            <NumberBox Header="Maximum" Value="{x:Bind VM.Maximum, Mode=TwoWay}" />
-            <ComboBox Header="SpinButtonPlacement" ItemsSource="{x:Bind VM.SpinButtonPlacementModes}"
+                <ToggleSwitch Header="AcceptsExpressions" IsOn="{x:Bind VM.AcceptsExpressions, Mode=TwoWay}" />
+                <ToggleSwitch Header="IsWrapEnabled" IsOn="{x:Bind VM.IsWrapEnabled, Mode=TwoWay}" />
+                <NumberBox Header="Minimum" Value="{x:Bind VM.Minimum, Mode=TwoWay}" />
+                <NumberBox Header="Maximum" Value="{x:Bind VM.Maximum, Mode=TwoWay}" />
+                <ComboBox Header="SpinButtonPlacement" ItemsSource="{x:Bind VM.SpinButtonPlacementModes}"
                       SelectedItem="{x:Bind VM.SpinButtonPlacementMode, Mode=TwoWay}" />
-            <ComboBox Header="Formatter" ItemsSource="{x:Bind VM.Formatters}" Width="200"
-                      SelectedItem="{x:Bind VM.Formatter, Mode=TwoWay}" >
-                <ComboBox.ItemTemplate>
-                    <DataTemplate x:DataType="num:INumberFormatter2">
+                <ComboBox Header="Formatter" ItemsSource="{x:Bind VM.Formatters}" 
+                          SelectedItem="{x:Bind VM.Formatter, Mode=TwoWay}" >
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate x:DataType="num:INumberFormatter2">
                             <TextBlock Text="{x:Bind Converter={StaticResource converter}}" />
-                    </DataTemplate>
-                </ComboBox.ItemTemplate>
-            </ComboBox>
-            <ComboBox Header="ValidationMode" ItemsSource="{x:Bind VM.ValidationModes}"
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+                <ComboBox Header="ValidationMode" ItemsSource="{x:Bind VM.ValidationModes}"
                       SelectedItem="{x:Bind VM.ValidationMode, Mode=TwoWay}" />
                 <ComboBox Header="TextAlignment" ItemsSource="{x:Bind VM.TextAlignments}"
                       SelectedItem="{x:Bind VM.TextAlignment, Mode=TwoWay}" >

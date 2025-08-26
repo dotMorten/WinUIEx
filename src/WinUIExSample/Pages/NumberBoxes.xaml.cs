@@ -91,7 +91,7 @@ namespace WinUIExSample.Pages
         partial void OnMinimumChanged(double value)
         {
             if (double.IsNaN(value))
-                Minimum = double.MaxValue;
+                Minimum = double.MinValue;
             OnPropertyChanged(nameof(MinimumDecimal));
             OnPropertyChanged(nameof(MinimumInt32));
         }

@@ -1,6 +1,6 @@
 ## `NumberBox<T>`
 
-Port of WinUI's NumberBox control to support generic number types.
+Port of WinUI's [NumberBox](https://learn.microsoft.com/en-us/windows/apps/design/controls/number-box) control to support generic number types.
 
 This control supports validation, increment stepping, and computing inline calculations of basic equations such as multiplication, division, addition, and subtraction.
 
@@ -13,6 +13,8 @@ The NumberBox<T>.Value is of type `T?` (nullable) to allow for null values when 
 To be able to assign Decimal values to the NumberBoxDecimal control, it can't be done in XAML (although x:Bind works). Support for decimal values is a limitation in the Windows App SDK and is supposed to be addressed in v1.8, but is currently not available in 1.8preview1 (see microsoft/WindowsAppSDK#5756)
 
 ## Usage
+
+For the most part, you can rely on [Microsoft's NumberBox documentation](https://learn.microsoft.com/en-us/windows/apps/design/controls/number-box) for how to use this control.
 
 Register the WinUIEx xmlns namespace and add one of the specified controls :
 ```xml
@@ -33,12 +35,8 @@ Register the WinUIEx xmlns namespace and add one of the specified controls :
                 Description="Decimal"
                 PlaceholderText="Enter number" />>
 ```
-to
-```xml
-<winex:WindowEx xmlns:winex="using:WinUIEx" Width="1024" Height="768"  ...>
-```
 
-## Extending with your own number-type
+### Extending with your own number-type
 
 First create a custom subclass of `NumberBox<T>`, for example for `float`:
 
@@ -47,7 +45,7 @@ public class NumberBoxFloat : NumberBox<float>
 {
      public NumberBoxFloat() => DefaultStyleKey = typeof(NumberBoxFloat);
 } 
-```cs
+```
 
 Next duplicate the control template from the other NumberBox controls and update the target type to match the new type name.
 

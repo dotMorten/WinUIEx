@@ -21,10 +21,10 @@ jobs:
     - name: Download DocFX
       run: |
         mkdir .tools/docfx
-        Invoke-WebRequest -Uri "https://github.com/dotnet/docfx/releases/download/v${env:DOCFXVERSION}/docfx.zip" -OutFile ".tools/docfx/docfx.zip"
+        Invoke-WebRequest -Uri "https://github.com/dotnet/docfx/releases/download/v${env:DOCFXVERSION}/docfx-win-x64-v${env:DOCFXVERSION}.zip" -OutFile ".tools/docfx/docfx.zip"
         [System.IO.Compression.ZipFile]::ExtractToDirectory(".tools/docfx/docfx.zip", ".tools/docfx" )
       env:
-        DOCFXVERSION: 2.59.4
+        DOCFXVERSION: 2.78.3
 
     - name: Install .NET OMD Generator
       run: dotnet tool install --tool-path .tools/omd dotMorten.OmdGenerator --version 1.4.0
@@ -41,7 +41,6 @@ jobs:
       env:         
         DOCFX_SOURCE_BRANCH_NAME: main
       run: |
-        nuget install memberpage -Version 2.59.4 -OutputDirectory docs
         .tools/docfx/docfx.exe metadata docs/docfx.json
         .tools/docfx/docfx.exe build docs/docfx.json
       

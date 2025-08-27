@@ -17,14 +17,24 @@ namespace WinUIEx
     /// <summary>
     /// Represents a control that can be used to display and edit floating point <see cref="decimal"/> numbers.
     /// </summary>
+    /// <remarks><para>This control supports validation, increment stepping, and computing inline
+    /// calculations of basic equations such as multiplication, division, addition, and subtraction.</para>
+    /// <para>
+    /// <para><note type="caution">Note: It is recommended to NOT set <see cref="NumberBox{T}.AcceptsExpression"/> to <c>true</c>
+    /// when working with Decimals, since the calculations will be performed with <c>double</c> accuracy only.</note></para>
+    /// <note type="tip">
+    /// Note: To be able to assign <see cref="System.Decimal"/> values to the <see cref="NumberBoxDecimal"/> control, it can't be done in XAML (although x:Bind works). Support for decimal values is a limitation in the Windows App SDK and is currently planned to be addressed in v1.8.
+    /// </note>
+    /// </para>
+    /// </remarks>
     public sealed class NumberBoxDecimal : NumberBox<decimal>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="NumberBoxDecimal"/> class.
         /// </summary>
         /// <remarks>
-        /// Note: It is recommended to NOT set <see cref="NumberBox{T}.AcceptsExpression"/> to <c>true</c>
-        /// when working with Decimals, since the calculations will be performed with double accuracy only.
+        /// <para><note type="warning">Note: It is recommended to NOT set <see cref="NumberBox{T}.AcceptsExpression"/> to <c>true</c>
+        /// when working with Decimals, since the calculations will be performed with double accuracy only.</note></para>
         /// </remarks>
         public NumberBoxDecimal() : base()
         {
@@ -35,6 +45,8 @@ namespace WinUIEx
     /// <summary>
     /// Represents a control that can be used to display and edit <see cref="int">integer</see> numbers.
     /// </summary>
+    /// <remarks>This control supports validation, increment stepping, and computing inline
+    /// calculations of basic equations such as multiplication, division, addition, and subtraction.</remarks>
     public sealed class NumberBoxInt32 : NumberBox<int>
     {
         /// <summary>

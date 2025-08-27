@@ -23,9 +23,9 @@ Watch WinUIEx covered in the On .NET Live show:
   - [Splash Screens](https://dotmorten.github.io/WinUIEx/concepts/Splashscreen.html)
   - [OAuth Web Authentication](https://dotmorten.github.io/WinUIEx/concepts/WebAuthenticator.html)
   - [Custom Window Backdrops](https://dotmorten.github.io/WinUIEx/concepts/CustomBackdrops.html)
-  - TitleBar control
+  - [`NumberBoxInt32`, `NumberBoxDecimal` and `NumberBox<T>`](https://dotmorten.github.io/WinUIEx/concepts/NumberBox.html) - Generic number input controls with support for expressions.
+  - TitleBar control (Deprecated in favor of WinAppSDK 1.7 TitleBar)
   - Code analyzers for Windows App SDK APIs to guide the developer.
-
 
 And more to come...
 

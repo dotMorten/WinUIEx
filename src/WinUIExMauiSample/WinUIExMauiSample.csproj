@@ -47,14 +47,14 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\WinUIEx\WinUIEx.csproj" AdditionalProperties="TargetFramework=net6.0-windows10.0.19041.0" />
+	  <ProjectReference Include="..\WinUIEx\WinUIEx.csproj" AdditionalProperties="TargetFramework=net8.0-windows10.0.19041.0" />
       <PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
     </ItemGroup>
 
   <Import Project="..\Dependencies.targets" Condition="'$(WinAppSDKVersion)'==''" />
   <ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">
-    <PackageReference Include="Microsoft.WindowsAppSDK" Version="$(WinAppSDKVersion)" />
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.7.250513003" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.756" />
   </ItemGroup>
 

@@ -1,8 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <Sdk Name="Microsoft.DotNet.PackageValidation" Version="1.0.0-preview.7.21379.12" />
-
+ 
   <PropertyGroup>
-    <TargetFramework>net6.0-windows10.0.19041.0</TargetFramework>
+    <TargetFramework>net8.0-windows10.0.19041.0</TargetFramework>
     <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
@@ -17,6 +16,7 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <WindowsSdkPackageVersion>10.0.19041.38</WindowsSdkPackageVersion>
+    <EnablePackageValidation>true</EnablePackageValidation>
   </PropertyGroup>
 
   <PropertyGroup Label="PackageInfo">
@@ -25,11 +25,9 @@
     <PackageId>WinUIEx</PackageId>
     <Product>WinUI Extensions</Product>
     <PackageReleaseNotes>
-      - Updated to Windows App SDK 1.7.0.
-      - Added IsVisibleInTray property to WindowManager and WindowEx that automatically adds a tray icon for the window.
-      - Deprecated TitleBar. Use Windows App SDK TitleBar instead.
-      - Deprecated WebAuthenticator APIs. Use Windows App SDK's Microsoft.Security.Authentication.OAuth APIs instead.
-      - WindowManager / WindowEx : Work around for memory leak caused by WinUI 3 bug (see https://github.com/microsoft/microsoft-ui-xaml/issues/9960) #222
+      - WinUIEx now requires at least .NET 8.
+      - Added NumberBox for Decimal and Integer types, as well as a generic version for easily extensibility with any number type.
+      - Disable Tab navigation to window content container control (#226).
     </PackageReleaseNotes>
   </PropertyGroup>
 

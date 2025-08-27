@@ -25,8 +25,9 @@
     <PackageId>WinUIEx</PackageId>
     <Product>WinUI Extensions</Product>
     <PackageReleaseNotes>
-      - Require .NET 8
+      - WinUIEx now requires at least .NET 8.
       - Added NumberBox for Decimal and Integer types, as well as a generic version for easily extensibility with any number type.
+      - Disable Tab navigation to window content container control (#226).
     </PackageReleaseNotes>
   </PropertyGroup>
 

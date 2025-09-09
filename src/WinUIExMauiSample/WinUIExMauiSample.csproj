@@ -54,8 +54,7 @@
 
   <Import Project="..\Dependencies.targets" Condition="'$(WinAppSDKVersion)'==''" />
   <ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">
-    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.7.250513003" />
-    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.756" />
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="$(WinAppSDKVersion)" />
   </ItemGroup>
 
 </Project>

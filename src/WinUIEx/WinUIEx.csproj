@@ -25,9 +25,7 @@
     <PackageId>WinUIEx</PackageId>
     <Product>WinUI Extensions</Product>
     <PackageReleaseNotes>
-      - WinUIEx now requires at least .NET 8.
-      - Added NumberBox for Decimal and Integer types, as well as a generic version for easily extensibility with any number type.
-      - Disable Tab navigation to window content container control (#226).
+      - WinUIEx now requires Windows App SDK 1.8, but no longer takes a dependency on the metapackage. Only a reference to `Microsoft.WindowsAppSDK.WinUI` is now needed.
     </PackageReleaseNotes>
   </PropertyGroup>
 
@@ -36,7 +34,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.WindowsAppSDK" Version="$(WinAppSDKVersion)" />
+    <PackageReference Include="Microsoft.WindowsAppSDK.WinUI" Version="$(WinUIVersion)" />
     <None Include="README.md" Pack="true" PackagePath="\" />
   </ItemGroup>
 

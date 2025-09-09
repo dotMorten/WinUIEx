@@ -23,7 +23,7 @@ namespace WinUIEx
     /// <para><note type="caution">Note: It is recommended to NOT set <see cref="NumberBox{T}.AcceptsExpression"/> to <c>true</c>
     /// when working with Decimals, since the calculations will be performed with <c>double</c> accuracy only.</note></para>
     /// <note type="tip">
-    /// Note: To be able to assign <see cref="System.Decimal"/> values to the <see cref="NumberBoxDecimal"/> control, it can't be done in XAML (although x:Bind works). Support for decimal values is a limitation in the Windows App SDK and is currently planned to be addressed in v1.8.
+    /// Note: To be able to assign <see cref="System.Decimal"/> values to the <see cref="NumberBoxDecimal"/> control, it can't be done in XAML (although x:Bind works). Support for decimal values is a limitation in the Windows App SDK. 
     /// </note>
     /// </para>
     /// </remarks>

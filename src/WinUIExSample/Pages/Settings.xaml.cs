@@ -24,12 +24,9 @@ namespace WinUIExSample.Pages
     /// </summary>
     public sealed partial class Settings : Page
     {
-        bool isInitialized;
         public Settings()
         {
             this.InitializeComponent();
-           // isInitialized = true;
-           // themeSelector.SelectedIndex = ((FrameworkElement)CurrentWindow.Content).RequestedTheme switch { ElementTheme.Dark => 1, ElementTheme.Light => 2, _ => 0 };
         }
 
         public WindowEx CurrentWindow => ((App)Application.Current).MainWindow;

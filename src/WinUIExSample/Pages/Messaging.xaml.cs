@@ -24,7 +24,6 @@ namespace WinUIExSample.Pages
     /// </summary>
     public sealed partial class Messaging : Page
     {
-        private static WindowMessageMonitor? monitor;
         public Messaging()
         {
             this.InitializeComponent();

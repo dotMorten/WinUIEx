@@ -10,7 +10,7 @@ Port of WinUI's `NumberBox` to `NumberBox<T>` to allow for any numeric datatype.
 The NumberBox<T>.Value is of type `T?` (nullable) to allow for null values when the user clears the text. If you bind to a non-nullable property, you must set `AllowNull="False"` on the control to prevent binding errors.
 
 ### Note on assigning decimal values:
-To be able to assign Decimal values to the NumberBoxDecimal control, it can't be done in XAML (although x:Bind works). Support for decimal values is a limitation in the Windows App SDK and is supposed to be addressed in v1.8, but is currently not available in 1.8preview1 (see microsoft/WindowsAppSDK#5756)
+To be able to assign Decimal values to the NumberBoxDecimal control, it can't be done in XAML (although x:Bind works). Support for decimal values is a limitation in the Windows App SDK, but I encourage you to upvote the following issue: [https://github.com/microsoft/microsoft-ui-xaml/issues/10776](https://github.com/microsoft/microsoft-ui-xaml/issues/10776)
 
 ## Usage
 

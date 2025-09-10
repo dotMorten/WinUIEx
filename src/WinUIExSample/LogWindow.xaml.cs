@@ -15,7 +15,7 @@ namespace WinUIExSample
             UpdateLog();
         }
 
-        public MainWindow MainWindow => (MainWindow)((App)Application.Current).MainWindow;
+        public MainWindow MainWindow => (MainWindow?)((App)Application.Current).MainWindow!;
 
         internal void UpdateLog()
         {

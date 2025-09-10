@@ -29,13 +29,16 @@ namespace WinUIExSample.Pages
             this.InitializeComponent();
         }
 
-        public WindowEx MainWindow => ((App)Application.Current).MainWindow;
+        public WindowEx MainWindow => ((App)Application.Current).MainWindow!;
 
         private async void ShowDialog_Click(object sender, RoutedEventArgs e)
         {
-            resultText.Text = "";
-            await MainWindow.ShowMessageDialogAsync("Hello World!", "Dialog title");
-            resultText.Text = "Dialog closed";
+            if (MainWindow is not null)
+            {
+                resultText.Text = "";
+                await MainWindow.ShowMessageDialogAsync("Hello World!", "Dialog title");
+                resultText.Text = "Dialog closed";
+            }
         }
 
         private async void ShowDialog2_Click(object sender, RoutedEventArgs e)

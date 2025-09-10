@@ -35,7 +35,7 @@ namespace WinUIExSample
 #endif
         }
 
-        internal SimpleSplashScreen fss { get; set; }
+        internal SimpleSplashScreen? fss { get; set; }
         /// <summary>
         /// Invoked when the application is launched normally by the end user.  Other entry points
         /// will be used such as when the application is launched to open a specific file.
@@ -47,7 +47,7 @@ namespace WinUIExSample
             var splash = new SplashScreen(window);
             splash.Completed += (s, e) =>
             {
-                m_window = (WindowEx)e;
+                m_window = e as WindowEx;
             };
             splash.Activated += Splash_Activated;
         }
@@ -59,9 +59,9 @@ namespace WinUIExSample
             fss = null;
         }
 
-        private WindowEx m_window;
+        private WindowEx? m_window;
 
-        public WindowEx MainWindow => m_window;
+        public WindowEx? MainWindow => m_window;
 
 #if UNPACKAGED
         private class FilePersistence : IDictionary<string, object>

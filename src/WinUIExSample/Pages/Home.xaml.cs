@@ -28,7 +28,7 @@ namespace WinUIExSample.Pages
         {
             this.InitializeComponent();
         }
-        public MainWindow MainWindow => (MainWindow)((App)Application.Current).MainWindow;
+        public MainWindow MainWindow => (MainWindow)((App)Application.Current).MainWindow!;
 
         private void OpenLogWindow_Click(object sender, RoutedEventArgs e) => MainWindow.ShowLogWindow();
     }

@@ -53,7 +53,7 @@ namespace WinUIExSample.Pages
             };
         }
 
-        public WindowEx MainWindow => ((App)Application.Current).MainWindow;
+        public WindowEx MainWindow => ((App)Application.Current).MainWindow!;
 
         private void Presenter_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {

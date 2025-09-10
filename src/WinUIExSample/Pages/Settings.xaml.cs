@@ -29,7 +29,7 @@ namespace WinUIExSample.Pages
             this.InitializeComponent();
         }
 
-        public WindowEx CurrentWindow => ((App)Application.Current).MainWindow;
+        public WindowEx CurrentWindow => ((App)Application.Current).MainWindow!;
 
         public int ThemeSelectedIndex
         {

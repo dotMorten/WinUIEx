@@ -14,6 +14,7 @@
     <EnableMsixTooling>true</EnableMsixTooling>
     <Configurations>Debug;Release;Experimental</Configurations>
     <LangVersion>preview</LangVersion>
+    <Nullable>enable</Nullable>
     <!-- Uncomment to run unpackaged: -->
     <!--<WindowsPackageType>None</WindowsPackageType>-->
     <WindowsSdkPackageVersion>10.0.22621.38</WindowsSdkPackageVersion>

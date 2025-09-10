@@ -40,7 +40,7 @@ namespace WinUIExSample.Pages
         {
             this.InitializeComponent();
         }
-        public WindowEx MainWindow => ((App)Application.Current).MainWindow;
+        public WindowEx MainWindow => ((App)Application.Current).MainWindow!;
 
         public NumberBoxVM VM { get; } = new NumberBoxVM();
 
@@ -51,7 +51,7 @@ namespace WinUIExSample.Pages
     }
     public partial class StringConverter : IValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, string language)
+        public object? Convert(object value, Type targetType, object? parameter, string language)
         {
             var type = value.GetType();
             if (type.IsEnum)
@@ -59,7 +59,7 @@ namespace WinUIExSample.Pages
             return type.Name;
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, string language)
+        public object? ConvertBack(object? value, Type targetType, object? parameter, string language)
         {
             throw new NotImplementedException();
         }

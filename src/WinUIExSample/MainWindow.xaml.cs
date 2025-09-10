@@ -24,7 +24,7 @@ namespace WinUIExSample
     {
         internal Queue<string> WindowEvents { get; } = new Queue<string>(101);
         private readonly WindowMessageMonitor monitor;
-        private LogWindow logWindow;
+        private LogWindow? logWindow;
 
         public MainWindow()
         {
@@ -61,8 +61,9 @@ namespace WinUIExSample
                     sender.Header = selectedItem.Content;
                     titleBar.Subtitle = selectedItem.Content as string;
                     string pageName = "WinUIExSample.Pages." + selectedItemTag;
-                    Type pageType = Type.GetType(pageName);
-                    contentFrame.Navigate(pageType);
+                    Type? pageType = Type.GetType(pageName);
+                    if (pageType is not null)
+                        contentFrame.Navigate(pageType);
                 }
             }
             sender.IsBackEnabled = contentFrame.CanGoBack;
@@ -119,7 +120,7 @@ namespace WinUIExSample
                 monitor.WindowMessageReceived -= WindowMessageReceived;
         }
 
-        private void WindowMessageReceived(object sender, WindowMessageEventArgs e)
+        private void WindowMessageReceived(object? sender, WindowMessageEventArgs e)
         {
             Log(e.Message.ToString());
             if (e.Message.MessageId == 0x0005) //WM_SIZE

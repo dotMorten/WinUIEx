@@ -35,7 +35,7 @@ namespace WinUIExSample.Pages
         {
             this.InitializeComponent();
         }
-        public WindowEx MainWindow => ((App)Application.Current).MainWindow;
+        public WindowEx MainWindow => ((App)Application.Current).MainWindow!;
 
         private CancellationTokenSource? oauthCancellationSource;
         private void DoOAuth_Click(object sender, RoutedEventArgs e)

@@ -149,8 +149,10 @@ namespace WinUIExSample
         [global::System.STAThreadAttribute]
         static void Main(string[] args)
         {
+#pragma warning disable CS0618 // Type or member is obsolete - We keep this here for testing the obsolete API
             if (WebAuthenticator.CheckOAuthRedirectionActivation(true))
                 return;
+#pragma warning restore CS0618 // Type or member is obsolete
 #if UNPACKAGED
             var fss = SimpleSplashScreen.ShowSplashScreenImage("Assets\\SplashScreen.scale-100.png");
 #else

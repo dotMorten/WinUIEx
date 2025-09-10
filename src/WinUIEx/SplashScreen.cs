@@ -16,6 +16,7 @@ namespace WinUIEx
         private Window? _window;
         private Type? _windowType;
         private readonly WindowManager _manager;
+        private readonly Func<Window> _getWindow;
 
         /// <summary>
         /// Creates and activates a new splashscreen, and opens the specified window once complete.
@@ -24,6 +25,7 @@ namespace WinUIEx
         public SplashScreen(Window window) : this()
         {
             _window = window ?? throw new ArgumentNullException(nameof(window));
+            _getWindow = () => _window;
         }
 
         /// <summary>
@@ -36,6 +38,7 @@ namespace WinUIEx
             if (!window.IsSubclassOf(typeof(Window)) && window != typeof(Window))
                 throw new ArgumentException("Type must be a Window");
             _windowType = window ?? throw new ArgumentNullException(nameof(window));
+            _getWindow = () => (Window)Activator.CreateInstance(window)!;
         }
 
         private SplashScreen()
@@ -83,10 +86,7 @@ namespace WinUIEx
             this.CenterOnScreen(w, h);
             this.Show();
             await OnLoading();
-            if (_windowType != null)
-#pragma warning disable IL2077 // Target parameter argument does not satisfy 'DynamicallyAccessedMembersAttribute' in call to target method. Type parameter already declared as requiring unreferenced code
-                _window = Activator.CreateInstance(_windowType) as Window;
-#pragma warning restore IL2077 // Target parameter argument does not satisfy 'DynamicallyAccessedMembersAttribute' in call to target method. The source field does not have matching annotations.
+            _window = _getWindow();
             _window?.Activate();
             this.Close();
             _window?.SetForegroundWindow();

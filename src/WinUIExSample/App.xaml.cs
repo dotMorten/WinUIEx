@@ -23,19 +23,19 @@ namespace WinUIExSample
         /// </summary>
         public App()
         {
+#if !DISABLE_XAML_GENERATED_MAIN // With custom main, we'd rather want to do this code in main
             if (WebAuthenticator.CheckOAuthRedirectionActivation())
                 return;
+            fss = SimpleSplashScreen.ShowDefaultSplashScreen();
+#endif
             this.InitializeComponent();
-            int length = 0;
-            var sb = new System.Text.StringBuilder(0);
-            int result = GetCurrentPackageFullName(ref length, sb);
-            if(result == 15700L)
-            {
-                // Not a packaged app. Configure file-based persistence instead
-                WinUIEx.WindowManager.PersistenceStorage = new FilePersistence("WinUIExPersistence.json");
-            }
+#if UNPACKAGED
+            // Use file-based persistence since we can't rely on default storage for window persistence when unpackaged
+            WinUIEx.WindowManager.PersistenceStorage = new FilePersistence("WinUIExPersistence.json");
+#endif
         }
-        
+
+        internal SimpleSplashScreen? fss { get; set; }
         /// <summary>
         /// Invoked when the application is launched normally by the end user.  Other entry points
         /// will be used such as when the application is launched to open a specific file.
@@ -43,19 +43,27 @@ namespace WinUIExSample
         /// <param name="args">Details about the launch request and process.</param>
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
-            // m_window = new MainWindow();
-            // m_window.Activate();
-            var splash = new SplashScreen(typeof(MainWindow));
-            splash.Completed += (s, e) => m_window = (WindowEx)e;
+            var window = new MainWindow();
+            var splash = new SplashScreen(window);
+            splash.Completed += (s, e) =>
+            {
+                m_window = e as WindowEx;
+            };
+            splash.Activated += Splash_Activated;
         }
 
-        private WindowEx m_window;
+        private void Splash_Activated(object sender, WindowActivatedEventArgs args)
+        {
+            ((Window)sender).Activated -= Splash_Activated;
+            fss?.Hide(TimeSpan.FromSeconds(1));
+            fss = null;
+        }
 
-        public WindowEx MainWindow => m_window;
+        private WindowEx? m_window;
 
-        [DllImport("kernel32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
-        private static extern int GetCurrentPackageFullName(ref int packageFullNameLength, System.Text.StringBuilder packageFullName);
+        public WindowEx? MainWindow => m_window;
 
+#if UNPACKAGED
         private class FilePersistence : IDictionary<string, object>
         {
             private readonly Dictionary<string, object> _data = new Dictionary<string, object>();
@@ -129,5 +137,34 @@ namespace WinUIExSample
 
             IEnumerator IEnumerable.GetEnumerator() => throw new NotImplementedException(); // TODO
         }
+#endif
     }
+
+#if DISABLE_XAML_GENERATED_MAIN
+    /// <summary>
+    /// Program class
+    /// </summary>
+    public static class Program
+    {
+        [global::System.STAThreadAttribute]
+        static void Main(string[] args)
+        {
+#pragma warning disable CS0618 // Type or member is obsolete - We keep this here for testing the obsolete API
+            if (WebAuthenticator.CheckOAuthRedirectionActivation(true))
+                return;
+#pragma warning restore CS0618 // Type or member is obsolete
+#if UNPACKAGED
+            var fss = SimpleSplashScreen.ShowSplashScreenImage("Assets\\SplashScreen.scale-100.png");
+#else
+            var fss = SimpleSplashScreen.ShowDefaultSplashScreen();
+#endif
+            global::WinRT.ComWrappersSupport.InitializeComWrappers();
+            global::Microsoft.UI.Xaml.Application.Start((p) => {
+                var context = new global::Microsoft.UI.Dispatching.DispatcherQueueSynchronizationContext(global::Microsoft.UI.Dispatching.DispatcherQueue.GetForCurrentThread());
+                global::System.Threading.SynchronizationContext.SetSynchronizationContext(context);
+                new App() { fss = fss };
+            });
+        }
+    }
+#endif
 }

@@ -11,7 +11,8 @@
       ],
       "dest": "obj/api",
       "disableGitFeatures": false,
-      "disableDefaultFilter": false
+      "disableDefaultFilter": false,
+	  "memberLayout": "separatePages"
     },
   ],
   "build": {
@@ -69,14 +70,14 @@
       "_gitContribute": {
         "branch": "main",
         "apiSpecFolder": "docs/api_overwrites"
-      }
+      },
+	  "memberLayout": "separatePages"
     },
     "dest": "../artifacts/docs_site",
     "globalMetadataFiles": [],
     "fileMetadataFiles": [],
     "template": [
       "default",
-      "memberpage.2.58.0/content",
       "template_overrides"
     ],
     "postProcessors": [],

@@ -1,8 +1,9 @@
 <Project>
 
   <PropertyGroup>
-    <WinAppSDKVersion>1.5.240227000</WinAppSDKVersion>
-    <WinAppSDKToolsVersion>10.0.22621.756</WinAppSDKToolsVersion>
+    <WinAppSDKVersion>1.8.250907003</WinAppSDKVersion>
+    <WinUIVersion>1.8.250906003</WinUIVersion>      
+    <WinAppSDKToolsVersion>10.0.26100.4654</WinAppSDKToolsVersion>      
   </PropertyGroup>
 
 </Project>

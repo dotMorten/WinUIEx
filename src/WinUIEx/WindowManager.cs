@@ -26,7 +26,7 @@ namespace WinUIEx
         private static bool TryGetWindowManager(Window window, [MaybeNullWhen(false)] out WindowManager manager)
         {
             if (window is null)
-                throw new ArgumentNullException();
+                throw new ArgumentNullException(nameof(window));
             var handle = window.GetWindowHandle();
             if (managers.TryGetValue(handle, out var weakHandle) && weakHandle.TryGetTarget(out manager))
             {
@@ -71,6 +71,7 @@ namespace WinUIEx
             _window.Closed += Window_Closed;
             _window.VisibilityChanged += Window_VisibilityChanged;
             AppWindow.Changed += AppWindow_Changed;
+            AppWindow.Destroying += AppWindow_Destroying;
 
             overlappedPresenter = AppWindow.Presenter as OverlappedPresenter ?? Microsoft.UI.Windowing.OverlappedPresenter.Create();
             managers[window.GetWindowHandle()] = new WeakReference<WindowManager>(this);
@@ -111,7 +112,11 @@ namespace WinUIEx
         private bool _isDisposed;
 
         /// <inheritdoc />
-        public void Dispose() => Dispose(true);
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
 
         private void Dispose(bool disposing)
         {
@@ -121,12 +126,22 @@ namespace WinUIEx
                 if (managers.ContainsKey(handle))
                     managers.Remove(handle);
                 AppWindow.Changed -= AppWindow_Changed;
+                AppWindow.Destroying -= AppWindow_Destroying;
                 _window.Activated -= Window_Activated;
                 _window.Closed -= Window_Closed;
+                _window.VisibilityChanged -= Window_VisibilityChanged;
                 _monitor.WindowMessageReceived -= OnWindowMessage;
                 _monitor.Dispose();
             }
             _isDisposed = true;
+        }
+
+        private void AppWindow_Destroying(AppWindow sender, object args)
+        {
+            // Workaround leak caused by https://github.com/microsoft/microsoft-ui-xaml/issues/9960
+            _window.Activated -= Window_Activated;
+            _window.Closed -= Window_Closed;
+            _window.VisibilityChanged -= Window_VisibilityChanged;
         }
 
         /// <summary>
@@ -240,6 +255,102 @@ namespace WinUIEx
             }
         }
 
+        private bool _isVisibleInTray = false;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the window is shown in the system tray.
+        /// </summary>
+        /// <remarks>
+        /// <para>The system tray icon will use the same icon as Window's Taskbar icon, and tooltip will match the AppWindow.Title value. Double-clicking the icon restores the window if minimized and brings it to the front.</para>
+        /// <para>See <see cref="WindowExtensions.SetIsShownInSwitchers" /> to hide the window from the Alt+Tab switcher and task bar.
+        /// If you want to minimize the window to the tray, set this to <c>true</c> and when  <see cref="WindowManager.WindowStateChanged"/> is fired and changes to minimized,
+        /// hide it from the switcher.</para>
+        /// </remarks>
+        public bool IsVisibleInTray
+        {
+            get => _isVisibleInTray;
+            set 
+            {
+                if (_isVisibleInTray != value)
+                {
+                    _isVisibleInTray = value;
+                    if (value)
+                        AddToTray();
+                    else
+                        RemoveFromTray();
+                }
+            }
+        }
+
+        private void AddToTray()
+        {
+            // See https://learn.microsoft.com/en-us/windows/win32/api/shellapi/nf-shellapi-shell_notifyicona
+            const uint NIM_ADD = 0x00000000;
+            // const uint NIM_MODIFY = 0x00000001;
+            const uint NIF_MESSAGE = 0x00000001;
+            const uint NIF_ICON = 0x00000002;
+            const uint NIF_TIP = 0x00000004;
+            var hicon = new HICON(currentIcon);
+            Windows.Win32.__ushort_128 tip = new Windows.Win32.__ushort_128();
+            for(int i = 0; i < 128 && i < AppWindow.Title.Length;i++)
+            {
+                tip[i] = (ushort)AppWindow.Title[i];
+            }
+            
+            if (Environment.Is64BitProcess)
+            {
+                var notifyIconData = new Windows.Win32.NOTIFYICONDATAW64
+                {
+                    hWnd = new Windows.Win32.Foundation.HWND(_window.GetWindowHandle()),
+                    cbSize = (uint)Marshal.SizeOf<Windows.Win32.NOTIFYICONDATAW64>(),
+                    uID = 0,
+                    uFlags = NIF_ICON | NIF_MESSAGE | NIF_TIP, // Icon and callback message is set and valid
+                    hIcon = hicon,
+                    uCallbackMessage = 0x8765,
+                    szTip = tip
+                };
+                Windows.Win32.PInvoke.Shell_NotifyIcon(NIM_ADD, notifyIconData);
+            }
+            else
+            {
+                var notifyIconData = new Windows.Win32.NOTIFYICONDATAW32
+                {
+                    hWnd = new Windows.Win32.Foundation.HWND(_window.GetWindowHandle()),
+                    cbSize = (uint)Marshal.SizeOf<Windows.Win32.NOTIFYICONDATAW32>(),
+                    uID = 0,
+                    uFlags = NIF_ICON | NIF_MESSAGE | NIF_TIP, // Icon and callback message is set and valid
+                    hIcon = hicon,
+                    uCallbackMessage = 0x8765,
+                    szTip = tip
+                };
+                Windows.Win32.PInvoke.Shell_NotifyIcon(NIM_ADD, notifyIconData);
+            }
+        }
+
+        private void RemoveFromTray()
+        {
+            const uint NIM_DELETE = 0x00000002;
+            if (Environment.Is64BitProcess)
+            {
+                var notifyIconData = new Windows.Win32.NOTIFYICONDATAW64
+                {
+                    hWnd = new Windows.Win32.Foundation.HWND(_window.GetWindowHandle()),
+                    cbSize = (uint)Marshal.SizeOf<Windows.Win32.NOTIFYICONDATAW64>(),
+                    uID = 0,
+                };
+                Windows.Win32.PInvoke.Shell_NotifyIcon(NIM_DELETE, notifyIconData);
+            }
+            else
+            {
+                var notifyIconData = new Windows.Win32.NOTIFYICONDATAW32
+                {
+                    hWnd = new Windows.Win32.Foundation.HWND(_window.GetWindowHandle()),
+                    cbSize = (uint)Marshal.SizeOf<Windows.Win32.NOTIFYICONDATAW32>(),
+                };
+                Windows.Win32.PInvoke.Shell_NotifyIcon(NIM_DELETE, notifyIconData);
+            }
+        }
+
         private unsafe void OnWindowMessage(object? sender, Messaging.WindowMessageEventArgs e)
         {
             if (e.MessageType == WindowsMessages.WM_SHOWWINDOW && e.Message.WParam == 1)
@@ -267,20 +378,20 @@ namespace WinUIEx
                         {
                             // Only restrict maxsize during restore
                             if (!double.IsNaN(MaxWidth) && MaxWidth > 0)
-                                rect2->ptMaxSize.x = (int)(Math.Min(Math.Max(MaxWidth, MinWidth) * (currentDpi / 96f), rect2->ptMaxSize.x)); // If minwidth<maxwidth, minwidth will take presedence
+                                rect2->ptMaxSize.X = (int)(Math.Min(Math.Max(MaxWidth, MinWidth) * (currentDpi / 96f), rect2->ptMaxSize.X)); // If minwidth<maxwidth, minwidth will take presedence
                             if (!double.IsNaN(MaxHeight) && MaxHeight > 0)
-                                rect2->ptMaxSize.y = (int)(Math.Min(Math.Max(MaxHeight, MinHeight) * (currentDpi / 96f), rect2->ptMaxSize.y)); // If minheight<maxheight, minheight will take presedence
+                                rect2->ptMaxSize.Y = (int)(Math.Min(Math.Max(MaxHeight, MinHeight) * (currentDpi / 96f), rect2->ptMaxSize.Y)); // If minheight<maxheight, minheight will take presedence
                         }
                         else
                         {
                             // Restrict min-size
-                            rect2->ptMinTrackSize.x = (int)(Math.Max(MinWidth * (currentDpi / 96f), rect2->ptMinTrackSize.x));
-                            rect2->ptMinTrackSize.y = (int)(Math.Max(MinHeight * (currentDpi / 96f), rect2->ptMinTrackSize.y));
+                            rect2->ptMinTrackSize.X = (int)(Math.Max(MinWidth * (currentDpi / 96f), rect2->ptMinTrackSize.X));
+                            rect2->ptMinTrackSize.Y = (int)(Math.Max(MinHeight * (currentDpi / 96f), rect2->ptMinTrackSize.Y));
                             // Restrict max-size
                             if (!double.IsNaN(MaxWidth) && MaxWidth > 0)
-                                rect2->ptMaxTrackSize.x = (int)(Math.Min(Math.Max(MaxWidth, MinWidth) * (currentDpi / 96f), rect2->ptMaxTrackSize.x)); // If minwidth<maxwidth, minwidth will take presedence
+                                rect2->ptMaxTrackSize.X = (int)(Math.Min(Math.Max(MaxWidth, MinWidth) * (currentDpi / 96f), rect2->ptMaxTrackSize.X)); // If minwidth<maxwidth, minwidth will take presedence
                             if (!double.IsNaN(MaxHeight) && MaxHeight > 0)
-                                rect2->ptMaxTrackSize.y = (int)(Math.Min(Math.Max(MaxHeight, MinHeight) * (currentDpi / 96f), rect2->ptMaxTrackSize.y)); // If minheight<maxheight, minheight will take presedence
+                                rect2->ptMaxTrackSize.Y = (int)(Math.Min(Math.Max(MaxHeight, MinHeight) * (currentDpi / 96f), rect2->ptMaxTrackSize.Y)); // If minheight<maxheight, minheight will take presedence
                         }
                     }
                     break;
@@ -294,7 +405,7 @@ namespace WinUIEx
                     {
                         // https://learn.microsoft.com/en-us/windows/win32/winmsg/wm-size
                         WindowState state;
-                        
+
                         switch (e.Message.WParam)
                         {
                             case 0: state = WindowState.Normal; break;
@@ -309,9 +420,30 @@ namespace WinUIEx
                         }
                         break;
                     }
-
+                case WindowsMessages.WM_SETICON:
+                    {
+                        // Track the current window icon for use in the tray
+                        if (e.Message.WParam == 0) // ICON_SMALL
+                            currentIcon = e.Message.LParam;
+                        // TODO: Also update tray icon
+                        break;
+                    }
+                case (WindowsMessages)0x8765: // Callback from tray icon defined in AddToTray()
+                    {
+                        // If icon was double-clicked, restore the window and bring to front
+                        if ((WindowsMessages)(e.Message.LParam & 0xffff) == WindowsMessages.WM_LBUTTONDBLCLK)
+                        {
+                            if (_windowState == WindowState.Minimized)
+                            {
+                                WindowExtensions.Restore(_window);
+                            }
+                            WindowExtensions.SetForegroundWindow(_window);
+                        }
+                        break;
+                    }
             }
         }
+        nint currentIcon = 0;
 
         private WindowState _windowState;
 
@@ -365,12 +497,17 @@ namespace WinUIEx
         private struct MINMAXINFO
         {
 #pragma warning disable CS0649
-            public Windows.Win32.Foundation.POINT ptReserved;
-            public Windows.Win32.Foundation.POINT ptMaxSize;
-            public Windows.Win32.Foundation.POINT ptMaxPosition;
-            public Windows.Win32.Foundation.POINT ptMinTrackSize;
-            public Windows.Win32.Foundation.POINT ptMaxTrackSize;
+            public POINT ptReserved;
+            public POINT ptMaxSize;
+            public POINT ptMaxPosition;
+            public POINT ptMinTrackSize;
+            public POINT ptMaxTrackSize;
 #pragma warning restore CS0649
+        }
+        private struct POINT
+        {
+            public int X;
+            public int Y;
         }
 
         #region Persistence
@@ -460,7 +597,7 @@ namespace WinUIEx
                     var retobj = (WINDOWPLACEMENT)Marshal.PtrToStructure(buffer, typeof(WINDOWPLACEMENT))!;
                     Marshal.FreeHGlobal(buffer);
                     // Ignore anything by maximized or normal
-                    if (retobj.showCmd == SHOW_WINDOW_CMD.SW_INVALIDATE && retobj.flags == WINDOWPLACEMENT_FLAGS.WPF_RESTORETOMAXIMIZED)
+                    if (retobj.showCmd == SHOW_WINDOW_CMD.SW_SHOWMINIMIZED && retobj.flags == WINDOWPLACEMENT_FLAGS.WPF_RESTORETOMAXIMIZED)
                         retobj.showCmd = SHOW_WINDOW_CMD.SW_MAXIMIZE;
                     else if (retobj.showCmd != SHOW_WINDOW_CMD.SW_MAXIMIZE)
                         retobj.showCmd = SHOW_WINDOW_CMD.SW_NORMAL;

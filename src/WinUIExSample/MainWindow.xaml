@@ -17,15 +17,15 @@
             <RowDefinition />
         </Grid.RowDefinitions>
         
-        <winex:TitleBar x:Name="titleBar" Title="WinUI EX Test App" IsPaneToggleButtonVisible="True" IsBackButtonVisible="True"
-                        IsBackEnabled="True" PaneToggleRequested="TitleBar_PaneToggleRequested" BackRequested="TitleBar_BackRequested">
-            <winex:TitleBar.IconSource>
+        <TitleBar x:Name="titleBar" Title="WinUI EX Test App" IsPaneToggleButtonVisible="True" IsBackButtonVisible="True"
+                        IsBackButtonEnabled="True" PaneToggleRequested="TitleBar_PaneToggleRequested" BackRequested="TitleBar_BackRequested">
+            <TitleBar.IconSource>
                 <ImageIconSource ImageSource="ms-appx:///Images/logo.png" />
-            </winex:TitleBar.IconSource>
-            <winex:TitleBar.Footer>
+            </TitleBar.IconSource>
+            <TitleBar.RightHeader>
                 <HyperlinkButton Content="WinUIEx on GitHub" NavigateUri="https://github.com/dotMorten/WinUIEx" />
-            </winex:TitleBar.Footer>
-        </winex:TitleBar>
+            </TitleBar.RightHeader>
+        </TitleBar>
         <NavigationView IsPaneOpen="True" AlwaysShowHeader="False" BackRequested="NavigationView_BackRequested"
                         IsPaneToggleButtonVisible="False" CompactModeThresholdWidth="0" x:Name="navigationView"
                         OpenPaneLength="250" Grid.Row="1" IsBackButtonVisible="Collapsed" PaneDisplayMode="Auto" SelectionChanged="NavigationView_SelectionChanged">
@@ -36,6 +36,7 @@
                 <NavigationViewItem Content="OAuth" Tag="OAuth" Icon="OtherUser" />
                 <NavigationViewItem Content="Window Messaging" Tag="Messaging" Icon="Message" />
                 <NavigationViewItem Content="Dialogs" Tag="Dialogs" Icon="Accept" />
+                <NavigationViewItem Content="NumberBox&lt;T>" Tag="NumberBoxes" Icon="SwitchApps" />
             </NavigationView.MenuItems>
             <Frame Margin="0,44,0,0" x:Name="contentFrame" Padding="10" Background="Transparent"/>
         </NavigationView>

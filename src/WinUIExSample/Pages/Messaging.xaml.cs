@@ -24,13 +24,12 @@ namespace WinUIExSample.Pages
     /// </summary>
     public sealed partial class Messaging : Page
     {
-        private static WindowMessageMonitor? monitor;
         public Messaging()
         {
             this.InitializeComponent();
         }
 
-        public MainWindow MainWindow => (MainWindow)((App)Application.Current).MainWindow;
+        public MainWindow MainWindow => (MainWindow)((App)Application.Current).MainWindow!;
 
         private void WMMessages_Toggled(object sender, RoutedEventArgs e) => MainWindow.ToggleWMMessages(((ToggleSwitch)sender).IsOn);
         private void OpenLogWindow_Click(object sender, RoutedEventArgs e) => MainWindow.ShowLogWindow();

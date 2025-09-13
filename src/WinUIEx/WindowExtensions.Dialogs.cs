@@ -43,5 +43,17 @@ namespace WinUIEx
             WinRT.Interop.InitializeWithWindow.Initialize(savePicker, window.GetWindowHandle());
             return savePicker;
         }
+
+        /// <summary>
+        /// Creates a new instance of a FolderPicker with the provided window as a parent.
+        /// </summary>
+        /// <param name="window">Parent window</param>
+        /// <returns>FolderPicker</returns>
+        public static FolderPicker CreateFolderPicker(this Window window)
+        {
+            FolderPicker folderPicker = new FolderPicker();
+            WinRT.Interop.InitializeWithWindow.Initialize(folderPicker, window.GetWindowHandle());
+            return folderPicker;
+        }
     }
 }

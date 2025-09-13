@@ -21,16 +21,24 @@ namespace WinUIEx
         {
             int monitorCount = PInvoke.GetSystemMetrics(Windows.Win32.UI.WindowsAndMessaging.SYSTEM_METRICS_INDEX.SM_CMONITORS);
             List<MonitorInfo> list = new List<MonitorInfo>(monitorCount);
-            MONITORENUMPROC callback = new MONITORENUMPROC((HMONITOR monitor, HDC deviceContext, RECT* rect, LPARAM data) =>
-            {
-                list.Add(new MonitorInfo(monitor, rect));
-                return true;
-            });
-            LPARAM data = new LPARAM();
-            bool ok = PInvoke.EnumDisplayMonitors(null, null, callback, data);
+            var cbhandle = GCHandle.Alloc(list);
+            var ptr = GCHandle.ToIntPtr(cbhandle);
+            
+            LPARAM data = new LPARAM(ptr);
+            bool ok = PInvoke.EnumDisplayMonitors(new HDC(0), (RECT?)null, &MonitorEnumProc, data);
+            cbhandle.Free();
             if (!ok)
                 Marshal.ThrowExceptionForHR(Marshal.GetLastWin32Error());
             return list;
+        }
+
+        [UnmanagedCallersOnly(CallConvs = new Type[] { typeof(System.Runtime.CompilerServices.CallConvStdcall) })]
+        private unsafe static BOOL MonitorEnumProc(HMONITOR hMonitor, HDC hdcMonitor, RECT* lprcMonitor, LPARAM dwData)
+        {
+            var handle = GCHandle.FromIntPtr(dwData.Value);
+            if(!lprcMonitor->IsEmpty && handle.IsAllocated && handle.Target is List<MonitorInfo> list)
+                list.Add(new MonitorInfo(hMonitor, *lprcMonitor));
+            return new BOOL(1);
         }
 
         /// <summary>
@@ -60,17 +68,17 @@ namespace WinUIEx
 
         private readonly HMONITOR _monitor;
 
-        internal unsafe MonitorInfo(HMONITOR monitor, RECT* rect)
+        internal unsafe MonitorInfo(HMONITOR monitor, RECT rect)
         {
             RectMonitor =
-                new Rect(new Point(rect->left, rect->top),
-                new Point(rect->right, rect->bottom));
+                new Rect(new Point(rect.left, rect.top),
+                new Point(rect.right, rect.bottom));
             _monitor = monitor;
-            var info = new MONITORINFOEXW() { __AnonymousBase_winuser_L13558_C43 = new MONITORINFO() { cbSize = (uint)sizeof(MONITORINFOEXW) } };
+            var info = new MONITORINFOEXW() { monitorInfo = new MONITORINFO() { cbSize = (uint)sizeof(MONITORINFOEXW) } };
             GetMonitorInfo(monitor, ref info);
             RectWork =
-                new Rect(new Point(info.__AnonymousBase_winuser_L13558_C43.rcWork.left, info.__AnonymousBase_winuser_L13558_C43.rcWork.top),
-                new Point(info.__AnonymousBase_winuser_L13558_C43.rcWork.right, info.__AnonymousBase_winuser_L13558_C43.rcWork.bottom));
+                new Rect(new Point(info.monitorInfo.rcWork.left, info.monitorInfo.rcWork.top),
+                new Point(info.monitorInfo.rcWork.right, info.monitorInfo.rcWork.bottom));
             Name = new string(info.szDevice.AsSpan()).Replace("\0", "").Trim();
         }
 

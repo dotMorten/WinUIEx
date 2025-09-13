@@ -30,12 +30,6 @@ namespace WinUIExSample
             this.SystemBackdrop = new Microsoft.UI.Xaml.Media.DesktopAcrylicBackdrop();
         }
 
-        public SplashScreen(Type window) : base(window)
-        {
-            this.InitializeComponent();
-            this.SystemBackdrop = new Microsoft.UI.Xaml.Media.DesktopAcrylicBackdrop();
-        }
-
         protected override async Task OnLoading()
         {
             if (System.Diagnostics.Debugger.IsAttached)

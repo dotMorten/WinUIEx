@@ -55,3 +55,14 @@ CreateRectRgn
 CreateSolidBrush
 FillRect
 GetDC
+ReleaseDC
+GdiplusStartup
+GdiplusShutdown
+GetObject
+GdipCreateBitmapFromFile
+GdipCreateHBITMAPFromBitmap
+WNDCLASSEXW
+RegisterClassEx
+CreateCompatibleDC
+SelectObject
+MonitorFromPoint

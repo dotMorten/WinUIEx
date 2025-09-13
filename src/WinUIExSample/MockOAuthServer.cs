@@ -90,7 +90,7 @@ Signed in. You can close this window now.</div></body></html>
 """);
                             foreach (var key in context.Request.QueryString.AllKeys)
                             {
-                                writer.WriteLine($"<input type=\"hidden\" name=\"{key}\" value=\"{context.Request.QueryString[key].Replace("\"", "&quot;")}\" />");
+                                writer.WriteLine($"<input type=\"hidden\" name=\"{key}\" value=\"{context.Request.QueryString[key]?.Replace("\"", "&quot;")}\" />");
                             }
                             writer.WriteLine("</form></div>");
                             writer.WriteLine("<hr/><b>Values sent:</b><br/>");

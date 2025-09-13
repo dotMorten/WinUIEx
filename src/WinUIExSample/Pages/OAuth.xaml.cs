@@ -35,7 +35,7 @@ namespace WinUIExSample.Pages
         {
             this.InitializeComponent();
         }
-        public WindowEx MainWindow => ((App)Application.Current).MainWindow;
+        public WindowEx MainWindow => ((App)Application.Current).MainWindow!;
 
         private CancellationTokenSource? oauthCancellationSource;
         private void DoOAuth_Click(object sender, RoutedEventArgs e)
@@ -65,7 +65,13 @@ namespace WinUIExSample.Pages
             OAuthWindow.Visibility = Visibility.Visible;
             try
             {
+#if UNPACKAGED
+                // Packaged app uses appxmanifest for protocol activation. Unpackaged apps must manually register
+                Microsoft.Windows.AppLifecycle.ActivationRegistrationManager.RegisterForProtocolActivation("winuiex", "Assets\\Square150x150Logo.scale-100", "WinUI EX", null);
+#endif
+#pragma warning disable CS0618 // Type or member is obsolete - We keep this here for testing the obsolete API
                 var result = await WebAuthenticator.AuthenticateAsync(new Uri(authorizeUri), new Uri(callbackUri), oauthCancellationSource.Token);
+#pragma warning restore CS0618 // Type or member is obsolete
                 MainWindow.BringToFront();
                 OAuthWindow.Visibility = Visibility.Collapsed;
                 Result.Text = $"Logged in. Info returned:";
@@ -74,6 +80,12 @@ namespace WinUIExSample.Pages
             }
             catch (TaskCanceledException) {
                 Result.Text = "Sign in cancelled";
+            }
+            finally
+            {
+#if UNPACKAGED
+                Microsoft.Windows.AppLifecycle.ActivationRegistrationManager.UnregisterForProtocolActivation("winuiex", null);
+#endif
             }
         }
 

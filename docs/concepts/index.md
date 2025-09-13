@@ -9,6 +9,10 @@
   - [Web Authenticator](WebAuthenticator.md)
   - [Backdrops](CustomBackdrops.md)
 
+
+### Controls
+  - [`NumberBoxInt32`, `NumberBoxDecimal` and `NumberBox<T>`](NumberBox.md)
+
 ### Tips and Tricks
 
   - [Using with .NET MAUI](Maui.md)

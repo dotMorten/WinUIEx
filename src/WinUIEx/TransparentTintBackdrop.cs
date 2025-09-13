@@ -1,4 +1,4 @@
-﻿using Microsoft.UI.Composition;
+using Microsoft.UI.Composition;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Hosting;
 using System;
@@ -12,7 +12,7 @@ namespace WinUIEx
     /// <summary>
     /// A custom backdrop that make the window completely transparent.
     /// </summary>
-    public class TransparentTintBackdrop : CompositionBrushBackdrop
+    public partial class TransparentTintBackdrop : CompositionBrushBackdrop
     {
         private WindowMessageMonitor? monitor;
         private Windows.UI.Composition.CompositionColorBrush? brush;
@@ -60,9 +60,7 @@ namespace WinUIEx
         /// <inheritdoc />
         protected override void OnTargetConnected(ICompositionSupportsSystemBackdrop connectedTarget, XamlRoot xamlRoot)
         {
-            var inspectable = connectedTarget.As<IInspectable>();
-            var xamlSource = DesktopWindowXamlSource.FromAbi(inspectable.ThisPtr);
-            var hWnd = xamlSource.SiteBridge.SiteView.EnvironmentView.AppWindowId.Value;
+            ulong hWnd = xamlRoot.ContentIslandEnvironment.AppWindowId.Value;
 
             monitor = new WindowMessageMonitor((IntPtr)hWnd);
             monitor.WindowMessageReceived += Monitor_WindowMessageReceived;
@@ -85,6 +83,9 @@ namespace WinUIEx
             backdrop?.Dispose();
             brush?.Dispose();
             brush = null;
+            if (!backgroundBrush.IsNull)
+                PInvoke.DeleteObject(backgroundBrush);
+            backgroundBrush = Windows.Win32.Graphics.Gdi.HBRUSH.Null;
             base.OnTargetDisconnected(disconnectedTarget);
         }
 
@@ -100,12 +101,15 @@ namespace WinUIEx
             });
         }
 
+        private Windows.Win32.Graphics.Gdi.HBRUSH backgroundBrush = Windows.Win32.Graphics.Gdi.HBRUSH.Null;
+
         private bool ClearBackground(nint hwnd, nint hdc)
         {
             if (PInvoke.GetClientRect(new Windows.Win32.Foundation.HWND(hwnd), out var rect))
             {
-                var brush = PInvoke.CreateSolidBrush(0);
-                FillRect(hdc, ref rect, brush);
+                if (backgroundBrush.IsNull)
+                    backgroundBrush = PInvoke.CreateSolidBrush(new Windows.Win32.Foundation.COLORREF(0));
+                FillRect(hdc, ref rect, backgroundBrush);
                 return true;
             }
             return false;

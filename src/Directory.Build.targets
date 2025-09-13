@@ -17,8 +17,7 @@
     <Authors>Morten Nielsen - https://xaml.dev</Authors>
     <Company>Morten Nielsen - https://xaml.dev</Company>
     <PackageIcon>logo.png</PackageIcon>
-    <Version>2.4.0</Version>
-    <PackageValidationBaselineVersion>2.3.4</PackageValidationBaselineVersion>
+    <Version>2.8.0</Version>
   </PropertyGroup>
 
   <ItemGroup Condition="'$(PackageId)'!=''">
@@ -31,8 +30,8 @@
   </PropertyGroup>
 
   <PropertyGroup Label="PackageValidationSettings">
+    <PackageValidationBaselineVersion>2.7.0</PackageValidationBaselineVersion>
     <GenerateCompatibilitySuppressionFile>false</GenerateCompatibilitySuppressionFile>
-    <CompatibilitySuppressionFilePath Condition="('$(GenerateCompatibilitySuppressionFile)'=='true') OR Exists('$(MSBuildProjectDirectory)\PackageValidationSuppression.txt')">PackageValidationSuppression.txt</CompatibilitySuppressionFilePath>
   </PropertyGroup>
   
   <Target Name="SignAssemblies" Condition="Exists($(CertificatePath)) AND '$(CertificatePassword)'!=''" BeforeTargets="CopyFilesToOutputDirectory" DependsOnTargets="ComputeIntermediateSatelliteAssemblies"> 
@@ -51,7 +50,7 @@
       <FilesToSign Include="@(IntermediateSatelliteAssembliesWithTargetPath)" />
       <FilesToSignFiltered Include="@(FilesToSign)" Condition="Exists(%(FilesToSign.Identity))" />
     </ItemGroup>
-    <Exec Condition="'@(FilesToSignFiltered->Count())' > 0" Command="&quot;$(SignToolPath)&quot; sign /v /fd SHA1 /f &quot;$(CertificatePath)&quot; /p &quot;$(CertificatePassword)&quot; /tr http://timestamp.digicert.com /td SHA1 &quot;%(FilesToSignFiltered.Identity)&quot;"
+    <Exec Condition="'@(FilesToSignFiltered->Count())' > 0" Command="&quot;$(SignToolPath)&quot; sign /v /fd SHA1 /f &quot;$(CertificatePath)&quot; /p &quot;$(CertificatePassword)&quot; /tr http://timestamp.digicert.com /td SHA256 &quot;%(FilesToSignFiltered.Identity)&quot;"
           WorkingDirectory="$(ProjectDir)" EchoOff="true" />
     <Exec Condition="'@(FilesToSignFiltered->Count())' > 0" Command="&quot;$(SignToolPath)&quot; sign /v /as /d &quot;Authorization Summary&quot; /fd SHA256 /f &quot;$(CertificatePath)&quot; /p &quot;$(CertificatePassword)&quot; /tr http://timestamp.digicert.com /td SHA256 &quot;%(FilesToSignFiltered.Identity)&quot;"
           WorkingDirectory="$(ProjectDir)" EchoOff="true" />

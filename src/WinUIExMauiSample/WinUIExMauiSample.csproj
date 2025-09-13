@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>$(TargetFrameworks);net8.0-windows10.0.19041.0</TargetFrameworks>
+		<TargetFrameworks>$(TargetFrameworks);net9.0-windows10.0.19041.0</TargetFrameworks>
 		<OutputType>Exe</OutputType>
 		<RootNamespace>WinUIExMauiSample</RootNamespace>
 		<UseMaui>true</UseMaui>
@@ -19,6 +19,9 @@
 		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
 		<ApplicationVersion>1</ApplicationVersion>
 		<TargetPlatformMinVersion>10.0.18362.0</TargetPlatformMinVersion>
+		<WindowsSdkPackageVersion>10.0.19041.38</WindowsSdkPackageVersion>
+    <DefineConstants>DISABLE_XAML_GENERATED_MAIN;$(DefineConstants)</DefineConstants>
+    <NoWarn>CS0618</NoWarn>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -40,7 +43,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\WinUIEx\WinUIEx.csproj" />
+	  <Compile Include="..\WinUIExSample\MockOAuthServer.cs" Link="MockOAuthServer.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\WinUIEx\WinUIEx.csproj" AdditionalProperties="TargetFramework=net8.0-windows10.0.19041.0" />
       <PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
     </ItemGroup>
@@ -48,7 +55,6 @@
   <Import Project="..\Dependencies.targets" Condition="'$(WinAppSDKVersion)'==''" />
   <ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="$(WinAppSDKVersion)" />
-    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.756" />
   </ItemGroup>
 
 </Project>

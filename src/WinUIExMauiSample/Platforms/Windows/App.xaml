@@ -5,4 +5,7 @@
     xmlns:maui="using:Microsoft.Maui"
     xmlns:local="using:WinUIExMauiSample.WinUI">
 
+    <maui:MauiWinUIApplication.Resources>
+        <SolidColorBrush x:Key="NavigationViewContentBackground" Color="Transparent" />
+    </maui:MauiWinUIApplication.Resources>
 </maui:MauiWinUIApplication>

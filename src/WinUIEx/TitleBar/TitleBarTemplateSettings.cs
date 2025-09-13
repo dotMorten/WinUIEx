@@ -6,7 +6,8 @@ namespace WinUIEx;
 /// <summary>
 /// Class used to forward the IconElement property to the template.
 /// </summary>
-public class TitleBarTemplateSettings : DependencyObject
+[System.Obsolete("Use Windows App SDK's TitleBar control instead.")]
+public partial class TitleBarTemplateSettings : DependencyObject
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="TitleBar"/> class.

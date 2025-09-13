@@ -78,6 +78,11 @@ namespace WinUIEx
         /// </remarks>
         public Rect RectWork { get; }
 
+        /// <summary>
+        /// Gets if the monitor is the the primary display monitor.
+        /// </summary>
+        public bool IsPrimary => _monitor == PInvoke.MonitorFromWindow(new(IntPtr.Zero), MONITOR_FROM_FLAGS.MONITOR_DEFAULTTOPRIMARY);
+
         /// <inheritdoc />
         public override string ToString() => $"{Name} {RectMonitor.Width}x{RectMonitor.Height}";
 

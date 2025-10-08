@@ -7,6 +7,8 @@ using WinUIEx.Messaging;
 using Windows.Win32.UI.WindowsAndMessaging;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using Windows.Foundation;
+using Microsoft.UI.Xaml.Controls.Primitives;
 
 namespace WinUIEx
 {
@@ -430,19 +432,152 @@ namespace WinUIEx
                     }
                 case (WindowsMessages)0x8765: // Callback from tray icon defined in AddToTray()
                     {
-                        // If icon was double-clicked, restore the window and bring to front
-                        if ((WindowsMessages)(e.Message.LParam & 0xffff) == WindowsMessages.WM_LBUTTONDBLCLK)
+                        switch((WindowsMessages)(e.Message.LParam & 0xffff))
                         {
-                            if (_windowState == WindowState.Minimized)
-                            {
-                                WindowExtensions.Restore(_window);
-                            }
-                            WindowExtensions.SetForegroundWindow(_window);
+                            case WindowsMessages.WM_LBUTTONDBLCLK:
+                                HandleTrayIconClick(MouseClickType.LeftDoubleClick);
+                                break;
+                            case WindowsMessages.WM_RBUTTONDBLCLK:
+                                HandleTrayIconClick(MouseClickType.RightDoubleClick);
+                                break;
+                            case WindowsMessages.WM_RBUTTONUP:
+                                HandleTrayIconClick(MouseClickType.RightMouseUp);
+                                break;
+                            case WindowsMessages.WM_RBUTTONDOWN:
+                                HandleTrayIconClick(MouseClickType.RightMouseDown);
+                                break;
+                            case WindowsMessages.WM_LBUTTONUP:
+                                HandleTrayIconClick(MouseClickType.LeftMouseUp);
+                                break;
+                            case WindowsMessages.WM_LBUTTONDOWN:
+                                HandleTrayIconClick(MouseClickType.LeftMouseDown);
+                                break;
                         }
                         break;
                     }
             }
         }
+
+        private void HandleTrayIconClick(MouseClickType type)
+        {
+            bool handled = false;
+            if (TrayIconClicked is EventHandler<TrayIconClickedEventArgs> handler)
+            {
+                var args = new TrayIconClickedEventArgs(type);
+                TrayIconClicked.Invoke(this, args);
+                if (args.Flyout is FlyoutBase flyout)
+                {
+
+                    var w = new TrayIconWindow(flyout);
+                    w.ShowAt(3500, 1600);
+                }
+            }
+            if(!handled && type == MouseClickType.LeftDoubleClick)
+            {
+                // Default action
+                // If icon was double-clicked, restore the window and bring to front
+                if (_windowState == WindowState.Minimized)
+                {
+                    WindowExtensions.Restore(_window);
+                }
+                WindowExtensions.SetForegroundWindow(_window);
+            }
+        }
+
+        private class TrayIconWindow : Window
+        {
+            private WindowManager manager;
+            private readonly FlyoutBase flyout;
+            ~TrayIconWindow()
+            {
+
+            }
+            public TrayIconWindow(FlyoutBase flyout)
+            {
+                manager = WindowManager.Get(this);
+                manager.MinHeight = 0;
+                manager.MinWidth = 0;
+                WindowExtensions.SetWindowStyle(this, WindowStyle.Popup);
+
+                this.Closed += TrayIconWindow_Closed;
+                this.Content = new Microsoft.UI.Xaml.Controls.Grid();
+                ((FrameworkElement)this.Content).Loaded += TrayIconWindow_Loaded;
+                this.flyout = flyout;
+                flyout.Closed += Flyout_Closed;
+                manager.WindowMessageReceived += Manager_WindowMessageReceived;
+            }
+
+            internal void ShowAt(int x, int y)
+            {
+                Activate();
+                AppWindow.MoveAndResize(new Windows.Graphics.RectInt32(x, y, 200, 100), Microsoft.UI.Windowing.DisplayArea.GetFromPoint(new Windows.Graphics.PointInt32(0, 0), Microsoft.UI.Windowing.DisplayAreaFallback.Primary));
+                WindowExtensions.SetForegroundWindow(this);
+            }
+
+            private void Flyout_Closed(object? sender, object e)
+            {
+                Close();
+            }
+
+            private void TrayIconWindow_Loaded(object sender, RoutedEventArgs e)
+            {
+                flyout.ShouldConstrainToRootBounds = false;
+                flyout.ShowAt((FrameworkElement)this.Content, new Microsoft.UI.Xaml.Controls.Primitives.FlyoutShowOptions()
+                {
+                    ShowMode = Microsoft.UI.Xaml.Controls.Primitives.FlyoutShowMode.Auto,
+                    Placement = Microsoft.UI.Xaml.Controls.Primitives.FlyoutPlacementMode.Auto,
+                    Position = new Point(0, 0)
+                });
+            }
+
+            private void TrayIconWindow_Closed(object sender, WindowEventArgs args)
+            {
+                flyout.Closed -= Flyout_Closed;
+                Closed -= TrayIconWindow_Closed;
+                manager.WindowMessageReceived -= Manager_WindowMessageReceived;
+                manager = null!;
+                ((FrameworkElement)this.Content).Loaded -= TrayIconWindow_Loaded;
+                Content = null;
+            }
+            private void Manager_WindowMessageReceived(object? sender, WindowMessageEventArgs e)
+            {
+                if (e.MessageType == WindowsMessages.WM_ACTIVATE)
+                {
+                    if (e.Message.WParam == 0) // Window lost focus
+                    {
+                        DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Normal, () =>
+                        {
+                                flyout.Hide();
+                        });
+                    }
+                }
+            }
+        }
+
+        public event EventHandler<TrayIconClickedEventArgs> TrayIconClicked;
+
+        public class TrayIconClickedEventArgs : EventArgs
+        {
+            internal TrayIconClickedEventArgs(MouseClickType type)
+            {
+                ClickType = type;
+            }
+            public MouseClickType ClickType { get; }
+
+            public FlyoutBase? Flyout { get; set; }
+
+            public bool Handled { get; set; }
+        }
+        public enum MouseClickType
+        {
+            LeftMouseDown,
+            RightMouseDown,
+            LeftMouseUp,
+            RightMouseUp,
+            LeftDoubleClick,
+            RightDoubleClick,
+        }
+
         nint currentIcon = 0;
 
         private WindowState _windowState;

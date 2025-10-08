@@ -36,8 +36,31 @@ namespace WinUIExSample
             monitor = new WindowMessageMonitor(this);
             navigationView.Loaded += NavigationView_Loaded;
             this.Closed += MainWindow_Closed;
+
+            var m = WindowManager.Get(this);
+            m.IsVisibleInTray = true;
+            m.TrayIconClicked += TrayIconClicked;
         }
 
+        private void TrayIconClicked(object? sender, WindowManager.TrayIconClickedEventArgs e)
+        {
+            if (e.ClickType == WindowManager.MouseClickType.RightMouseUp)
+            {
+                var flyout = new MenuFlyout();
+                flyout.Items.Add(new MenuFlyoutItem() { Text = "WinUI Context" });
+                flyout.Items.Add(new MenuFlyoutItem() { Text = "Menus is SUPER EASY" });
+                flyout.Items.Add(new MenuFlyoutItem() { Text = "But only if" });
+                flyout.Items.Add(new MenuFlyoutItem() { Text = "You code it yourself" });
+                e.Flyout = flyout; // Set a flyout to present. Can be any FlyoutBase kind
+            }
+            if (e.ClickType == WindowManager.MouseClickType.LeftMouseDown)
+            {
+                var flyout = new Flyout();
+                flyout.Content = new MediaPlayerElement() { Source = Windows.Media.Core.MediaSource.CreateFromUri(new Uri("https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4")), AutoPlay = true, Stretch = Stretch.UniformToFill, Width = 300, Height = 200 };
+                flyout.Closing += (s, e) => (flyout.Content as MediaPlayerElement)?.MediaPlayer.Dispose();
+                e.Flyout = flyout; 
+            }
+        }
         private void MainWindow_Closed(object sender, WindowEventArgs args) => logWindow?.Close();
 
         private void NavigationView_Loaded(object sender, RoutedEventArgs e)

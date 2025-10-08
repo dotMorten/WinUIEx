@@ -39,24 +39,29 @@ namespace WinUIExSample
 
             var m = WindowManager.Get(this);
             m.IsVisibleInTray = true;
-            m.TrayIconClicked += TrayIconClicked;
+            m.TrayIconInvoked += TrayIconClicked;
         }
 
-        private void TrayIconClicked(object? sender, WindowManager.TrayIconClickedEventArgs e)
+        private void TrayIconClicked(object? sender, TrayIconInvokedEventArgs e)
         {
-            if (e.ClickType == WindowManager.MouseClickType.RightMouseUp)
+            if (e.Type == TrayIconInvokeType.RightMouseUp)
             {
                 var flyout = new MenuFlyout();
-                flyout.Items.Add(new MenuFlyoutItem() { Text = "WinUI Context" });
-                flyout.Items.Add(new MenuFlyoutItem() { Text = "Menus is SUPER EASY" });
-                flyout.Items.Add(new MenuFlyoutItem() { Text = "But only if" });
-                flyout.Items.Add(new MenuFlyoutItem() { Text = "You code it yourself" });
+                flyout.Items.Add(new MenuFlyoutItem() { Text = "WinUI Context Menus!", IsEnabled = false });
+                flyout.Items.Add(new MenuFlyoutItem() { Text = "Try Left clicking", IsEnabled = false });
+                flyout.Items.Add(new MenuFlyoutSeparator());
+                flyout.Items.Add(new MenuFlyoutItem() { Text = "Exit WinUIEx" });
+                ((MenuFlyoutItem)flyout.Items.Last()).Click += (s, e) => this.Close();
                 e.Flyout = flyout; // Set a flyout to present. Can be any FlyoutBase kind
             }
-            if (e.ClickType == WindowManager.MouseClickType.LeftMouseDown)
+            else if (e.Type == TrayIconInvokeType.LeftMouseDown)
             {
                 var flyout = new Flyout();
-                flyout.Content = new MediaPlayerElement() { Source = Windows.Media.Core.MediaSource.CreateFromUri(new Uri("https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4")), AutoPlay = true, Stretch = Stretch.UniformToFill, Width = 300, Height = 200 };
+                flyout.SystemBackdrop = new MicaBackdrop();
+                StackPanel stackPanel = new StackPanel();
+                stackPanel.Children.Add(new TextBlock() { Text = "You can put any content here!", FontWeight = Microsoft.UI.Text.FontWeights.Bold });
+                stackPanel.Children.Add(new TextBlock() { Text = "Now try right-clicking the icon" });
+                flyout.Content = stackPanel;
                 flyout.Closing += (s, e) => (flyout.Content as MediaPlayerElement)?.MediaPlayer.Dispose();
                 e.Flyout = flyout; 
             }

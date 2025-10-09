@@ -319,32 +319,32 @@ namespace WinUIEx
     public enum TrayIconInvokeType
     {
         /// <summary>
-        /// User moused down on the tray icon using the left button.
+        /// User moused down on the tray icon using the primary button.
         /// </summary>
         LeftMouseDown,
 
         /// <summary>
-        /// User moused down on the tray icon using the right button.
+        /// User moused down on the tray icon using the secondary button.
         /// </summary>
         RightMouseDown,
 
         /// <summary>
-        /// User released the left mouse button on the tray icon.
+        /// User released the primary mouse button on the tray icon.
         /// </summary>
         LeftMouseUp,
 
         /// <summary>
-        /// User released the right mouse button on the tray icon.
+        /// User released the secondary mouse button on the tray icon.
         /// </summary>
         RightMouseUp,
 
         /// <summary>
-        /// User double-clicked the left mouse button on the tray icon.
+        /// User double-clicked the primary mouse button on the tray icon.
         /// </summary>
         LeftDoubleClick,
 
         /// <summary>
-        /// User double-clicked the right mouse button on the tray icon.
+        /// User double-clicked the secondary mouse button on the tray icon.
         /// </summary>
         RightDoubleClick,
     }

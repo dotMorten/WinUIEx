@@ -14,6 +14,9 @@ namespace WinUIEx
 {
     public partial class WindowManager
     {
+        private const uint DefaultTrayIconId = 123;
+        private const uint TrayIconCallbackId = 0x8765;
+
         private bool _isVisibleInTray = false;
 
         /// <summary>
@@ -24,8 +27,16 @@ namespace WinUIEx
         /// <para>See <see cref="AppWindow.IsShownInSwitchers" /> to hide the window from the Alt+Tab switcher and task bar.
         /// If you want to minimize the window to the tray, set this to <c>true</c> and when  <see cref="WindowManager.WindowStateChanged"/> is fired and changes to minimized,
         /// hide it from the switcher.</para>
+        /// <note type="important">
+        /// It is important that you assign a task bar icon first before setting this to <c>true</c>, or this method will throw.
+        /// See <see cref="AppWindow.SetTaskbarIcon(string)"/> or <see cref="WindowExtensions.SetTaskBarIcon(Window, Icon?)"/>.
+        /// </note>
         /// </remarks>
+        /// <exception cref="InvalidOperationException">Thrown if the TaskBarIcon has not been set</exception>
         /// <seealso cref="TrayIconInvoked"/>
+        /// <seealso cref="AppWindow.SetTaskbarIcon(Microsoft.UI.IconId)"/>
+        /// <seealso cref="AppWindow.SetTaskbarIcon(string)"/>
+        /// <seealso cref="WindowExtensions.SetTaskBarIcon(Window, Icon?)"/>
         public bool IsVisibleInTray
         {
             get => _isVisibleInTray;
@@ -35,15 +46,21 @@ namespace WinUIEx
                 {
                     _isVisibleInTray = value;
                     if (value)
-                        AddToTray();
+                    {
+                        if (currentIcon == 0)
+                            throw new InvalidOperationException("No icon currently assigned to the taskbar. Call AppWindow.SetTaskbarIcon or WindowExtensions.SetTaskBarIcon prior to turning on the tray icon");
+                        AddToTray(DefaultTrayIconId);
+                    }
                     else
-                        RemoveFromTray();
+                        RemoveFromTray(DefaultTrayIconId);
                 }
             }
         }
 
-        private void AddToTray()
+        private void AddToTray(uint iconId)
         {
+            if (currentIcon == 0) // No icon to add
+                return;
             // See https://learn.microsoft.com/en-us/windows/win32/api/shellapi/nf-shellapi-shell_notifyicona
             const uint NIM_ADD = 0x00000000;
             // const uint NIM_MODIFY = 0x00000001;
@@ -63,19 +80,13 @@ namespace WinUIEx
                 {
                     hWnd = new Windows.Win32.Foundation.HWND(_window.GetWindowHandle()),
                     cbSize = (uint)Marshal.SizeOf<Windows.Win32.NOTIFYICONDATAW64>(),
-                    uID = 0,
+                    uID = iconId,
                     uFlags = NIF_ICON | NIF_MESSAGE | NIF_TIP, // Icon and callback message is set and valid
                     hIcon = hicon,
-                    uCallbackMessage = 0x8765,
+                    uCallbackMessage = TrayIconCallbackId,
                     szTip = tip
                 };
                 Windows.Win32.PInvoke.Shell_NotifyIcon(NIM_ADD, notifyIconData);
-                currentTrayIcon = new NOTIFYICONIDENTIFIER()
-                {
-                    uID = 0,
-                    hWnd = notifyIconData.hWnd,
-                    cbSize = (uint)Marshal.SizeOf<NOTIFYICONIDENTIFIER>(),
-                };
             }
             else
             {
@@ -83,23 +94,17 @@ namespace WinUIEx
                 {
                     hWnd = new Windows.Win32.Foundation.HWND(_window.GetWindowHandle()),
                     cbSize = (uint)Marshal.SizeOf<Windows.Win32.NOTIFYICONDATAW32>(),
-                    uID = 0,
+                    uID = iconId,
                     uFlags = NIF_ICON | NIF_MESSAGE | NIF_TIP, // Icon and callback message is set and valid
                     hIcon = hicon,
-                    uCallbackMessage = 0x8765,
+                    uCallbackMessage = TrayIconCallbackId,
                     szTip = tip
                 };
                 Windows.Win32.PInvoke.Shell_NotifyIcon(NIM_ADD, notifyIconData);
-                currentTrayIcon = new NOTIFYICONIDENTIFIER()
-                {
-                    uID = 0,
-                    hWnd = notifyIconData.hWnd,
-                    cbSize = (uint)Marshal.SizeOf<NOTIFYICONIDENTIFIER>(),
-                };
             }
         }
 
-        private void RemoveFromTray()
+        private void RemoveFromTray(uint iconId)
         {
             const uint NIM_DELETE = 0x00000002;
             if (Environment.Is64BitProcess)
@@ -108,7 +113,7 @@ namespace WinUIEx
                 {
                     hWnd = new Windows.Win32.Foundation.HWND(_window.GetWindowHandle()),
                     cbSize = (uint)Marshal.SizeOf<Windows.Win32.NOTIFYICONDATAW64>(),
-                    uID = 0,
+                    uID = iconId,
                 };
                 Windows.Win32.PInvoke.Shell_NotifyIcon(NIM_DELETE, notifyIconData);
             }
@@ -118,14 +123,17 @@ namespace WinUIEx
                 {
                     hWnd = new Windows.Win32.Foundation.HWND(_window.GetWindowHandle()),
                     cbSize = (uint)Marshal.SizeOf<Windows.Win32.NOTIFYICONDATAW32>(),
+                    uID = iconId,
                 };
                 Windows.Win32.PInvoke.Shell_NotifyIcon(NIM_DELETE, notifyIconData);
             }
-            currentTrayIcon = null;
         }
 
         private void ProcessTrayIconEvents(Message message)
         {
+            var iconid = (uint)message.WParam;
+            if (iconid != DefaultTrayIconId)
+                return;
             switch ((WindowsMessages)(message.LParam & 0xffff))
             {
                 case WindowsMessages.WM_LBUTTONDBLCLK:
@@ -153,13 +161,12 @@ namespace WinUIEx
         private struct NOTIFYICONIDENTIFIER
         {
             public uint cbSize;
-            public IntPtr hWnd;
-            public Int32 uID;
+            public nint hWnd;
+            public uint uID;
             public Guid guidItem;
         }
         [DllImport("shell32.dll", SetLastError = true)]
         private static extern int Shell_NotifyIconGetRect([In] ref NOTIFYICONIDENTIFIER identifier, [Out] out Windows.Graphics.RectInt32 iconLocation);
-        private NOTIFYICONIDENTIFIER? currentTrayIcon;
 
         private void HandleTrayIconClick(TrayIconInvokeType type)
         {
@@ -168,9 +175,14 @@ namespace WinUIEx
             {
                 var args = new TrayIconInvokedEventArgs(type);
                 handler.Invoke(this, args);
-                if (args.Flyout is FlyoutBase flyout && currentTrayIcon.HasValue)
+                if (args.Flyout is FlyoutBase flyout)
                 {
-                    var icon = currentTrayIcon.Value; 
+                    var icon = new NOTIFYICONIDENTIFIER()
+                    {
+                        uID = DefaultTrayIconId,
+                        hWnd = _window.GetWindowHandle(),
+                        cbSize = (uint)Marshal.SizeOf<NOTIFYICONIDENTIFIER>(),
+                    };
                     Shell_NotifyIconGetRect(ref icon, out var location);
                     var w = new TrayIconWindow(flyout);
                     w.ShowAt(location.X, location.Y);

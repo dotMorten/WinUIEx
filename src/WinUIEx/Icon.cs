@@ -100,6 +100,8 @@ namespace WinUIEx
         /// For testing - Creates a simple Yang icon
         /// </summary>
         /// <returns>Icon with a Yang icon</returns>
+        [Obsolete]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static Icon Yang()
         {
             var hinstance = PInvoke.GetModuleHandle((string?)null);

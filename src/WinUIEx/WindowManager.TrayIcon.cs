@@ -183,9 +183,12 @@ namespace WinUIEx
                         hWnd = _window.GetWindowHandle(),
                         cbSize = (uint)Marshal.SizeOf<NOTIFYICONIDENTIFIER>(),
                     };
-                    Shell_NotifyIconGetRect(ref icon, out var location);
-                    var w = new TrayIconWindow(flyout);
-                    w.ShowAt(location.X, location.Y);
+                    var hresult = Shell_NotifyIconGetRect(ref icon, out var location);
+                    if (hresult == 0)
+                    {
+                        var w = new TrayIconWindow(flyout);
+                        w.ShowAt(location.X, location.Y);
+                    }
                 }
                 handled = args.Handled;
             }

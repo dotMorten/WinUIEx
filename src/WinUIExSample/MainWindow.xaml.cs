@@ -50,8 +50,14 @@ namespace WinUIExSample
                 flyout.Items.Add(new MenuFlyoutItem() { Text = "WinUI Context Menus!", IsEnabled = false });
                 flyout.Items.Add(new MenuFlyoutItem() { Text = "Try Left clicking", IsEnabled = false });
                 flyout.Items.Add(new MenuFlyoutSeparator());
-                flyout.Items.Add(new MenuFlyoutItem() { Text = "Exit WinUIEx" });
+                flyout.Items.Add(new MenuFlyoutItem() { Text = "Quit WinUIEx" });
                 ((MenuFlyoutItem)flyout.Items.Last()).Click += (s, e) => this.Close();
+                var submenu = new MenuFlyoutSubItem() { Text = "About... " };
+                submenu.Items.Add(new MenuFlyoutItem() { Text = "Visit GitHub Site " });
+                ((MenuFlyoutItem)submenu.Items.Last()).Click += (s, e) => _ = Windows.System.Launcher.LaunchUriAsync(new Uri("https://github.com/dotMorten/WinUIEx"));
+                submenu.Items.Add(new MenuFlyoutItem() { Text = "Sponsor WinUIEx" });
+                ((MenuFlyoutItem)submenu.Items.Last()).Click += (s, e) => _ = Windows.System.Launcher.LaunchUriAsync(new Uri("https://github.com/sponsors/dotMorten"));
+                flyout.Items.Add(submenu);
                 e.Flyout = flyout; // Set a flyout to present. Can be any FlyoutBase kind
             }
             else if (e.Type == TrayIconInvokeType.LeftMouseDown)

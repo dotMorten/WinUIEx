@@ -21,7 +21,7 @@ namespace WinUIEx
         /// </summary>
         /// <remarks>
         /// <para>The system tray icon will use the same icon as Window's Taskbar icon, and tooltip will match the AppWindow.Title value. Double-clicking the icon restores the window if minimized and brings it to the front.</para>
-        /// <para>See <see cref="WindowExtensions.SetIsShownInSwitchers" /> to hide the window from the Alt+Tab switcher and task bar.
+        /// <para>See <see cref="AppWindow.IsShownInSwitchers" /> to hide the window from the Alt+Tab switcher and task bar.
         /// If you want to minimize the window to the tray, set this to <c>true</c> and when  <see cref="WindowManager.WindowStateChanged"/> is fired and changes to minimized,
         /// hide it from the switcher.</para>
         /// </remarks>

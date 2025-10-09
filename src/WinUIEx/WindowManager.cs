@@ -7,6 +7,8 @@ using WinUIEx.Messaging;
 using Windows.Win32.UI.WindowsAndMessaging;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using Windows.Foundation;
+using Microsoft.UI.Xaml.Controls.Primitives;
 
 namespace WinUIEx
 {
@@ -255,102 +257,6 @@ namespace WinUIEx
             }
         }
 
-        private bool _isVisibleInTray = false;
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the window is shown in the system tray.
-        /// </summary>
-        /// <remarks>
-        /// <para>The system tray icon will use the same icon as Window's Taskbar icon, and tooltip will match the AppWindow.Title value. Double-clicking the icon restores the window if minimized and brings it to the front.</para>
-        /// <para>See <see cref="WindowExtensions.SetIsShownInSwitchers" /> to hide the window from the Alt+Tab switcher and task bar.
-        /// If you want to minimize the window to the tray, set this to <c>true</c> and when  <see cref="WindowManager.WindowStateChanged"/> is fired and changes to minimized,
-        /// hide it from the switcher.</para>
-        /// </remarks>
-        public bool IsVisibleInTray
-        {
-            get => _isVisibleInTray;
-            set 
-            {
-                if (_isVisibleInTray != value)
-                {
-                    _isVisibleInTray = value;
-                    if (value)
-                        AddToTray();
-                    else
-                        RemoveFromTray();
-                }
-            }
-        }
-
-        private void AddToTray()
-        {
-            // See https://learn.microsoft.com/en-us/windows/win32/api/shellapi/nf-shellapi-shell_notifyicona
-            const uint NIM_ADD = 0x00000000;
-            // const uint NIM_MODIFY = 0x00000001;
-            const uint NIF_MESSAGE = 0x00000001;
-            const uint NIF_ICON = 0x00000002;
-            const uint NIF_TIP = 0x00000004;
-            var hicon = new HICON(currentIcon);
-            Windows.Win32.__ushort_128 tip = new Windows.Win32.__ushort_128();
-            for(int i = 0; i < 128 && i < AppWindow.Title.Length;i++)
-            {
-                tip[i] = (ushort)AppWindow.Title[i];
-            }
-            
-            if (Environment.Is64BitProcess)
-            {
-                var notifyIconData = new Windows.Win32.NOTIFYICONDATAW64
-                {
-                    hWnd = new Windows.Win32.Foundation.HWND(_window.GetWindowHandle()),
-                    cbSize = (uint)Marshal.SizeOf<Windows.Win32.NOTIFYICONDATAW64>(),
-                    uID = 0,
-                    uFlags = NIF_ICON | NIF_MESSAGE | NIF_TIP, // Icon and callback message is set and valid
-                    hIcon = hicon,
-                    uCallbackMessage = 0x8765,
-                    szTip = tip
-                };
-                Windows.Win32.PInvoke.Shell_NotifyIcon(NIM_ADD, notifyIconData);
-            }
-            else
-            {
-                var notifyIconData = new Windows.Win32.NOTIFYICONDATAW32
-                {
-                    hWnd = new Windows.Win32.Foundation.HWND(_window.GetWindowHandle()),
-                    cbSize = (uint)Marshal.SizeOf<Windows.Win32.NOTIFYICONDATAW32>(),
-                    uID = 0,
-                    uFlags = NIF_ICON | NIF_MESSAGE | NIF_TIP, // Icon and callback message is set and valid
-                    hIcon = hicon,
-                    uCallbackMessage = 0x8765,
-                    szTip = tip
-                };
-                Windows.Win32.PInvoke.Shell_NotifyIcon(NIM_ADD, notifyIconData);
-            }
-        }
-
-        private void RemoveFromTray()
-        {
-            const uint NIM_DELETE = 0x00000002;
-            if (Environment.Is64BitProcess)
-            {
-                var notifyIconData = new Windows.Win32.NOTIFYICONDATAW64
-                {
-                    hWnd = new Windows.Win32.Foundation.HWND(_window.GetWindowHandle()),
-                    cbSize = (uint)Marshal.SizeOf<Windows.Win32.NOTIFYICONDATAW64>(),
-                    uID = 0,
-                };
-                Windows.Win32.PInvoke.Shell_NotifyIcon(NIM_DELETE, notifyIconData);
-            }
-            else
-            {
-                var notifyIconData = new Windows.Win32.NOTIFYICONDATAW32
-                {
-                    hWnd = new Windows.Win32.Foundation.HWND(_window.GetWindowHandle()),
-                    cbSize = (uint)Marshal.SizeOf<Windows.Win32.NOTIFYICONDATAW32>(),
-                };
-                Windows.Win32.PInvoke.Shell_NotifyIcon(NIM_DELETE, notifyIconData);
-            }
-        }
-
         private unsafe void OnWindowMessage(object? sender, Messaging.WindowMessageEventArgs e)
         {
             if (e.MessageType == WindowsMessages.WM_SHOWWINDOW && e.Message.WParam == 1)
@@ -423,26 +329,23 @@ namespace WinUIEx
                 case WindowsMessages.WM_SETICON:
                     {
                         // Track the current window icon for use in the tray
-                        if (e.Message.WParam == 0) // ICON_SMALL
+                        if (e.Message.WParam == 0 || e.Message.WParam == 1)
                             currentIcon = e.Message.LParam;
-                        // TODO: Also update tray icon
+                        if (IsVisibleInTray)
+                        {
+                            RemoveFromTray(DefaultTrayIconId);
+                            AddToTray(DefaultTrayIconId);
+                        }
                         break;
                     }
-                case (WindowsMessages)0x8765: // Callback from tray icon defined in AddToTray()
+                case (WindowsMessages)TrayIconCallbackId: // Callback from tray icon defined in AddToTray()
                     {
-                        // If icon was double-clicked, restore the window and bring to front
-                        if ((WindowsMessages)(e.Message.LParam & 0xffff) == WindowsMessages.WM_LBUTTONDBLCLK)
-                        {
-                            if (_windowState == WindowState.Minimized)
-                            {
-                                WindowExtensions.Restore(_window);
-                            }
-                            WindowExtensions.SetForegroundWindow(_window);
-                        }
+                        ProcessTrayIconEvents(e.Message);
                         break;
                     }
             }
         }
+
         nint currentIcon = 0;
 
         private WindowState _windowState;

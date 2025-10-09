@@ -25,7 +25,7 @@
     <PackageId>WinUIEx</PackageId>
     <Product>WinUI Extensions</Product>
     <PackageReleaseNotes>
-      - WinUIEx now requires Windows App SDK 1.8, but no longer takes a dependency on the metapackage. Only a reference to `Microsoft.WindowsAppSDK.WinUI` is now needed.
+      - Added support for WinUI 3 based flyouts in the system tray
     </PackageReleaseNotes>
   </PropertyGroup>
 

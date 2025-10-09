@@ -103,6 +103,7 @@ namespace WinUIEx
         /// </summary>
         /// <param name="window">window</param>
         /// <param name="enable"><c>true</c> if this window should be shown in the task switchers, otherwise <c>false</c>.</param>
+        [Obsolete("Use AppWindow.IsShownInSwitchers")]
         public static void SetIsShownInSwitchers(this Microsoft.UI.Xaml.Window window, bool enable) => window.AppWindow.IsShownInSwitchers = enable;
 
         /// <summary>
@@ -181,7 +182,6 @@ namespace WinUIEx
         /// </summary>
         /// <param name="window"></param>
         /// <param name="kind"></param>
-        /// <returns></returns>
         public static void SetWindowPresenter(this Microsoft.UI.Xaml.Window window, AppWindowPresenterKind kind) => window.AppWindow.SetPresenter(kind);
 
         /// <summary>

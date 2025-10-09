@@ -17,7 +17,7 @@
     <Authors>Morten Nielsen - https://xaml.dev</Authors>
     <Company>Morten Nielsen - https://xaml.dev</Company>
     <PackageIcon>logo.png</PackageIcon>
-    <Version>2.8.0</Version>
+    <Version>2.9.0</Version>
   </PropertyGroup>
 
   <ItemGroup Condition="'$(PackageId)'!=''">
@@ -30,7 +30,7 @@
   </PropertyGroup>
 
   <PropertyGroup Label="PackageValidationSettings">
-    <PackageValidationBaselineVersion>2.7.0</PackageValidationBaselineVersion>
+    <PackageValidationBaselineVersion>2.8.0</PackageValidationBaselineVersion>
     <GenerateCompatibilitySuppressionFile>false</GenerateCompatibilitySuppressionFile>
   </PropertyGroup>
   

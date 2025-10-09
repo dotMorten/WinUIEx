@@ -74,7 +74,7 @@ namespace WinUIEx
                 {
                     uID = 0,
                     hWnd = notifyIconData.hWnd,
-                    cbSize = (uint)(uint)Marshal.SizeOf<NOTIFYICONIDENTIFIER>(),
+                    cbSize = (uint)Marshal.SizeOf<NOTIFYICONIDENTIFIER>(),
                 };
             }
             else
@@ -94,7 +94,7 @@ namespace WinUIEx
                 {
                     uID = 0,
                     hWnd = notifyIconData.hWnd,
-                    cbSize = (uint)(uint)Marshal.SizeOf<NOTIFYICONIDENTIFIER>(),
+                    cbSize = (uint)Marshal.SizeOf<NOTIFYICONIDENTIFIER>(),
                 };
             }
         }
@@ -160,13 +160,14 @@ namespace WinUIEx
         [DllImport("shell32.dll", SetLastError = true)]
         private static extern int Shell_NotifyIconGetRect([In] ref NOTIFYICONIDENTIFIER identifier, [Out] out Windows.Graphics.RectInt32 iconLocation);
         private NOTIFYICONIDENTIFIER? currentTrayIcon;
+
         private void HandleTrayIconClick(TrayIconInvokeType type)
         {
             bool handled = false;
             if (TrayIconInvoked is EventHandler<TrayIconInvokedEventArgs> handler)
             {
                 var args = new TrayIconInvokedEventArgs(type);
-                TrayIconInvoked.Invoke(this, args);
+                handler.Invoke(this, args);
                 if (args.Flyout is FlyoutBase flyout && currentTrayIcon.HasValue)
                 {
                     var icon = currentTrayIcon.Value; 
@@ -191,10 +192,7 @@ namespace WinUIEx
         {
             private WindowManager manager;
             private readonly FlyoutBase flyout;
-            ~TrayIconWindow()
-            {
 
-            }
             public TrayIconWindow(FlyoutBase flyout)
             {
                 manager = WindowManager.Get(this);
@@ -320,7 +318,7 @@ namespace WinUIEx
         LeftMouseUp,
 
         /// <summary>
-        /// User released the left mouse button on the tray icon.
+        /// User released the right mouse button on the tray icon.
         /// </summary>
         RightMouseUp,
 

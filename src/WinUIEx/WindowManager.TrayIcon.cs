@@ -259,7 +259,7 @@ namespace WinUIEx
                 {
                     if (e.Message.WParam == 0) // Window lost focus
                     {
-                        var result = this.DispatcherQueue.TryEnqueue(() => Hide());
+                        this.DispatcherQueue.TryEnqueue(() => Hide());
                     }
                 }
             }

@@ -331,7 +331,11 @@ namespace WinUIEx
                         // Track the current window icon for use in the tray
                         if (e.Message.WParam == 0 || e.Message.WParam == 1)
                             currentIcon = e.Message.LParam;
-                        // TODO: Also update tray icon
+                        if (IsVisibleInTray)
+                        {
+                            RemoveFromTray(DefaultTrayIconId);
+                            AddToTray(DefaultTrayIconId);
+                        }
                         break;
                     }
                 case (WindowsMessages)TrayIconCallbackId: // Callback from tray icon defined in AddToTray()

@@ -187,6 +187,7 @@ namespace WinUIEx
                     var w = new TrayIconWindow(flyout);
                     w.ShowAt(location.X, location.Y);
                 }
+                handled = args.Handled;
             }
             if (!handled && type == TrayIconInvokeType.LeftDoubleClick)
             {

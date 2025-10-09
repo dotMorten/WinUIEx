@@ -62,7 +62,6 @@ namespace WinUIExSample
                 stackPanel.Children.Add(new TextBlock() { Text = "You can put any content here!", FontWeight = Microsoft.UI.Text.FontWeights.Bold });
                 stackPanel.Children.Add(new TextBlock() { Text = "Now try right-clicking the icon" });
                 flyout.Content = stackPanel;
-                flyout.Closing += (s, e) => (flyout.Content as MediaPlayerElement)?.MediaPlayer.Dispose();
                 e.Flyout = flyout; 
             }
         }

@@ -47,8 +47,6 @@ namespace WinUIEx
                     _isVisibleInTray = value;
                     if (value)
                     {
-                        if (currentIcon == 0)
-                            throw new InvalidOperationException("No icon currently assigned to the taskbar. Call AppWindow.SetTaskbarIcon or WindowExtensions.SetTaskBarIcon prior to turning on the tray icon");
                         AddToTray(DefaultTrayIconId);
                     }
                     else
@@ -60,14 +58,34 @@ namespace WinUIEx
         private void AddToTray(uint iconId)
         {
             if (currentIcon == 0) // No icon to add
-                return;
+            {
+                var lresult = Windows.Win32.PInvoke.SendMessage(new Windows.Win32.Foundation.HWND(_window.GetWindowHandle()), (uint)WindowsMessages.WM_GETICON, 1, (nint)0);
+                if (lresult > 0)
+                    currentIcon = (int)lresult;
+                else
+                {
+                    lresult = Windows.Win32.PInvoke.SendMessage(new Windows.Win32.Foundation.HWND(_window.GetWindowHandle()), (uint)WindowsMessages.WM_GETICON, 0, (nint)0);
+                    if (lresult > 0)
+                        currentIcon = (int)lresult;
+                }
+            }
+            
             // See https://learn.microsoft.com/en-us/windows/win32/api/shellapi/nf-shellapi-shell_notifyicona
             const uint NIM_ADD = 0x00000000;
             // const uint NIM_MODIFY = 0x00000001;
             const uint NIF_MESSAGE = 0x00000001;
             const uint NIF_ICON = 0x00000002;
             const uint NIF_TIP = 0x00000004;
-            var hicon = new HICON(currentIcon);
+            HICON hicon;
+            if (currentIcon > 0)
+            {
+                hicon = new HICON(currentIcon);
+            }
+            else // Fall back to default application icon
+            {
+                var icon = Windows.Win32.PInvoke.LoadIcon(Windows.Win32.Foundation.HINSTANCE.Null, lpIconName: Windows.Win32.PInvoke.IDI_APPLICATION);
+                hicon = new HICON(icon);
+            }
             Windows.Win32.__ushort_128 tip = new Windows.Win32.__ushort_128();
             for (int i = 0; i < 128 && i < AppWindow.Title.Length; i++)
             {

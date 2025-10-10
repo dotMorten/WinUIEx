@@ -330,11 +330,13 @@ namespace WinUIEx
         /// <summary>
         /// Gets the way the tray icon was invoked.
         /// </summary>
+        /// <value>The method of which the tray icon got invoked.</value>
         public TrayIconInvokeType Type { get; }
 
         /// <summary>
         /// Gets or sets a flyout to display by the trayicon
         /// </summary>
+        /// <value>The flyout to be displayed by the tray icon.</value>
         public FlyoutBase? Flyout { get; set; }
 
         /// <summary>
@@ -345,6 +347,7 @@ namespace WinUIEx
         /// the window is restored and brought to the front. By marking this event
         /// handled, this default behavior will be disabled.
         /// </remarks>
+        /// <value><c>True</c> if this event was handled and the default behavior should not occur, otherwise <c>false</c>.</value>
         public bool Handled { get; set; }
     }
 

@@ -15,6 +15,7 @@ A set of extension methods and classes to fill some gaps in WinUI 3, mostly arou
   - [Splash screen](concepts/Splashscreen.md)
   - [OAuth Web Authenticator](concepts/WebAuthenticator.md)
   - [Custom Backdrops](concepts/CustomBackdrops.md)
+  - [Tray Icon support including WinUI 3 based context menus.](https://dotmorten.github.io/WinUIEx/api/WinUIEx.WindowManager.TrayIconInvoked.html)
   - [`NumberBoxInt32`, `NumberBoxDecimal` and `NumberBox<T>`](concepts/NumberBox.md)
   - TitleBar control (Deprecated in favor of WinAppSDK 1.7 TitleBar)
 

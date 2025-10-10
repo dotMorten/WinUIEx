@@ -27,12 +27,11 @@ namespace WinUIEx
         /// <para>See <see cref="AppWindow.IsShownInSwitchers" /> to hide the window from the Alt+Tab switcher and task bar.
         /// If you want to minimize the window to the tray, set this to <c>true</c> and when  <see cref="WindowManager.WindowStateChanged"/> is fired and changes to minimized,
         /// hide it from the switcher.</para>
-        /// <note type="important">
-        /// It is important that you assign a task bar icon first before setting this to <c>true</c>, or this method will throw.
-        /// See <see cref="AppWindow.SetTaskbarIcon(string)"/> or <see cref="WindowExtensions.SetTaskBarIcon(Window, Icon?)"/>.
+        /// <note type="tip">
+        /// The taskbar icon will be used for the tray icon. You can update the taskbar icon by calling either <see cref="AppWindow.SetTaskbarIcon(string)">AppWindow.SetTaskbarIcon(string)</see>
+        /// or <see cref="WindowExtensions.SetTaskBarIcon(Window, Icon?)">WindowExtensions.SetTaskBarIcon(Window, Icon?)</see>.
         /// </note>
         /// </remarks>
-        /// <exception cref="InvalidOperationException">Thrown if the TaskBarIcon has not been set</exception>
         /// <seealso cref="TrayIconInvoked"/>
         /// <seealso cref="AppWindow.SetTaskbarIcon(Microsoft.UI.IconId)"/>
         /// <seealso cref="AppWindow.SetTaskbarIcon(string)"/>
@@ -292,8 +291,28 @@ namespace WinUIEx
         }
 
         /// <summary>
-        /// Raised when the user invokes the trayicon by clicking or accessing via keyboard
+        /// Raised when the user invokes the tray icon by mouse click or accessing via keyboard.
         /// </summary>
+        /// <remarks>
+        /// <note>
+        /// Make sure you set <see cref="IsVisibleInTray"/> to <c>true</c> to enable the tray icon.
+        /// </note>
+        /// <example>
+        /// Adding a context menu to the tray icon when the user right-clicks using this event:
+        /// <code lang="csharp">
+        /// private void TrayIconClicked(object? sender, TrayIconInvokedEventArgs e)
+        /// {
+        ///     if (e.Type == TrayIconInvokeType.RightMouseUp)
+        ///     {
+        ///         var flyout = new MenuFlyout();
+        ///         flyout.Items.Add(new MenuFlyoutItem() { Text = "Quit WinUIEx" });
+        ///         ((MenuFlyoutItem) flyout.Items.Last()).Click += (s, e) => this.Close();
+        ///         e.Flyout = flyout; // Set a flyout to present. Can be any FlyoutBase kind
+        ///     }
+        /// }
+        /// </code>
+        /// </example>
+        /// </remarks>
         /// <seealso cref="IsVisibleInTray"/>
         public event EventHandler<TrayIconInvokedEventArgs>? TrayIconInvoked;
     }

@@ -258,7 +258,8 @@ namespace WinUIEx
             private void TrayIconWindow_Loaded(object sender, RoutedEventArgs e)
             {
                 flyout.ShouldConstrainToRootBounds = false;
-                flyout.ShowAt((FrameworkElement)this.Content, new FlyoutShowOptions()
+                flyout.XamlRoot = Content.XamlRoot;
+                flyout.ShowAt(Content, new FlyoutShowOptions()
                 {
                     ShowMode = FlyoutShowMode.Auto,
                     Placement = FlyoutPlacementMode.Auto,

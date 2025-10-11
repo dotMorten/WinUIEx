@@ -24,7 +24,7 @@ Watch WinUIEx covered in the On .NET Live show:
   - [OAuth Web Authentication](https://dotmorten.github.io/WinUIEx/concepts/WebAuthenticator.html)
   - [Custom Window Backdrops](https://dotmorten.github.io/WinUIEx/concepts/CustomBackdrops.html)
   - [`NumberBoxInt32`, `NumberBoxDecimal` and `NumberBox<T>`](https://dotmorten.github.io/WinUIEx/concepts/NumberBox.html) - Generic number input controls with support for expressions.
-  - [Tray Icon support including WinUI 3 based context menus.](https://dotmorten.github.io/WinUIEx/api/WinUIEx.WindowManager.TrayIconInvoked.html)
+  - [Tray Icon support including WinUI 3 based context menus.](https://dotmorten.github.io/WinUIEx/concepts/TrayIcon.html)
   - TitleBar control (Deprecated in favor of WinAppSDK 1.7 TitleBar)
   - Code analyzers for Windows App SDK APIs to guide the developer.
 

@@ -233,6 +233,7 @@ namespace WinUIEx
                 manager.MinWidth = 0;
                 WindowExtensions.SetWindowStyle(this, WindowStyle.Popup);
                 AppWindow.IsShownInSwitchers = false;
+                manager.IsAlwaysOnTop = true;
 
                 this.Closed += TrayIconWindow_Closed;
                 this.Content = new Microsoft.UI.Xaml.Controls.Grid();

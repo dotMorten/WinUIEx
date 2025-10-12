@@ -63,7 +63,6 @@ namespace WinUIExSample
         private void TrayIconLeftClick(WindowManager sender, TrayIconEventArgs e)
         {
             var flyout = new Flyout();
-            flyout.SystemBackdrop = new MicaBackdrop();
             StackPanel stackPanel = new StackPanel();
             stackPanel.Children.Add(new TextBlock() { Text = "You can put any content here!", FontWeight = Microsoft.UI.Text.FontWeights.Bold });
             stackPanel.Children.Add(new TextBlock() { Text = "Now try right-clicking the icon" });

@@ -36,7 +36,6 @@ namespace WinUIExSample.Pages
 
         public WindowEx MainWindow => ((App)Application.Current).MainWindow!;
 
-
         private void WindowControl_Loaded(object? sender, RoutedEventArgs e)
         {
             MainWindow.WindowStateChanged += CurrentWindow_WindowStateChanged;

@@ -15,10 +15,12 @@ namespace WinUIEx;
 /// Represents an application icon displayed in the Windows system tray, providing functionality to show, update, and
 /// interact with a tray icon and its associated tooltip and events.
 /// </summary>
-/// <remarks>The TrayIcon class enables applications to display an icon in the system tray (notification area),
+/// <remarks><para>The TrayIcon class enables applications to display an icon in the system tray (notification area),
 /// respond to user interactions such as clicks and double-clicks, and show contextual flyouts. It manages the icon's
-/// visibility, tooltip, and icon image, and provides events for common user actions. The class implements IDisposable;
-/// callers should dispose of instances to release system resources and remove the icon from the tray.</remarks>
+/// visibility, tooltip, and icon image, and provides events for common user actions.</para>
+/// <note>Make sure you keep a reference to the <see cref="TrayIcon"/> as long as you are relying on it in the tray,
+/// or the Garbage Collector will collect it and remove it from the tray.</note>
+/// </remarks>
 public class TrayIcon : IDisposable
 {
     private const uint TrayIconCallbackId = 0x8765;

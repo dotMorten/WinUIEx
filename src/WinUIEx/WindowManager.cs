@@ -104,6 +104,8 @@ namespace WinUIEx
         {
             CleanUpBackdrop();
             SavePersistence();
+            _trayIcon?.Dispose();
+            _trayIcon = null;
         }
 
         /// <summary>

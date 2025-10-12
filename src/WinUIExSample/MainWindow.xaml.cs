@@ -26,6 +26,8 @@ namespace WinUIExSample
         private readonly WindowMessageMonitor monitor;
         private LogWindow? logWindow;
 
+        internal List<TrayIcon> TrayIcons { get; } = new List<TrayIcon>();
+
         public MainWindow()
         {
             this.InitializeComponent();
@@ -39,15 +41,15 @@ namespace WinUIExSample
 
             var m = WindowManager.Get(this);
             m.IsVisibleInTray = true;
-            m.RightClick += TrayIconRightClick;
-            m.LeftClick += TrayIconLeftClick;
+            m.TrayIconContextMenu += TrayIconRightClick;
         }
 
         private void TrayIconRightClick(WindowManager? sender, TrayIconEventArgs e)
         {
             var flyout = new MenuFlyout();
             flyout.Items.Add(new MenuFlyoutItem() { Text = "WinUI Context Menus!", IsEnabled = false });
-            flyout.Items.Add(new MenuFlyoutItem() { Text = "Try Left clicking", IsEnabled = false });
+            flyout.Items.Add(new MenuFlyoutItem() { Text = "Open WinUIEx" });
+            ((MenuFlyoutItem)flyout.Items.Last()).Click += (s, e) =>  Activate();
             flyout.Items.Add(new MenuFlyoutSeparator());
             flyout.Items.Add(new MenuFlyoutItem() { Text = "Quit WinUIEx" });
             ((MenuFlyoutItem)flyout.Items.Last()).Click += (s, e) => this.Close();
@@ -60,17 +62,15 @@ namespace WinUIExSample
             e.Flyout = flyout; // Set a flyout to present. Can be any FlyoutBase kind
         }
 
-        private void TrayIconLeftClick(WindowManager sender, TrayIconEventArgs e)
+        private void MainWindow_Closed(object sender, WindowEventArgs args)
         {
-            var flyout = new Flyout();
-            StackPanel stackPanel = new StackPanel();
-            stackPanel.Children.Add(new TextBlock() { Text = "You can put any content here!", FontWeight = Microsoft.UI.Text.FontWeights.Bold });
-            stackPanel.Children.Add(new TextBlock() { Text = "Now try right-clicking the icon" });
-            flyout.Content = stackPanel;
-            e.Flyout = flyout;
+            // Ensure all child windows are closed and tray icons are disposed
+            logWindow?.Close();
+            foreach(var icon in TrayIcons)
+            {
+                icon.Dispose();
+            }
         }
-
-        private void MainWindow_Closed(object sender, WindowEventArgs args) => logWindow?.Close();
 
         private void NavigationView_Loaded(object sender, RoutedEventArgs e)
         {

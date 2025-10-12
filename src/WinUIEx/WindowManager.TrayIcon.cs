@@ -87,9 +87,8 @@ namespace WinUIEx
             {
                 var icon = GetCurrentIcon();
                 _trayIcon = new TrayIcon(iconId, icon, AppWindow.Title);
-                _trayIcon.LeftDoubleClick += TrayIcon_LeftDoubleClick;
-                _trayIcon.LeftClick += TrayIcon_LeftClick;
-                _trayIcon.RightClick += TrayIcon_RightClick;
+                _trayIcon.Selected += TrayIcon_LeftClick;
+                _trayIcon.ContextMenu += TrayIcon_RightClick;
             }
             _trayIcon.IsVisible = true;
         }
@@ -98,17 +97,22 @@ namespace WinUIEx
         {
             if (_trayIcon is not null)
             {
-                _trayIcon.LeftDoubleClick -= TrayIcon_LeftDoubleClick;
-                _trayIcon.LeftClick -= TrayIcon_LeftClick;
-                _trayIcon.RightClick -= TrayIcon_RightClick;
+                _trayIcon.Selected -= TrayIcon_LeftClick;
+                _trayIcon.ContextMenu -= TrayIcon_RightClick;
                 _trayIcon.IsVisible = false;
                 _trayIcon.Dispose();
                 _trayIcon = null;
             }
         }
 
-        private void TrayIcon_LeftDoubleClick(TrayIcon sender, TrayIconEventArgs args)
+
+        private void TrayIcon_RightClick(TrayIcon sender, TrayIconEventArgs args) => TrayIconContextMenu?.Invoke(this, args);
+
+        private void TrayIcon_LeftClick(TrayIcon sender, TrayIconEventArgs args)
         {
+            TrayIconSelected?.Invoke(this, args);
+            if (args.Handled)
+                return;
             if (_windowState == WindowState.Minimized)
             {
                 WindowExtensions.Restore(_window);
@@ -116,19 +120,15 @@ namespace WinUIEx
             WindowExtensions.SetForegroundWindow(_window);
         }
 
-        private void TrayIcon_RightClick(TrayIcon sender, TrayIconEventArgs args) => RightClick?.Invoke(this, args);
-
-        private void TrayIcon_LeftClick(TrayIcon sender, TrayIconEventArgs args) => LeftClick?.Invoke(this, args);
-
         /// <summary>
         /// Occurs when the user clicks the left mouse button on the tray icon.
         /// </summary>
-        public event TypedEventHandler<WindowManager, TrayIconEventArgs>? LeftClick;
+        public event TypedEventHandler<WindowManager, TrayIconEventArgs>? TrayIconSelected;
 
         /// <summary>
         /// Occurs when the user right-clicks the tray icon.
         /// </summary>
-        public event TypedEventHandler<WindowManager, TrayIconEventArgs>? RightClick;
+        public event TypedEventHandler<WindowManager, TrayIconEventArgs>? TrayIconContextMenu;
 
         internal Microsoft.UI.IconId GetCurrentIcon()
         {

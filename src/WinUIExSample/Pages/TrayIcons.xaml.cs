@@ -33,27 +33,25 @@ namespace WinUIExSample.Pages
 
         public MainWindow MainWindow => (MainWindow)((App)Application.Current).MainWindow!;
 
-        private List<TrayIcon> icons = new List<TrayIcon>();
-
         private void CreateTray_Click(object sender, RoutedEventArgs e)
         {
-            TrayIcon icon = new TrayIcon((uint)icons.Count,
+            TrayIcon icon = new TrayIcon((uint)MainWindow.TrayIcons.Count,
                 iconPath: iconSelector.SelectedIndex == 0 ? "Images/OKIcon.ico" : "Images/ErrorIcon.ico",
                 tooltip: tooltip.Text);
             icon.IsVisible = true;
 
-            icon.RightClick += (s, e) =>
+            icon.ContextMenu += (s, e) =>
                 e.Flyout = new Flyout() { Content = new TextBlock() { Text = "You right-clicked!" } };
-            icon.LeftClick += (s, e) =>
+            icon.Selected += (s, e) =>
                 e.Flyout = new Flyout() { Content = new TextBlock() { Text = "You left-clicked!" } };
             icon.LeftDoubleClick += (s, e) => MainWindow.Activate();
 
-            icons.Add(icon);
+            MainWindow.TrayIcons.Add(icon);
         }
 
         private void UpdateTray_Click(object sender, RoutedEventArgs e)
         {
-            foreach(var icon in icons)
+            foreach(var icon in MainWindow.TrayIcons)
             {
                 icon.SetIcon(@"e:\GitHub\dotMorten\AnyStatus\src\Apps\Windows\AnyStatus.Apps.Windows\Resources\Icons\Tray\StatusOK.ico");
             }
@@ -67,14 +65,14 @@ namespace WinUIExSample.Pages
             // {
             //     icon.Dispose();
             // }
-            icons.Clear();
+            MainWindow.TrayIcons.Clear();
             GC.Collect(2);
             GC.WaitForPendingFinalizers();
         }
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            foreach (var icon in icons)
+            foreach (var icon in MainWindow.TrayIcons)
             {
                 icon.Tooltip = tooltip.Text;
             }
@@ -82,7 +80,7 @@ namespace WinUIExSample.Pages
 
         private void iconSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            foreach (var icon in icons)
+            foreach (var icon in MainWindow.TrayIcons)
             {
                 icon.SetIcon(iconSelector.SelectedIndex == 0 ? "Images/OKIcon.ico" : "Images/ErrorIcon.ico");
             }

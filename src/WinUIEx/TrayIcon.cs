@@ -197,7 +197,8 @@ public class TrayIcon : IDisposable
         if (_currentFlyout is not null)
         {
             _currentFlyout.Closing -= CurrentFlyout_Closing;
-            _currentFlyout.Hide();
+            if (_currentFlyout.IsOpen)
+                _currentFlyout.Hide();
             _currentFlyout = null;
         }
         _window.Hide();
@@ -220,11 +221,11 @@ public class TrayIcon : IDisposable
         }
     }
 
+    const uint NIM_MODIFY = 0x00000001;
     private void UpdateTooltip()
     {
         if (!IsVisible)
             return;
-        const uint NIM_MODIFY = 0x00000001;
 
         if (Environment.Is64BitProcess)
         {
@@ -301,6 +302,7 @@ public class TrayIcon : IDisposable
 
         // See https://learn.microsoft.com/en-us/windows/win32/api/shellapi/nf-shellapi-shell_notifyicona
         const uint NIM_ADD = 0x00000000;
+        const uint NIM_SETVERSION = 0x00000004;
         HICON hicon;
         if (currentIcon.Value > 0)
         {
@@ -316,11 +318,13 @@ public class TrayIcon : IDisposable
         {
             var notifyIconData = CreateIconData64(iconId, hicon, Tooltip, TrayIconCallbackId);
             PInvoke.Shell_NotifyIcon(NIM_ADD, notifyIconData);
+            PInvoke.Shell_NotifyIcon(NIM_SETVERSION, notifyIconData);
         }
         else
         {
             var notifyIconData = CreateIconData32(iconId, hicon, Tooltip, TrayIconCallbackId);
             PInvoke.Shell_NotifyIcon(NIM_ADD, notifyIconData);
+            PInvoke.Shell_NotifyIcon(NIM_SETVERSION, notifyIconData);
         }
     }
 
@@ -329,6 +333,7 @@ public class TrayIcon : IDisposable
         const uint NIF_MESSAGE = 0x00000001;
         const uint NIF_ICON = 0x00000002;
         const uint NIF_TIP = 0x00000004;
+        const uint NIF_SHOWTIP = 0x80;
         uint flags = 0;
         if (!hicon.IsNull)
             flags = flags | NIF_ICON;
@@ -342,7 +347,7 @@ public class TrayIcon : IDisposable
                     tip[i] = (ushort)_tooltip[i];
                 }
             }
-            flags = flags | NIF_TIP;
+            flags = flags | NIF_TIP | NIF_SHOWTIP;
         }
         if (callbackId > 0)
             flags = flags | NIF_MESSAGE;
@@ -362,7 +367,8 @@ public class TrayIcon : IDisposable
             uFlags = flags,
             hIcon = hicon,
             uCallbackMessage = TrayIconCallbackId,
-            szTip = tip
+            szTip = tip, 
+            VersionOrTimeout = 4,
         };
     }
 
@@ -379,7 +385,8 @@ public class TrayIcon : IDisposable
             uFlags = flags,
             hIcon = hicon,
             uCallbackMessage = TrayIconCallbackId,
-            szTip = tip
+            szTip = tip,
+            VersionOrTimeout = 4 
         };
     }
 
@@ -410,11 +417,15 @@ public class TrayIcon : IDisposable
 
     private void ProcessTrayIconEvents(Message message)
     {
-        var iconid = (uint)message.WParam;
+        var iconid = message.HighOrder;
         if (iconid != TrayIconId)
             return;
+        var type = (WindowsMessages)(message.LParam & 0xffff);
+        var lparam = message.LParam & 0xffff0000;
+        System.Diagnostics.Debug.WriteLine($"Tray {type}: LParam={lparam.ToString("0x")} WParam=0x{message.WParam.ToString("x2")}");
+
         TrayIconEventArgs? args = null;
-        switch ((WindowsMessages)(message.LParam & 0xffff))
+        switch (type)
         {
             case WindowsMessages.WM_LBUTTONDBLCLK:
                 LeftDoubleClick?.Invoke(this, args = new TrayIconEventArgs());
@@ -422,11 +433,11 @@ public class TrayIcon : IDisposable
             case WindowsMessages.WM_RBUTTONDBLCLK:
                 RightDoubleClick?.Invoke(this, args = new TrayIconEventArgs());
                 break;
-            case WindowsMessages.WM_RBUTTONUP:
-                RightClick?.Invoke(this, args = new TrayIconEventArgs());
+            case WindowsMessages.NIN_SELECT:
+                Selected?.Invoke(this, args = new TrayIconEventArgs());
                 break;
-            case WindowsMessages.WM_LBUTTONUP:
-                LeftClick?.Invoke(this, args = new TrayIconEventArgs());
+            case WindowsMessages.WM_CONTEXTMENU:
+                ContextMenu?.Invoke(this, args = new TrayIconEventArgs());
                 break;
         }
         if (args?.Flyout != null)
@@ -434,14 +445,14 @@ public class TrayIcon : IDisposable
     }
 
     /// <summary>
-    /// Occurs when the user clicks the left mouse button on the tray icon.
+    /// Occurs when the user clicks the left mouse button on the tray icon or selects it via the keyboard.
     /// </summary>
-    public event Windows.Foundation.TypedEventHandler<TrayIcon, TrayIconEventArgs>? LeftClick;
+    public event Windows.Foundation.TypedEventHandler<TrayIcon, TrayIconEventArgs>? Selected;
 
     /// <summary>
-    /// Occurs when the user right-clicks the tray icon.
+    /// Occurs when the user right-clicks the tray icon or selects the context menu from the keyboard.
     /// </summary>
-    public event Windows.Foundation.TypedEventHandler<TrayIcon, TrayIconEventArgs>? RightClick;
+    public event Windows.Foundation.TypedEventHandler<TrayIcon, TrayIconEventArgs>? ContextMenu;
 
     /// <summary>
     /// Occurs when the user double-clicks the left mouse button on the tray icon.
@@ -467,4 +478,9 @@ public class TrayIconEventArgs : EventArgs
     /// Gets or sets the flyout to be shown when this event triggers.
     /// </summary>
     public FlyoutBase? Flyout { get; set; }
+
+    /// <summary>
+    /// Prevents any default action associated with this event.
+    /// </summary>
+    public bool Handled { get; set; }
 }

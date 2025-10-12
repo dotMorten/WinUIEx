@@ -17,6 +17,7 @@ namespace WinUIEx
     /// Manages a native Windows Icon instance
     /// </summary>
     [CreateFromString(MethodName = "WinUIEx.Icon.FromFile")]
+    [Obsolete]
     public unsafe class Icon : IDisposable
     {
         private readonly HICON handle;

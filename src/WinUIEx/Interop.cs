@@ -124,6 +124,10 @@ namespace Windows.Win32
         [DllImport("Shell32", ExactSpelling = true, EntryPoint = "Shell_NotifyIconW")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
         internal static extern unsafe bool Shell_NotifyIcon(uint dwMessage, NOTIFYICONDATAW64* lpData);
+
+        [DllImport("shell32.dll", SetLastError = true)]
+        [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
+        internal static extern int Shell_NotifyIconGetRect([In] ref NOTIFYICONIDENTIFIER identifier, [Out] out Windows.Graphics.RectInt32 iconLocation);
     }
 
     /// <summary>Contains information about a system appbar message.</summary>
@@ -508,5 +512,30 @@ namespace Windows.Win32
             [FieldOffset(0)]
             internal uint uVersion;
         }
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct NOTIFYICONIDENTIFIER
+    {
+        public uint cbSize;
+        public nint hWnd;
+        public uint uID;
+        public Guid guidItem;
+    }
+
+    internal struct MINMAXINFO
+    {
+#pragma warning disable CS0649
+        public POINT ptReserved;
+        public POINT ptMaxSize;
+        public POINT ptMaxPosition;
+        public POINT ptMinTrackSize;
+        public POINT ptMaxTrackSize;
+#pragma warning restore CS0649
+    }
+    internal struct POINT
+    {
+        public int X;
+        public int Y;
     }
 }

@@ -23,6 +23,11 @@ namespace WinUIEx;
 /// </remarks>
 public class TrayIcon : IDisposable
 {
+    // See https://learn.microsoft.com/en-us/windows/win32/api/shellapi/nf-shellapi-shell_notifyicona
+    const uint NIM_ADD = 0x00000000;
+    const uint NIM_MODIFY = 0x00000001;
+    const uint NIM_DELETE = 0x00000002;
+    const uint NIM_SETVERSION = 0x00000004;
     private const uint TrayIconCallbackId = 0x8765;
     private readonly Window _window;
     private readonly nint _windowHandle;
@@ -221,7 +226,6 @@ public class TrayIcon : IDisposable
         }
     }
 
-    const uint NIM_MODIFY = 0x00000001;
     private void UpdateTooltip()
     {
         if (!IsVisible)
@@ -243,7 +247,6 @@ public class TrayIcon : IDisposable
     {
         if (!IsVisible || currentIcon.Value == 0)
             return;
-        const uint NIM_MODIFY = 0x00000001;
         var hicon = new HICON((nint)currentIcon.Value);
 
         if (Environment.Is64BitProcess)
@@ -300,9 +303,6 @@ public class TrayIcon : IDisposable
             }
         }
 
-        // See https://learn.microsoft.com/en-us/windows/win32/api/shellapi/nf-shellapi-shell_notifyicona
-        const uint NIM_ADD = 0x00000000;
-        const uint NIM_SETVERSION = 0x00000004;
         HICON hicon;
         if (currentIcon.Value > 0)
         {
@@ -392,7 +392,6 @@ public class TrayIcon : IDisposable
 
     private void RemoveFromTray(uint iconId)
     {
-        const uint NIM_DELETE = 0x00000002;
         if (Environment.Is64BitProcess)
         {
             var notifyIconData = new NOTIFYICONDATAW64

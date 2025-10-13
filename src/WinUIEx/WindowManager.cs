@@ -104,6 +104,8 @@ namespace WinUIEx
         {
             CleanUpBackdrop();
             SavePersistence();
+            _trayIcon?.Dispose();
+            _trayIcon = null;
         }
 
         /// <summary>
@@ -278,7 +280,7 @@ namespace WinUIEx
             {
                 case WindowsMessages.WM_GETMINMAXINFO:
                     {
-                        MINMAXINFO* rect2 = (MINMAXINFO*)e.Message.LParam;
+                        Windows.Win32.MINMAXINFO* rect2 = (Windows.Win32.MINMAXINFO*)e.Message.LParam;
                         var currentDpi = _window.GetDpiForWindow();
                         if (_restoringPersistence)
                         {
@@ -330,23 +332,12 @@ namespace WinUIEx
                     {
                         // Track the current window icon for use in the tray
                         if (e.Message.WParam == 0 || e.Message.WParam == 1)
-                            currentIcon = e.Message.LParam;
-                        if (IsVisibleInTray)
-                        {
-                            RemoveFromTray(DefaultTrayIconId);
-                            AddToTray(DefaultTrayIconId);
-                        }
-                        break;
-                    }
-                case (WindowsMessages)TrayIconCallbackId: // Callback from tray icon defined in AddToTray()
-                    {
-                        ProcessTrayIconEvents(e.Message);
+                            _trayIcon?.SetIcon(new Microsoft.UI.IconId((ulong)e.Message.LParam));
                         break;
                     }
             }
         }
 
-        nint currentIcon = 0;
 
         private WindowState _windowState;
 
@@ -397,21 +388,6 @@ namespace WinUIEx
         /// </summary>
         public event EventHandler<WindowMessageEventArgs>? WindowMessageReceived;
 
-        private struct MINMAXINFO
-        {
-#pragma warning disable CS0649
-            public POINT ptReserved;
-            public POINT ptMaxSize;
-            public POINT ptMaxPosition;
-            public POINT ptMinTrackSize;
-            public POINT ptMaxTrackSize;
-#pragma warning restore CS0649
-        }
-        private struct POINT
-        {
-            public int X;
-            public int Y;
-        }
 
         #region Persistence
 

@@ -270,6 +270,7 @@ namespace WinUIEx
         /// </summary>
         /// <param name="window">Window</param>
         /// <param name="icon">Icon</param>
+        [Obsolete("Use AppWindow.SetTaskbarIcon")]
         public static void SetTaskBarIcon(this Microsoft.UI.Xaml.Window window, Icon? icon) => HwndExtensions.SetTaskBarIcon(window.GetWindowHandle(), icon);
 
         /// <summary>

@@ -137,11 +137,13 @@ namespace WinUIEx
         /// <returns></returns>
         public bool BringToFront() => WindowExtensions.SetForegroundWindow(this);
 
+        [Obsolete]
         private Icon? _TaskBarIcon;
 
         /// <summary>
         /// Gets or sets the task bar icon.
         /// </summary>
+        [Obsolete("Use AppWindow.SetTaskbarIcon")]
         public Icon? TaskBarIcon
         {
             get { return _TaskBarIcon; }

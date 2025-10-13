@@ -26,6 +26,8 @@ namespace WinUIExSample
         private readonly WindowMessageMonitor monitor;
         private LogWindow? logWindow;
 
+        internal List<TrayIcon> TrayIcons { get; } = new List<TrayIcon>();
+
         public MainWindow()
         {
             this.InitializeComponent();
@@ -39,39 +41,36 @@ namespace WinUIExSample
 
             var m = WindowManager.Get(this);
             m.IsVisibleInTray = true;
-            m.TrayIconInvoked += TrayIconClicked;
+            m.TrayIconContextMenu += TrayIconRightClick;
         }
 
-        private void TrayIconClicked(object? sender, TrayIconInvokedEventArgs e)
+        private void TrayIconRightClick(WindowManager? sender, TrayIconEventArgs e)
         {
-            if (e.Type == TrayIconInvokeType.RightMouseUp)
+            var flyout = new MenuFlyout();
+            flyout.Items.Add(new MenuFlyoutItem() { Text = "WinUI Context Menus!", IsEnabled = false });
+            flyout.Items.Add(new MenuFlyoutItem() { Text = "Open WinUIEx" });
+            ((MenuFlyoutItem)flyout.Items.Last()).Click += (s, e) =>  Activate();
+            flyout.Items.Add(new MenuFlyoutSeparator());
+            flyout.Items.Add(new MenuFlyoutItem() { Text = "Quit WinUIEx" });
+            ((MenuFlyoutItem)flyout.Items.Last()).Click += (s, e) => this.Close();
+            var submenu = new MenuFlyoutSubItem() { Text = "About... " };
+            submenu.Items.Add(new MenuFlyoutItem() { Text = "Visit GitHub Site " });
+            ((MenuFlyoutItem)submenu.Items.Last()).Click += (s, e) => _ = Windows.System.Launcher.LaunchUriAsync(new Uri("https://github.com/dotMorten/WinUIEx"));
+            submenu.Items.Add(new MenuFlyoutItem() { Text = "Sponsor WinUIEx" });
+            ((MenuFlyoutItem)submenu.Items.Last()).Click += (s, e) => _ = Windows.System.Launcher.LaunchUriAsync(new Uri("https://github.com/sponsors/dotMorten"));
+            flyout.Items.Add(submenu);
+            e.Flyout = flyout; // Set a flyout to present. Can be any FlyoutBase kind
+        }
+
+        private void MainWindow_Closed(object sender, WindowEventArgs args)
+        {
+            // Ensure all child windows are closed and tray icons are disposed
+            logWindow?.Close();
+            foreach(var icon in TrayIcons)
             {
-                var flyout = new MenuFlyout();
-                flyout.Items.Add(new MenuFlyoutItem() { Text = "WinUI Context Menus!", IsEnabled = false });
-                flyout.Items.Add(new MenuFlyoutItem() { Text = "Try Left clicking", IsEnabled = false });
-                flyout.Items.Add(new MenuFlyoutSeparator());
-                flyout.Items.Add(new MenuFlyoutItem() { Text = "Quit WinUIEx" });
-                ((MenuFlyoutItem)flyout.Items.Last()).Click += (s, e) => this.Close();
-                var submenu = new MenuFlyoutSubItem() { Text = "About... " };
-                submenu.Items.Add(new MenuFlyoutItem() { Text = "Visit GitHub Site " });
-                ((MenuFlyoutItem)submenu.Items.Last()).Click += (s, e) => _ = Windows.System.Launcher.LaunchUriAsync(new Uri("https://github.com/dotMorten/WinUIEx"));
-                submenu.Items.Add(new MenuFlyoutItem() { Text = "Sponsor WinUIEx" });
-                ((MenuFlyoutItem)submenu.Items.Last()).Click += (s, e) => _ = Windows.System.Launcher.LaunchUriAsync(new Uri("https://github.com/sponsors/dotMorten"));
-                flyout.Items.Add(submenu);
-                e.Flyout = flyout; // Set a flyout to present. Can be any FlyoutBase kind
-            }
-            else if (e.Type == TrayIconInvokeType.LeftMouseDown)
-            {
-                var flyout = new Flyout();
-                flyout.SystemBackdrop = new MicaBackdrop();
-                StackPanel stackPanel = new StackPanel();
-                stackPanel.Children.Add(new TextBlock() { Text = "You can put any content here!", FontWeight = Microsoft.UI.Text.FontWeights.Bold });
-                stackPanel.Children.Add(new TextBlock() { Text = "Now try right-clicking the icon" });
-                flyout.Content = stackPanel;
-                e.Flyout = flyout; 
+                icon.Dispose();
             }
         }
-        private void MainWindow_Closed(object sender, WindowEventArgs args) => logWindow?.Close();
 
         private void NavigationView_Loaded(object sender, RoutedEventArgs e)
         {

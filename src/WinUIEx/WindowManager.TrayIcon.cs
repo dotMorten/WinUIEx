@@ -19,6 +19,8 @@ namespace WinUIEx
 
         private bool _isVisibleInTray = false;
 
+        private TrayIcon? _trayIcon;
+
         /// <summary>
         /// Gets or sets a value indicating whether the window is shown in the system tray.
         /// </summary>
@@ -28,14 +30,18 @@ namespace WinUIEx
         /// If you want to minimize the window to the tray, set this to <c>true</c> and when  <see cref="WindowManager.WindowStateChanged"/> is fired and changes to minimized,
         /// hide it from the switcher.</para>
         /// <note type="tip">
-        /// The taskbar icon will be used for the tray icon. You can update the taskbar icon by calling either <see cref="AppWindow.SetTaskbarIcon(string)">AppWindow.SetTaskbarIcon(string)</see>
-        /// or <see cref="WindowExtensions.SetTaskBarIcon(Window, Icon?)">WindowExtensions.SetTaskBarIcon(Window, Icon?)</see>.
+        /// The taskbar icon will be used for the tray icon. You can update the taskbar icon by calling <see cref="AppWindow.SetTaskbarIcon(string)">AppWindow.SetTaskbarIcon(string)</see>.
         /// </note>
+        /// <para>
+        /// For more advanced scenarios where more control is needed over the tray, multiple icons or managing tooltip and icons separately
+        /// from the window, see the <see cref="TrayIcon"/> class.
+        /// </para>
         /// </remarks>
-        /// <seealso cref="TrayIconInvoked"/>
+        /// <seealso cref="TrayIcon"/>
         /// <seealso cref="AppWindow.SetTaskbarIcon(Microsoft.UI.IconId)"/>
         /// <seealso cref="AppWindow.SetTaskbarIcon(string)"/>
         /// <seealso cref="WindowExtensions.SetTaskBarIcon(Window, Icon?)"/>
+        /// <seealso cref="TrayIconId"/>
         public bool IsVisibleInTray
         {
             get => _isVisibleInTray;
@@ -54,340 +60,89 @@ namespace WinUIEx
             }
         }
 
-        private void AddToTray(uint iconId)
+        private uint _trayIconId = uint.MaxValue - 1;
+
+        /// <summary>
+        /// Gets or sets a unique identifier for the tray icon.
+        /// </summary>
+        public uint TrayIconId
         {
-            if (currentIcon == 0) // No icon to add
+            get { return _trayIconId; }
+            set
             {
-                var lresult = Windows.Win32.PInvoke.SendMessage(new Windows.Win32.Foundation.HWND(_window.GetWindowHandle()), (uint)WindowsMessages.WM_GETICON, 1, (nint)0);
-                if (lresult > 0)
-                    currentIcon = (int)lresult;
-                else
+                if (_trayIconId != value)
                 {
-                    lresult = Windows.Win32.PInvoke.SendMessage(new Windows.Win32.Foundation.HWND(_window.GetWindowHandle()), (uint)WindowsMessages.WM_GETICON, 0, (nint)0);
-                    if (lresult > 0)
-                        currentIcon = (int)lresult;
+                    if (_isVisibleInTray)
+                        RemoveFromTray(_trayIconId);
+                    _trayIconId = value;
+                    if (_isVisibleInTray)
+                        AddToTray(_trayIconId);
                 }
             }
-            
-            // See https://learn.microsoft.com/en-us/windows/win32/api/shellapi/nf-shellapi-shell_notifyicona
-            const uint NIM_ADD = 0x00000000;
-            // const uint NIM_MODIFY = 0x00000001;
-            const uint NIF_MESSAGE = 0x00000001;
-            const uint NIF_ICON = 0x00000002;
-            const uint NIF_TIP = 0x00000004;
-            HICON hicon;
-            if (currentIcon > 0)
-            {
-                hicon = new HICON(currentIcon);
-            }
-            else // Fall back to default application icon
-            {
-                var icon = Windows.Win32.PInvoke.LoadIcon(Windows.Win32.Foundation.HINSTANCE.Null, lpIconName: Windows.Win32.PInvoke.IDI_APPLICATION);
-                hicon = new HICON(icon);
-            }
-            Windows.Win32.__ushort_128 tip = new Windows.Win32.__ushort_128();
-            for (int i = 0; i < 128 && i < AppWindow.Title.Length; i++)
-            {
-                tip[i] = (ushort)AppWindow.Title[i];
-            }
+        }
 
-            if (Environment.Is64BitProcess)
+        private void AddToTray(uint iconId)
+        {
+            if (_trayIcon is null)
             {
-                var notifyIconData = new Windows.Win32.NOTIFYICONDATAW64
-                {
-                    hWnd = new Windows.Win32.Foundation.HWND(_window.GetWindowHandle()),
-                    cbSize = (uint)Marshal.SizeOf<Windows.Win32.NOTIFYICONDATAW64>(),
-                    uID = iconId,
-                    uFlags = NIF_ICON | NIF_MESSAGE | NIF_TIP, // Icon and callback message is set and valid
-                    hIcon = hicon,
-                    uCallbackMessage = TrayIconCallbackId,
-                    szTip = tip
-                };
-                Windows.Win32.PInvoke.Shell_NotifyIcon(NIM_ADD, notifyIconData);
+                var icon = GetCurrentIcon();
+                _trayIcon = new TrayIcon(iconId, icon, AppWindow.Title);
+                _trayIcon.Selected += TrayIcon_LeftClick;
+                _trayIcon.ContextMenu += TrayIcon_RightClick;
             }
-            else
-            {
-                var notifyIconData = new Windows.Win32.NOTIFYICONDATAW32
-                {
-                    hWnd = new Windows.Win32.Foundation.HWND(_window.GetWindowHandle()),
-                    cbSize = (uint)Marshal.SizeOf<Windows.Win32.NOTIFYICONDATAW32>(),
-                    uID = iconId,
-                    uFlags = NIF_ICON | NIF_MESSAGE | NIF_TIP, // Icon and callback message is set and valid
-                    hIcon = hicon,
-                    uCallbackMessage = TrayIconCallbackId,
-                    szTip = tip
-                };
-                Windows.Win32.PInvoke.Shell_NotifyIcon(NIM_ADD, notifyIconData);
-            }
+            _trayIcon.IsVisible = true;
         }
 
         private void RemoveFromTray(uint iconId)
         {
-            const uint NIM_DELETE = 0x00000002;
-            if (Environment.Is64BitProcess)
+            if (_trayIcon is not null)
             {
-                var notifyIconData = new Windows.Win32.NOTIFYICONDATAW64
-                {
-                    hWnd = new Windows.Win32.Foundation.HWND(_window.GetWindowHandle()),
-                    cbSize = (uint)Marshal.SizeOf<Windows.Win32.NOTIFYICONDATAW64>(),
-                    uID = iconId,
-                };
-                Windows.Win32.PInvoke.Shell_NotifyIcon(NIM_DELETE, notifyIconData);
+                _trayIcon.Selected -= TrayIcon_LeftClick;
+                _trayIcon.ContextMenu -= TrayIcon_RightClick;
+                _trayIcon.IsVisible = false;
+                _trayIcon.Dispose();
+                _trayIcon = null;
             }
+        }
+
+
+        private void TrayIcon_RightClick(TrayIcon sender, TrayIconEventArgs args) => TrayIconContextMenu?.Invoke(this, args);
+
+        private void TrayIcon_LeftClick(TrayIcon sender, TrayIconEventArgs args)
+        {
+            TrayIconSelected?.Invoke(this, args);
+            if (args.Handled)
+                return;
+            if (_windowState == WindowState.Minimized)
+            {
+                WindowExtensions.Restore(_window);
+            }
+            WindowExtensions.SetForegroundWindow(_window);
+        }
+
+        /// <summary>
+        /// Occurs when the user clicks the left mouse button on the tray icon.
+        /// </summary>
+        public event TypedEventHandler<WindowManager, TrayIconEventArgs>? TrayIconSelected;
+
+        /// <summary>
+        /// Occurs when the user right-clicks the tray icon.
+        /// </summary>
+        public event TypedEventHandler<WindowManager, TrayIconEventArgs>? TrayIconContextMenu;
+
+        internal Microsoft.UI.IconId GetCurrentIcon()
+        {
+            var lresult = Windows.Win32.PInvoke.SendMessage(new Windows.Win32.Foundation.HWND(_window.GetWindowHandle()), (uint)WindowsMessages.WM_GETICON, 1, (nint)0);
+            if (lresult > 0)
+                return new Microsoft.UI.IconId((ulong)(nint)lresult);
             else
             {
-                var notifyIconData = new Windows.Win32.NOTIFYICONDATAW32
-                {
-                    hWnd = new Windows.Win32.Foundation.HWND(_window.GetWindowHandle()),
-                    cbSize = (uint)Marshal.SizeOf<Windows.Win32.NOTIFYICONDATAW32>(),
-                    uID = iconId,
-                };
-                Windows.Win32.PInvoke.Shell_NotifyIcon(NIM_DELETE, notifyIconData);
+                lresult = Windows.Win32.PInvoke.SendMessage(new Windows.Win32.Foundation.HWND(_window.GetWindowHandle()), (uint)WindowsMessages.WM_GETICON, 0, (nint)0);
+                if (lresult > 0)
+                    return new Microsoft.UI.IconId((ulong)(nint)lresult);
             }
+            var icon = Windows.Win32.PInvoke.LoadIcon(Windows.Win32.Foundation.HINSTANCE.Null, lpIconName: Windows.Win32.PInvoke.IDI_APPLICATION);
+            return new Microsoft.UI.IconId((ulong)icon.Value);
         }
-
-        private void ProcessTrayIconEvents(Message message)
-        {
-            var iconid = (uint)message.WParam;
-            if (iconid != DefaultTrayIconId)
-                return;
-            switch ((WindowsMessages)(message.LParam & 0xffff))
-            {
-                case WindowsMessages.WM_LBUTTONDBLCLK:
-                    HandleTrayIconClick(TrayIconInvokeType.LeftDoubleClick);
-                    break;
-                case WindowsMessages.WM_RBUTTONDBLCLK:
-                    HandleTrayIconClick(TrayIconInvokeType.RightDoubleClick);
-                    break;
-                case WindowsMessages.WM_RBUTTONUP:
-                    HandleTrayIconClick(TrayIconInvokeType.RightMouseUp);
-                    break;
-                case WindowsMessages.WM_RBUTTONDOWN:
-                    HandleTrayIconClick(TrayIconInvokeType.RightMouseDown);
-                    break;
-                case WindowsMessages.WM_LBUTTONUP:
-                    HandleTrayIconClick(TrayIconInvokeType.LeftMouseUp);
-                    break;
-                case WindowsMessages.WM_LBUTTONDOWN:
-                    HandleTrayIconClick(TrayIconInvokeType.LeftMouseDown);
-                    break;
-            }
-        }
-
-        [StructLayout(LayoutKind.Sequential)]
-        private struct NOTIFYICONIDENTIFIER
-        {
-            public uint cbSize;
-            public nint hWnd;
-            public uint uID;
-            public Guid guidItem;
-        }
-        [DllImport("shell32.dll", SetLastError = true)]
-        private static extern int Shell_NotifyIconGetRect([In] ref NOTIFYICONIDENTIFIER identifier, [Out] out Windows.Graphics.RectInt32 iconLocation);
-
-        private void HandleTrayIconClick(TrayIconInvokeType type)
-        {
-            bool handled = false;
-            if (TrayIconInvoked is EventHandler<TrayIconInvokedEventArgs> handler)
-            {
-                var args = new TrayIconInvokedEventArgs(type);
-                handler.Invoke(this, args);
-                if (args.Flyout is FlyoutBase flyout)
-                {
-                    var icon = new NOTIFYICONIDENTIFIER()
-                    {
-                        uID = DefaultTrayIconId,
-                        hWnd = _window.GetWindowHandle(),
-                        cbSize = (uint)Marshal.SizeOf<NOTIFYICONIDENTIFIER>(),
-                    };
-                    var hresult = Shell_NotifyIconGetRect(ref icon, out var location);
-                    if (hresult == 0)
-                    {
-                        var w = new TrayIconWindow(flyout);
-                        w.ShowAt(location.X, location.Y);
-                    }
-                }
-                handled = args.Handled;
-            }
-            if (!handled && type == TrayIconInvokeType.LeftDoubleClick)
-            {
-                // Default action
-                // If icon was double-clicked, restore the window and bring to front
-                if (_windowState == WindowState.Minimized)
-                {
-                    WindowExtensions.Restore(_window);
-                }
-                WindowExtensions.SetForegroundWindow(_window);
-            }
-        }
-
-        private class TrayIconWindow : Window
-        {
-            private WindowManager manager;
-            private readonly FlyoutBase flyout;
-
-            public TrayIconWindow(FlyoutBase flyout)
-            {
-                manager = WindowManager.Get(this);
-                manager.MinHeight = 0;
-                manager.MinWidth = 0;
-                WindowExtensions.SetWindowStyle(this, WindowStyle.Popup);
-                AppWindow.IsShownInSwitchers = false;
-                manager.IsAlwaysOnTop = true;
-
-                this.Closed += TrayIconWindow_Closed;
-                this.Content = new Microsoft.UI.Xaml.Controls.Grid();
-                ((FrameworkElement)this.Content).Loaded += TrayIconWindow_Loaded;
-                this.flyout = flyout;
-                flyout.Closing += Flyout_Closing;
-                manager.WindowMessageReceived += Manager_WindowMessageReceived;
-            }
-
-            internal void ShowAt(int x, int y)
-            {
-                Activate();
-                AppWindow.MoveAndResize(new Windows.Graphics.RectInt32(x, y, 0, 0), Microsoft.UI.Windowing.DisplayArea.GetFromPoint(new Windows.Graphics.PointInt32(0, 0), Microsoft.UI.Windowing.DisplayAreaFallback.Primary));
-                WindowExtensions.SetForegroundWindow(this);
-            }
-
-            private void Flyout_Closing(FlyoutBase sender, FlyoutBaseClosingEventArgs args)
-            {
-                Close();
-            }
-
-            private void TrayIconWindow_Loaded(object sender, RoutedEventArgs e)
-            {
-                flyout.ShouldConstrainToRootBounds = false;
-                flyout.XamlRoot = Content.XamlRoot;
-                flyout.ShowAt(Content, new FlyoutShowOptions()
-                {
-                    ShowMode = FlyoutShowMode.Auto,
-                    Placement = FlyoutPlacementMode.Auto,
-                    Position = new Point(0, 0)
-                });
-            }
-
-            private void TrayIconWindow_Closed(object sender, WindowEventArgs args)
-            {
-                manager.WindowMessageReceived -= Manager_WindowMessageReceived;
-                ((FrameworkElement)this.Content).Loaded -= TrayIconWindow_Loaded;
-                flyout.Closing -= Flyout_Closing;
-                Closed -= TrayIconWindow_Closed;
-                Content = null;
-            }
-
-            private void Manager_WindowMessageReceived(object? sender, WindowMessageEventArgs e)
-            {
-                if (e.MessageType == WindowsMessages.WM_ACTIVATE)
-                {
-                    if (e.Message.WParam == 0) // Window lost focus
-                    {
-                        this.DispatcherQueue.TryEnqueue(() => Hide());
-                    }
-                }
-            }
-            private void Hide()
-            {
-                flyout.Hide();
-            }
-        }
-
-        /// <summary>
-        /// Raised when the user invokes the tray icon by mouse click or accessing via keyboard.
-        /// </summary>
-        /// <remarks>
-        /// <note>
-        /// Make sure you set <see cref="IsVisibleInTray"/> to <c>true</c> to enable the tray icon.
-        /// </note>
-        /// <example>
-        /// Adding a context menu to the tray icon when the user right-clicks using this event:
-        /// <code lang="csharp">
-        /// private void TrayIconClicked(object? sender, TrayIconInvokedEventArgs e)
-        /// {
-        ///     if (e.Type == TrayIconInvokeType.RightMouseUp)
-        ///     {
-        ///         var flyout = new MenuFlyout();
-        ///         flyout.Items.Add(new MenuFlyoutItem() { Text = "Quit WinUIEx" });
-        ///         ((MenuFlyoutItem) flyout.Items.Last()).Click += (s, e) => this.Close();
-        ///         e.Flyout = flyout; // Set a flyout to present. Can be any FlyoutBase kind
-        ///     }
-        /// }
-        /// </code>
-        /// </example>
-        /// </remarks>
-        /// <seealso cref="IsVisibleInTray"/>
-        public event EventHandler<TrayIconInvokedEventArgs>? TrayIconInvoked;
-    }
-
-    /// <summary>
-    /// The event arguments for the <see cref="WindowManager.TrayIconInvoked"/> event.
-    /// </summary>
-    public class TrayIconInvokedEventArgs : EventArgs
-    {
-        internal TrayIconInvokedEventArgs(TrayIconInvokeType type)
-        {
-            Type = type;
-        }
-
-        /// <summary>
-        /// Gets the way the tray icon was invoked.
-        /// </summary>
-        /// <value>The method of which the tray icon got invoked.</value>
-        public TrayIconInvokeType Type { get; }
-
-        /// <summary>
-        /// Gets or sets a flyout to display by the trayicon
-        /// </summary>
-        /// <value>The flyout to be displayed by the tray icon.</value>
-        public FlyoutBase? Flyout { get; set; }
-
-        /// <summary>
-        /// Set to true to avoid any default behavior
-        /// </summary>
-        /// <remarks>
-        /// When the type is <see cref="TrayIconInvokeType.LeftDoubleClick"/>
-        /// the window is restored and brought to the front. By marking this event
-        /// handled, this default behavior will be disabled.
-        /// </remarks>
-        /// <value><c>True</c> if this event was handled and the default behavior should not occur, otherwise <c>false</c>.</value>
-        public bool Handled { get; set; }
-    }
-
-    /// <summary>
-    /// Describes the way the tray icon was interacted with
-    /// </summary>
-    /// <seealso cref="WindowManager.TrayIconInvoked"/>
-    /// <seealso cref="WindowManager.IsVisibleInTray"/>
-    public enum TrayIconInvokeType
-    {
-        /// <summary>
-        /// User moused down on the tray icon using the primary button.
-        /// </summary>
-        LeftMouseDown,
-
-        /// <summary>
-        /// User moused down on the tray icon using the secondary button.
-        /// </summary>
-        RightMouseDown,
-
-        /// <summary>
-        /// User released the primary mouse button on the tray icon.
-        /// </summary>
-        LeftMouseUp,
-
-        /// <summary>
-        /// User released the secondary mouse button on the tray icon.
-        /// </summary>
-        RightMouseUp,
-
-        /// <summary>
-        /// User double-clicked the primary mouse button on the tray icon.
-        /// </summary>
-        LeftDoubleClick,
-
-        /// <summary>
-        /// User double-clicked the secondary mouse button on the tray icon.
-        /// </summary>
-        RightDoubleClick,
     }
 }

@@ -68,7 +68,7 @@ namespace WinUIEx.Messaging
                 default:
                     break;
             }
-            return $"{(WindowsMessages)MessageId}: LParam={LParam} WParam={WParam}";
+            return $"{(WindowsMessages)MessageId}: LParam=0x{LParam.ToString("x")} WParam=0x{WParam.ToString("x")}";
         }
     }
 }

@@ -28,6 +28,7 @@ public class TrayIcon : IDisposable
     const uint NIM_MODIFY = 0x00000001;
     const uint NIM_DELETE = 0x00000002;
     const uint NIM_SETVERSION = 0x00000004;
+
     private const uint TrayIconCallbackId = 0x8765;
     private readonly Window _window;
     private readonly nint _windowHandle;
@@ -421,7 +422,7 @@ public class TrayIcon : IDisposable
             return;
         var type = (WindowsMessages)(message.LParam & 0xffff);
         var lparam = message.LParam & 0xffff0000;
-        System.Diagnostics.Debug.WriteLine($"Tray {type}: LParam={lparam.ToString("0x")} WParam=0x{message.WParam.ToString("x2")}");
+        System.Diagnostics.Debug.WriteLine($"Tray {type}: LParam=0x{lparam.ToString("x")} WParam=0x{message.WParam.ToString("x")}");
 
         TrayIconEventArgs? args = null;
         switch (type)

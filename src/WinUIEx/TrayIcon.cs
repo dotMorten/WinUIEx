@@ -328,7 +328,7 @@ public class TrayIcon : IDisposable
         }
     }
 
-    private uint CreateIconData(HICON hicon, string? tooltip, uint callbackId, out __ushort_128 tip)
+    private static uint CreateIconData(HICON hicon, string? tooltip, uint callbackId, out __ushort_128 tip)
     {
         const uint NIF_MESSAGE = 0x00000001;
         const uint NIF_ICON = 0x00000002;
@@ -340,11 +340,11 @@ public class TrayIcon : IDisposable
         tip = new __ushort_128();
         if (!string.IsNullOrEmpty(tooltip))
         {
-            if (!string.IsNullOrEmpty(_tooltip))
+            if (!string.IsNullOrEmpty(tooltip))
             {
-                for (int i = 0; i < 128 && i < _tooltip.Length; i++)
+                for (int i = 0; i < 128 && i < tooltip.Length; i++)
                 {
-                    tip[i] = (ushort)_tooltip[i];
+                    tip[i] = (ushort)tooltip[i];
                 }
             }
             flags = flags | NIF_TIP | NIF_SHOWTIP;

@@ -49,14 +49,6 @@ namespace WinUIExSample.Pages
             MainWindow.TrayIcons.Add(icon);
         }
 
-        private void UpdateTray_Click(object sender, RoutedEventArgs e)
-        {
-            foreach(var icon in MainWindow.TrayIcons)
-            {
-                icon.SetIcon(@"e:\GitHub\dotMorten\AnyStatus\src\Apps\Windows\AnyStatus.Apps.Windows\Resources\Icons\Tray\StatusOK.ico");
-            }
-        }
-
         private void ClearTray_Click(object sender, RoutedEventArgs e)
         {
             // Normally you would want to Dispose the icons, but here we just test that once GC is run,

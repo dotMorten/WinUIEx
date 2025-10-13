@@ -490,7 +490,6 @@ namespace WinUIEx
 
         private void OnSizeChanged(WindowSizeChangedEventArgs e)
         {
-            var dpi = this.GetDpiForWindow();
             var result = OnSizeChanged(e.Size);
             if (result)
                 e.Handled = true;

@@ -341,12 +341,9 @@ public class TrayIcon : IDisposable
         tip = new __ushort_128();
         if (!string.IsNullOrEmpty(tooltip))
         {
-            if (!string.IsNullOrEmpty(tooltip))
+            for (int i = 0; i < 128 && i < tooltip.Length; i++)
             {
-                for (int i = 0; i < 128 && i < tooltip.Length; i++)
-                {
-                    tip[i] = (ushort)tooltip[i];
-                }
+                tip[i] = (ushort)tooltip[i];
             }
             flags = flags | NIF_TIP | NIF_SHOWTIP;
         }

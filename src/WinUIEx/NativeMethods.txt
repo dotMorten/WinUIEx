@@ -69,5 +69,9 @@ MonitorFromPoint
 IDI_APPLICATION
 CreateRectRgn
 CreateRoundRectRgn
+CreateEllipticRgn
+CreatePolygonRgn
 CombineRgn
 SetWindowRgn
+GetWindowRgn
+GetWindowRgnBox

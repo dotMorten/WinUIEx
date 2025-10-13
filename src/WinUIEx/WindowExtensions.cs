@@ -373,8 +373,17 @@ namespace WinUIEx
         /// <param name="region">The region to set on the window</param>
         public static void SetRegion(this Microsoft.UI.Xaml.Window window, Region? region)
         {
-            PInvoke.SetWindowRgn(new Windows.Win32.Foundation.HWND(window.GetWindowHandle()),
-                region?.Create(window.GetDpiForWindow() / 96d) ?? Windows.Win32.Graphics.Gdi.HRGN.Null, window.Visible);
+            var converter = Microsoft.UI.Content.ContentCoordinateConverter.CreateForWindowId(window.AppWindow.Id);
+            var screenLoc = window.AppWindow.Position;
+            var rgn = region?.Create(converter, screenLoc, window.GetDpiForWindow() / 96d) ?? Windows.Win32.Graphics.Gdi.HRGN.Null;
+            try
+            {
+                PInvoke.SetWindowRgn(new Windows.Win32.Foundation.HWND(window.GetWindowHandle()), rgn, window.Visible);
+            }
+            finally
+            {
+                PInvoke.DeleteObject(rgn);
+            }
         }
     }
 }

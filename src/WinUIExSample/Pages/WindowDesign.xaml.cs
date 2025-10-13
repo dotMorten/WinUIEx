@@ -106,5 +106,10 @@ namespace WinUIExSample.Pages
             protected override Windows.UI.Composition.CompositionBrush CreateBrush(Windows.UI.Composition.Compositor compositor)
                 => compositor.CreateHostBackdropBrush();
         }
+
+        private void OpenHoleWindow_Click(object sender, RoutedEventArgs e)
+        {
+            new HoleWindow().Activate();
+        }
     }
 }

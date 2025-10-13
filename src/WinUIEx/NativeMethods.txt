@@ -67,3 +67,7 @@ CreateCompatibleDC
 SelectObject
 MonitorFromPoint
 IDI_APPLICATION
+CreateRectRgn
+CreateRoundRectRgn
+CombineRgn
+SetWindowRgn

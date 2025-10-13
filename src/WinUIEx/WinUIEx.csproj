@@ -25,7 +25,8 @@
     <PackageId>WinUIEx</PackageId>
     <Product>WinUI Extensions</Product>
     <PackageReleaseNotes>
-      - Added support for WinUI 3 based flyouts in the system tray
+      - Added support for WinUI 3 based flyouts in the system tray.
+      - Added extension method for assigning transparent regions to a window (Issue #235).
     </PackageReleaseNotes>
   </PropertyGroup>
 

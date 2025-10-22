@@ -46,9 +46,9 @@ namespace WinUIEx
         /// </summary>
         ~CaptureElement()
         {
-            if (m_swapchain != null)
+            //if (m_swapchain != default)
                 Marshal.ReleaseComObject(m_swapchain);
-            if (m_d3dDevice != null)
+            //if (m_d3dDevice != default)
                 Marshal.ReleaseComObject(m_d3dDevice);
         }
 

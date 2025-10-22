@@ -58,7 +58,7 @@ namespace WinUIEx
         }
 
         /// <inheritdoc />
-        protected override void OnTargetConnected(ICompositionSupportsSystemBackdrop connectedTarget, XamlRoot xamlRoot)
+        protected unsafe override void OnTargetConnected(ICompositionSupportsSystemBackdrop connectedTarget, XamlRoot xamlRoot)
         {
             ulong hWnd = xamlRoot.ContentIslandEnvironment.AppWindowId.Value;
 

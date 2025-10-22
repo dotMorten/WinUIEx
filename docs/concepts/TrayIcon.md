@@ -7,12 +7,12 @@ var wm = WindowManager.Get(MyWindow);
 wm.IsVisibleInTray = true;                        
 ```
 
-By default, if the user clicks/selects this icon, the window is brought to the front, and if minimized, restored.
+If the user clicks/selects this icon, the window is brought to the front, and if minimized, restored.
 The icon used is obtained from the Window's task bar icon. You can set the icon using the `Window.AppWindow.SetTaskbarIcon` method.
 
 ### Context menu and custom click actions
-You can add additional actions to user-inactions by subscribing to the [`TrayIconContextMenu`](https://dotmorten.github.io/WinUIEx/api/WinUIEx.WindowManager.TrayIconContextMenu.html) event.
-This event gives you the ability override the display any kind of flyout by setting the 
+You can add an additional context-menu action to tray icon by subscribing to the [`TrayIconContextMenu`](https://dotmorten.github.io/WinUIEx/api/WinUIEx.WindowManager.TrayIconContextMenu.html) event.
+This event gives you the ability to display any kind of flyout by setting the 
 [`Flyout`](https://dotmorten.github.io/WinUIEx/api/WinUIEx.TrayIconEventArgs.Flyout.html#TrayIconEventArgs) property on the event argument.
 
 For example:
@@ -52,12 +52,12 @@ protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs ar
 
 ## Using the TrayIcon class
 
-For more fine-grained control over the tray icon, you can use the [`TrayIcon`](https://dotmorten.github.io/WinUIEx/api/WinUIEx.TrayIcon.html) class directly.
+For more fine-grained control over the tray icon, you can use the [`TrayIcon`](https://dotmorten.github.io/WinUIEx/api/WinUIEx.TrayIcon.html) class directly, which provides no default behaviors and more events to work with.
 This class allows you to create a tray icon without associating it with a window, and gives you more control over its behavior,
 updating its icon and tooltip, or even have multiple icons for a single process.
 
 Note: Make sure once you close your application, that all TrayIcon instances are disposed, otherwise the icon will remain in the tray and the process will not exit.
-This behavior however also allows you to create a window-less application, or (if needed) creating a Window on demand based on TrayIcon interactions. For example:
+This behavior however also allows you to create a window-less application, and (if needed) creating a Window on demand based on TrayIcon interactions. For example:
 
 ```cs
 public partial class App : Application

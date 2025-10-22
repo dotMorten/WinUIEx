@@ -19,10 +19,32 @@ namespace WinUIEx
     /// </summary>
     /// <remarks>
     /// <para>
-    /// Your app must be configured for OAuth. In you app package's <c>Package.appxmanifest</c> under Declarations, add a 
+    /// Your app must be configured for OAuth with schema activation. The scheme must be the first part of the url, ie if your
+    /// oauth redirection url starts with for instance <c>myappscheme://signin/</c>, the scheme would be <c>myappscheme</c>.
+    /// Note that http(s) schemes are not supported here.
+    /// </para>
+    /// <para>
+    /// If your app is packaged, in your app's <c>Package.appxmanifest</c> under <c>Declarations</c>, add a 
     /// Protocol declaration and add the scheme you registered for your application's oauth redirect url under "Name".
     /// </para>
+    /// <para>
+    /// If your app is unpackaged, make sure you register the application for protocol activation.
+    /// </para> 
+    /// <example>
+    /// <code lang="csharp">
+    /// try
+    /// {
+    ///     Microsoft.Windows.AppLifecycle.ActivationRegistrationManager.RegisterForProtocolActivation("myappscheme", "Assets\\Square150x150Logo.scale-100", "My App Name", null);
+    ///     var result = await WebAuthenticator.AuthenticateAsync(authorizeUri, callbackUri, cancellationToken);
+    /// }
+    /// finally
+    /// {
+    ///     Microsoft.Windows.AppLifecycle.ActivationRegistrationManager.UnregisterForProtocolActivation("myappscheme", null);
+    /// }
+    /// </code>
+    /// </example>
     /// </remarks>
+    [Obsolete("Use Windows App SDK's Microsoft.Security.Authentication.OAuth APIs instead.")]
     public sealed class WebAuthenticator
     {
         /// <summary>
@@ -218,11 +240,20 @@ namespace WinUIEx
             }
             if (!Helpers.IsAppPackaged)
             {
-                throw new InvalidOperationException("The WebAuthenticator requires a packaged app with an AppxManifest");
+                if(callbackUri.Scheme == "http" || callbackUri.Scheme == "https")
+                    throw new InvalidOperationException($"{callbackUri.Scheme}:// schemes are not allowed for callbackUri. Use a custom scheme like 'myapp' instead.");
+                var value = Microsoft.Win32.Registry.ClassesRoot.OpenSubKey(callbackUri.Scheme);
+                if(value is null || value.GetValue("URL Protocol") is null)
+                {
+                    throw new InvalidOperationException($"The URI Scheme '{callbackUri.Scheme}' is not registered. Call ActivationRegistrationManager.RegisterForProtocolActivation to register protocol activation.");
+                }
             }
-            if (!IsUriProtocolDeclared(callbackUri.Scheme))
+            else
             {
-                throw new InvalidOperationException($"The URI Scheme {callbackUri.Scheme} is not declared in AppxManifest.xml");
+                if (!IsUriProtocolDeclared(callbackUri.Scheme))
+                {
+                    throw new InvalidOperationException($"The URI Scheme {callbackUri.Scheme} is not declared in AppxManifest.xml");
+                }
             }
             var g = Guid.NewGuid();
             var taskId = g.ToString();

@@ -2,11 +2,9 @@
 
 A set of extension methods and classes to fill some gaps in WinUI 3, mostly around windowing and unit testing.
 
-### NuGet Packages:
+### NuGet Package:
 
   - [WinUIEX](https://www.nuget.org/packages/WinUIEx/)
-  - [WinUIEX.TestTools](https://www.nuget.org/packages/WinUIEx.TestTools/)
-  - [WinUIEX.TestTools.MSTest](https://www.nuget.org/packages/WinUIEx.TestTools.MSTest/)
 
 ### Features
 
@@ -14,10 +12,12 @@ A set of extension methods and classes to fill some gaps in WinUI 3, mostly arou
   - [HWND Window Handle Extensions methods](concepts/HwndExtensions.md)
   - [Extended `WindowEx` Window class](concepts/WindowEx.md)
   - [Window Manager](concepts/WindowManager.md)
-  - [UI Test Tooling for easy UI Testing](concepts/UITests.md)
   - [Splash screen](concepts/Splashscreen.md)
   - [OAuth Web Authenticator](concepts/WebAuthenticator.md)
   - [Custom Backdrops](concepts/CustomBackdrops.md)
+  - [Tray Icon support including WinUI 3 based context menus.](concepts/TrayIcon.md)
+  - [`NumberBoxInt32`, `NumberBoxDecimal` and `NumberBox<T>`](concepts/NumberBox.md)
+  - TitleBar control (Deprecated in favor of WinAppSDK 1.7 TitleBar)
 
 
 And more to come...
@@ -37,5 +37,5 @@ See here for details: https://github.com/sponsors/dotMorten
 
 Read the [Overview](concepts/index.md) notes
 
-![image](https://user-images.githubusercontent.com/1378165/171925868-5783b70d-3942-4911-8c77-86df696a7b97.png)
+> [!Video https://github.com/dotMorten/WinUIEx/assets/1378165/ce41d0b0-da5d-40c5-b6fd-ff272f15d57e]
 

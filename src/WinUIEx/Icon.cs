@@ -17,6 +17,7 @@ namespace WinUIEx
     /// Manages a native Windows Icon instance
     /// </summary>
     [CreateFromString(MethodName = "WinUIEx.Icon.FromFile")]
+    [Obsolete]
     public unsafe class Icon : IDisposable
     {
         private readonly HICON handle;
@@ -44,7 +45,7 @@ namespace WinUIEx
         /// <returns>Icon</returns>
         public static Icon FromFile(string filename)
         {
-            var handle = PInvoke.LoadImage(null, filename, GDI_IMAGE_TYPE.IMAGE_ICON, 16, 16, Windows.Win32.UI.Controls.IMAGE_FLAGS.LR_LOADFROMFILE);
+            var handle = PInvoke.LoadImage(null, filename, GDI_IMAGE_TYPE.IMAGE_ICON, 16, 16, IMAGE_FLAGS.LR_LOADFROMFILE);
             ThrowIfInvalid(handle);
             return new Icon(handle);
         }
@@ -100,6 +101,8 @@ namespace WinUIEx
         /// For testing - Creates a simple Yang icon
         /// </summary>
         /// <returns>Icon with a Yang icon</returns>
+        [Obsolete]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static Icon Yang()
         {
             var hinstance = PInvoke.GetModuleHandle((string?)null);

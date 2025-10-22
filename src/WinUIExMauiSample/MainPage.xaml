@@ -36,7 +36,7 @@
                 HorizontalOptions="Center" />
 
             <Button 
-                Text="Perform oauth siging"
+                Text="Perform oauth sign-in"
                 SemanticProperties.Hint="OAuth Test"
                 Clicked="OnOAuthClicked"
                 HorizontalOptions="Center" />
@@ -50,7 +50,7 @@
                         <x:String>Transparent</x:String>
                         <x:String>None</x:String>
                     </Picker.Items>
-                    <Picker.SelectedIndex>2</Picker.SelectedIndex>
+                    <Picker.SelectedIndex>0</Picker.SelectedIndex>
                 </Picker>
             </HorizontalStackLayout>
         </VerticalStackLayout>

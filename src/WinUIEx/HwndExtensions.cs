@@ -7,6 +7,8 @@ using Windows.Win32.UI.WindowsAndMessaging;
 using Windows.Win32.Graphics.Gdi;
 using WinRT;
 using Microsoft.UI;
+using Microsoft.UI.Xaml.Controls.Primitives;
+using System.ComponentModel;
 
 namespace WinUIEx
 {
@@ -77,7 +79,7 @@ namespace WinUIEx
         /// <param name="hwnd">Window handle</param>
         /// <param name="enable">Whether to display on top</param>
         public static void SetAlwaysOnTop(IntPtr hwnd, bool enable)
-            => SetWindowPosOrThrow(new HWND(hwnd), new HWND(enable ? -1 : -2), 0, 0, 0, 0, SET_WINDOW_POS_FLAGS.SWP_NOSIZE | SET_WINDOW_POS_FLAGS.SWP_NOMOVE);
+            => SetWindowPosOrThrow(new HWND(hwnd), new HWND(new IntPtr(enable ? -1 : -2)), 0, 0, 0, 0, SET_WINDOW_POS_FLAGS.SWP_NOSIZE | SET_WINDOW_POS_FLAGS.SWP_NOMOVE);
 
         private static void SetWindowPosOrThrow(HWND hWnd, HWND hWndInsertAfter, int X, int Y, int cx, int cy, SET_WINDOW_POS_FLAGS uFlags)
         {
@@ -149,7 +151,7 @@ namespace WinUIEx
         {
             var dpi = GetDpiForWindow(hwnd);
             var scalingFactor = dpi / 96d;
-            SetWindowPosOrThrow(new HWND(hwnd), new HWND(0), (int)(x * scalingFactor), (int)(y * scalingFactor), (int)(width * scalingFactor), (int)(height * scalingFactor), SET_WINDOW_POS_FLAGS.SWP_NOSENDCHANGING);
+            SetWindowPosOrThrow(new HWND(hwnd), new HWND(IntPtr.Zero), (int)(x * scalingFactor), (int)(y * scalingFactor), (int)(width * scalingFactor), (int)(height * scalingFactor), SET_WINDOW_POS_FLAGS.SWP_NOSENDCHANGING);
         }
 
         /// <summary>
@@ -162,7 +164,7 @@ namespace WinUIEx
         {
             var dpi = GetDpiForWindow(hwnd);
             var scalingFactor = dpi / 96d;
-            SetWindowPosOrThrow(new HWND(hwnd), new HWND(0), 0, 0, (int)(width * scalingFactor), (int)(height * scalingFactor),
+            SetWindowPosOrThrow(new HWND(hwnd), new HWND(IntPtr.Zero), 0, 0, (int)(width * scalingFactor), (int)(height * scalingFactor),
                 SET_WINDOW_POS_FLAGS.SWP_NOREPOSITION | SET_WINDOW_POS_FLAGS.SWP_NOSENDCHANGING);
         }
 
@@ -171,9 +173,10 @@ namespace WinUIEx
         /// </summary>
         /// <param name="hWnd">Window handle</param>
         /// <param name="icon">Icon</param>
+        [Obsolete("Use AppWindow.SetTaskbarIcon")]
         public static void SetTaskBarIcon(IntPtr hWnd, Icon? icon)
         {
-            PInvoke.SendMessage(new HWND(hWnd), (uint)Messaging.WindowsMessages.WM_SETICON, new WPARAM(0), new LPARAM(icon?.Handle.Value ?? IntPtr.Zero));
+            PInvoke.SendMessage(new HWND(hWnd), (uint)Messaging.WindowsMessages.WM_SETICON, new WPARAM(1), new LPARAM(icon?.Handle.Value ?? IntPtr.Zero));
         }
 
         /// <summary>
@@ -242,7 +245,7 @@ namespace WinUIEx
             if (r != currentStyle)
                 Marshal.ThrowExceptionForHR(Marshal.GetLastWin32Error());
             // Redraw window
-            PInvoke.SetWindowPos(h, new HWND(0), 0, 0, 0, 0, SET_WINDOW_POS_FLAGS.SWP_FRAMECHANGED | SET_WINDOW_POS_FLAGS.SWP_NOMOVE | SET_WINDOW_POS_FLAGS.SWP_NOSIZE | SET_WINDOW_POS_FLAGS.SWP_NOZORDER | SET_WINDOW_POS_FLAGS.SWP_NOOWNERZORDER);
+            PInvoke.SetWindowPos(h, new HWND(IntPtr.Zero), 0, 0, 0, 0, SET_WINDOW_POS_FLAGS.SWP_FRAMECHANGED | SET_WINDOW_POS_FLAGS.SWP_NOMOVE | SET_WINDOW_POS_FLAGS.SWP_NOSIZE | SET_WINDOW_POS_FLAGS.SWP_NOZORDER | SET_WINDOW_POS_FLAGS.SWP_NOOWNERZORDER);
         }
 
         /// <summary>
@@ -258,7 +261,7 @@ namespace WinUIEx
             if (r != currentStyle)
                 Marshal.ThrowExceptionForHR(Marshal.GetLastWin32Error());
             // Redraw window
-            PInvoke.SetWindowPos(h, new HWND(0), 0, 0, 0, 0, SET_WINDOW_POS_FLAGS.SWP_FRAMECHANGED | SET_WINDOW_POS_FLAGS.SWP_NOMOVE | SET_WINDOW_POS_FLAGS.SWP_NOSIZE | SET_WINDOW_POS_FLAGS.SWP_NOZORDER | SET_WINDOW_POS_FLAGS.SWP_NOOWNERZORDER);
+            PInvoke.SetWindowPos(h, new HWND(IntPtr.Zero), 0, 0, 0, 0, SET_WINDOW_POS_FLAGS.SWP_FRAMECHANGED | SET_WINDOW_POS_FLAGS.SWP_NOMOVE | SET_WINDOW_POS_FLAGS.SWP_NOSIZE | SET_WINDOW_POS_FLAGS.SWP_NOZORDER | SET_WINDOW_POS_FLAGS.SWP_NOOWNERZORDER);
         }
         /// <summary>
         /// Gets the current window style
@@ -284,7 +287,7 @@ namespace WinUIEx
             if (r != currentStyle) // If the function succeeds, the return value is the previous value of the specified 32-bit integer.
                 Marshal.ThrowExceptionForHR(Marshal.GetLastWin32Error());
             // Redraw window
-            PInvoke.SetWindowPos(h, new HWND(0), 0, 0, 0, 0, SET_WINDOW_POS_FLAGS.SWP_FRAMECHANGED | SET_WINDOW_POS_FLAGS.SWP_NOMOVE | SET_WINDOW_POS_FLAGS.SWP_NOSIZE | SET_WINDOW_POS_FLAGS.SWP_NOZORDER | SET_WINDOW_POS_FLAGS.SWP_NOOWNERZORDER);
+            PInvoke.SetWindowPos(h, new HWND(IntPtr.Zero), 0, 0, 0, 0, SET_WINDOW_POS_FLAGS.SWP_FRAMECHANGED | SET_WINDOW_POS_FLAGS.SWP_NOMOVE | SET_WINDOW_POS_FLAGS.SWP_NOSIZE | SET_WINDOW_POS_FLAGS.SWP_NOZORDER | SET_WINDOW_POS_FLAGS.SWP_NOOWNERZORDER);
         }
 
         /// <summary>
@@ -306,7 +309,7 @@ namespace WinUIEx
             if (r != currentStyle) // If the function succeeds, the return value is the previous value of the specified 32-bit integer.
                 Marshal.ThrowExceptionForHR(Marshal.GetLastWin32Error());
             // Redraw window
-            PInvoke.SetWindowPos(h, new HWND(0), 0, 0, 0, 0, SET_WINDOW_POS_FLAGS.SWP_FRAMECHANGED | SET_WINDOW_POS_FLAGS.SWP_NOMOVE | SET_WINDOW_POS_FLAGS.SWP_NOSIZE | SET_WINDOW_POS_FLAGS.SWP_NOZORDER | SET_WINDOW_POS_FLAGS.SWP_NOOWNERZORDER);
+            PInvoke.SetWindowPos(h, new HWND(IntPtr.Zero), 0, 0, 0, 0, SET_WINDOW_POS_FLAGS.SWP_FRAMECHANGED | SET_WINDOW_POS_FLAGS.SWP_NOMOVE | SET_WINDOW_POS_FLAGS.SWP_NOSIZE | SET_WINDOW_POS_FLAGS.SWP_NOZORDER | SET_WINDOW_POS_FLAGS.SWP_NOOWNERZORDER);
         }
 
         /// <summary>
@@ -321,7 +324,7 @@ namespace WinUIEx
             var extendedStyle = (WindowStyles)PInvoke.GetWindowLong(handle, WINDOW_LONG_PTR_INDEX.GWL_EXSTYLE);
             if(extendedStyle.HasFlag(WindowStyles.WS_EX_LAYERED) == false)
                 PInvoke.SetWindowLong(handle, WINDOW_LONG_PTR_INDEX.GWL_EXSTYLE, (int) (extendedStyle | WindowStyles.WS_EX_LAYERED));
-            if (!PInvoke.SetLayeredWindowAttributes(handle, 0, alpha, LAYERED_WINDOW_ATTRIBUTES_FLAGS.LWA_ALPHA))
+            if (!PInvoke.SetLayeredWindowAttributes(handle, new COLORREF(0), alpha, LAYERED_WINDOW_ATTRIBUTES_FLAGS.LWA_ALPHA))
                 Marshal.ThrowExceptionForHR(Marshal.GetLastWin32Error());
         }
         [Flags]
@@ -386,7 +389,11 @@ namespace WinUIEx
         /// <summary>Same as the <see cref="Child"/> style.</summary>
         ChildWindow = 0x40000000,
         /// <summary>Excludes the area occupied by child windows when drawing occurs within the parent window. This style is used when creating the parent window.</summary>
+        [Obsolete("Use ClipChildren")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         ChildChildren = 0x02000000,
+        /// <summary>Excludes the area occupied by child windows when drawing occurs within the parent window. This style is used when creating the parent window.</summary>
+        ClipChildren = 0x02000000,
         /// <summary>Clips child windows relative to each other; that is, when a particular child window receives a WM_PAINT message, the CLIPSIBLINGS style clips all other overlapping child windows out of the region of the child window to be updated. If CLIPSIBLINGS is not specified and child windows overlap, it is possible, when drawing within the client area of a child window, to draw within the client area of a neighboring child window.</summary>
         ClipSiblings = 0x04000000,
         /// <summary>The window is initially disabled. A disabled window cannot receive input from the user. To change this after a window has been created, use the EnableWindow function.</summary>
@@ -412,10 +419,10 @@ namespace WinUIEx
         Overlapped = 0x00000000,
         /// <summary>The window is an overlapped window. Same as the TILEDWINDOW style.</summary>
         OverlappedWindow = (Overlapped | Caption | SysMenu | ThickFrame | MinimizeBox | MaximizeBox),
-        // <summary>The window is a pop-up window. This style cannot be used with the CHILD style.</summary>
-        //POPUP = 0x80000000,
-        // <summary>The window is a pop-up window. The CAPTION and POPUPWINDOW styles must be combined to make the window menu visible.</summary>
-        //POPUPWINDOW = (POPUP | BORDER | SYSMENU),
+        /// <summary>The window is a pop-up window. This style cannot be used with the CHILD style.</summary>
+        Popup = unchecked((int)0x80000000),
+        /// <summary>The window is a pop-up window. The CAPTION and POPUPWINDOW styles must be combined to make the window menu visible.</summary>
+        PopupWindow = unchecked((int)(0x80000000 | Border | SysMenu)),
         /// <summary>The window has a sizing border. Same as the THICKFRAME style.</summary>
         SizeBox = 0x00040000,
         /// <summary>The window has a window menu on its title bar. The CAPTION style must also be specified.</summary>

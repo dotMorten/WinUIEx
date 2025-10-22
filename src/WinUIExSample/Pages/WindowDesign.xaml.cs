@@ -53,7 +53,7 @@ namespace WinUIExSample.Pages
             };
         }
 
-        public WindowEx MainWindow => ((App)Application.Current).MainWindow;
+        public WindowEx MainWindow => ((App)Application.Current).MainWindow!;
 
         private void Presenter_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -82,7 +82,7 @@ namespace WinUIExSample.Pages
             }
         }
 
-        private class ColorAnimatedBackdrop : CompositionBrushBackdrop
+        private partial class ColorAnimatedBackdrop : CompositionBrushBackdrop
         {
             protected override Windows.UI.Composition.CompositionBrush CreateBrush(Windows.UI.Composition.Compositor compositor)
             {
@@ -101,10 +101,15 @@ namespace WinUIExSample.Pages
             }
         }
 
-        private class BlurredBackdrop : CompositionBrushBackdrop
+        private partial class BlurredBackdrop : CompositionBrushBackdrop
         {
             protected override Windows.UI.Composition.CompositionBrush CreateBrush(Windows.UI.Composition.Compositor compositor)
                 => compositor.CreateHostBackdropBrush();
+        }
+
+        private void OpenHoleWindow_Click(object sender, RoutedEventArgs e)
+        {
+            new HoleWindow().Activate();
         }
     }
 }

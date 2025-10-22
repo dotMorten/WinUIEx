@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Window
+    x:Class="WinUIExSample.HoleWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ex="using:WinUIEx"
+    xmlns:local="using:WinUIExSample"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="WinUIEx Regions" 
+    mc:Ignorable="d">
+    <Grid Margin="0">
+        <Grid.RowDefinitions>
+            <RowDefinition  Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Border VerticalAlignment="Top" Background="CornflowerBlue">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="WinUIEx Regions" FontSize="24" FontFamily="Segoe UI" FontWeight="Light" Margin="10,5,0,5" Foreground="White" />
+                <TextBlock Text="Click blue area to punch holes in the window" Margin="20,10,0,5" Foreground="White" VerticalAlignment="Center" />
+            </StackPanel>
+        </Border>
+
+        <Canvas Grid.Row="1">
+
+            <Border Width="200" Height="200" Canvas.Left="100" Canvas.Top="50" BorderThickness="2" BorderBrush="Red" >
+                <Border Background="Blue" x:Name="RectangleArea" PointerPressed="RectangleArea_PointerPressed" />
+            </Border>
+
+            <Grid Width="200" Height="100" Canvas.Left="350" Canvas.Top="75" >
+                <Ellipse x:Name="EllipseArea" Fill="Blue" PointerPressed="EllipseArea_PointerPressed" Margin="1,1,1,1" />
+                <Ellipse Stroke="Red" StrokeThickness="2" />
+            </Grid>
+
+            <Border Width="200" Height="200" Canvas.Left="100" Canvas.Top="275" BorderThickness="2" BorderBrush="Red" CornerRadius="20" >
+                <Border Background="Blue" x:Name="RoundedRectangleArea" PointerPressed="RoundedRectangleArea_PointerPressed" CornerRadius="18" />
+            </Border>
+
+            <Grid Canvas.Left="350" Canvas.Top="275" >
+                <Path Fill="Blue" Stroke="Red" StrokeThickness="2" Data="M100,10 L122.45,72.36  L188.17,72.36  L134.86,112.9 L154.45,177.64  L100,140 L45.55,177.64 L65.14,112.9 L11.83,72.36 L77.55,72.36 Z"
+                      Stretch="None" PointerPressed="StarArea_Pressed" />
+            </Grid>
+
+        </Canvas>
+
+        <Button Content="Reset" Click="ButtonClear_Click" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="20" Grid.Row="1" />
+
+    </Grid>
+</Window>

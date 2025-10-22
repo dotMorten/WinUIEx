@@ -34,8 +34,9 @@ namespace WinUIEx
             _manager.PositionChanged += (s, e) => { OnPositionChanged(e); PositionChanged?.Invoke(this, e); };
             _manager.ZOrderChanged += (s, e) => { OnZOrderChanged(e); ZOrderChanged?.Invoke(this, e); };
             _manager.WindowStateChanged += (s, e) => { OnStateChanged(e); WindowStateChanged?.Invoke(this, e); };
-            SizeChanged += (s, e) => { OnSizeChanged(e); };
-            
+            SizeChanged += WindowEx_SizeChanged;
+            AppWindow.Destroying += (s,e) => SizeChanged -= WindowEx_SizeChanged; // Workaround for https://github.com/microsoft/microsoft-ui-xaml/issues/9960
+ 
             var rootContent = new Grid();
             rootContent.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Auto), MinHeight = 0 });
             rootContent.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Star) });
@@ -54,13 +55,16 @@ namespace WinUIEx
             windowArea = new ContentControl()
             {
                 HorizontalContentAlignment = HorizontalAlignment.Stretch,
-                VerticalContentAlignment = VerticalAlignment.Stretch
+                VerticalContentAlignment = VerticalAlignment.Stretch,
+                IsTabStop = false
             };
             Grid.SetRow(windowArea, 1);
             rootContent.Children.Add(windowArea);
 
             this.Content = rootContent;
         }
+
+        private void WindowEx_SizeChanged(object sender, WindowSizeChangedEventArgs args) => OnSizeChanged(args);
 
         /// <summary>
         /// Shows a message dialog
@@ -133,11 +137,13 @@ namespace WinUIEx
         /// <returns></returns>
         public bool BringToFront() => WindowExtensions.SetForegroundWindow(this);
 
+        [Obsolete]
         private Icon? _TaskBarIcon;
 
         /// <summary>
         /// Gets or sets the task bar icon.
         /// </summary>
+        [Obsolete("Use AppWindow.SetTaskbarIcon")]
         public Icon? TaskBarIcon
         {
             get { return _TaskBarIcon; }
@@ -241,6 +247,21 @@ namespace WinUIEx
         {
             get => _manager.IsResizable;
             set => _manager.IsResizable = value;
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the window is shown in the system tray.
+        /// </summary>
+        /// <remarks>
+        /// <para>The system tray icon will use the same icon as Window's Taskbar icon, and tooltip will match the AppWindow.Title value. Double-clicking the icon restores the window if minimized and brings it to the front.</para>
+        /// <para>See <see cref="WindowExtensions.SetIsShownInSwitchers" /> to hide the window from the Alt+Tab switcher and task bar.
+        /// If you want to minimize the window to the tray, set this to <c>true</c> and on <see cref="WindowManager.WindowStateChanged"/> changes to minimized,
+        /// hide it from the switcher.</para>
+        /// </remarks>
+        public bool IsVisibleInTray
+        {
+            get => _manager.IsVisibleInTray;
+            set => _manager.IsVisibleInTray = value;
         }
 
         /// <summary>
@@ -469,7 +490,6 @@ namespace WinUIEx
 
         private void OnSizeChanged(WindowSizeChangedEventArgs e)
         {
-            var dpi = this.GetDpiForWindow();
             var result = OnSizeChanged(e.Size);
             if (result)
                 e.Handled = true;

@@ -5,19 +5,26 @@
 Add WinUIEx to the Windows build target by adding a package reference in the `.csproj` file:
 ```xml
   <ItemGroup>
-    <PackageReference Include="WinUIEx" Version="2.3.0" Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'" />
+    <PackageReference Include="WinUIEx" Version="2.8.0" Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'" />
   </ItemGroup>
 ```
 
 If the referenced version of WinUIEx relies on a newer version of the Windows App SDK than .NET MAUI implicitly references, you'll likely see errors like this:
 ```
-Error	NU1605	Warning As Error: Detected package downgrade: Microsoft.WindowsAppSDK from 1.4.230822000 to 1.2.221209.1.
-Reference the package directly from the project to select a different version. MauiApp8 -> WinUIEx 2.3.0 -> Microsoft.WindowsAppSDK (>= 1.4.230822000) 
+Error	NU1605	Warning As Error: Detected package downgrade: Microsoft.WindowsAppSDK from 1.8.250907003 to 1.7.250310001.
+Reference the package directly from the project to select a different version. MauiApp8 -> WinUIEx 2.8.0 -> Microsoft.WindowsAppSDK (>= 1.8.250907003) 
+```
+or the following error:
+```
+The MSIX build tools use the 'CustomBeforeMicrosoftCommonTargets' MSBuild property to wire up a custom .props file that sets some necessary properties.
+This .props file does not appear to have been imported correctly. This likely means that someone has also overridden 'CustomBeforeMicrosoftCommonTargets',
+without ensuring to also chain the import of the previously assigned .props and .targets set to that property. You can use a binlog to learn more about
+where that assignment was done (set the verbosity to diagnostics, and search for 'reassignment: $(CustomBeforeMicrosoftCommonTargets').
 ```
 To address that, explicitly reference the Windows App SDK package with the version mentioned in the error. For example:
 ```xml
 <ItemGroup>
-    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.4.230822000" Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'" />
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.8.250907003" Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'" />
 </ItemGroup>
 ```
 

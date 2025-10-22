@@ -3,12 +3,16 @@
  
 ![image](https://github.com/dotMorten/WinUIEx/raw/main/src/logo.png)
 
-A set of extension methods and classes to fill some gaps in WinUI 3, mostly around windowing and unit testing.
+A set of extension methods and classes to fill some gaps in WinUI 3, mostly around windowing, authentication and helpers to simplify code.
 
-### NuGet Packages:
+
+Watch WinUIEx covered in the On .NET Live show:
+
+[![Watch the video](https://img.youtube.com/vi/VQ0lP_0uboQ/hqdefault.jpg)](https://www.youtube.com/watch?v=VQ0lP_0uboQ&t=169s)
+
+
+### NuGet Package:
   - [WinUIEX](https://www.nuget.org/packages/WinUIEx/)
-  - [WinUIEX.TestTools](https://www.nuget.org/packages/WinUIEx.TestTools/)
-  - [WinUIEX.TestTools.MSTest](https://www.nuget.org/packages/WinUIEx.TestTools.MSTest/)
 
 ### Features
 
@@ -19,8 +23,10 @@ A set of extension methods and classes to fill some gaps in WinUI 3, mostly arou
   - [Splash Screens](https://dotmorten.github.io/WinUIEx/concepts/Splashscreen.html)
   - [OAuth Web Authentication](https://dotmorten.github.io/WinUIEx/concepts/WebAuthenticator.html)
   - [Custom Window Backdrops](https://dotmorten.github.io/WinUIEx/concepts/CustomBackdrops.html)
+  - [`NumberBoxInt32`, `NumberBoxDecimal` and `NumberBox<T>`](https://dotmorten.github.io/WinUIEx/concepts/NumberBox.html) - Generic number input controls with support for expressions.
+  - [Tray Icon support including WinUI 3 based context menus.](https://dotmorten.github.io/WinUIEx/concepts/TrayIcon.html)
+  - TitleBar control (Deprecated in favor of WinAppSDK 1.7 TitleBar)
   - Code analyzers for Windows App SDK APIs to guide the developer.
-
 
 And more to come...
 
@@ -28,6 +34,7 @@ And more to come...
 
  - [Windows Dev Home](https://github.com/microsoft/devhome)
  - [Microsoft Power Toys](https://github.com/microsoft/PowerToys)
+ - [Windows Phone Link](https://www.microsoft.com/en-in/windows/sync-across-your-devices)
  - [Windows Template Studio](https://marketplace.visualstudio.com/items?itemName=WASTeamAccount.WindowsTemplateStudio)
  - [Files App](https://github.com/files-community/Files)
  - [Lively Wallpaper](https://github.com/rocksdanister/lively)

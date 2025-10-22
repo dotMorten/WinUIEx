@@ -34,57 +34,56 @@ namespace WinUIExSample.Pages
             this.Unloaded += WindowControl_Unloaded;
         }
 
-        public WindowEx MainWindow => ((App)Application.Current).MainWindow;
+        public WindowEx MainWindow => ((App)Application.Current).MainWindow!;
 
-
-        private void WindowControl_Loaded(object sender, RoutedEventArgs e)
+        private void WindowControl_Loaded(object? sender, RoutedEventArgs e)
         {
             MainWindow.WindowStateChanged += CurrentWindow_WindowStateChanged;
         }
 
-        private void WindowControl_Unloaded(object sender, RoutedEventArgs e)
+        private void WindowControl_Unloaded(object? sender, RoutedEventArgs e)
         {
             MainWindow.WindowStateChanged += CurrentWindow_WindowStateChanged;
         }
 
-        private void CurrentWindow_WindowStateChanged(object sender, WindowState e)
+        private void CurrentWindow_WindowStateChanged(object? sender, WindowState e)
         {
             windowState.SelectedIndex = (int)e;
         }
 
-        private void windowState_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void windowState_SelectionChanged(object? sender, SelectionChangedEventArgs e)
         {
             MainWindow.WindowState = (WindowState)windowState.SelectedIndex;
         }
 
-        private void Center_Click(object sender, RoutedEventArgs e) => MainWindow.CenterOnScreen();
+        private void Center_Click(object? sender, RoutedEventArgs e) => MainWindow.CenterOnScreen();
 
-        private void MaximizeWindow_Click(object sender, RoutedEventArgs e) => MainWindow.Maximize();
+        private void MaximizeWindow_Click(object? sender, RoutedEventArgs e) => MainWindow.Maximize();
 
-        private void RestoreWindow_Click(object sender, RoutedEventArgs e) => MainWindow.Restore();
+        private void RestoreWindow_Click(object? sender, RoutedEventArgs e) => MainWindow.Restore();
 
-        private async void MinimizeWindow_Click(object sender, RoutedEventArgs e)
+        private async void MinimizeWindow_Click(object? sender, RoutedEventArgs e)
         {
             MainWindow.Minimize();
             await Task.Delay(2000);
             MainWindow.Restore();
         }
 
-        private async void HideWindow_Click(object sender, RoutedEventArgs e)
+        private async void HideWindow_Click(object? sender, RoutedEventArgs e)
         {
             MainWindow.Hide();
             await Task.Delay(2000);
             MainWindow.Restore();
         }
 
-        private async void BringToFront_Click(object sender, RoutedEventArgs e)
+        private async void BringToFront_Click(object? sender, RoutedEventArgs e)
         {
             await Task.Delay(2000);
             MainWindow.BringToFront();
         }
 
 
-        private void limitMaxCheckbox_Toggled(object sender, RoutedEventArgs e)
+        private void limitMaxCheckbox_Toggled(object? sender, RoutedEventArgs e)
         {
             if (limitMaxCheckbox.IsOn)
             {
@@ -93,8 +92,8 @@ namespace WinUIExSample.Pages
             }
             else
             {
-                MainWindow.MaxWidth = double.NaN;
-                MainWindow.MaxHeight = double.NaN;
+                MainWindow.MaxWidth = 0;
+                MainWindow.MaxHeight = 0;
             }
         }
         public int WindowStateSelectedIndex
@@ -108,7 +107,7 @@ namespace WinUIExSample.Pages
             MainWindow.SetWindowOpacity((byte)e.NewValue);
         }
 
-        private void DisplayInfo_Click(object sender, RoutedEventArgs e)
+        private void DisplayInfo_Click(object? sender, RoutedEventArgs e)
         {
 
             var monitors = MonitorInfo.GetDisplayMonitors();

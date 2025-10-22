@@ -24,17 +24,19 @@ jobs:
     - name: Build
       run: |
         msbuild /restore /t:Build,Pack src/WinUIEx/WinUIEx.csproj /p:Configuration=Release
-        msbuild /restore /t:Build,Pack src\TestTools\WinUIEx.TestTools\WinUIEx.TestTools.csproj /p:Configuration=Release
-        msbuild /restore /t:Build src\TestTools\WinUIEx.TestTools.MSTest.CodeGenerator\WinUIEx.TestTools.MSTest.CodeGenerator.csproj /p:Configuration=Release
-        msbuild /restore /t:Build,Pack src\TestTools\WinUIEx.TestTools.MSTest\WinUIEx.TestTools.MSTest.csproj /p:Configuration=Release
         
-#    - name: Test
-#      run: |
-#        msbuild /restore /t:Build src\TestTools\WinUIUnitTests\WinUIUnitTests.csproj /p:Platform=x64 /p:Configuration=Release
-#        vstest.console.exe src\TestTools\WinUIUnitTests\bin\x64\Release\net5.0-windows10.0.19041.0\win10-x64\WinUIUnitTests.build.appxrecipe --logger:"console;verbosity=normal" /InIsolation
+    - name: Test WinUIEx
+      run: |
+        msbuild /restore /t:Build src\WinUIEx.Tests\WinUIEx.Tests.csproj /p:Platform=x64 /p:Configuration=Release
+        vstest.console.exe src\WinUIEx.Tests\bin\x64\Release\net8.0-windows10.0.19041.0\WinUIEx.Tests.build.appxrecipe --logger:"console;verbosity=normal" /InIsolation
+      
+    - name: Test WinUIEx Analyzer
+      run: |
+        msbuild /restore /t:Build src\WinUIEx.Analyzers\WinUIEx.Analyzers.Test\WinUIEx.Analyzers.Test.csproj /p:Configuration=Release
+        vstest.console.exe src\WinUIEx.Analyzers\WinUIEx.Analyzers.Test\bin\Release\net8.0-windows10.0.19041.0\WinUIEx.Analyzers.Test.dll --logger:"console;verbosity=normal" /InIsolation
       
     - name: Upload artifacts
-      uses: actions/upload-artifact@v1
+      uses: actions/upload-artifact@v4
       with:
         name: NuGet Packages
         path: artifacts\NuGet\Release

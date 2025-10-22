@@ -18,10 +18,12 @@
             <TextBlock Text="WinUIEx" FontSize="32" FontFamily="Segoe UI" FontWeight="Light" Margin="0,-10,0,0" />
             <TextBlock Text="Functional Test App" FontSize="24" FontFamily="Segoe UI" FontWeight="Light" x:Name="Status" />
         </StackPanel>
+        <Image Source="/Assets/LargeTile.png" Stretch="Uniform" HorizontalAlignment="Right" VerticalAlignment="Top" MaxHeight="100"
+               Margin="0,0,20,0"/>
         <StackPanel Grid.Row="1">
             <StackPanel Background="{StaticResource SemiTransparentBackgroundBrush}" CornerRadius="10" Padding="10" Margin="0,10,0,0">
                 <TextBlock>WinUIEx: A set of extension methods and classes to fill some gaps in WinUI 3, mostly around windowing and unit testing.</TextBlock>
-                <TextBlock>
+                <TextBlock TextWrapping="Wrap">
                     <Run>Read the documentation at</Run> <Hyperlink NavigateUri="https://dotmorten.github.io/WinUIEx/">dotmorten.github.io/WinUIEx/</Hyperlink>, and view all the source
                     at <Hyperlink NavigateUri="https://github.com/dotMorten/WinUIEx">github.com/dotMorten/WinUIEx</Hyperlink>.
                     <LineBreak /><LineBreak />

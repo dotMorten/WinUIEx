@@ -7,6 +7,8 @@ using WinUIEx.Messaging;
 using Windows.Win32.UI.WindowsAndMessaging;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using Windows.Foundation;
+using Microsoft.UI.Xaml.Controls.Primitives;
 
 namespace WinUIEx
 {
@@ -26,7 +28,7 @@ namespace WinUIEx
         private static bool TryGetWindowManager(Window window, [MaybeNullWhen(false)] out WindowManager manager)
         {
             if (window is null)
-                throw new ArgumentNullException();
+                throw new ArgumentNullException(nameof(window));
             var handle = window.GetWindowHandle();
             if (managers.TryGetValue(handle, out var weakHandle) && weakHandle.TryGetTarget(out manager))
             {
@@ -71,6 +73,7 @@ namespace WinUIEx
             _window.Closed += Window_Closed;
             _window.VisibilityChanged += Window_VisibilityChanged;
             AppWindow.Changed += AppWindow_Changed;
+            AppWindow.Destroying += AppWindow_Destroying;
 
             overlappedPresenter = AppWindow.Presenter as OverlappedPresenter ?? Microsoft.UI.Windowing.OverlappedPresenter.Create();
             managers[window.GetWindowHandle()] = new WeakReference<WindowManager>(this);
@@ -101,6 +104,8 @@ namespace WinUIEx
         {
             CleanUpBackdrop();
             SavePersistence();
+            _trayIcon?.Dispose();
+            _trayIcon = null;
         }
 
         /// <summary>
@@ -111,7 +116,11 @@ namespace WinUIEx
         private bool _isDisposed;
 
         /// <inheritdoc />
-        public void Dispose() => Dispose(true);
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
 
         private void Dispose(bool disposing)
         {
@@ -121,12 +130,22 @@ namespace WinUIEx
                 if (managers.ContainsKey(handle))
                     managers.Remove(handle);
                 AppWindow.Changed -= AppWindow_Changed;
+                AppWindow.Destroying -= AppWindow_Destroying;
                 _window.Activated -= Window_Activated;
                 _window.Closed -= Window_Closed;
+                _window.VisibilityChanged -= Window_VisibilityChanged;
                 _monitor.WindowMessageReceived -= OnWindowMessage;
                 _monitor.Dispose();
             }
             _isDisposed = true;
+        }
+
+        private void AppWindow_Destroying(AppWindow sender, object args)
+        {
+            // Workaround leak caused by https://github.com/microsoft/microsoft-ui-xaml/issues/9960
+            _window.Activated -= Window_Activated;
+            _window.Closed -= Window_Closed;
+            _window.VisibilityChanged -= Window_VisibilityChanged;
         }
 
         /// <summary>
@@ -212,9 +231,9 @@ namespace WinUIEx
             get => _maxWidth;
             set
             {
-                if(value <= 0) throw new ArgumentOutOfRangeException(nameof(value));
+                if(value < 0) throw new ArgumentOutOfRangeException(nameof(value));
                 _maxWidth = value;
-                if (Width > value)
+                if (value > 0 && Width > value)
                     Width = value;
             }
         }
@@ -233,9 +252,9 @@ namespace WinUIEx
             get => _maxHeight;
             set
             {
-                if (value <= 0) throw new ArgumentOutOfRangeException(nameof(value));
+                if (value < 0) throw new ArgumentOutOfRangeException(nameof(value));
                 _maxHeight = value;
-                if (Height > value)
+                if (value > 0 && Height > value)
                     Height = value;
             }
         }
@@ -261,26 +280,26 @@ namespace WinUIEx
             {
                 case WindowsMessages.WM_GETMINMAXINFO:
                     {
-                        MINMAXINFO* rect2 = (MINMAXINFO*)e.Message.LParam;
+                        Windows.Win32.MINMAXINFO* rect2 = (Windows.Win32.MINMAXINFO*)e.Message.LParam;
                         var currentDpi = _window.GetDpiForWindow();
                         if (_restoringPersistence)
                         {
                             // Only restrict maxsize during restore
                             if (!double.IsNaN(MaxWidth) && MaxWidth > 0)
-                                rect2->ptMaxSize.x = (int)(Math.Min(Math.Max(MaxWidth, MinWidth) * (currentDpi / 96f), rect2->ptMaxSize.x)); // If minwidth<maxwidth, minwidth will take presedence
+                                rect2->ptMaxSize.X = (int)(Math.Min(Math.Max(MaxWidth, MinWidth) * (currentDpi / 96f), rect2->ptMaxSize.X)); // If minwidth<maxwidth, minwidth will take presedence
                             if (!double.IsNaN(MaxHeight) && MaxHeight > 0)
-                                rect2->ptMaxSize.y = (int)(Math.Min(Math.Max(MaxHeight, MinHeight) * (currentDpi / 96f), rect2->ptMaxSize.y)); // If minheight<maxheight, minheight will take presedence
+                                rect2->ptMaxSize.Y = (int)(Math.Min(Math.Max(MaxHeight, MinHeight) * (currentDpi / 96f), rect2->ptMaxSize.Y)); // If minheight<maxheight, minheight will take presedence
                         }
                         else
                         {
                             // Restrict min-size
-                            rect2->ptMinTrackSize.x = (int)(Math.Max(MinWidth * (currentDpi / 96f), rect2->ptMinTrackSize.x));
-                            rect2->ptMinTrackSize.y = (int)(Math.Max(MinHeight * (currentDpi / 96f), rect2->ptMinTrackSize.y));
+                            rect2->ptMinTrackSize.X = (int)(Math.Max(MinWidth * (currentDpi / 96f), rect2->ptMinTrackSize.X));
+                            rect2->ptMinTrackSize.Y = (int)(Math.Max(MinHeight * (currentDpi / 96f), rect2->ptMinTrackSize.Y));
                             // Restrict max-size
                             if (!double.IsNaN(MaxWidth) && MaxWidth > 0)
-                                rect2->ptMaxTrackSize.x = (int)(Math.Min(Math.Max(MaxWidth, MinWidth) * (currentDpi / 96f), rect2->ptMaxTrackSize.x)); // If minwidth<maxwidth, minwidth will take presedence
+                                rect2->ptMaxTrackSize.X = (int)(Math.Min(Math.Max(MaxWidth, MinWidth) * (currentDpi / 96f), rect2->ptMaxTrackSize.X)); // If minwidth<maxwidth, minwidth will take presedence
                             if (!double.IsNaN(MaxHeight) && MaxHeight > 0)
-                                rect2->ptMaxTrackSize.y = (int)(Math.Min(Math.Max(MaxHeight, MinHeight) * (currentDpi / 96f), rect2->ptMaxTrackSize.y)); // If minheight<maxheight, minheight will take presedence
+                                rect2->ptMaxTrackSize.Y = (int)(Math.Min(Math.Max(MaxHeight, MinHeight) * (currentDpi / 96f), rect2->ptMaxTrackSize.Y)); // If minheight<maxheight, minheight will take presedence
                         }
                     }
                     break;
@@ -294,7 +313,7 @@ namespace WinUIEx
                     {
                         // https://learn.microsoft.com/en-us/windows/win32/winmsg/wm-size
                         WindowState state;
-                        
+
                         switch (e.Message.WParam)
                         {
                             case 0: state = WindowState.Normal; break;
@@ -309,9 +328,16 @@ namespace WinUIEx
                         }
                         break;
                     }
-
+                case WindowsMessages.WM_SETICON:
+                    {
+                        // Track the current window icon for use in the tray
+                        if (e.Message.WParam == 0 || e.Message.WParam == 1)
+                            _trayIcon?.SetIcon(new Microsoft.UI.IconId((ulong)e.Message.LParam));
+                        break;
+                    }
             }
         }
+
 
         private WindowState _windowState;
 
@@ -362,16 +388,6 @@ namespace WinUIEx
         /// </summary>
         public event EventHandler<WindowMessageEventArgs>? WindowMessageReceived;
 
-        private struct MINMAXINFO
-        {
-#pragma warning disable CS0649
-            public Windows.Win32.Foundation.POINT ptReserved;
-            public Windows.Win32.Foundation.POINT ptMaxSize;
-            public Windows.Win32.Foundation.POINT ptMaxPosition;
-            public Windows.Win32.Foundation.POINT ptMinTrackSize;
-            public Windows.Win32.Foundation.POINT ptMaxTrackSize;
-#pragma warning restore CS0649
-        }
 
         #region Persistence
 
@@ -460,7 +476,7 @@ namespace WinUIEx
                     var retobj = (WINDOWPLACEMENT)Marshal.PtrToStructure(buffer, typeof(WINDOWPLACEMENT))!;
                     Marshal.FreeHGlobal(buffer);
                     // Ignore anything by maximized or normal
-                    if (retobj.showCmd == SHOW_WINDOW_CMD.SW_INVALIDATE && retobj.flags == WINDOWPLACEMENT_FLAGS.WPF_RESTORETOMAXIMIZED)
+                    if (retobj.showCmd == SHOW_WINDOW_CMD.SW_SHOWMINIMIZED && retobj.flags == WINDOWPLACEMENT_FLAGS.WPF_RESTORETOMAXIMIZED)
                         retobj.showCmd = SHOW_WINDOW_CMD.SW_MAXIMIZE;
                     else if (retobj.showCmd != SHOW_WINDOW_CMD.SW_MAXIMIZE)
                         retobj.showCmd = SHOW_WINDOW_CMD.SW_NORMAL;

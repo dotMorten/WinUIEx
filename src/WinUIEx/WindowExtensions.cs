@@ -2,6 +2,7 @@
 using Microsoft.UI.Windowing;
 using System;
 using System.Runtime.InteropServices;
+using Windows.Win32;
 
 namespace WinUIEx
 {
@@ -103,6 +104,7 @@ namespace WinUIEx
         /// </summary>
         /// <param name="window">window</param>
         /// <param name="enable"><c>true</c> if this window should be shown in the task switchers, otherwise <c>false</c>.</param>
+        [Obsolete("Use AppWindow.IsShownInSwitchers")]
         public static void SetIsShownInSwitchers(this Microsoft.UI.Xaml.Window window, bool enable) => window.AppWindow.IsShownInSwitchers = enable;
 
         /// <summary>
@@ -181,7 +183,6 @@ namespace WinUIEx
         /// </summary>
         /// <param name="window"></param>
         /// <param name="kind"></param>
-        /// <returns></returns>
         public static void SetWindowPresenter(this Microsoft.UI.Xaml.Window window, AppWindowPresenterKind kind) => window.AppWindow.SetPresenter(kind);
 
         /// <summary>
@@ -270,6 +271,7 @@ namespace WinUIEx
         /// </summary>
         /// <param name="window">Window</param>
         /// <param name="icon">Icon</param>
+        [Obsolete("Use AppWindow.SetTaskbarIcon")]
         public static void SetTaskBarIcon(this Microsoft.UI.Xaml.Window window, Icon? icon) => HwndExtensions.SetTaskBarIcon(window.GetWindowHandle(), icon);
 
         /// <summary>
@@ -361,5 +363,27 @@ namespace WinUIEx
         /// <param name="alpha">Alpha value used to describe the opacity of the layered window. When <paramref name="alpha"/> is 0, the window is completely transparent. When <paramref name="alpha"/> is 255, the window is opaque.</param>
         public static void SetLayeredWindowAttributes(this Microsoft.UI.Xaml.Window window, Windows.UI.Color chromaKey, byte alpha) 
             => HwndExtensions.SetLayeredWindowAttributes(GetWindowHandle(window), chromaKey.R, chromaKey.G, chromaKey.B, alpha);*/
+
+        /// <summary>
+        /// Sets the window region of a window. The window region determines the area within the window
+        /// where the system permits drawing. The system does not display any portion of a window that
+        /// lies outside of the window region.
+        /// </summary>
+        /// <param name="window">The window whose window region is to be set.</param>
+        /// <param name="region">The region to set on the window</param>
+        public static void SetRegion(this Microsoft.UI.Xaml.Window window, Region? region)
+        {
+            var converter = Microsoft.UI.Content.ContentCoordinateConverter.CreateForWindowId(window.AppWindow.Id);
+            var screenLoc = window.AppWindow.Position;
+            var rgn = region?.Create(converter, screenLoc, window.GetDpiForWindow() / 96d) ?? Windows.Win32.Graphics.Gdi.HRGN.Null;
+            try
+            {
+                PInvoke.SetWindowRgn(new Windows.Win32.Foundation.HWND(window.GetWindowHandle()), rgn, window.Visible);
+            }
+            finally
+            {
+                PInvoke.DeleteObject(rgn);
+            }
+        }
     }
 }

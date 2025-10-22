@@ -32,6 +32,8 @@ namespace WinUIExSample.Pages
             LoadWebcam();
         }
 
+        public MainWindow MainWindow => (MainWindow)((App)Application.Current).MainWindow!;
+
         Windows.Media.Capture.MediaCapture mediaCapture;
         private async void LoadWebcam()
         {
@@ -53,8 +55,6 @@ namespace WinUIExSample.Pages
             elm.Source = mediaCapture;
             //await mediaCapture.StartPreviewAsync();
         }
-
-        public MainWindow MainWindow => (MainWindow)((App)Application.Current).MainWindow;
 
         private void OpenLogWindow_Click(object sender, RoutedEventArgs e) => MainWindow.ShowLogWindow();
     }

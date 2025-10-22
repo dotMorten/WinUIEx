@@ -121,10 +121,10 @@
     <value>The member was never implemeted in WinUI 3.</value>
   </data>
   <data name="AlwaysNullMessageFormat" xml:space="preserve">
-    <value>The member '{0}' will always be null and should not be used.</value>
+    <value>The member '{0}' will always be null and should not be used</value>
   </data>
   <data name="AlwaysNullTitle" xml:space="preserve">
-    <value>The member will always be null.</value>
+    <value>The member will always be null</value>
   </data>
   <data name="DispatcherDescription" xml:space="preserve">
     <value>The Dispatcher will always return null. It has been replaced by the DispatcherQueue.</value>

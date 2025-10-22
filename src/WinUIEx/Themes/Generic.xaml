@@ -4,6 +4,11 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:WinUIEx">
 
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="ms-appx:///WinUIEx/TitleBar/TitleBar.xaml" />
+        <ResourceDictionary Source="ms-appx:///WinUIEx/NumberBox/NumberBox.xaml"  />
+    </ResourceDictionary.MergedDictionaries>
+
     <Style TargetType="local:CaptureElement" >
         <Setter Property="Template">
             <Setter.Value>

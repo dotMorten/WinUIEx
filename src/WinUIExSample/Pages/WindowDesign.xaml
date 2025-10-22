@@ -30,6 +30,7 @@
                     <ComboBoxItem>Animated</ComboBoxItem>
                     <ComboBoxItem>Blur</ComboBoxItem>
                 </ComboBox>
+                <Button Content="Open Window Hole Punch Sample" Click="OpenHoleWindow_Click" />
             </StackPanel>
         </ScrollViewer>
     </Grid>

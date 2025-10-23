@@ -178,12 +178,20 @@ public class TrayIcon : IDisposable
                 _currentFlyout.Hide();
             flyout.ShouldConstrainToRootBounds = false;
             _currentFlyout = flyout;
-            ((Microsoft.UI.Xaml.Controls.Grid)_window.Content).ContextFlyout = flyout;
+            var grid = ((Microsoft.UI.Xaml.Controls.Grid)_window.Content);
+            grid.ContextFlyout = flyout;
             _window.Activate();
             _window.Show();
             _window.AppWindow.MoveAndResize(new Windows.Graphics.RectInt32(location.X, location.Y, 0, 0), Microsoft.UI.Windowing.DisplayArea.GetFromPoint(new Windows.Graphics.PointInt32(0, 0), Microsoft.UI.Windowing.DisplayAreaFallback.Primary));
             WindowExtensions.SetForegroundWindow(_window);
-            _currentFlyout.ShowAt(_root, new FlyoutShowOptions() { Position = new Windows.Foundation.Point(0, 0) });
+            double w = (location.Width - location.X) /  grid.XamlRoot.RasterizationScale;
+            double h = (location.Height - location.Y) / grid.XamlRoot.RasterizationScale;
+            
+            _currentFlyout.ShowAt(_root, new FlyoutShowOptions()
+            {
+                Position = new Windows.Foundation.Point(0, 0),
+                ExclusionRect = new Windows.Foundation.Rect(0, 0, w, h)
+            });
             _currentFlyout.Closing += CurrentFlyout_Closing;
         }
     }
@@ -419,7 +427,7 @@ public class TrayIcon : IDisposable
             return;
         var type = (WindowsMessages)(message.LParam & 0xffff);
         var lparam = message.LParam & 0xffff0000;
-        System.Diagnostics.Debug.WriteLine($"Tray {type}: LParam=0x{lparam.ToString("x")} WParam=0x{message.WParam.ToString("x")}");
+        //System.Diagnostics.Debug.WriteLine($"Tray {type}: LParam=0x{lparam.ToString("x")} WParam=0x{message.WParam.ToString("x")}");
 
         TrayIconEventArgs? args = null;
         switch (type)

@@ -34,6 +34,7 @@ namespace WinUIExSample
             this.SystemBackdrop = WindowDesign.micaBackdrop;
             ExtendsContentIntoTitleBar = true;
             this.SetTitleBarBackgroundColors(Microsoft.UI.Colors.Transparent);
+            AppWindow.SetIcon("Images/WindowIcon.ico");
             PersistenceId = "MainWindow";
             monitor = new WindowMessageMonitor(this);
             navigationView.Loaded += NavigationView_Loaded;

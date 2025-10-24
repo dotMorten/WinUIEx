@@ -1,0 +1,4 @@
+# Workaround for https://github.com/microsoft/microsoft-ui-xaml/issues/10855
+[XamlTypeInfo.g.cs]
+dotnet_diagnostic.CS0612.severity = none
+dotnet_diagnostic.CS0618.severity = none

@@ -238,7 +238,7 @@ namespace WinUIEx
             var currentStyle = PInvoke.GetWindowLong(h, WINDOW_LONG_PTR_INDEX.GWL_STYLE);
             var newStyle = currentStyle;
             if (visible)
-                newStyle = (newStyle & (int)style);
+                newStyle = (newStyle | (int)style);
             else
                 newStyle = (newStyle & ~(int)style);
             var r = PInvoke.SetWindowLong(h, WINDOW_LONG_PTR_INDEX.GWL_STYLE, newStyle);

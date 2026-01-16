@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
@@ -22,6 +21,24 @@ namespace WinUIEx
         private readonly ContentControl titleBarContainer;
         private readonly ContentControl windowArea;
         private readonly WindowManager _manager;
+        private static WindowEx? _current;
+
+        /// <summary>
+        /// Gets the current instance of <see cref="WindowEx"/>. This property ensures a valid reference 
+        /// in both packaged and unpackaged apps, hiding the base property which always returns <see langword="null"/>.
+        /// </summary>
+        /// <returns>
+        /// <see cref="WindowEx"/>
+        /// </returns>
+        public static new WindowEx Current
+        {
+            get
+            {
+                if (_current == null)
+                    _current = new WindowEx();
+                return _current;
+            }
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="WindowEx"/> class.
@@ -29,14 +46,14 @@ namespace WinUIEx
         public WindowEx()
         {
             _manager = WindowManager.Get(this);
-            
+
             _manager.PresenterChanged += (s, e) => { OnPresenterChanged(Presenter); PresenterChanged?.Invoke(this, e); };
             _manager.PositionChanged += (s, e) => { OnPositionChanged(e); PositionChanged?.Invoke(this, e); };
             _manager.ZOrderChanged += (s, e) => { OnZOrderChanged(e); ZOrderChanged?.Invoke(this, e); };
             _manager.WindowStateChanged += (s, e) => { OnStateChanged(e); WindowStateChanged?.Invoke(this, e); };
             SizeChanged += WindowEx_SizeChanged;
-            AppWindow.Destroying += (s,e) => SizeChanged -= WindowEx_SizeChanged; // Workaround for https://github.com/microsoft/microsoft-ui-xaml/issues/9960
- 
+            AppWindow.Destroying += (s, e) => SizeChanged -= WindowEx_SizeChanged; // Workaround for https://github.com/microsoft/microsoft-ui-xaml/issues/9960
+
             var rootContent = new Grid();
             rootContent.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Auto), MinHeight = 0 });
             rootContent.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Star) });
@@ -147,7 +164,8 @@ namespace WinUIEx
         public Icon? TaskBarIcon
         {
             get { return _TaskBarIcon; }
-            set {
+            set
+            {
                 _TaskBarIcon = value;
                 this.SetTaskBarIcon(value);
             }
@@ -161,7 +179,7 @@ namespace WinUIEx
             get => base.Title;
             set => base.Title = value;
         }
-        
+
         /// <summary>
         /// Gets or sets a unique ID used for saving and restoring window size and position
         /// across sessions.
@@ -185,7 +203,7 @@ namespace WinUIEx
         public object? WindowContent
         {
             get => windowArea.Content;
-            set 
+            set
             {
                 if (windowArea.Content is FrameworkElement oldelm)
                 {
@@ -221,7 +239,7 @@ namespace WinUIEx
             get => _manager.IsTitleBarVisible;
             set => _manager.IsTitleBarVisible = value;
         }
-                
+
         /// <summary>
         /// Gets or sets a value indicating whether the minimize button is visible
         /// </summary>
@@ -506,23 +524,23 @@ namespace WinUIEx
         /// </remarks>
         protected virtual bool OnSizeChanged(Windows.Foundation.Size newSize) => false;
 
-/*
-        /// <summary>
-        /// Called when the actual theme changes
-        /// </summary>
-        /// <param name="theme">The new theme</param>
-        /// <seealso cref="FrameworkElement.ActualTheme"/>
-        /// <seealso cref="ActualTheme"/>
-        protected virtual void OnThemeChanged(ElementTheme theme)
-        {            
-        }
+        /*
+                /// <summary>
+                /// Called when the actual theme changes
+                /// </summary>
+                /// <param name="theme">The new theme</param>
+                /// <seealso cref="FrameworkElement.ActualTheme"/>
+                /// <seealso cref="ActualTheme"/>
+                protected virtual void OnThemeChanged(ElementTheme theme)
+                {            
+                }
 
-        /// <summary>
-        /// The actual theme for the window
-        /// </summary>
-        /// <seealso cref="OnThemeChanged(ElementTheme)"/>
-        public ElementTheme ActualTheme => windowArea.ActualTheme;
-*/
+                /// <summary>
+                /// The actual theme for the window
+                /// </summary>
+                /// <seealso cref="OnThemeChanged(ElementTheme)"/>
+                public ElementTheme ActualTheme => windowArea.ActualTheme;
+        */
         #endregion Window events and corresponding virtual methods
     }
 }

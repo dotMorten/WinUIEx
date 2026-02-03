@@ -32,10 +32,11 @@ And more to come...
 
 ### Example of WinUIEx production apps
 
- - [Windows Dev Home](https://github.com/microsoft/devhome)
  - [Microsoft Power Toys](https://github.com/microsoft/PowerToys)
+ - [Windows Subsystem for Linux](https://github.com/microsoft/WSL)
  - [Windows Phone Link](https://www.microsoft.com/en-in/windows/sync-across-your-devices)
  - [Windows Template Studio](https://marketplace.visualstudio.com/items?itemName=WASTeamAccount.WindowsTemplateStudio)
+ - [Windows Dev Home](https://github.com/microsoft/devhome)
  - [Files App](https://github.com/files-community/Files)
  - [Lively Wallpaper](https://github.com/rocksdanister/lively)
 

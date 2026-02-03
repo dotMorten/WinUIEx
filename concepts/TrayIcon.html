@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+
+  <head>
+    <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+      <title> </title>
+      <meta name="viewport" content="width=device-width">
+      <meta name="title" content=" ">
+    
+    
+      <link rel="shortcut icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../styles/docfx.vendor.min.css">
+      <link rel="stylesheet" href="../styles/docfx.css">
+      <link rel="stylesheet" href="../styles/main.css">
+      <meta property="docfx:navrel" content="../toc.html">
+      <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/logo.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+
+<h2 id="windows-tray-icon">Windows Tray Icon</h2>
+<p>You can add your application to the Windows Tray by simply setting <a href="https://dotmorten.github.io/WinUIEx/api/WinUIEx.WindowManager.IsVisibleInTray.html"><code>IsVisibleInTray</code></a> on the <a href="https://dotmorten.github.io/WinUIEx/api/WinUIEx.WindowManager.html"><code>WindowManager</code></a>.</p>
+<pre><code class="lang-cs">var wm = WindowManager.Get(MyWindow);
+wm.IsVisibleInTray = true;                        
+</code></pre>
+<p>If the user clicks/selects this icon, the window is brought to the front, and if minimized, restored.
+The icon used is obtained from the Window's task bar icon. You can set the icon using the <code>Window.AppWindow.SetTaskbarIcon</code> method.</p>
+<h3 id="context-menu-and-custom-click-actions">Context menu and custom click actions</h3>
+<p>You can add an additional context-menu action to tray icon by subscribing to the <a href="https://dotmorten.github.io/WinUIEx/api/WinUIEx.WindowManager.TrayIconContextMenu.html"><code>TrayIconContextMenu</code></a> event.
+This event gives you the ability to display any kind of flyout by setting the
+<a href="https://dotmorten.github.io/WinUIEx/api/WinUIEx.TrayIconEventArgs.Flyout.html#TrayIconEventArgs"><code>Flyout</code></a> property on the event argument.</p>
+<p>For example:</p>
+<pre><code class="lang-cs">wm.TrayIconContextMenu += (w, e) =&gt;
+{
+    var flyout = new MenuFlyout();
+    flyout.Items.Add(new MenuFlyoutItem() { Text = &quot;Open&quot; });
+    flyout.Items.Add(new MenuFlyoutItem() { Text = &quot;Quit App&quot; });
+    ((MenuFlyoutItem)flyout.Items[0]).Click += (s, e) =&gt; MyWindow.Activate();
+    ((MenuFlyoutItem)flyout.Items[1]).Click += (s, e) =&gt; MyWindow.Close();
+    e.Flyout = flyout;
+};
+</code></pre>
+<h3 id="implementing-minimize-to-tray-or-launch-to-tray">Implementing Minimize-To-Tray or Launch-To-Tray</h3>
+<p>You can create a minimize-to-tray feature by reacting to the minimize event and hide the window from the task switchers.
+Similarly, you can launch the app minimized to have the app just start up in the tray.</p>
+<pre><code class="lang-cs">protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
+{
+    _window = new MainWindow();
+    var wm = WindowManager.Get(_window);
+    wm.IsVisibleInTray = true; // Show app in tray
+    // Minimize to tray:
+    wm.WindowStateChanged += (s, state) =&gt;
+        wm.AppWindow.IsShownInSwitchers = state != WindowState.Minimized;
+
+    if (MyAppSettings.LaunchToTray) // Delay activating the window by starting minimized
+        wm.WindowState = WindowState.Minimized;
+    else
+        _window.Activate();
+}
+</code></pre>
+<h2 id="using-the-trayicon-class">Using the TrayIcon class</h2>
+<p>For more fine-grained control over the tray icon, you can use the <a href="https://dotmorten.github.io/WinUIEx/api/WinUIEx.TrayIcon.html"><code>TrayIcon</code></a> class directly, which provides no default behaviors and more events to work with.
+This class allows you to create a tray icon without associating it with a window, and gives you more control over its behavior,
+updating its icon and tooltip, or even have multiple icons for a single process.</p>
+<p>Note: Make sure once you close your application, that all TrayIcon instances are disposed, otherwise the icon will remain in the tray and the process will not exit.
+This behavior however also allows you to create a window-less application, and (if needed) creating a Window on demand based on TrayIcon interactions. For example:</p>
+<pre><code class="lang-cs">public partial class App : Application
+{
+    private TrayIcon icon;
+    private Window? _window;
+
+    public App()
+    {
+        InitializeComponent();
+    }
+
+    private Window GetMainWindow()
+    {
+        if (_window is not null)
+            return _window;
+        _window = new MainWindow();
+        _window.AppWindow.Closing += (s, e) =&gt;
+        {
+            // Prevent closing so it can be re-activated later. We'll just hide it for now
+            // As an alternative don't cache the Window, but close and recreate a new Window every time.
+            e.Cancel = true; 
+            s.Hide(); 
+        };
+        var wm = WindowManager.Get(_window);
+        wm.WindowStateChanged += (s, state) =&gt; wm.AppWindow.IsShownInSwitchers = state != WindowState.Minimized;
+        return _window;
+    }
+
+    protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
+    {
+        // In OnLaunched we don't create a window but just the tray icon. We'll create a window later if we need to.
+        // Note: This icon will keep the application process alive as well.
+        icon = new TrayIcon(1, &quot;Images/StatusOK.ico&quot;, &quot;Test&quot;);
+        icon.IsVisible = true;
+        icon.Selected += (s, e) =&gt; GetMainWindow().Activate();
+        icon.ContextMenu += (w, e) =&gt;
+        {
+            var flyout = new MenuFlyout();
+            flyout.Items.Add(new MenuFlyoutItem() { Text = &quot;Open&quot; });
+            ((MenuFlyoutItem)flyout.Items[0]).Click += (s, e) =&gt; GetMainWindow().Activate();
+            flyout.Items.Add(new MenuFlyoutItem() { Text = &quot;Quit App&quot; });
+            ((MenuFlyoutItem)flyout.Items[1]).Click += (s, e) =&gt;
+            {
+                // Make sure we close both the main window, and the icon for the process to exit
+                _window?.Close();
+                icon.Dispose();
+            };
+            e.Flyout = flyout;
+        };
+    }
+}
+</code></pre>
+
+</article>
+          </div>
+
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/dotMorten/WinUIEx/blob/main/docs/concepts/TrayIcon.md/#L1" class="contribution-link">Edit this page</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In this article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+      
+      <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script type="text/javascript" src="../styles/docfx.vendor.min.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

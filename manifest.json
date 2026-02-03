@@ -1,0 +1,4702 @@
+{
+  "source_base_path": "D:/a/WinUIEx/WinUIEx/docs",
+  "xrefmap": "xrefmap.yml",
+  "files": [
+    {
+      "type": "Resource",
+      "source_relative_path": "../artifacts/docs/api/omd.html",
+      "output": {
+        "resource": {
+          "relative_path": "api/omd.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "api/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "api/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "concepts/CustomBackdrops.md",
+      "output": {
+        ".html": {
+          "relative_path": "concepts/CustomBackdrops.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "concepts/HwndExtensions.md",
+      "output": {
+        ".html": {
+          "relative_path": "concepts/HwndExtensions.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "concepts/Maui.md",
+      "output": {
+        ".html": {
+          "relative_path": "concepts/Maui.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "concepts/MediaPlayer.md",
+      "output": {
+        ".html": {
+          "relative_path": "concepts/MediaPlayer.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "concepts/NumberBox.md",
+      "output": {
+        ".html": {
+          "relative_path": "concepts/NumberBox.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "concepts/Splashscreen.md",
+      "output": {
+        ".html": {
+          "relative_path": "concepts/Splashscreen.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "concepts/TrayIcon.md",
+      "output": {
+        ".html": {
+          "relative_path": "concepts/TrayIcon.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "concepts/WebAuthenticator.md",
+      "output": {
+        ".html": {
+          "relative_path": "concepts/WebAuthenticator.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "concepts/WindowEx.md",
+      "output": {
+        ".html": {
+          "relative_path": "concepts/WindowEx.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "concepts/WindowExtensions.md",
+      "output": {
+        ".html": {
+          "relative_path": "concepts/WindowExtensions.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "concepts/WindowManager.md",
+      "output": {
+        ".html": {
+          "relative_path": "concepts/WindowManager.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "concepts/WindowMessageMonitor.md",
+      "output": {
+        ".html": {
+          "relative_path": "concepts/WindowMessageMonitor.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "concepts/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "concepts/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "concepts/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "concepts/toc.html"
+        },
+        ".json": {
+          "relative_path": "concepts/toc.json"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "favicon.ico",
+      "output": {
+        "resource": {
+          "relative_path": "favicon.ico"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/logo.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/logo.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "index.md",
+      "output": {
+        ".html": {
+          "relative_path": "index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.CombineMode.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.CombineMode.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.CombineMode",
+      "Summary": "<p sourcefile=\"obj/api/WinUIEx.CombineMode.yml\" sourcestartlinenumber=\"1\">A mode indicating how two regions will be combined.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.CompositionBrushBackdrop.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.CompositionBrushBackdrop.-ctor.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.CompositionBrushBackdrop.CompositionBrushBackdrop",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.CompositionBrushBackdrop.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.CompositionBrushBackdrop.CreateBrush.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.CompositionBrushBackdrop.CreateBrush",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.CompositionBrushBackdrop.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.CompositionBrushBackdrop.OnDefaultSystemBackdropConfigurationChanged.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.CompositionBrushBackdrop.OnDefaultSystemBackdropConfigurationChanged",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.CompositionBrushBackdrop.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.CompositionBrushBackdrop.OnTargetConnected.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.CompositionBrushBackdrop.OnTargetConnected",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.CompositionBrushBackdrop.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.CompositionBrushBackdrop.OnTargetDisconnected.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.CompositionBrushBackdrop.OnTargetDisconnected",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.CompositionBrushBackdrop.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.CompositionBrushBackdrop.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.CompositionBrushBackdrop",
+      "Summary": "<p sourcefile=\"obj/api/WinUIEx.CompositionBrushBackdrop.yml\" sourcestartlinenumber=\"1\">Helper class for creating composition-brush based backdrops.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.ExtendedWindowStyle.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.ExtendedWindowStyle.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.ExtendedWindowStyle",
+      "Summary": "<p sourcefile=\"obj/api/WinUIEx.ExtendedWindowStyle.yml\" sourcestartlinenumber=\"1\">Flags used for ToggleExtendedWindowStyle method</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.HwndExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.HwndExtensions.GetDpiForWindowsMonitor.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.HwndExtensions.GetDpiForWindowsMonitor",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.HwndExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.HwndExtensions.GetDpiForWindow.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.HwndExtensions.GetDpiForWindow",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.HwndExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.HwndExtensions.RestoreWindow.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.HwndExtensions.RestoreWindow",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.HwndExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.HwndExtensions.SetWindowStyle.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.HwndExtensions.SetWindowStyle",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.HwndExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.HwndExtensions.ToggleWindowStyle.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.HwndExtensions.ToggleWindowStyle",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.HwndExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.HwndExtensions.SetForegroundWindow.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.HwndExtensions.SetForegroundWindow",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.HwndExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.HwndExtensions.SetExtendedWindowStyle.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.HwndExtensions.SetExtendedWindowStyle",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.HwndExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.HwndExtensions.ToggleExtendedWindowStyle.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.HwndExtensions.ToggleExtendedWindowStyle",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.HwndExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.HwndExtensions.GetWindowStyle.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.HwndExtensions.GetWindowStyle",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.HwndExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.HwndExtensions.MinimizeWindow.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.HwndExtensions.MinimizeWindow",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.HwndExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.HwndExtensions.SetIcon.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.HwndExtensions.SetIcon",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.HwndExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.HwndExtensions.GetActiveWindow.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.HwndExtensions.GetActiveWindow",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.HwndExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.HwndExtensions.SetWindowOpacity.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.HwndExtensions.SetWindowOpacity",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.HwndExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.HwndExtensions.HideWindow.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.HwndExtensions.HideWindow",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.HwndExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.HwndExtensions.ShowWindow.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.HwndExtensions.ShowWindow",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.HwndExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.HwndExtensions.SetTaskBarIcon.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.HwndExtensions.SetTaskBarIcon",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.HwndExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.HwndExtensions.SetWindowSize.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.HwndExtensions.SetWindowSize",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.HwndExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.HwndExtensions.SetWindowPositionAndSize.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.HwndExtensions.SetWindowPositionAndSize",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.HwndExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.HwndExtensions.CenterOnScreen.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.HwndExtensions.CenterOnScreen",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.HwndExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.HwndExtensions.SetAlwaysOnTop.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.HwndExtensions.SetAlwaysOnTop",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.HwndExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.HwndExtensions.GetDesktopWindow.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.HwndExtensions.GetDesktopWindow",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.HwndExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.HwndExtensions.MaximizeWindow.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.HwndExtensions.MaximizeWindow",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.HwndExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.HwndExtensions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.HwndExtensions",
+      "Summary": "<p sourcefile=\"obj/api/WinUIEx.HwndExtensions.yml\" sourcestartlinenumber=\"1\">A set of HWND Helper Methods</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.HwndExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.HwndExtensions.GetExtendedWindowStyle.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.HwndExtensions.GetExtendedWindowStyle",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.Icon.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.Icon.Dispose.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.Icon.Dispose",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.Icon.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.Icon.FromByteArray.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.Icon.FromByteArray",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.Icon.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.Icon.FromFile.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.Icon.FromFile",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.Icon.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.Icon.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.Icon",
+      "Summary": "<p sourcefile=\"obj/api/WinUIEx.Icon.yml\" sourcestartlinenumber=\"1\">Manages a native Windows Icon instance</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.Icon.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.Icon.Finalize.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.Icon.~Icon",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.Messaging.Message.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.Messaging.Message.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.Messaging.Message",
+      "Summary": "<p sourcefile=\"obj/api/WinUIEx.Messaging.Message.yml\" sourcestartlinenumber=\"1\">Represents a Windows Message.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.Messaging.Message.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.Messaging.Message.ToString.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.Messaging.Message.ToString",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.Messaging.Message.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.Messaging.Message.LParam.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.Messaging.Message.LParam",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.Messaging.Message.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.Messaging.Message.MessageId.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.Messaging.Message.MessageId",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.Messaging.Message.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.Messaging.Message.Hwnd.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.Messaging.Message.Hwnd",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.Messaging.Message.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.Messaging.Message.WParam.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.Messaging.Message.WParam",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.Messaging.WindowMessageEventArgs.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.Messaging.WindowMessageEventArgs.Result.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.Messaging.WindowMessageEventArgs.Result",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.Messaging.WindowMessageEventArgs.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.Messaging.WindowMessageEventArgs.Handled.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.Messaging.WindowMessageEventArgs.Handled",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.Messaging.WindowMessageEventArgs.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.Messaging.WindowMessageEventArgs.Message.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.Messaging.WindowMessageEventArgs.Message",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.Messaging.WindowMessageEventArgs.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.Messaging.WindowMessageEventArgs.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.Messaging.WindowMessageEventArgs",
+      "Summary": "<p sourcefile=\"obj/api/WinUIEx.Messaging.WindowMessageEventArgs.yml\" sourcestartlinenumber=\"1\">Event arguments for the <xref href=\"WinUIEx.Messaging.WindowMessageMonitor.WindowMessageReceived\" data-throw-if-not-resolved=\"false\"></xref> event.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.Messaging.WindowMessageMonitor.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.Messaging.WindowMessageMonitor.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.Messaging.WindowMessageMonitor",
+      "Summary": "<p sourcefile=\"obj/api/WinUIEx.Messaging.WindowMessageMonitor.yml\" sourcestartlinenumber=\"1\">The message monitor allows you to monitor all WM_MESSAGE events for a given window.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.Messaging.WindowMessageMonitor.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.Messaging.WindowMessageMonitor.WindowMessageReceived.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.Messaging.WindowMessageMonitor.WindowMessageReceived",
+      "Summary": "<p sourcefile=\"obj/api/WinUIEx.Messaging.WindowMessageMonitor.yml\" sourcestartlinenumber=\"1\">Event raised when a windows message is received.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.Messaging.WindowMessageMonitor.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.Messaging.WindowMessageMonitor.-ctor.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.Messaging.WindowMessageMonitor.WindowMessageMonitor",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.Messaging.WindowMessageMonitor.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.Messaging.WindowMessageMonitor.Finalize.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.Messaging.WindowMessageMonitor.~WindowMessageMonitor",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.Messaging.WindowMessageMonitor.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.Messaging.WindowMessageMonitor.Dispose.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.Messaging.WindowMessageMonitor.Dispose",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.Messaging.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.Messaging.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.Messaging",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.MonitorInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.MonitorInfo.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.MonitorInfo",
+      "Summary": "<p sourcefile=\"obj/api/WinUIEx.MonitorInfo.yml\" sourcestartlinenumber=\"1\">Contains information about a display monitor.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.MonitorInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.MonitorInfo.ToString.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.MonitorInfo.ToString",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.MonitorInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.MonitorInfo.IsPrimary.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.MonitorInfo.IsPrimary",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.MonitorInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.MonitorInfo.RectWork.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.MonitorInfo.RectWork",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.MonitorInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.MonitorInfo.RectMonitor.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.MonitorInfo.RectMonitor",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.MonitorInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.MonitorInfo.Name.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.MonitorInfo.Name",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.MonitorInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.MonitorInfo.GetDisplayMonitors.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.MonitorInfo.GetDisplayMonitors",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.NumberBox-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.NumberBox-1.HeaderTemplate.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.NumberBox<T>.HeaderTemplate",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.NumberBox-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.NumberBox-1.InputScope.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.NumberBox<T>.InputScope",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.NumberBox-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.NumberBox-1.Header.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.NumberBox<T>.Header",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.NumberBox-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.NumberBox-1.PlaceholderText.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.NumberBox<T>.PlaceholderText",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.NumberBox-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.NumberBox-1.AcceptsExpression.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.NumberBox<T>.AcceptsExpression",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.NumberBox-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.NumberBox-1.SelectionHighlightColor.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.NumberBox<T>.SelectionHighlightColor",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.NumberBox-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.NumberBox-1.TextAlignment.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.NumberBox<T>.TextAlignment",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.NumberBox-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.NumberBox-1.TextReadingOrder.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.NumberBox<T>.TextReadingOrder",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.NumberBox-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.NumberBox-1.PreventKeyboardDisplayOnProgrammaticFocus.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.NumberBox<T>.PreventKeyboardDisplayOnProgrammaticFocus",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.NumberBox-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.NumberBox-1.Description.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.NumberBox<T>.Description",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.NumberBox-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.NumberBox-1.ValidationMode.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.NumberBox<T>.ValidationMode",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.NumberBox-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.NumberBox-1.SpinButtonPlacementMode.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.NumberBox<T>.SpinButtonPlacementMode",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.NumberBox-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.NumberBox-1.IsWrapEnabled.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.NumberBox<T>.IsWrapEnabled",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.NumberBox-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.NumberBox-1.NumberFormatter.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.NumberBox<T>.NumberFormatter",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.NumberBox-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.NumberBox-1.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.NumberBox<T>",
+      "Summary": "<p sourcefile=\"obj/api/WinUIEx.NumberBox-1.yml\" sourcestartlinenumber=\"1\">Represents an abstract control that can be used to display and edit numbers.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.NumberBox-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.NumberBox-1.Text.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.NumberBox<T>.Text",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.NumberBox-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.NumberBox-1.SelectionFlyout.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.NumberBox<T>.SelectionFlyout",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.NumberBox-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.NumberBox-1.LargeChange.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.NumberBox<T>.LargeChange",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.NumberBox-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.NumberBox-1.IsWrapEnabledProperty.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.NumberBox<T>.IsWrapEnabledProperty",
+      "Summary": "<p sourcefile=\"obj/api/WinUIEx.NumberBox-1.yml\" sourcestartlinenumber=\"1\">Identifies the <xref href=\"WinUIEx.NumberBox%601.IsWrapEnabled\" data-throw-if-not-resolved=\"false\"></xref> dependency property.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.NumberBox-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.NumberBox-1.Maximum.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.NumberBox<T>.Maximum",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.NumberBox-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.NumberBox-1.ValueProperty.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.NumberBox<T>.ValueProperty",
+      "Summary": "<p sourcefile=\"obj/api/WinUIEx.NumberBox-1.yml\" sourcestartlinenumber=\"1\">Identifies the <xref href=\"WinUIEx.NumberBox%601.Value\" data-throw-if-not-resolved=\"false\"></xref> dependency property.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.NumberBox-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.NumberBox-1.Value.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.NumberBox<T>.Value",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.NumberBox-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.NumberBox-1.OnApplyTemplate.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.NumberBox<T>.OnApplyTemplate",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.NumberBox-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.NumberBox-1.OnCreateAutomationPeer.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.NumberBox<T>.OnCreateAutomationPeer",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.NumberBox-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.NumberBox-1.-ctor.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.NumberBox<T>.NumberBox",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.NumberBox-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.NumberBox-1.MaximumProperty.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.NumberBox<T>.MaximumProperty",
+      "Summary": "<p sourcefile=\"obj/api/WinUIEx.NumberBox-1.yml\" sourcestartlinenumber=\"1\">Identifies the <xref href=\"WinUIEx.NumberBox%601.Maximum\" data-throw-if-not-resolved=\"false\"></xref> dependency property.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.NumberBox-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.NumberBox-1.SmallChangeProperty.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.NumberBox<T>.SmallChangeProperty",
+      "Summary": "<p sourcefile=\"obj/api/WinUIEx.NumberBox-1.yml\" sourcestartlinenumber=\"1\">Identifies the <xref href=\"WinUIEx.NumberBox%601.SmallChange\" data-throw-if-not-resolved=\"false\"></xref> dependency property.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.NumberBox-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.NumberBox-1.LargeChangeProperty.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.NumberBox<T>.LargeChangeProperty",
+      "Summary": "<p sourcefile=\"obj/api/WinUIEx.NumberBox-1.yml\" sourcestartlinenumber=\"1\">Identifies the <xref href=\"WinUIEx.NumberBox%601.LargeChange\" data-throw-if-not-resolved=\"false\"></xref> dependency property.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.NumberBox-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.NumberBox-1.TextProperty.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.NumberBox<T>.TextProperty",
+      "Summary": "<p sourcefile=\"obj/api/WinUIEx.NumberBox-1.yml\" sourcestartlinenumber=\"1\">Identifies the <xref href=\"WinUIEx.NumberBox%601.Text\" data-throw-if-not-resolved=\"false\"></xref> dependency property.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.NumberBox-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.NumberBox-1.HeaderProperty.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.NumberBox<T>.HeaderProperty",
+      "Summary": "<p sourcefile=\"obj/api/WinUIEx.NumberBox-1.yml\" sourcestartlinenumber=\"1\">Identifies the <xref href=\"WinUIEx.NumberBox%601.Header\" data-throw-if-not-resolved=\"false\"></xref> dependency property.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.NumberBox-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.NumberBox-1.SmallChange.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.NumberBox<T>.SmallChange",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.NumberBox-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.NumberBox-1.HeaderTemplateProperty.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.NumberBox<T>.HeaderTemplateProperty",
+      "Summary": "<p sourcefile=\"obj/api/WinUIEx.NumberBox-1.yml\" sourcestartlinenumber=\"1\">Identifies the <xref href=\"WinUIEx.NumberBox%601.HeaderTemplate\" data-throw-if-not-resolved=\"false\"></xref> dependency property.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.NumberBox-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.NumberBox-1.InputScopeProperty.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.NumberBox<T>.InputScopeProperty",
+      "Summary": "<p sourcefile=\"obj/api/WinUIEx.NumberBox-1.yml\" sourcestartlinenumber=\"1\">Identifies the <xref href=\"WinUIEx.NumberBox%601.InputScope\" data-throw-if-not-resolved=\"false\"></xref> dependency property.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.NumberBox-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.NumberBox-1.PlaceholderTextProperty.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.NumberBox<T>.PlaceholderTextProperty",
+      "Summary": "<p sourcefile=\"obj/api/WinUIEx.NumberBox-1.yml\" sourcestartlinenumber=\"1\">Identifies the <xref href=\"WinUIEx.NumberBox%601.PlaceholderText\" data-throw-if-not-resolved=\"false\"></xref> dependency property.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.NumberBox-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.NumberBox-1.AllowNullProperty.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.NumberBox<T>.AllowNullProperty",
+      "Summary": "<p sourcefile=\"obj/api/WinUIEx.NumberBox-1.yml\" sourcestartlinenumber=\"1\">Identifies the <xref href=\"WinUIEx.NumberBox%601.AllowNull\" data-throw-if-not-resolved=\"false\"></xref> dependency property.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.NumberBox-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.NumberBox-1.SelectionHighlightColorProperty.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.NumberBox<T>.SelectionHighlightColorProperty",
+      "Summary": "<p sourcefile=\"obj/api/WinUIEx.NumberBox-1.yml\" sourcestartlinenumber=\"1\">Identifies the <xref href=\"WinUIEx.NumberBox%601.SelectionHighlightColor\" data-throw-if-not-resolved=\"false\"></xref> dependency property.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.NumberBox-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.NumberBox-1.SelectionFlyoutProperty.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.NumberBox<T>.SelectionFlyoutProperty",
+      "Summary": "<p sourcefile=\"obj/api/WinUIEx.NumberBox-1.yml\" sourcestartlinenumber=\"1\">Identifies the <xref href=\"WinUIEx.NumberBox%601.SelectionFlyout\" data-throw-if-not-resolved=\"false\"></xref> dependency property.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.NumberBox-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.NumberBox-1.ValidationModeProperty.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.NumberBox<T>.ValidationModeProperty",
+      "Summary": "<p sourcefile=\"obj/api/WinUIEx.NumberBox-1.yml\" sourcestartlinenumber=\"1\">Identifies the <xref href=\"WinUIEx.NumberBox%601.ValidationMode\" data-throw-if-not-resolved=\"false\"></xref> dependency property.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.NumberBox-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.NumberBox-1.SpinButtonPlacementModeProperty.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.NumberBox<T>.SpinButtonPlacementModeProperty",
+      "Summary": "<p sourcefile=\"obj/api/WinUIEx.NumberBox-1.yml\" sourcestartlinenumber=\"1\">Identifies the <xref href=\"WinUIEx.NumberBox%601.SpinButtonPlacementMode\" data-throw-if-not-resolved=\"false\"></xref> dependency property.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.NumberBox-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.NumberBox-1.MinimumProperty.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.NumberBox<T>.MinimumProperty",
+      "Summary": "<p sourcefile=\"obj/api/WinUIEx.NumberBox-1.yml\" sourcestartlinenumber=\"1\">Identifies the <xref href=\"WinUIEx.NumberBox%601.Minimum\" data-throw-if-not-resolved=\"false\"></xref> dependency property.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.NumberBox-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.NumberBox-1.AcceptsExpressionProperty.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.NumberBox<T>.AcceptsExpressionProperty",
+      "Summary": "<p sourcefile=\"obj/api/WinUIEx.NumberBox-1.yml\" sourcestartlinenumber=\"1\">Identifies the <xref href=\"WinUIEx.NumberBox%601.AcceptsExpression\" data-throw-if-not-resolved=\"false\"></xref> dependency property.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.NumberBox-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.NumberBox-1.NumberFormatterProperty.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.NumberBox<T>.NumberFormatterProperty",
+      "Summary": "<p sourcefile=\"obj/api/WinUIEx.NumberBox-1.yml\" sourcestartlinenumber=\"1\">Identifies the <xref href=\"WinUIEx.NumberBox%601.NumberFormatter\" data-throw-if-not-resolved=\"false\"></xref> dependency property.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.NumberBox-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.NumberBox-1.ValueChanged.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.NumberBox<T>.ValueChanged",
+      "Summary": "<p sourcefile=\"obj/api/WinUIEx.NumberBox-1.yml\" sourcestartlinenumber=\"1\">Occurs after the user triggers evaluation of new input by pressing the Enter key, clicking a spin button, or by changing focus.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.NumberBox-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.NumberBox-1.AllowNull.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.NumberBox<T>.AllowNull",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.NumberBox-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.NumberBox-1.TextReadingOrderProperty.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.NumberBox<T>.TextReadingOrderProperty",
+      "Summary": "<p sourcefile=\"obj/api/WinUIEx.NumberBox-1.yml\" sourcestartlinenumber=\"1\">Identifies the <xref href=\"WinUIEx.NumberBox%601.TextReadingOrder\" data-throw-if-not-resolved=\"false\"></xref> dependency property.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.NumberBox-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.NumberBox-1.Minimum.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.NumberBox<T>.Minimum",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.NumberBox-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.NumberBox-1.TextAlignmentProperty.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.NumberBox<T>.TextAlignmentProperty",
+      "Summary": "<p sourcefile=\"obj/api/WinUIEx.NumberBox-1.yml\" sourcestartlinenumber=\"1\">Identifies the <xref href=\"WinUIEx.NumberBox%601.TextAlignment\" data-throw-if-not-resolved=\"false\"></xref> dependency property.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.NumberBox-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.NumberBox-1.DescriptionProperty.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.NumberBox<T>.DescriptionProperty",
+      "Summary": "<p sourcefile=\"obj/api/WinUIEx.NumberBox-1.yml\" sourcestartlinenumber=\"1\">Identifies the <xref href=\"WinUIEx.NumberBox%601.Description\" data-throw-if-not-resolved=\"false\"></xref> dependency property.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.NumberBox-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.NumberBox-1.PreventKeyboardDisplayOnProgrammaticFocusProperty.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.NumberBox<T>.PreventKeyboardDisplayOnProgrammaticFocusProperty",
+      "Summary": "<p sourcefile=\"obj/api/WinUIEx.NumberBox-1.yml\" sourcestartlinenumber=\"1\">Identifies the <xref href=\"WinUIEx.NumberBox%601.PreventKeyboardDisplayOnProgrammaticFocus\" data-throw-if-not-resolved=\"false\"></xref> dependency property.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.NumberBoxDecimal.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.NumberBoxDecimal.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.NumberBoxDecimal",
+      "Summary": "<p sourcefile=\"obj/api/WinUIEx.NumberBoxDecimal.yml\" sourcestartlinenumber=\"1\">Represents a control that can be used to display and edit floating point <xref href=\"System.Decimal\" data-throw-if-not-resolved=\"false\"></xref> numbers.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.NumberBoxDecimal.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.NumberBoxDecimal.-ctor.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.NumberBoxDecimal.NumberBoxDecimal",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.NumberBoxInt32.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.NumberBoxInt32.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.NumberBoxInt32",
+      "Summary": "<p sourcefile=\"obj/api/WinUIEx.NumberBoxInt32.yml\" sourcestartlinenumber=\"1\">Represents a control that can be used to display and edit <xref href=\"System.Int32?text=integer\" data-throw-if-not-resolved=\"false\"></xref> numbers.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.NumberBoxInt32.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.NumberBoxInt32.-ctor.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.NumberBoxInt32.NumberBoxInt32",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.NumberBoxValueChangedEventArgs-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.NumberBoxValueChangedEventArgs-1.NewValue.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.NumberBoxValueChangedEventArgs<T>.NewValue",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.NumberBoxValueChangedEventArgs-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.NumberBoxValueChangedEventArgs-1.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.NumberBoxValueChangedEventArgs<T>",
+      "Summary": "<p sourcefile=\"obj/api/WinUIEx.NumberBoxValueChangedEventArgs-1.yml\" sourcestartlinenumber=\"1\">Provides event data for the <xref href=\"Microsoft.UI.Xaml.Controls.NumberBox.ValueChanged?text=NumberBox.ValueChanged\" data-throw-if-not-resolved=\"false\"></xref> event.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.NumberBoxValueChangedEventArgs-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.NumberBoxValueChangedEventArgs-1.OldValue.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.NumberBoxValueChangedEventArgs<T>.OldValue",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.Region.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.Region.op_Subtraction.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.Region.operator -",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.Region.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.Region.op_Addition.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.Region.operator +",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.Region.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.Region.And.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.Region.And",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.Region.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.Region.Combine.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.Region.Combine",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.Region.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.Region.CreatePolygon.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.Region.CreatePolygon",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.Region.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.Region.CreateElliptic.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.Region.CreateElliptic",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.Region.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.Region.CreateRoundedRectangle.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.Region.CreateRoundedRectangle",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.Region.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.Region.CreateRectangle.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.Region.CreateRectangle",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.Region.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.Region.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.Region",
+      "Summary": "<p sourcefile=\"obj/api/WinUIEx.Region.yml\" sourcestartlinenumber=\"1\">Represents a region of the screen in device-independent pixels.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.Region.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.Region.Xor.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.Region.Xor",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.SimpleSplashScreen.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.SimpleSplashScreen.Dispose.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.SimpleSplashScreen.Dispose",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.SimpleSplashScreen.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.SimpleSplashScreen.ShowDefaultSplashScreen.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.SimpleSplashScreen.ShowDefaultSplashScreen",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.SimpleSplashScreen.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.SimpleSplashScreen.ShowSplashScreenImage.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.SimpleSplashScreen.ShowSplashScreenImage",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.SimpleSplashScreen.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.SimpleSplashScreen.Finalize.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.SimpleSplashScreen.~SimpleSplashScreen",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.SimpleSplashScreen.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.SimpleSplashScreen.Hide.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.SimpleSplashScreen.Hide",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.SimpleSplashScreen.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.SimpleSplashScreen.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.SimpleSplashScreen",
+      "Summary": "<p sourcefile=\"obj/api/WinUIEx.SimpleSplashScreen.yml\" sourcestartlinenumber=\"1\">Simple and fast splash screen for display images during application startup.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.SplashScreen.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.SplashScreen.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.SplashScreen",
+      "Summary": "<p sourcefile=\"obj/api/WinUIEx.SplashScreen.yml\" sourcestartlinenumber=\"1\">A splash screen window for rendering XAML that shows with no chrome, and once <xref href=\"WinUIEx.SplashScreen.OnLoading\" data-throw-if-not-resolved=\"false\"></xref> has completed,\nopens a new window.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.SplashScreen.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.SplashScreen.-ctor.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.SplashScreen.SplashScreen",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.SplashScreen.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.SplashScreen.Width.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.SplashScreen.Width",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.SplashScreen.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.SplashScreen.Height.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.SplashScreen.Height",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.SplashScreen.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.SplashScreen.IsAlwaysOnTop.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.SplashScreen.IsAlwaysOnTop",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.SplashScreen.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.SplashScreen.OnLoading.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.SplashScreen.OnLoading",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.SplashScreen.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.SplashScreen.Completed.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.SplashScreen.Completed",
+      "Summary": "<p sourcefile=\"obj/api/WinUIEx.SplashScreen.yml\" sourcestartlinenumber=\"1\">Raised once the splash screen has completed <xref href=\"WinUIEx.SplashScreen.OnLoading\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.TitleBar.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.TitleBar.Header.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.TitleBar.Header",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.TitleBar.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.TitleBar.IsBackEnabled.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.TitleBar.IsBackEnabled",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.TitleBar.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.TitleBar.IsBackButtonVisible.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.TitleBar.IsBackButtonVisible",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.TitleBar.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.TitleBar.Footer.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.TitleBar.Footer",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.TitleBar.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.TitleBar.Content.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.TitleBar.Content",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.TitleBar.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.TitleBar.Subtitle.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.TitleBar.Subtitle",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.TitleBar.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.TitleBar.FooterProperty.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.TitleBar.FooterProperty",
+      "Summary": "<p sourcefile=\"obj/api/WinUIEx.TitleBar.yml\" sourcestartlinenumber=\"1\">Identifies the <xref href=\"WinUIEx.TitleBar.Footer\" data-throw-if-not-resolved=\"false\"></xref> dependency property.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.TitleBar.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.TitleBar.IsBackButtonVisibleProperty.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.TitleBar.IsBackButtonVisibleProperty",
+      "Summary": "<p sourcefile=\"obj/api/WinUIEx.TitleBar.yml\" sourcestartlinenumber=\"1\">Identifies the <xref href=\"WinUIEx.TitleBar.IsBackButtonVisible\" data-throw-if-not-resolved=\"false\"></xref> dependency property.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.TitleBar.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.TitleBar.IsBackEnabledProperty.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.TitleBar.IsBackEnabledProperty",
+      "Summary": "<p sourcefile=\"obj/api/WinUIEx.TitleBar.yml\" sourcestartlinenumber=\"1\">Identifies the <xref href=\"WinUIEx.TitleBar.IsBackEnabled\" data-throw-if-not-resolved=\"false\"></xref> dependency property.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.TitleBar.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.TitleBar.IsPaneToggleButtonVisibleProperty.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.TitleBar.IsPaneToggleButtonVisibleProperty",
+      "Summary": "<p sourcefile=\"obj/api/WinUIEx.TitleBar.yml\" sourcestartlinenumber=\"1\">Identifies the <xref href=\"WinUIEx.TitleBar.IsPaneToggleButtonVisible\" data-throw-if-not-resolved=\"false\"></xref> dependency property.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.TitleBar.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.TitleBar.TemplateSettingsProperty.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.TitleBar.TemplateSettingsProperty",
+      "Summary": "<p sourcefile=\"obj/api/WinUIEx.TitleBar.yml\" sourcestartlinenumber=\"1\">Identifies the <xref href=\"WinUIEx.TitleBar.TemplateSettings\" data-throw-if-not-resolved=\"false\"></xref> dependency property.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.TitleBar.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.TitleBar.BackRequested.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.TitleBar.BackRequested",
+      "Summary": "<p sourcefile=\"obj/api/WinUIEx.TitleBar.yml\" sourcestartlinenumber=\"1\">Raised when the back button is clicked</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.TitleBar.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.TitleBar.IsPaneToggleButtonVisible.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.TitleBar.IsPaneToggleButtonVisible",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.TitleBar.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.TitleBar.PaneToggleRequested.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.TitleBar.PaneToggleRequested",
+      "Summary": "<p sourcefile=\"obj/api/WinUIEx.TitleBar.yml\" sourcestartlinenumber=\"1\">Raised when the Pane toggle button is clicked</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.TitleBar.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.TitleBar.Title.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.TitleBar.Title",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.TitleBar.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.TitleBar.ContentProperty.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.TitleBar.ContentProperty",
+      "Summary": "<p sourcefile=\"obj/api/WinUIEx.TitleBar.yml\" sourcestartlinenumber=\"1\">Identifies the <xref href=\"WinUIEx.TitleBar.Content\" data-throw-if-not-resolved=\"false\"></xref> dependency property.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.TitleBar.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.TitleBar.-ctor.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.TitleBar.TitleBar",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.TitleBar.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.TitleBar.OnApplyTemplate.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.TitleBar.OnApplyTemplate",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.TitleBar.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.TitleBar.IconSource.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.TitleBar.IconSource",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.TitleBar.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.TitleBar.IconSourceProperty.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.TitleBar.IconSourceProperty",
+      "Summary": "<p sourcefile=\"obj/api/WinUIEx.TitleBar.yml\" sourcestartlinenumber=\"1\">Identifies the <xref href=\"WinUIEx.TitleBar.IconSource\" data-throw-if-not-resolved=\"false\"></xref> dependency property.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.TitleBar.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.TitleBar.HeaderProperty.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.TitleBar.HeaderProperty",
+      "Summary": "<p sourcefile=\"obj/api/WinUIEx.TitleBar.yml\" sourcestartlinenumber=\"1\">Identifies the <xref href=\"WinUIEx.TitleBar.Header\" data-throw-if-not-resolved=\"false\"></xref> dependency property.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.TitleBar.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.TitleBar.TitleProperty.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.TitleBar.TitleProperty",
+      "Summary": "<p sourcefile=\"obj/api/WinUIEx.TitleBar.yml\" sourcestartlinenumber=\"1\">Identifies the <xref href=\"WinUIEx.TitleBar.Title\" data-throw-if-not-resolved=\"false\"></xref> dependency property.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.TitleBar.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.TitleBar.SubtitleProperty.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.TitleBar.SubtitleProperty",
+      "Summary": "<p sourcefile=\"obj/api/WinUIEx.TitleBar.yml\" sourcestartlinenumber=\"1\">Identifies the <xref href=\"WinUIEx.TitleBar.Subtitle\" data-throw-if-not-resolved=\"false\"></xref> dependency property.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.TitleBar.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.TitleBar.Finalize.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.TitleBar.~TitleBar",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.TitleBar.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.TitleBar.TemplateSettings.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.TitleBar.TemplateSettings",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.TitleBar.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.TitleBar.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.TitleBar",
+      "Summary": "<p sourcefile=\"obj/api/WinUIEx.TitleBar.yml\" sourcestartlinenumber=\"1\">TitleBar control.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.TitleBar.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.TitleBar.OnCreateAutomationPeer.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.TitleBar.OnCreateAutomationPeer",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.TitleBarAutomationPeer.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.TitleBarAutomationPeer.GetNameCore.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.TitleBarAutomationPeer.GetNameCore",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.TitleBarAutomationPeer.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.TitleBarAutomationPeer.GetClassNameCore.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.TitleBarAutomationPeer.GetClassNameCore",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.TitleBarAutomationPeer.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.TitleBarAutomationPeer.GetAutomationControlTypeCore.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.TitleBarAutomationPeer.GetAutomationControlTypeCore",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.TitleBarAutomationPeer.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.TitleBarAutomationPeer.-ctor.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.TitleBarAutomationPeer.TitleBarAutomationPeer",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.TitleBarAutomationPeer.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.TitleBarAutomationPeer.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.TitleBarAutomationPeer",
+      "Summary": "<p sourcefile=\"obj/api/WinUIEx.TitleBarAutomationPeer.yml\" sourcestartlinenumber=\"1\">Automation peer for the <xref href=\"WinUIEx.TitleBar\" data-throw-if-not-resolved=\"false\"></xref> control.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.TitleBarTemplateSettings.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.TitleBarTemplateSettings.-ctor.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.TitleBarTemplateSettings.TitleBarTemplateSettings",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.TitleBarTemplateSettings.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.TitleBarTemplateSettings.IconElement.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.TitleBarTemplateSettings.IconElement",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.TitleBarTemplateSettings.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.TitleBarTemplateSettings.IconElementProperty.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.TitleBarTemplateSettings.IconElementProperty",
+      "Summary": "<p sourcefile=\"obj/api/WinUIEx.TitleBarTemplateSettings.yml\" sourcestartlinenumber=\"1\">Identifies the <xref href=\"WinUIEx.TitleBarTemplateSettings.IconElement\" data-throw-if-not-resolved=\"false\"></xref> dependency property.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.TitleBarTemplateSettings.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.TitleBarTemplateSettings.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.TitleBarTemplateSettings",
+      "Summary": "<p sourcefile=\"obj/api/WinUIEx.TitleBarTemplateSettings.yml\" sourcestartlinenumber=\"1\">Class used to forward the IconElement property to the template.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.TransparentTintBackdrop.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.TransparentTintBackdrop.-ctor.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.TransparentTintBackdrop.TransparentTintBackdrop",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.TransparentTintBackdrop.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.TransparentTintBackdrop.TintColor.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.TransparentTintBackdrop.TintColor",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.TransparentTintBackdrop.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.TransparentTintBackdrop.CreateBrush.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.TransparentTintBackdrop.CreateBrush",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.TransparentTintBackdrop.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.TransparentTintBackdrop.OnTargetConnected.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.TransparentTintBackdrop.OnTargetConnected",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.TransparentTintBackdrop.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.TransparentTintBackdrop.OnTargetDisconnected.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.TransparentTintBackdrop.OnTargetDisconnected",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.TransparentTintBackdrop.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.TransparentTintBackdrop.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.TransparentTintBackdrop",
+      "Summary": "<p sourcefile=\"obj/api/WinUIEx.TransparentTintBackdrop.yml\" sourcestartlinenumber=\"1\">A custom backdrop that make the window completely transparent.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.TrayIcon.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.TrayIcon.Finalize.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.TrayIcon.~TrayIcon",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.TrayIcon.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.TrayIcon.Dispose.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.TrayIcon.Dispose",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.TrayIcon.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.TrayIcon.-ctor.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.TrayIcon.TrayIcon",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.TrayIcon.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.TrayIcon.IsVisible.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.TrayIcon.IsVisible",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.TrayIcon.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.TrayIcon.TrayIconId.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.TrayIcon.TrayIconId",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.TrayIcon.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.TrayIcon.CloseFlyout.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.TrayIcon.CloseFlyout",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.TrayIcon.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.TrayIcon.Tooltip.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.TrayIcon.Tooltip",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.TrayIcon.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.TrayIcon.SetIcon.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.TrayIcon.SetIcon",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.TrayIcon.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.TrayIcon.Selected.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.TrayIcon.Selected",
+      "Summary": "<p sourcefile=\"obj/api/WinUIEx.TrayIcon.yml\" sourcestartlinenumber=\"1\">Occurs when the user clicks the left mouse button on the tray icon or selects it via the keyboard.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.TrayIcon.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.TrayIcon.ContextMenu.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.TrayIcon.ContextMenu",
+      "Summary": "<p sourcefile=\"obj/api/WinUIEx.TrayIcon.yml\" sourcestartlinenumber=\"1\">Occurs when the user right-clicks the tray icon or selects the context menu from the keyboard.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.TrayIcon.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.TrayIcon.LeftDoubleClick.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.TrayIcon.LeftDoubleClick",
+      "Summary": "<p sourcefile=\"obj/api/WinUIEx.TrayIcon.yml\" sourcestartlinenumber=\"1\">Occurs when the user double-clicks the left mouse button on the tray icon.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.TrayIcon.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.TrayIcon.RightDoubleClick.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.TrayIcon.RightDoubleClick",
+      "Summary": "<p sourcefile=\"obj/api/WinUIEx.TrayIcon.yml\" sourcestartlinenumber=\"1\">Occurs when the user double-clicks the tray icon with the right mouse button.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.TrayIcon.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.TrayIcon.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.TrayIcon",
+      "Summary": "<p sourcefile=\"obj/api/WinUIEx.TrayIcon.yml\" sourcestartlinenumber=\"1\">Represents an application icon displayed in the Windows system tray, providing functionality to show, update, and\ninteract with a tray icon and its associated tooltip and events.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.TrayIconEventArgs.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.TrayIconEventArgs.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.TrayIconEventArgs",
+      "Summary": "<p sourcefile=\"obj/api/WinUIEx.TrayIconEventArgs.yml\" sourcestartlinenumber=\"1\">Provides data for events related to the tray icon, including information about the associated flyout to display.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.TrayIconEventArgs.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.TrayIconEventArgs.Flyout.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.TrayIconEventArgs.Flyout",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.TrayIconEventArgs.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.TrayIconEventArgs.Handled.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.TrayIconEventArgs.Handled",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WebAuthenticator.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WebAuthenticator.CheckOAuthRedirectionActivation.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WebAuthenticator.CheckOAuthRedirectionActivation",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WebAuthenticator.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WebAuthenticator.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WebAuthenticator",
+      "Summary": "<p sourcefile=\"obj/api/WinUIEx.WebAuthenticator.yml\" sourcestartlinenumber=\"1\">Handles OAuth redirection to the system browser and re-activation.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WebAuthenticator.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WebAuthenticator.AuthenticateAsync.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WebAuthenticator.AuthenticateAsync",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WebAuthenticatorResult.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WebAuthenticatorResult.-ctor.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WebAuthenticatorResult.WebAuthenticatorResult",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WebAuthenticatorResult.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WebAuthenticatorResult.Properties.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WebAuthenticatorResult.Properties",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WebAuthenticatorResult.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WebAuthenticatorResult.AccessToken.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WebAuthenticatorResult.AccessToken",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WebAuthenticatorResult.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WebAuthenticatorResult.RefreshToken.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WebAuthenticatorResult.RefreshToken",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WebAuthenticatorResult.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WebAuthenticatorResult.IdToken.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WebAuthenticatorResult.IdToken",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WebAuthenticatorResult.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WebAuthenticatorResult.RefreshTokenExpiresIn.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WebAuthenticatorResult.RefreshTokenExpiresIn",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WebAuthenticatorResult.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WebAuthenticatorResult.ExpiresIn.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WebAuthenticatorResult.ExpiresIn",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WebAuthenticatorResult.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WebAuthenticatorResult.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WebAuthenticatorResult",
+      "Summary": "<p sourcefile=\"obj/api/WinUIEx.WebAuthenticatorResult.yml\" sourcestartlinenumber=\"1\">Web Authenticator result parsed from the callback Url.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowEx.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowEx.TaskBarIcon.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowEx.TaskBarIcon",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowEx.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowEx.Title.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowEx.Title",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowEx.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowEx.BringToFront.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowEx.BringToFront",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowEx.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowEx.IsMinimizable.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowEx.IsMinimizable",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowEx.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowEx.ShowMessageDialogAsync.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowEx.ShowMessageDialogAsync",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowEx.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowEx.-ctor.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowEx.WindowEx",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowEx.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowEx.PersistenceId.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowEx.PersistenceId",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowEx.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowEx.AppWindow.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowEx.AppWindow",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowEx.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowEx.IsTitleBarVisible.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowEx.IsTitleBarVisible",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowEx.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowEx.WindowState.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowEx.WindowState",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowEx.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowEx.MinWidth.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowEx.MinWidth",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowEx.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowEx.Presenter.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowEx.Presenter",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowEx.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowEx.PresenterKind.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowEx.PresenterKind",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowEx.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowEx.Width.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowEx.Width",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowEx.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowEx.Height.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowEx.Height",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowEx.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowEx.OnStateChanged.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowEx.OnStateChanged",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowEx.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowEx.MinHeight.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowEx.MinHeight",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowEx.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowEx.MaxWidth.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowEx.MaxWidth",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowEx.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowEx.MaxHeight.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowEx.MaxHeight",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowEx.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowEx.OnPositionChanged.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowEx.OnPositionChanged",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowEx.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowEx.OnPresenterChanged.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowEx.OnPresenterChanged",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowEx.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowEx.OnZOrderChanged.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowEx.OnZOrderChanged",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowEx.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowEx.OnSizeChanged.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowEx.OnSizeChanged",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowEx.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowEx.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowEx",
+      "Summary": "<p sourcefile=\"obj/api/WinUIEx.WindowEx.yml\" sourcestartlinenumber=\"1\">A custom WinUI Window with more convenience methods</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowEx.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowEx.ZOrderChanged.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowEx.ZOrderChanged",
+      "Summary": "<p sourcefile=\"obj/api/WinUIEx.WindowEx.yml\" sourcestartlinenumber=\"1\">Raised if the Z order of the window changed.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowEx.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowEx.PresenterChanged.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowEx.PresenterChanged",
+      "Summary": "<p sourcefile=\"obj/api/WinUIEx.WindowEx.yml\" sourcestartlinenumber=\"1\">Raised if the presenter for the window changed.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowEx.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowEx.PositionChanged.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowEx.PositionChanged",
+      "Summary": "<p sourcefile=\"obj/api/WinUIEx.WindowEx.yml\" sourcestartlinenumber=\"1\">Raised if the window position changes.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowEx.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowEx.WindowStateChanged.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowEx.WindowStateChanged",
+      "Summary": "<p sourcefile=\"obj/api/WinUIEx.WindowEx.yml\" sourcestartlinenumber=\"1\">Occurs when the window's <xref href=\"WinUIEx.WindowEx.WindowState\" data-throw-if-not-resolved=\"false\"></xref> property changes.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowEx.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowEx.WindowContent.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowEx.WindowContent",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowEx.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowEx.IsVisibleInTray.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowEx.IsVisibleInTray",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowEx.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowEx.IsResizable.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowEx.IsResizable",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowEx.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowEx.IsMaximizable.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowEx.IsMaximizable",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowEx.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowEx.IsAlwaysOnTop.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowEx.IsAlwaysOnTop",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowEx.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowEx.IsShownInSwitchers.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowEx.IsShownInSwitchers",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowExtensions.GetIsResizable.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowExtensions.GetIsResizable",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowExtensions.GetAppWindow.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowExtensions.GetAppWindow",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowExtensions.GetDpiForWindow.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowExtensions.GetDpiForWindow",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowExtensions.SetForegroundWindow.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowExtensions.SetForegroundWindow",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowExtensions.SetIsAlwaysOnTop.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowExtensions.SetIsAlwaysOnTop",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowExtensions.GetIsAlwaysOnTop.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowExtensions.GetIsAlwaysOnTop",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowExtensions.SetIsResizable.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowExtensions.SetIsResizable",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowExtensions.GetIsMinimizable.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowExtensions.GetIsMinimizable",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowExtensions.SetIsMinimizable.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowExtensions.SetIsMinimizable",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowExtensions.SetIsMaximizable.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowExtensions.SetIsMaximizable",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowExtensions.GetIsMaximizable.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowExtensions.GetIsMaximizable",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowExtensions.CenterOnScreen.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowExtensions.CenterOnScreen",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowExtensions.SetIcon.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowExtensions.SetIcon",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowExtensions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowExtensions",
+      "Summary": "<p sourcefile=\"obj/api/WinUIEx.WindowExtensions.yml\" sourcestartlinenumber=\"1\">WinUI Window Extension Methods</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowExtensions.CreateFolderPicker.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowExtensions.CreateFolderPicker",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowExtensions.CreateSaveFilePicker.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowExtensions.CreateSaveFilePicker",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowExtensions.CreateOpenFilePicker.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowExtensions.CreateOpenFilePicker",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowExtensions.CreateMessageDialog.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowExtensions.CreateMessageDialog",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowExtensions.SetRegion.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowExtensions.SetRegion",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowExtensions.SetWindowOpacity.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowExtensions.SetWindowOpacity",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowExtensions.ToggleExtendedWindowStyle.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowExtensions.ToggleExtendedWindowStyle",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowExtensions.SetExtendedWindowStyle.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowExtensions.SetExtendedWindowStyle",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowExtensions.GetExtendedWindowStyle.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowExtensions.GetExtendedWindowStyle",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowExtensions.SetWindowStyle.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowExtensions.SetWindowStyle",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowExtensions.GetWindowStyle.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowExtensions.GetWindowStyle",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowExtensions.ToggleWindowStyle.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowExtensions.ToggleWindowStyle",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowExtensions.SetTaskBarIcon.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowExtensions.SetTaskBarIcon",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowExtensions.MoveAndResize.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowExtensions.MoveAndResize",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowExtensions.Move.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowExtensions.Move",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowExtensions.SetWindowSize.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowExtensions.SetWindowSize",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowExtensions.SetTitleBarBackgroundColors.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowExtensions.SetTitleBarBackgroundColors",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowExtensions.GetWindowHandle.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowExtensions.GetWindowHandle",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowExtensions.GetAppWindowFromWindowHandle.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowExtensions.GetAppWindowFromWindowHandle",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowExtensions.SetWindowPresenter.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowExtensions.SetWindowPresenter",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowExtensions.Hide.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowExtensions.Hide",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowExtensions.Maximize.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowExtensions.Maximize",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowExtensions.Minimize.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowExtensions.Minimize",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowExtensions.Restore.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowExtensions.Restore",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowExtensions.Show.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowExtensions.Show",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowExtensions.SetIsShownInSwitchers.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowExtensions.SetIsShownInSwitchers",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowManager.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowManager.Height.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowManager.Height",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowManager.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowManager.Get.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowManager.Get",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowManager.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowManager.Finalize.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowManager.~WindowManager",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowManager.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowManager.Dispose.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowManager.Dispose",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowManager.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowManager.AppWindow.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowManager.AppWindow",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowManager.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowManager.Width.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowManager.Width",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowManager.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowManager.MinWidth.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowManager.MinWidth",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowManager.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowManager.MaxWidth.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowManager.MaxWidth",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowManager.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowManager.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowManager",
+      "Summary": "<p sourcefile=\"obj/api/WinUIEx.WindowManager.yml\" sourcestartlinenumber=\"1\">Manages Window size, and ensures window correctly resizes during DPI changes to keep consistent\nDPI-independent sizing.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowManager.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowManager.TrayIconId.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowManager.TrayIconId",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowManager.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowManager.IsVisibleInTray.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowManager.IsVisibleInTray",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowManager.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowManager.PresenterKind.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowManager.PresenterKind",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowManager.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowManager.MinHeight.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowManager.MinHeight",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowManager.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowManager.IsResizable.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowManager.IsResizable",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowManager.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowManager.IsMaximizable.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowManager.IsMaximizable",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowManager.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowManager.IsMinimizable.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowManager.IsMinimizable",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowManager.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowManager.IsTitleBarVisible.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowManager.IsTitleBarVisible",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowManager.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowManager.PersistenceStorage.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowManager.PersistenceStorage",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowManager.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowManager.IsAlwaysOnTop.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowManager.IsAlwaysOnTop",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowManager.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowManager.TrayIconContextMenu.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowManager.TrayIconContextMenu",
+      "Summary": "<p sourcefile=\"obj/api/WinUIEx.WindowManager.yml\" sourcestartlinenumber=\"1\">Occurs when the user right-clicks the tray icon.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowManager.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowManager.TrayIconSelected.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowManager.TrayIconSelected",
+      "Summary": "<p sourcefile=\"obj/api/WinUIEx.WindowManager.yml\" sourcestartlinenumber=\"1\">Occurs when the user clicks the left mouse button on the tray icon.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowManager.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowManager.ZOrderChanged.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowManager.ZOrderChanged",
+      "Summary": "<p sourcefile=\"obj/api/WinUIEx.WindowManager.yml\" sourcestartlinenumber=\"1\">Raised if the Z order of the window changes.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowManager.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowManager.PresenterChanged.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowManager.PresenterChanged",
+      "Summary": "<p sourcefile=\"obj/api/WinUIEx.WindowManager.yml\" sourcestartlinenumber=\"1\">Raised if the presenter for the window changes.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowManager.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowManager.PositionChanged.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowManager.PositionChanged",
+      "Summary": "<p sourcefile=\"obj/api/WinUIEx.WindowManager.yml\" sourcestartlinenumber=\"1\">Raised if the window position changes.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowManager.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowManager.WindowMessageReceived.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowManager.WindowMessageReceived",
+      "Summary": "<p sourcefile=\"obj/api/WinUIEx.WindowManager.yml\" sourcestartlinenumber=\"1\">Event raised when a windows message is received.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowManager.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowManager.WindowStateChanged.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowManager.WindowStateChanged",
+      "Summary": "<p sourcefile=\"obj/api/WinUIEx.WindowManager.yml\" sourcestartlinenumber=\"1\">Occurs when the window's <xref href=\"WinUIEx.WindowManager.WindowState\" data-throw-if-not-resolved=\"false\"></xref> property changes.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowManager.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowManager.WindowState.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowManager.WindowState",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowManager.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowManager.MaxHeight.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowManager.MaxHeight",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowManager.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowManager.PersistenceId.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowManager.PersistenceId",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowState.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowState.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowState",
+      "Summary": "<p sourcefile=\"obj/api/WinUIEx.WindowState.yml\" sourcestartlinenumber=\"1\">Specifies whether a window is minimized, maximized, or restored. Used by the <xref href=\"WinUIEx.WindowManager.WindowState\" data-throw-if-not-resolved=\"false\"></xref> property.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.WindowStyle.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.WindowStyle.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.WindowStyle",
+      "Summary": "<p sourcefile=\"obj/api/WinUIEx.WindowStyle.yml\" sourcestartlinenumber=\"1\">Flags used for ToggleWindowStyle method</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.ZOrderInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.ZOrderInfo.IsZOrderAtBottom.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.ZOrderInfo.IsZOrderAtBottom",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.ZOrderInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.ZOrderInfo.ZOrderBelowWindowId.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.ZOrderInfo.ZOrderBelowWindowId",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.ZOrderInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.ZOrderInfo.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.ZOrderInfo",
+      "Summary": "<p sourcefile=\"obj/api/WinUIEx.ZOrderInfo.yml\" sourcestartlinenumber=\"1\">Information about the ZOrder of the window</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.ZOrderInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.ZOrderInfo.IsZOrderAtTop.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx.ZOrderInfo.IsZOrderAtTop",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/WinUIEx.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinUIEx.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinUIEx",
+      "Summary": null
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "obj/api/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/toc.html"
+        },
+        ".json": {
+          "relative_path": "api/toc.json"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "rules/WinUIEx1001.md",
+      "output": {
+        ".html": {
+          "relative_path": "rules/WinUIEx1001.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "rules/WinUIEx1002.md",
+      "output": {
+        ".html": {
+          "relative_path": "rules/WinUIEx1002.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "toc.html"
+        },
+        ".json": {
+          "relative_path": "toc.json"
+        }
+      },
+      "version": ""
+    }
+  ],
+  "groups": [
+    {
+      "xrefmap": "xrefmap.yml"
+    }
+  ]
+}

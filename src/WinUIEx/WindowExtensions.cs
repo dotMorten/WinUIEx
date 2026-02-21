@@ -1,11 +1,8 @@
-﻿using System;
-using System.Runtime.InteropServices;
-using Microsoft.UI;
-using Microsoft.UI.Content;
+﻿using Microsoft.UI;
 using Microsoft.UI.Windowing;
-using Windows.Graphics;
+using System;
+using System.Runtime.InteropServices;
 using Windows.Win32;
-using Windows.Win32.Graphics.Gdi;
 
 namespace WinUIEx
 {
@@ -20,10 +17,7 @@ namespace WinUIEx
 		/// <param name="window"></param>
 		/// <returns></returns>
 		[Obsolete("Use Microsoft.UI.Xaml.Window.AppWindow")]
-		public static AppWindow GetAppWindow(this Microsoft.UI.Xaml.Window window)
-		{
-			return window.AppWindow;
-		}
+		public static AppWindow GetAppWindow(this Microsoft.UI.Xaml.Window window) => window.AppWindow;
 
 		/// <summary>Returns the dots per inch (dpi) value for the associated window.</summary>
 		/// <param name = "window">The window you want to get information about.</param>
@@ -31,10 +25,7 @@ namespace WinUIEx
 		/// <remarks>
 		/// <para><see href = "https://docs.microsoft.com/windows/win32/api//winuser/nf-winuser-getdpiforwindow">Learn more about this API from docs.microsoft.com</see>.</para>
 		/// </remarks>
-		public static uint GetDpiForWindow(this Microsoft.UI.Xaml.Window window)
-		{
-			return HwndExtensions.GetDpiForWindow(window.GetWindowHandle());
-		}
+		public static uint GetDpiForWindow(this Microsoft.UI.Xaml.Window window) => HwndExtensions.GetDpiForWindow(window.GetWindowHandle());
 
 		/// <summary>Brings the thread that created the specified window into the foreground and activates the window.</summary>
 		/// <param name="window">
@@ -44,10 +35,7 @@ namespace WinUIEx
 		/// <para><c>true</c> if the window was brought to the foreground.</para>
 		/// <para><c>false</c> if the window was not brought to the foreground.</para>
 		/// </returns>
-		public static bool SetForegroundWindow(this Microsoft.UI.Xaml.Window window)
-		{
-			return HwndExtensions.SetForegroundWindow(window.GetWindowHandle());
-		}
+		public static bool SetForegroundWindow(this Microsoft.UI.Xaml.Window window) => HwndExtensions.SetForegroundWindow(window.GetWindowHandle());
 
 		/// <summary>
 		/// Configures whether the window should always be displayed on top of other windows or not
@@ -56,20 +44,14 @@ namespace WinUIEx
 		/// <exception cref="NotSupportedException">Throw if the AppWindow Presenter isn't an overlapped presenter.</exception>
 		/// <param name="window">Window</param>
 		/// <param name="enable">Whether to display on top</param>
-		public static void SetIsAlwaysOnTop(this Microsoft.UI.Xaml.Window window, bool enable)
-		{
-			window.UpdateOverlappedPresenter((c) => c.IsAlwaysOnTop = enable);
-		}
+		public static void SetIsAlwaysOnTop(this Microsoft.UI.Xaml.Window window, bool enable) => window.UpdateOverlappedPresenter((c) => c.IsAlwaysOnTop = enable);
 
 		/// <summary>
 		/// Gets a value indicating whether this window is on top or not.
 		/// </summary>
 		/// <param name="window">window</param>
 		/// <returns><c>True</c> if the overlapped presenter is on top, otherwise <c>false</c>.</returns>
-		public static bool GetIsAlwaysOnTop(this Microsoft.UI.Xaml.Window window)
-		{
-			return window.GetOverlappedPresenterValue((c) => c?.IsAlwaysOnTop ?? false);
-		}
+		public static bool GetIsAlwaysOnTop(this Microsoft.UI.Xaml.Window window) => window.GetOverlappedPresenterValue((c) => c?.IsAlwaysOnTop ?? false);
 
 		/// <summary>
 		/// Enables or disables the ability to resize the window.
@@ -78,20 +60,14 @@ namespace WinUIEx
 		/// <exception cref="NotSupportedException">Throw if the AppWindow Presenter isn't an overlapped presenter.</exception>
 		/// <param name="window"></param>
 		/// <param name="enable"></param>
-		public static void SetIsResizable(this Microsoft.UI.Xaml.Window window, bool enable)
-		{
-			window.UpdateOverlappedPresenter((c) => c.IsResizable = enable);
-		}
+		public static void SetIsResizable(this Microsoft.UI.Xaml.Window window, bool enable) => window.UpdateOverlappedPresenter((c) => c.IsResizable = enable);
 
 		/// <summary>
 		/// Gets a value indicating whether this resizable or not.
 		/// </summary>
 		/// <param name="window">window</param>
 		/// <returns><c>True</c> if the overlapped presenter is resizeable, otherwise <c>false</c>.</returns>
-		public static bool GetIsResizable(this Microsoft.UI.Xaml.Window window)
-		{
-			return GetOverlappedPresenterValue(window, (c) => c?.IsResizable ?? false);
-		}
+		public static bool GetIsResizable(this Microsoft.UI.Xaml.Window window) => GetOverlappedPresenterValue(window, (c) => c?.IsResizable ?? false);
 
 		/// <summary>
 		/// </summary>
@@ -99,20 +75,14 @@ namespace WinUIEx
 		/// <exception cref="NotSupportedException">Throw if the AppWindow Presenter isn't an overlapped presenter.</exception>
 		/// <param name="window">window</param>
 		/// <param name="enable"><c>true</c> if this window should be maximizable.</param>
-		public static void SetIsMaximizable(this Microsoft.UI.Xaml.Window window, bool enable)
-		{
-			window.UpdateOverlappedPresenter((c) => c.IsMaximizable = enable);
-		}
+		public static void SetIsMaximizable(this Microsoft.UI.Xaml.Window window, bool enable) => window.UpdateOverlappedPresenter((c) => c.IsMaximizable = enable);
 
 		/// <summary>
 		/// Gets a value indicating whether this window is maximizeable or not.
 		/// </summary>
 		/// <param name="window">window</param>
 		/// <returns><c>True</c> if the overlapped presenter is on maximizable, otherwise <c>false</c>.</returns>
-		public static bool GetIsMaximizable(this Microsoft.UI.Xaml.Window window)
-		{
-			return GetOverlappedPresenterValue(window, (c) => c?.IsMaximizable ?? false);
-		}
+		public static bool GetIsMaximizable(this Microsoft.UI.Xaml.Window window) => GetOverlappedPresenterValue(window, (c) => c?.IsMaximizable ?? false);
 
 		/// <summary>
 		/// </summary>
@@ -120,20 +90,14 @@ namespace WinUIEx
 		/// <exception cref="NotSupportedException">Throw if the AppWindow Presenter isn't an overlapped presenter.</exception>
 		/// <param name="window">window</param>
 		/// <param name="enable"><c>true</c> if this window should be minimizable.</param>
-		public static void SetIsMinimizable(this Microsoft.UI.Xaml.Window window, bool enable)
-		{
-			window.UpdateOverlappedPresenter((c) => c.IsMinimizable = enable);
-		}
+		public static void SetIsMinimizable(this Microsoft.UI.Xaml.Window window, bool enable) => window.UpdateOverlappedPresenter((c) => c.IsMinimizable = enable);
 
 		/// <summary>
 		/// Gets a value indicating whether this window is minimizeable or not.
 		/// </summary>
 		/// <param name="window">window</param>
 		/// <returns><c>True</c> if the overlapped presenter is on minimizable, otherwise <c>false</c>.</returns>
-		public static bool GetIsMinimizable(this Microsoft.UI.Xaml.Window window)
-		{
-			return GetOverlappedPresenterValue(window, (c) => c?.IsMinimizable ?? false);
-		}
+		public static bool GetIsMinimizable(this Microsoft.UI.Xaml.Window window) => GetOverlappedPresenterValue(window, (c) => c?.IsMinimizable ?? false);
 
 		/// <summary>
 		/// Enables or disables showing the window in the task switchers.
@@ -141,46 +105,30 @@ namespace WinUIEx
 		/// <param name="window">window</param>
 		/// <param name="enable"><c>true</c> if this window should be shown in the task switchers, otherwise <c>false</c>.</param>
 		[Obsolete("Use AppWindow.IsShownInSwitchers")]
-		public static void SetIsShownInSwitchers(this Microsoft.UI.Xaml.Window window, bool enable)
-		{
-			window.AppWindow.IsShownInSwitchers = enable;
-		}
+		public static void SetIsShownInSwitchers(this Microsoft.UI.Xaml.Window window, bool enable) => window.AppWindow.IsShownInSwitchers = enable;
 
 		/// <summary>
 		/// Sets the icon for the window, using the specified icon ID.
 		/// </summary>
 		/// <param name="window">Window</param>
 		/// <param name="iconId">The ID of the icon.</param>
-		public static void SetIcon(this Microsoft.UI.Xaml.Window window, IconId iconId)
-		{
-			HwndExtensions.SetIcon(window.GetWindowHandle(), iconId);
-		}
+		public static void SetIcon(this Microsoft.UI.Xaml.Window window, IconId iconId) => HwndExtensions.SetIcon(window.GetWindowHandle(), iconId);
 
 		private static void UpdateOverlappedPresenter(this Microsoft.UI.Xaml.Window window, Action<OverlappedPresenter> action)
 		{
 			if (window is null)
-			{
 				throw new ArgumentNullException(nameof(window));
-			}
-
-			AppWindow appwindow = window.AppWindow;
+			var appwindow = window.AppWindow;
 			if (appwindow.Presenter is OverlappedPresenter overlapped)
-			{
 				action(overlapped);
-			}
 			else
-			{
 				throw new NotSupportedException($"Not supported with a {appwindow.Presenter.Kind} presenter");
-			}
 		}
 		private static T GetOverlappedPresenterValue<T>(this Microsoft.UI.Xaml.Window window, Func<OverlappedPresenter?, T> action)
 		{
 			if (window is null)
-			{
 				throw new ArgumentNullException(nameof(window));
-			}
-
-			AppWindow appwindow = window.AppWindow;
+			var appwindow = window.AppWindow;
 			return action(appwindow.Presenter as OverlappedPresenter);
 		}
 
@@ -191,9 +139,7 @@ namespace WinUIEx
 		/// <param name="width">Width of the window in device independent pixels, or <c>null</c> if keeping the current size</param>
 		/// <param name="height">Height of the window in device independent pixels, or <c>null</c> if keeping the current size</param>
 		public static void CenterOnScreen(this Microsoft.UI.Xaml.Window window, double? width = null, double? height = null)
-		{
-			HwndExtensions.CenterOnScreen(window.GetWindowHandle(), width, height);
-		}
+			=> HwndExtensions.CenterOnScreen(window.GetWindowHandle(), width, height);
 
 		/// <summary>
 		/// Positions and resizes the window
@@ -205,7 +151,7 @@ namespace WinUIEx
 		/// <param name="height">Height of the window in device independent pixels.</param>
 		public static void MoveAndResize(this Microsoft.UI.Xaml.Window window, double x, double y, double width, double height)
 		{
-			float scale = HwndExtensions.GetDpiForWindow(window.GetWindowHandle()) / 96f;
+			var scale = HwndExtensions.GetDpiForWindow(window.GetWindowHandle()) / 96f;
 			window.AppWindow.MoveAndResize(new Windows.Graphics.RectInt32((int)x, (int)y, (int)(width * scale), (int)(height * scale)));
 		}
 
@@ -228,7 +174,7 @@ namespace WinUIEx
 		/// <param name="height">Height of the window in device-independent units.</param>
 		public static void SetWindowSize(this Microsoft.UI.Xaml.Window window, double width, double height)
 		{
-			float scale = HwndExtensions.GetDpiForWindow(window.GetWindowHandle()) / 96f;
+			var scale = HwndExtensions.GetDpiForWindow(window.GetWindowHandle()) / 96f;
 			window.AppWindow.Resize(new Windows.Graphics.SizeInt32((int)(width * scale), (int)(height * scale)));
 		}
 
@@ -237,10 +183,7 @@ namespace WinUIEx
 		/// </summary>
 		/// <param name="window"></param>
 		/// <param name="kind"></param>
-		public static void SetWindowPresenter(this Microsoft.UI.Xaml.Window window, AppWindowPresenterKind kind)
-		{
-			window.AppWindow.SetPresenter(kind);
-		}
+		public static void SetWindowPresenter(this Microsoft.UI.Xaml.Window window, AppWindowPresenterKind kind) => window.AppWindow.SetPresenter(kind);
 
 		/// <summary>
 		/// Gets the native HWND pointer handle for the window
@@ -248,9 +191,7 @@ namespace WinUIEx
 		/// <param name="window">The window to return the handle for</param>
 		/// <returns>HWND handle</returns>
 		public static IntPtr GetWindowHandle(this Microsoft.UI.Xaml.Window window)
-		{
-			return window is null ? throw new ArgumentNullException(nameof(window)) : WinRT.Interop.WindowNative.GetWindowHandle(window);
-		}
+			=> window is null ? throw new ArgumentNullException(nameof(window)) : WinRT.Interop.WindowNative.GetWindowHandle(window);
 
 		[DllImport("Microsoft.Internal.FrameworkUdk.dll", EntryPoint = "Windowing_GetWindowHandleFromWindowId", CharSet = CharSet.Unicode)]
 		private static extern IntPtr GetWindowHandleFromWindowId(WindowId windowId, out IntPtr result);
@@ -262,7 +203,8 @@ namespace WinUIEx
 		/// <returns>Window HWND handle</returns>
 		public static IntPtr GetWindowHandle(this WindowId windowId)
 		{
-			_ = GetWindowHandleFromWindowId(windowId, out nint hwnd);
+			IntPtr hwnd;
+			GetWindowHandleFromWindowId(windowId, out hwnd);
 			return hwnd;
 		}
 
@@ -274,10 +216,7 @@ namespace WinUIEx
 		public static AppWindow GetAppWindowFromWindowHandle(IntPtr hwnd)
 		{
 			if (hwnd == IntPtr.Zero)
-			{
 				throw new ArgumentNullException(nameof(hwnd));
-			}
-
 			WindowId windowId = Win32Interop.GetWindowIdFromWindow(hwnd);
 			return AppWindow.GetFromWindowId(windowId);
 		}
@@ -312,10 +251,7 @@ namespace WinUIEx
 		/// <remarks>The presenter must be an overlapped presenter.</remarks>
 		/// <exception cref="NotSupportedException">Throw if the AppWindow Presenter isn't an overlapped presenter.</exception>
 		/// <param name="window">Window</param>
-		public static void Maximize(this Microsoft.UI.Xaml.Window window)
-		{
-			UpdateOverlappedPresenter(window, (c) => c.Maximize());
-		}
+		public static void Maximize(this Microsoft.UI.Xaml.Window window) => UpdateOverlappedPresenter(window, (c) => c.Maximize());
 
 		/// <summary>
 		/// Minimizes the specified window and activates the next top-level window in the Z order.
@@ -323,10 +259,7 @@ namespace WinUIEx
 		/// <remarks>The presenter must be an overlapped presenter.</remarks>
 		/// <exception cref="NotSupportedException">Throw if the AppWindow Presenter isn't an overlapped presenter.</exception>
 		/// <param name="window">Window</param>
-		public static void Minimize(this Microsoft.UI.Xaml.Window window)
-		{
-			UpdateOverlappedPresenter(window, (c) => c.Minimize());
-		}
+		public static void Minimize(this Microsoft.UI.Xaml.Window window) => UpdateOverlappedPresenter(window, (c) => c.Minimize());
 
 		/// <summary>
 		/// Activates and displays the window. If the window is minimized or maximized, the system restores
@@ -335,31 +268,21 @@ namespace WinUIEx
 		/// <remarks>The presenter must be an overlapped presenter.</remarks>
 		/// <exception cref="NotSupportedException">Throw if the AppWindow Presenter isn't an overlapped presenter.</exception>
 		/// <param name="window">Window</param>
-		public static void Restore(this Microsoft.UI.Xaml.Window window)
-		{
-			UpdateOverlappedPresenter(window, (c) => c.Restore());
-		}
+		public static void Restore(this Microsoft.UI.Xaml.Window window) => UpdateOverlappedPresenter(window, (c) => c.Restore());
 
 		/// <summary>
 		/// Sets the icon for the window, using the specified icon path.
 		/// </summary>
 		/// <param name="window">Window</param>
 		/// <param name="iconPath">The path of the icon.</param>
-		public static void SetIcon(this Microsoft.UI.Xaml.Window window, string iconPath)
-		{
-			HwndExtensions.SetIcon(window.GetWindowHandle(), iconPath);
-		}
-
+		public static void SetIcon(this Microsoft.UI.Xaml.Window window, string iconPath) => HwndExtensions.SetIcon(window.GetWindowHandle(), iconPath);
 		/// <summary>
 		/// Sets the task bar icon to the provided icon
 		/// </summary>
 		/// <param name="window">Window</param>
 		/// <param name="icon">Icon</param>
 		[Obsolete("Use AppWindow.SetTaskbarIcon")]
-		public static void SetTaskBarIcon(this Microsoft.UI.Xaml.Window window, Icon? icon)
-		{
-			HwndExtensions.SetTaskBarIcon(window.GetWindowHandle(), icon);
-		}
+		public static void SetTaskBarIcon(this Microsoft.UI.Xaml.Window window, Icon? icon) => HwndExtensions.SetTaskBarIcon(window.GetWindowHandle(), icon);
 
 		/// <summary>
 		/// Gets the background color for the title bar and all its buttons and their states.
@@ -368,7 +291,7 @@ namespace WinUIEx
 		/// <param name="color">color</param>
 		public static void SetTitleBarBackgroundColors(this Microsoft.UI.Xaml.Window window, Windows.UI.Color color)
 		{
-			AppWindow appWindow = window.AppWindow;
+			var appWindow = window.AppWindow;
 			if (AppWindowTitleBar.IsCustomizationSupported())
 			{
 				appWindow.TitleBar.ButtonBackgroundColor = color;
@@ -384,20 +307,14 @@ namespace WinUIEx
 		/// </summary>
 		/// <param name="window">Window</param>
 		/// <returns></returns>
-		public static WindowStyle GetWindowStyle(this Microsoft.UI.Xaml.Window window)
-		{
-			return HwndExtensions.GetWindowStyle(window.GetWindowHandle());
-		}
+		public static WindowStyle GetWindowStyle(this Microsoft.UI.Xaml.Window window) => HwndExtensions.GetWindowStyle(window.GetWindowHandle());
 
 		/// <summary>
 		/// Sets the current window style
 		/// </summary>
 		/// <param name="window">Window</param>
 		/// <param name="newStyle"></param>
-		public static void SetWindowStyle(this Microsoft.UI.Xaml.Window window, WindowStyle newStyle)
-		{
-			HwndExtensions.SetWindowStyle(window.GetWindowHandle(), newStyle);
-		}
+		public static void SetWindowStyle(this Microsoft.UI.Xaml.Window window, WindowStyle newStyle) => HwndExtensions.SetWindowStyle(window.GetWindowHandle(), newStyle);
 
 		/// <summary>
 		/// Disables or enables the window style
@@ -405,30 +322,21 @@ namespace WinUIEx
 		/// <param name="window">Window</param>
 		/// <param name="visible"></param>
 		/// <param name="style"></param>
-		public static void ToggleWindowStyle(this Microsoft.UI.Xaml.Window window, bool visible, WindowStyle style)
-		{
-			HwndExtensions.ToggleWindowStyle(window.GetWindowHandle(), visible, style);
-		}
+		public static void ToggleWindowStyle(this Microsoft.UI.Xaml.Window window, bool visible, WindowStyle style) => HwndExtensions.ToggleWindowStyle(window.GetWindowHandle(), visible, style);
 
 		/// <summary>
 		/// Gets the current window style
 		/// </summary>
 		/// <param name="window">Window</param>
 		/// <returns></returns>
-		public static ExtendedWindowStyle GetExtendedWindowStyle(this Microsoft.UI.Xaml.Window window)
-		{
-			return HwndExtensions.GetExtendedWindowStyle(window.GetWindowHandle());
-		}
+		public static ExtendedWindowStyle GetExtendedWindowStyle(this Microsoft.UI.Xaml.Window window) => HwndExtensions.GetExtendedWindowStyle(window.GetWindowHandle());
 
 		/// <summary>
 		/// Sets the current window style
 		/// </summary>
 		/// <param name="window">Window</param>
 		/// <param name="newStyle"></param>
-		public static void SetExtendedWindowStyle(this Microsoft.UI.Xaml.Window window, ExtendedWindowStyle newStyle)
-		{
-			HwndExtensions.SetExtendedWindowStyle(window.GetWindowHandle(), newStyle);
-		}
+		public static void SetExtendedWindowStyle(this Microsoft.UI.Xaml.Window window, ExtendedWindowStyle newStyle) => HwndExtensions.SetExtendedWindowStyle(window.GetWindowHandle(), newStyle);
 
 		/// <summary>
 		/// Disables or enables the window style
@@ -436,10 +344,7 @@ namespace WinUIEx
 		/// <param name="window">Window</param>
 		/// <param name="visible"></param>
 		/// <param name="style"></param>
-		public static void ToggleExtendedWindowStyle(this Microsoft.UI.Xaml.Window window, bool visible, ExtendedWindowStyle style)
-		{
-			HwndExtensions.ToggleExtendedWindowStyle(window.GetWindowHandle(), visible, style);
-		}
+		public static void ToggleExtendedWindowStyle(this Microsoft.UI.Xaml.Window window, bool visible, ExtendedWindowStyle style) => HwndExtensions.ToggleExtendedWindowStyle(window.GetWindowHandle(), visible, style);
 
 		/// <summary>
 		/// Sets the opacity of a layered window.
@@ -448,9 +353,7 @@ namespace WinUIEx
 		/// <param name="alpha">Alpha value used to describe the opacity of the layered window. When <paramref name="alpha"/> is 0, the window is completely transparent. When <paramref name="alpha"/> is 255, the window is opaque.</param>
 		//// <seealso cref="SetLayeredWindowAttributes(Microsoft.UI.Xaml.Window, Windows.UI.Color, byte)" />
 		public static void SetWindowOpacity(this Microsoft.UI.Xaml.Window window, byte alpha)
-		{
-			HwndExtensions.SetWindowOpacity(GetWindowHandle(window), alpha);
-		}
+			=> HwndExtensions.SetWindowOpacity(GetWindowHandle(window), alpha);
 
 		/* Chroma keys doesn't seem to work on WinUI windows
         /// <summary>
@@ -480,16 +383,16 @@ namespace WinUIEx
 		/// <param name="region">The region to set on the window</param>
 		public static void SetRegion(this Microsoft.UI.Xaml.Window window, Region? region)
 		{
-			ContentCoordinateConverter converter = Microsoft.UI.Content.ContentCoordinateConverter.CreateForWindowId(window.AppWindow.Id);
-			PointInt32 screenLoc = window.AppWindow.Position;
-			HRGN rgn = region?.Create(converter, screenLoc, window.GetDpiForWindow() / 96d) ?? Windows.Win32.Graphics.Gdi.HRGN.Null;
+			var converter = Microsoft.UI.Content.ContentCoordinateConverter.CreateForWindowId(window.AppWindow.Id);
+			var screenLoc = window.AppWindow.Position;
+			var rgn = region?.Create(converter, screenLoc, window.GetDpiForWindow() / 96d) ?? Windows.Win32.Graphics.Gdi.HRGN.Null;
 			try
 			{
-				_ = PInvoke.SetWindowRgn(new Windows.Win32.Foundation.HWND(window.GetWindowHandle()), rgn, window.Visible);
+				PInvoke.SetWindowRgn(new Windows.Win32.Foundation.HWND(window.GetWindowHandle()), rgn, window.Visible);
 			}
 			finally
 			{
-				_ = PInvoke.DeleteObject(rgn);
+				PInvoke.DeleteObject(rgn);
 			}
 		}
 	}

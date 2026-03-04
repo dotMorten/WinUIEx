@@ -123,6 +123,18 @@ namespace WinUIEx.Messaging
         WM_GETTEXTLENGTH = 0x000e,
 
         /// <summary>
+        /// Sent to a window when the SetWindowLong function is about to change one or more of the window's styles.
+        /// </summary>
+        /// <seealso cref="https://learn.microsoft.com/en-us/windows/win32/winmsg/wm-stylechanging"/>
+        WM_STYLECHANGING = 0x007C,
+
+        /// <summary>
+        /// Sent to a window after the SetWindowLong function has changed one or more of the window's styles.
+        /// </summary>
+        /// <seealso cref="https://learn.microsoft.com/en-us/windows/win32/winmsg/wm-stylechanged"/>
+        WM_STYLECHANGED = 0x007D,
+
+        /// <summary>
         /// Sent to a window when its nonclient area needs to be changed to indicate an active or inactive state.
         /// </summary>
         /// <seealso href="https://docs.microsoft.com/en-us/windows/win32/winmsg/wm-ncactivate">Microsoft Docs</seealso>

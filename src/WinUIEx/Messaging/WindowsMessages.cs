@@ -125,13 +125,13 @@ namespace WinUIEx.Messaging
         /// <summary>
         /// Sent to a window when the SetWindowLong function is about to change one or more of the window's styles.
         /// </summary>
-        /// <seealso cref="https://learn.microsoft.com/en-us/windows/win32/winmsg/wm-stylechanging"/>
+        /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/winmsg/wm-stylechanging"/>
         WM_STYLECHANGING = 0x007C,
 
         /// <summary>
         /// Sent to a window after the SetWindowLong function has changed one or more of the window's styles.
         /// </summary>
-        /// <seealso cref="https://learn.microsoft.com/en-us/windows/win32/winmsg/wm-stylechanged"/>
+        /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/winmsg/wm-stylechanged"/>
         WM_STYLECHANGED = 0x007D,
 
         /// <summary>

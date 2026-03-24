@@ -26,6 +26,7 @@ namespace WinUIEx
         private bool _isInitialized; // Set to true on first activation. Used to track persistence restore
         private WINDOWPLACEMENT? _lastKnownOverlappedPlacement;
         private int _overlappedPlacementUpdateVersion;
+        private bool _overlappedPlacementCapturePending;
 
         private static bool TryGetWindowManager(Window window, [MaybeNullWhen(false)] out WindowManager manager)
         {
@@ -495,17 +496,42 @@ namespace WinUIEx
 
         private void RequestOverlappedPlacementCapture()
         {
+            if (_isDisposed)
+                return;
+
             var version = ++_overlappedPlacementUpdateVersion;
-            _window.DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Low, () =>
+
+            if (_overlappedPlacementCapturePending)
+                return;
+
+            _overlappedPlacementCapturePending = true;
+
+            bool enqueued = _window.DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Low, () =>
             {
+                _overlappedPlacementCapturePending = false;
+
+                if (_isDisposed)
+                    return;
+
                 if (version != _overlappedPlacementUpdateVersion)
                     return;
+
                 TryCaptureOverlappedPlacement();
             });
+
+            if (!enqueued)
+            {
+                _overlappedPlacementCapturePending = false;
+                if (!_isDisposed && version == _overlappedPlacementUpdateVersion)
+                    TryCaptureOverlappedPlacement();
+            }
         }
 
         private bool TryCaptureOverlappedPlacement()
         {
+            if (_isDisposed)
+                return false;
+
             if (AppWindow.Presenter.Kind != AppWindowPresenterKind.Overlapped)
                 return false;
 
@@ -540,14 +566,15 @@ namespace WinUIEx
                     }
 
                     WINDOWPLACEMENT placement;
-                    // If we're closing while in fullscreen, persist the last known overlapped placement
-                    // instead of the fullscreen bounds.
+                    // If we're closing while using a non-overlapped presenter, persist the last known
+                    // overlapped placement instead of the current non-overlapped bounds.
                     if (AppWindow.Presenter.Kind != AppWindowPresenterKind.Overlapped && _lastKnownOverlappedPlacement is WINDOWPLACEMENT cached)
                         placement = cached;
                     else
                     {
                         placement = new WINDOWPLACEMENT();
-                        Windows.Win32.PInvoke.GetWindowPlacement(new Windows.Win32.Foundation.HWND(_window.GetWindowHandle()), ref placement);
+                        if (!Windows.Win32.PInvoke.GetWindowPlacement(new Windows.Win32.Foundation.HWND(_window.GetWindowHandle()), ref placement))
+                            return;
                     }
 
                     int structSize = Marshal.SizeOf(typeof(WINDOWPLACEMENT));

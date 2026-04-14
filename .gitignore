@@ -350,3 +350,4 @@ MigrationBackup/
 .ionide/
 .tools
 docs/memberpage.2.58.0
+.dotnet

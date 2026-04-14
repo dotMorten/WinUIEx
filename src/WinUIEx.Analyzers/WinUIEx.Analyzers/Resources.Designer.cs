@@ -113,5 +113,32 @@ namespace WinUIEx.Analyzers {
                 return ResourceManager.GetString("DispatcherTitle", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Frame.Navigate only supports page types that inherit from Microsoft.UI.Xaml.Controls.Page..
+        /// </summary>
+        internal static string NavigateTypeDescription {
+            get {
+                return ResourceManager.GetString("NavigateTypeDescription", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Type &apos;{0}&apos; cannot be used with Frame.Navigate because it does not inherit from &apos;{1}&apos;..
+        /// </summary>
+        internal static string NavigateTypeMessageFormat {
+            get {
+                return ResourceManager.GetString("NavigateTypeMessageFormat", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Frame.Navigate target must inherit from Page.
+        /// </summary>
+        internal static string NavigateTypeTitle {
+            get {
+                return ResourceManager.GetString("NavigateTypeTitle", resourceCulture);
+            }
+        }
     }
 }

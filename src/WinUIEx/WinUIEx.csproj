@@ -25,8 +25,7 @@
     <PackageId>WinUIEx</PackageId>
     <Product>WinUI Extensions</Product>
     <PackageReleaseNotes>
-      - Added support for WinUI 3 based flyouts in the system tray.
-      - Added extension method for assigning transparent regions to a window (Issue #235).
+        - Added a new analyzer to call out when invalid type as a parameter for `Frame.Navigate`. #260
     </PackageReleaseNotes>
   </PropertyGroup>
 

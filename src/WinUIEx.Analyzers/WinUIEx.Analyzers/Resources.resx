@@ -135,4 +135,13 @@
   <data name="DispatcherTitle" xml:space="preserve">
     <value>Dispatcher must be replaced with DispatcherQueue</value>
   </data>
+  <data name="NavigateTypeDescription" xml:space="preserve">
+    <value>Frame.Navigate only supports page types that inherit from Microsoft.UI.Xaml.Controls.Page.</value>
+  </data>
+  <data name="NavigateTypeMessageFormat" xml:space="preserve">
+    <value>Type '{0}' cannot be used with Frame.Navigate because it does not inherit from '{1}'.</value>
+  </data>
+  <data name="NavigateTypeTitle" xml:space="preserve">
+    <value>Frame.Navigate target must inherit from Page</value>
+  </data>
 </root>

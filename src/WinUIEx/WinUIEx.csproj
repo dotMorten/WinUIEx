@@ -25,7 +25,7 @@
     <PackageId>WinUIEx</PackageId>
     <Product>WinUI Extensions</Product>
     <PackageReleaseNotes>
-        - Added a new analyzer to call out when invalid type as a parameter for `Frame.Navigate`. #260
+        - Added a new analyzer to call out when an invalid type is passed to `Frame.Navigate`. #260
     </PackageReleaseNotes>
   </PropertyGroup>
 

@@ -44,7 +44,7 @@ namespace WinUIEx
         /// </summary>
         public static bool TestProperty { get; set; }
         
-        public Task<string> TestAsync() => throw new System.NotImplementedException("TODO");
+        public string TestMethod() => throw new System.NotImplementedException("TODO");
 
         /// <summary>
         /// Gets (or creates) a window manager for the specific window.

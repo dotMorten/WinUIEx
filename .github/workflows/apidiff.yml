@@ -30,12 +30,12 @@ jobs:
         shell: bash
         run: |
           generateomd \
-            /source=src/MyLibrary \
-            /gitRepo=${{ github.server_url }}/${{ github.repository }} \
-            /sourceRef=${{ github.event.pull_request.head.sha }} \
-            /compareRef=${{ github.event.pull_request.base.sha }} \
-            /format=md \
-            /output=api-diff
+            --source=src/WinUIEx \
+            --gitRepo=${{ github.server_url }}/${{ github.repository }} \
+            --sourceRef=${{ github.event.pull_request.head.sha }} \
+            --compareRef=${{ github.event.pull_request.base.sha }} \
+            --format=md \
+            --output=api-diff
 
       - name: Check whether API changes were found
         id: api_diff

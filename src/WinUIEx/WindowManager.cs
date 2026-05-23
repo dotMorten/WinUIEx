@@ -38,6 +38,13 @@ namespace WinUIEx
             manager = null;
             return false;
         }
+        
+        /// <summary>
+        /// This is just a test. DO NOT MERGE.
+        /// </summary>
+        public static bool TestProperty { get; set; }
+        
+        public Task<string> TestAsync() => throw new System.NotImplementedException("TODO");
 
         /// <summary>
         /// Gets (or creates) a window manager for the specific window.

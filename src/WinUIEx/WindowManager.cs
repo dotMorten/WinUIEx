@@ -630,7 +630,7 @@ namespace WinUIEx
         /// <summary>
         /// Raised if the Z order of the window changes.
         /// </summary>
-        public event EventHandler<ZOrderInfo>? ZOrderChanged;
+        internal event EventHandler<ZOrderInfo>? ZOrderChanged;
 
     }
 

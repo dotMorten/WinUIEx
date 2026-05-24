@@ -1,0 +1,103 @@
+name: PR API diff
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  api-diff:
+    runs-on: windows-latest
+
+    steps:
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Install generator
+        run: dotnet tool install --global dotMorten.OmdGenerator
+
+      - name: Generate API diff
+        shell: bash
+        run: |
+          generateomd \
+            --source=src/WinUIEx/ \
+            --gitRepo=${{ github.server_url }}/${{ github.repository }} \
+            --sourceRef=${{ github.event.pull_request.head.sha }} \
+            --compareRef=${{ github.event.pull_request.base.sha }} \
+            --format=md \
+            --output=api-diff
+
+      - name: Check whether API changes were found
+        id: api_diff
+        shell: bash
+        run: |
+          if grep -q '^namespace ' api-diff.md; then
+            echo "has_changes=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "has_changes=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Create or update PR comment
+        uses: actions/github-script@v7
+        env:
+          COMMENT_MARKER: <!-- dotnet-omd-api-diff -->
+          HAS_CHANGES: ${{ steps.api_diff.outputs.has_changes }}
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const fs = require('fs');
+            const marker = process.env.COMMENT_MARKER;
+            const hasChanges = process.env.HAS_CHANGES === 'true';
+            const diff = fs.readFileSync('api-diff.md', 'utf8').trim();
+            
+            const { owner, repo } = context.repo;
+            const issue_number = context.payload.pull_request.number;
+
+            const comments = await github.paginate(github.rest.issues.listComments, {
+              owner,
+              repo,
+              issue_number,
+              per_page: 100
+            });
+
+            const existing = comments.find(comment =>
+              comment.user.type === 'Bot' && comment.body.includes(marker));
+
+            if (!hasChanges && !existing) {
+              return;
+            }
+
+            const body = hasChanges
+              ? [
+                  marker,
+                  '## API changes',
+                  '',
+                  diff
+                ].join('\n')
+              : [
+                  marker,
+                  '## API changes',
+                  '',
+                  'No API changes are currently detected in this pull request.'
+                ].join('\n');
+
+            if (existing) {
+              await github.rest.issues.updateComment({
+                owner,
+                repo,
+                comment_id: existing.id,
+                body
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner,
+                repo,
+                issue_number,
+                body
+              });
+            }

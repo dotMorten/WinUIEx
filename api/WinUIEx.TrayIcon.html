@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+
+  <head>
+    <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+      <title>Class TrayIcon </title>
+      <meta name="viewport" content="width=device-width">
+      <meta name="title" content="Class TrayIcon ">
+    
+    <meta name="description" content="Represents an application icon displayed in the Windows system tray, providing functionality to show, update, and interact with a tray icon and its associated tooltip and events.">
+      <link rel="shortcut icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../styles/docfx.vendor.min.css">
+      <link rel="stylesheet" href="../styles/docfx.css">
+      <link rel="stylesheet" href="../styles/main.css">
+      <meta property="docfx:navrel" content="../toc.html">
+      <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/logo.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="WinUIEx.TrayIcon">
+
+
+
+  <h1 id="WinUIEx_TrayIcon" data-uid="WinUIEx.TrayIcon" class="text-break">Class TrayIcon</h1>
+  <div class="markdown level0 summary"><p>Represents an application icon displayed in the Windows system tray, providing functionality to show, update, and
+interact with a tray icon and its associated tooltip and events.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
+    <div class="level1"><span class="xref">TrayIcon</span></div>
+  </div>
+  <div class="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.idisposable">IDisposable</a></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode">object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone">object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring">object.ToString()</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="WinUIEx.html">WinUIEx</a></h6>
+  <h6><strong>Assembly</strong>: WinUIEx.dll</h6>
+  <h5 id="WinUIEx_TrayIcon_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class TrayIcon : IDisposable</code></pre>
+  </div>
+  <h5 id="WinUIEx_TrayIcon_remarks"><strong>Remarks</strong></h5>
+  <div class="markdown level0 remarks"><p>The TrayIcon class enables applications to display an icon in the system tray (notification area),
+    respond to user interactions such as clicks and double-clicks, and show contextual flyouts. It manages the icon's
+    visibility, tooltip, and icon image, and provides events for common user actions.</p>
+    <div class="NOTE"><h5>note</h5><p>Make sure you keep a reference to the <a class="xref" href="WinUIEx.TrayIcon.html">TrayIcon</a> as long as you are relying on it in the tray,
+    or the Garbage Collector will collect it and remove it from the tray.</p></div>
+</div>
+  <h3 id="constructors">Constructors
+</h3>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td id="WinUIEx_TrayIcon__ctor_System_UInt32_Microsoft_UI_IconId_System_String_" data-uid="WinUIEx.TrayIcon.#ctor(System.UInt32,Microsoft.UI.IconId,System.String)">
+          <a class="xref" href="WinUIEx.TrayIcon.-ctor.html#WinUIEx_TrayIcon__ctor_System_UInt32_Microsoft_UI_IconId_System_String_">TrayIcon(uint, IconId, string)</a>
+        </td>
+        <td class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="WinUIEx.TrayIcon.html">TrayIcon</a> class with the specified icon and tooltip text.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="WinUIEx_TrayIcon__ctor_System_UInt32_System_String_System_String_" data-uid="WinUIEx.TrayIcon.#ctor(System.UInt32,System.String,System.String)">
+          <a class="xref" href="WinUIEx.TrayIcon.-ctor.html#WinUIEx_TrayIcon__ctor_System_UInt32_System_String_System_String_">TrayIcon(uint, string, string)</a>
+        </td>
+        <td class="markdown level1 summary"><p>Initializes a new instance of the TrayIcon class with the specified icon and tooltip text.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+</h3>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td id="WinUIEx_TrayIcon_IsVisible" data-uid="WinUIEx.TrayIcon.IsVisible">
+          <a class="xref" href="WinUIEx.TrayIcon.IsVisible.html#WinUIEx_TrayIcon_IsVisible">IsVisible</a>
+        </td>
+        <td class="markdown level1 summary"><p>Gets or sets a value indicating whether this instance is visible in the tray.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="WinUIEx_TrayIcon_Tooltip" data-uid="WinUIEx.TrayIcon.Tooltip">
+          <a class="xref" href="WinUIEx.TrayIcon.Tooltip.html#WinUIEx_TrayIcon_Tooltip">Tooltip</a>
+        </td>
+        <td class="markdown level1 summary"><p>Gets or sets the tooltip displayed when hovering on the callout. Maximum length: 128 characters</p>
+</td>
+      </tr>
+      <tr>
+        <td id="WinUIEx_TrayIcon_TrayIconId" data-uid="WinUIEx.TrayIcon.TrayIconId">
+          <a class="xref" href="WinUIEx.TrayIcon.TrayIconId.html#WinUIEx_TrayIcon_TrayIconId">TrayIconId</a>
+        </td>
+        <td class="markdown level1 summary"><p>Gets the unique identifier for the tray icon.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+</h3>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td id="WinUIEx_TrayIcon_CloseFlyout" data-uid="WinUIEx.TrayIcon.CloseFlyout">
+          <a class="xref" href="WinUIEx.TrayIcon.CloseFlyout.html#WinUIEx_TrayIcon_CloseFlyout">CloseFlyout()</a>
+        </td>
+        <td class="markdown level1 summary"><p>Force-closes the flyout if it is visible.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="WinUIEx_TrayIcon_Dispose" data-uid="WinUIEx.TrayIcon.Dispose">
+          <a class="xref" href="WinUIEx.TrayIcon.Dispose.html#WinUIEx_TrayIcon_Dispose">Dispose()</a>
+        </td>
+        <td class="markdown level1 summary"><p>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="WinUIEx_TrayIcon_Dispose_System_Boolean_" data-uid="WinUIEx.TrayIcon.Dispose(System.Boolean)">
+          <a class="xref" href="WinUIEx.TrayIcon.Dispose.html#WinUIEx_TrayIcon_Dispose_System_Boolean_">Dispose(bool)</a>
+        </td>
+        <td class="markdown level1 summary"><p>Disposes this instance and cleans up any resources</p>
+</td>
+      </tr>
+      <tr>
+        <td id="WinUIEx_TrayIcon_Finalize" data-uid="WinUIEx.TrayIcon.Finalize">
+          <a class="xref" href="WinUIEx.TrayIcon.Finalize.html#WinUIEx_TrayIcon_Finalize">~TrayIcon()</a>
+        </td>
+        <td class="markdown level1 summary"></td>
+      </tr>
+      <tr>
+        <td id="WinUIEx_TrayIcon_SetIcon_Microsoft_UI_IconId_" data-uid="WinUIEx.TrayIcon.SetIcon(Microsoft.UI.IconId)">
+          <a class="xref" href="WinUIEx.TrayIcon.SetIcon.html#WinUIEx_TrayIcon_SetIcon_Microsoft_UI_IconId_">SetIcon(IconId)</a>
+        </td>
+        <td class="markdown level1 summary"><p>Sets the icon displayed for the application's taskbar window.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="WinUIEx_TrayIcon_SetIcon_System_String_" data-uid="WinUIEx.TrayIcon.SetIcon(System.String)">
+          <a class="xref" href="WinUIEx.TrayIcon.SetIcon.html#WinUIEx_TrayIcon_SetIcon_System_String_">SetIcon(string)</a>
+        </td>
+        <td class="markdown level1 summary"><p>Sets the icon displayed for the application's taskbar button.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="events">Events
+</h3>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td id="WinUIEx_TrayIcon_ContextMenu" data-uid="WinUIEx.TrayIcon.ContextMenu">
+          <a class="xref" href="WinUIEx.TrayIcon.ContextMenu.html">ContextMenu</a>
+        </td>
+        <td class="markdown level1 summary"><p>Occurs when the user right-clicks the tray icon or selects the context menu from the keyboard.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="WinUIEx_TrayIcon_LeftDoubleClick" data-uid="WinUIEx.TrayIcon.LeftDoubleClick">
+          <a class="xref" href="WinUIEx.TrayIcon.LeftDoubleClick.html">LeftDoubleClick</a>
+        </td>
+        <td class="markdown level1 summary"><p>Occurs when the user double-clicks the left mouse button on the tray icon.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="WinUIEx_TrayIcon_RightDoubleClick" data-uid="WinUIEx.TrayIcon.RightDoubleClick">
+          <a class="xref" href="WinUIEx.TrayIcon.RightDoubleClick.html">RightDoubleClick</a>
+        </td>
+        <td class="markdown level1 summary"><p>Occurs when the user double-clicks the tray icon with the right mouse button.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="WinUIEx_TrayIcon_Selected" data-uid="WinUIEx.TrayIcon.Selected">
+          <a class="xref" href="WinUIEx.TrayIcon.Selected.html">Selected</a>
+        </td>
+        <td class="markdown level1 summary"><p>Occurs when the user clicks the left mouse button on the tray icon or selects it via the keyboard.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+
+</article>
+          </div>
+
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/dotMorten/WinUIEx/new/main/docs/api_overwrites/new?filename=WinUIEx_TrayIcon.md&amp;value=---%0Auid%3A%20WinUIEx.TrayIcon%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Edit this page</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/dotMorten/WinUIEx/blob/main/src/WinUIEx/TrayIcon.cs/#L24" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In this article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+      
+      <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script type="text/javascript" src="../styles/docfx.vendor.min.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

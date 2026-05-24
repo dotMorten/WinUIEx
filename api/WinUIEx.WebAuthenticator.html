@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+
+  <head>
+    <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+      <title>Class WebAuthenticator </title>
+      <meta name="viewport" content="width=device-width">
+      <meta name="title" content="Class WebAuthenticator ">
+    
+    <meta name="description" content="Handles OAuth redirection to the system browser and re-activation.">
+      <link rel="shortcut icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../styles/docfx.vendor.min.css">
+      <link rel="stylesheet" href="../styles/docfx.css">
+      <link rel="stylesheet" href="../styles/main.css">
+      <meta property="docfx:navrel" content="../toc.html">
+      <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/logo.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="WinUIEx.WebAuthenticator">
+
+
+
+  <h1 id="WinUIEx_WebAuthenticator" data-uid="WinUIEx.WebAuthenticator" class="text-break">Class WebAuthenticator</h1>
+  <div class="markdown level0 summary"><p>Handles OAuth redirection to the system browser and re-activation.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
+    <div class="level1"><span class="xref">WebAuthenticator</span></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode">object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring">object.ToString()</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="WinUIEx.html">WinUIEx</a></h6>
+  <h6><strong>Assembly</strong>: WinUIEx.dll</h6>
+  <h5 id="WinUIEx_WebAuthenticator_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Obsolete(&quot;Use Windows App SDK&#39;s Microsoft.Security.Authentication.OAuth APIs instead.&quot;)]
+public sealed class WebAuthenticator</code></pre>
+  </div>
+  <h5 id="WinUIEx_WebAuthenticator_remarks"><strong>Remarks</strong></h5>
+  <div class="markdown level0 remarks"><p>
+Your app must be configured for OAuth with schema activation. The scheme must be the first part of the url, ie if your
+oauth redirection url starts with for instance <code>myappscheme://signin/</code>, the scheme would be <code>myappscheme</code>.
+Note that http(s) schemes are not supported here.
+</p>
+<p>
+If your app is packaged, in your app's <code>Package.appxmanifest</code> under <code>Declarations</code>, add a 
+Protocol declaration and add the scheme you registered for your application's oauth redirect url under "Name".
+</p>
+<p>
+If your app is unpackaged, make sure you register the application for protocol activation.
+</p> 
+<example>
+<pre><code class="lang-csharp">try
+{
+    Microsoft.Windows.AppLifecycle.ActivationRegistrationManager.RegisterForProtocolActivation("myappscheme", "Assets\\Square150x150Logo.scale-100", "My App Name", null);
+    var result = await WebAuthenticator.AuthenticateAsync(authorizeUri, callbackUri, cancellationToken);
+}
+finally
+{
+    Microsoft.Windows.AppLifecycle.ActivationRegistrationManager.UnregisterForProtocolActivation("myappscheme", null);
+}</code></pre>
+</example>
+</div>
+  <h3 id="methods">Methods
+</h3>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td id="WinUIEx_WebAuthenticator_AuthenticateAsync_System_Uri_System_Uri_" data-uid="WinUIEx.WebAuthenticator.AuthenticateAsync(System.Uri,System.Uri)">
+          <a class="xref" href="WinUIEx.WebAuthenticator.AuthenticateAsync.html#WinUIEx_WebAuthenticator_AuthenticateAsync_System_Uri_System_Uri_">AuthenticateAsync(Uri, Uri)</a>
+        </td>
+        <td class="markdown level1 summary"><p>Begin an authentication flow by navigating to the specified url and waiting for a callback/redirect to the callbackUrl scheme.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="WinUIEx_WebAuthenticator_AuthenticateAsync_System_Uri_System_Uri_System_Threading_CancellationToken_" data-uid="WinUIEx.WebAuthenticator.AuthenticateAsync(System.Uri,System.Uri,System.Threading.CancellationToken)">
+          <a class="xref" href="WinUIEx.WebAuthenticator.AuthenticateAsync.html#WinUIEx_WebAuthenticator_AuthenticateAsync_System_Uri_System_Uri_System_Threading_CancellationToken_">AuthenticateAsync(Uri, Uri, CancellationToken)</a>
+        </td>
+        <td class="markdown level1 summary"><p>Begin an authentication flow by navigating to the specified url and waiting for a callback/redirect to the callbackUrl scheme.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="WinUIEx_WebAuthenticator_CheckOAuthRedirectionActivation_Microsoft_Windows_AppLifecycle_AppActivationArguments_System_Boolean_" data-uid="WinUIEx.WebAuthenticator.CheckOAuthRedirectionActivation(Microsoft.Windows.AppLifecycle.AppActivationArguments,System.Boolean)">
+          <a class="xref" href="WinUIEx.WebAuthenticator.CheckOAuthRedirectionActivation.html#WinUIEx_WebAuthenticator_CheckOAuthRedirectionActivation_Microsoft_Windows_AppLifecycle_AppActivationArguments_System_Boolean_">CheckOAuthRedirectionActivation(AppActivationArguments?, bool)</a>
+        </td>
+        <td class="markdown level1 summary"><p>Performs an OAuth protocol activation check and redirects activation to the correct application instance.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="WinUIEx_WebAuthenticator_CheckOAuthRedirectionActivation_System_Boolean_" data-uid="WinUIEx.WebAuthenticator.CheckOAuthRedirectionActivation(System.Boolean)">
+          <a class="xref" href="WinUIEx.WebAuthenticator.CheckOAuthRedirectionActivation.html#WinUIEx_WebAuthenticator_CheckOAuthRedirectionActivation_System_Boolean_">CheckOAuthRedirectionActivation(bool)</a>
+        </td>
+        <td class="markdown level1 summary"><p>Performs an OAuth protocol activation check and redirects activation to the correct application instance.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+
+</article>
+          </div>
+
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/dotMorten/WinUIEx/new/main/docs/api_overwrites/new?filename=WinUIEx_WebAuthenticator.md&amp;value=---%0Auid%3A%20WinUIEx.WebAuthenticator%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Edit this page</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/dotMorten/WinUIEx/blob/main/src/WinUIEx/WebAuthenticator.cs/#L47" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In this article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+      
+      <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script type="text/javascript" src="../styles/docfx.vendor.min.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

@@ -39,6 +39,9 @@ namespace WinUIEx
             return false;
         }
 
+        public string NewStringProperty { get; set; }
+        public void NewMethod() { }
+
         /// <summary>
         /// Gets (or creates) a window manager for the specific window.
         /// </summary>
@@ -623,8 +626,14 @@ namespace WinUIEx
         /// <summary>
         /// Raised if the Z order of the window changes.
         /// </summary>
-        public event EventHandler<ZOrderInfo>? ZOrderChanged;
+        internal event EventHandler<ZOrderInfo>? ZOrderChanged;
 
+    }
+
+    public class NewClass
+    {
+        public NewClass(string name) { }
+        public Name { get; }
     }
 
     /// <summary>

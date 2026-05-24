@@ -632,8 +632,8 @@ namespace WinUIEx
 
     public class NewClass
     {
-        public NewClass(string name) { }
-        public Name { get; }
+        public NewClass(string name) { Name = name; }
+        public string Name { get; }
     }
 
     /// <summary>

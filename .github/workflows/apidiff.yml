@@ -43,23 +43,18 @@ jobs:
           fi
 
       - name: Create or update PR comment
-        if: steps.api_diff.outputs.has_changes == 'true'
         uses: actions/github-script@v7
         env:
           COMMENT_MARKER: <!-- dotnet-omd-api-diff -->
+          HAS_CHANGES: ${{ steps.api_diff.outputs.has_changes }}
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const fs = require('fs');
             const marker = process.env.COMMENT_MARKER;
+            const hasChanges = process.env.HAS_CHANGES === 'true';
             const diff = fs.readFileSync('api-diff.md', 'utf8').trim();
-            const body = [
-              marker,
-              '## API changes',
-              '',
-              diff
-            ].join('\n');
-
+            
             const { owner, repo } = context.repo;
             const issue_number = context.payload.pull_request.number;
 
@@ -72,6 +67,24 @@ jobs:
 
             const existing = comments.find(comment =>
               comment.user.type === 'Bot' && comment.body.includes(marker));
+
+            if (!hasChanges && !existing) {
+              return;
+            }
+
+            const body = hasChanges
+              ? [
+                  marker,
+                  '## API changes',
+                  '',
+                  diff
+                ].join('\n')
+              : [
+                  marker,
+                  '## API changes',
+                  '',
+                  'No API changes are currently detected in this pull request.'
+                ].join('\n');
 
             if (existing) {
               await github.rest.issues.updateComment({

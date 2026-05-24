@@ -116,4 +116,3 @@ jobs:
               draft: release.draft,
               prerelease: release.prerelease
             });
-```

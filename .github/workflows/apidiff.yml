@@ -25,7 +25,7 @@ jobs:
         shell: bash
         run: |
           generateomd \
-            --source=src/WinUIEx/ \
+            --source=src/WinUIEx/WinUIEx.csproj \
             --gitRepo=${{ github.server_url }}/${{ github.repository }} \
             --sourceRef=${{ github.event.pull_request.head.sha }} \
             --compareRef=${{ github.event.pull_request.base.sha }} \

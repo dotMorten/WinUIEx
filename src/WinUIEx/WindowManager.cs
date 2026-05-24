@@ -38,13 +38,6 @@ namespace WinUIEx
             manager = null;
             return false;
         }
-        
-        /// <summary>
-        /// This is just a test. DO NOT MERGE.
-        /// </summary>
-        public static bool TestProperty { get; set; }
-        
-        public string TestMethod() => throw new System.NotImplementedException("TODO");
 
         /// <summary>
         /// Gets (or creates) a window manager for the specific window.
@@ -630,7 +623,7 @@ namespace WinUIEx
         /// <summary>
         /// Raised if the Z order of the window changes.
         /// </summary>
-        internal event EventHandler<ZOrderInfo>? ZOrderChanged;
+        public event EventHandler<ZOrderInfo>? ZOrderChanged;
 
     }
 

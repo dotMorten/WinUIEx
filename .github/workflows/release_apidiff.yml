@@ -2,7 +2,7 @@ name: Release API diff
 
 on:
   release:
-    types: [published]
+    types: [created, edited, published]
 
 permissions:
   contents: write

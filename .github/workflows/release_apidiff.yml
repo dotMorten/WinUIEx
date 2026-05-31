@@ -48,12 +48,12 @@ jobs:
         shell: bash
         run: |
           generateomd \
-            /source=src/WinUIEx/WinUIEx.csproj \
-            /gitRepo=${{ github.server_url }}/${{ github.repository }} \
-            /sourceRef=${{ github.event.release.tag_name }} \
-            /compareRef=${{ steps.previous_release.outputs.tag }} \
-            /format=md \
-            /output=api-diff
+            --source=src/WinUIEx/WinUIEx.csproj \
+            --gitRepo=${{ github.server_url }}/${{ github.repository }} \
+            --sourceRef=${{ github.event.release.tag_name }} \
+            --compareRef=${{ steps.previous_release.outputs.tag }} \
+            --format=md \
+            --output=api-diff
 
       - name: Check whether API changes were found
         if: steps.previous_release.outputs.tag != ''

@@ -8,7 +8,6 @@ namespace WinUIEx
     /// Web Authenticator result parsed from the callback Url.
     /// </summary>
     /// <seealso cref="WebAuthenticator"/>
-    [Obsolete("Use Windows App SDK's Microsoft.Security.Authentication.OAuth APIs instead.")]
     public class WebAuthenticatorResult
     {
         /// <summary>

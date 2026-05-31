@@ -44,7 +44,6 @@ namespace WinUIEx
     /// </code>
     /// </example>
     /// </remarks>
-    [Obsolete("Use Windows App SDK's Microsoft.Security.Authentication.OAuth APIs instead.")]
     public sealed class WebAuthenticator
     {
         /// <summary>

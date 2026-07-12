@@ -36,7 +36,7 @@ namespace WinUIExSample.Pages
         private void CreateTray_Click(object sender, RoutedEventArgs e)
         {
             TrayIcon icon = new TrayIcon((uint)MainWindow.TrayIcons.Count,
-                iconPath: iconSelector.SelectedIndex == 0 ? "Images/OKIcon.ico" : "Images/ErrorIcon.ico",
+                iconPath: GetSelectedIconPath(),
                 tooltip: tooltip.Text);
             icon.IsVisible = true;
 
@@ -70,12 +70,15 @@ namespace WinUIExSample.Pages
             }
         }
 
-        private void iconSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private string GetSelectedIconPath()
         {
-            foreach (var icon in MainWindow.TrayIcons)
+            return iconSelector.SelectedIndex switch
             {
-                icon.SetIcon(iconSelector.SelectedIndex == 0 ? "Images/OKIcon.ico" : "Images/ErrorIcon.ico");
-            }
+                0 => "Images/OKIcon.ico",
+                1 => "Images/ErrorIcon.ico",
+                2 => "Images/InfoIcon.svg",
+                _ => "Images/OKIcon.ico"
+            };
         }
     }
 }

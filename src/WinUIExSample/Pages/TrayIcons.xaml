@@ -31,9 +31,10 @@
                 <TextBlock Text="Additional Tray Icons" FontSize="18" />
                 <TextBox Text="TrayIcon Tooltip" PlaceholderText="Tooltip for icon" MaxLength="128" HorizontalAlignment="Left"
                          TextChanged="TextBox_TextChanged" x:Name="tooltip" Header="Tooltip" Width="150" />
-                <ComboBox x:Name="iconSelector" Header="Icon:" Width="150" SelectedIndex="0" SelectionChanged="iconSelector_SelectionChanged">
+                <ComboBox x:Name="iconSelector" Header="Icon for new tray icon:" Width="150" SelectedIndex="0">
                     <ComboBoxItem>OK</ComboBoxItem>
                     <ComboBoxItem>Error</ComboBoxItem>
+                    <ComboBoxItem>Info (SVG)</ComboBoxItem>
                 </ComboBox>
                 <Button Content="Add TrayIcon" Click="CreateTray_Click" Width="150" />
                 <Button Content="Clear Tray Icons" Click="ClearTray_Click" Width="150" />

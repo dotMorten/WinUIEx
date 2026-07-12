@@ -34,6 +34,7 @@ public class TrayIcon : IDisposable
     private readonly nint _windowHandle;
     private readonly WindowMessageMonitor _monitor;
     private IconId currentIcon;
+    private HICON _ownedIconHandle;
     private string _tooltip;
     private FrameworkElement _root;
     private FlyoutBase? _currentFlyout;
@@ -54,7 +55,7 @@ public class TrayIcon : IDisposable
     /// Initializes a new instance of the TrayIcon class with the specified icon and tooltip text.
     /// </summary>
     /// <param name="trayiconId">A unique identifier for the tray icon.</param>
-    /// <param name="iconPath">The file path to the icon image to display in the system tray. Must refer to a valid .ico image file.</param>
+    /// <param name="iconPath">The file path to the icon image to display in the system tray. Supports .ico and .svg files.</param>
     /// <param name="tooltip">The tooltip text to display when the user hovers over the tray icon. Maximum length: 128 characters.</param>
     public TrayIcon(uint trayiconId, string iconPath, string tooltip) : this(trayiconId, tooltip)
     {
@@ -101,6 +102,7 @@ public class TrayIcon : IDisposable
             _monitor.Dispose();
         }
         RemoveFromTray(TrayIconId);
+        ReleaseOwnedIcon();
     }
 
     private void CheckDisposed()
@@ -273,16 +275,32 @@ public class TrayIcon : IDisposable
     /// <summary>
     /// Sets the icon displayed for the application's taskbar button.
     /// </summary>
-    /// <param name="iconPath">The file path to the icon image to display on the taskbar button. The path must refer to a valid .ico image file.</param>
+    /// <param name="iconPath">The file path to the icon image to display in the tray. Supports .ico and .svg files.</param>
     public unsafe void SetIcon(string iconPath)
     {
-        fixed (char* nameLocal = iconPath)
+        CheckDisposed();
+        if (iconPath is null)
+            throw new ArgumentNullException(nameof(iconPath));
+
+        string resolvedIconPath = IconPathHelper.ResolvePath(iconPath);
+        int size = Math.Max((int)(WindowExtensions.GetDpiForWindow(_window) / 6d), 1);
+        switch (GetIconFileType(resolvedIconPath))
         {
-            var size = (int)(WindowExtensions.GetDpiForWindow(_window) / 6d);
-            var id = PInvoke.LoadImage(HINSTANCE.Null, nameLocal, GDI_IMAGE_TYPE.IMAGE_ICON, size, size, IMAGE_FLAGS.LR_LOADFROMFILE);
-            if (id.IsNull)
-                throw new ArgumentException($"Failed to load icon from {iconPath}");
-            SetIcon(new IconId((ulong)id.Value));
+            case IconFileType.Ico:
+                fixed (char* nameLocal = resolvedIconPath)
+                {
+                    var id = PInvoke.LoadImage(HINSTANCE.Null, nameLocal, GDI_IMAGE_TYPE.IMAGE_ICON, size, size, IMAGE_FLAGS.LR_LOADFROMFILE);
+                    if (id.IsNull)
+                        throw new ArgumentException($"Failed to load icon from {iconPath}", nameof(iconPath));
+                    SetIconCore(new IconId((ulong)id.Value), new HICON(id.Value));
+                }
+                break;
+            case IconFileType.Svg:
+                var svgHandle = SvgIconHelper.CreateIconFromSvg(resolvedIconPath, (uint)size, (uint)size);
+                SetIconCore(new IconId((ulong)svgHandle.Value), svgHandle);
+                break;
+            default:
+                throw new ArgumentException($"Unsupported icon file format for {iconPath}", nameof(iconPath));
         }
     }
 
@@ -292,9 +310,67 @@ public class TrayIcon : IDisposable
     /// <param name="iconId">The identifier of the icon to display in the taskbar. Must be a valid <see cref="IconId"/> value.</param>
     public void SetIcon(IconId iconId)
     {
+        CheckDisposed();
+        SetIconCore(iconId, HICON.Null);
+    }
+
+    private void SetIconCore(IconId iconId, HICON ownedIconHandle)
+    {
+        ReleaseOwnedIcon();
+        _ownedIconHandle = ownedIconHandle;
         currentIcon = iconId;
         if (IsVisible)
             UpdateIcon();
+    }
+
+    private void ReleaseOwnedIcon()
+    {
+        if (!_ownedIconHandle.IsNull)
+        {
+            PInvoke.DestroyIcon(_ownedIconHandle);
+            _ownedIconHandle = HICON.Null;
+        }
+    }
+
+    private static IconFileType GetIconFileType(string iconPath)
+    {
+        string extension = Path.GetExtension(iconPath);
+        if (extension.Equals(".ico", StringComparison.OrdinalIgnoreCase))
+            return IconFileType.Ico;
+        if (extension.Equals(".svg", StringComparison.OrdinalIgnoreCase))
+            return IconFileType.Svg;
+
+        using FileStream stream = File.OpenRead(iconPath);
+        Span<byte> header = stackalloc byte[4];
+        int bytesRead = stream.Read(header);
+        if (bytesRead >= 4 &&
+            header[0] == 0x00 &&
+            header[1] == 0x00 &&
+            header[2] == 0x01 &&
+            header[3] == 0x00)
+        {
+            return IconFileType.Ico;
+        }
+
+        stream.Position = 0;
+        using StreamReader reader = new StreamReader(stream, System.Text.Encoding.UTF8, detectEncodingFromByteOrderMarks: true, bufferSize: 256, leaveOpen: false);
+        char[] textBuffer = new char[256];
+        int textLength = reader.Read(textBuffer, 0, textBuffer.Length);
+        string text = new string(textBuffer, 0, textLength).TrimStart();
+        if (text.StartsWith("<svg", StringComparison.OrdinalIgnoreCase) ||
+            text.Contains("<svg", StringComparison.OrdinalIgnoreCase))
+        {
+            return IconFileType.Svg;
+        }
+
+        return IconFileType.Unknown;
+    }
+
+    private enum IconFileType
+    {
+        Unknown,
+        Ico,
+        Svg
     }
 
     private void AddToTray(uint iconId)

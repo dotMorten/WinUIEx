@@ -25,11 +25,7 @@
     <PackageId>WinUIEx</PackageId>
     <Product>WinUI Extensions</Product>
     <PackageReleaseNotes>
-        - Added a new analyzer to call out when an invalid type is passed to `Frame.Navigate`. #260
-        - Remove obsolete tags from WebAuthenticator.
-        - Improve location of tray flyout to not obscure icon.
-        - Obsolete Icon class in favor of WinAppSDK's AppWindow.SetIcon.
-        - Fix ToggleWindowStyle not always working #249 
+        - Add SVG file support to `TrayIcon.SetIcon(string)`, including relative path resolution and smart `.ico`/`.svg` detection.
     </PackageReleaseNotes>
   </PropertyGroup>
 

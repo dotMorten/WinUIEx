@@ -38,6 +38,8 @@
     <Content Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
     <Content Include="Assets\StoreLogo.png" />
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
+    <Content Include="TestAssets\InfoIcon.svg" />
+    <Content Include="..\WinUIExSample\Images\OKIcon.ico" Link="TestAssets\OKIcon.ico" />
   </ItemGroup>
 
   <Import Project="..\Dependencies.targets" Condition="'$(WinAppSDKVersion)'==''" />

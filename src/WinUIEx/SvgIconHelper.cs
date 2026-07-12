@@ -366,7 +366,7 @@ namespace WinUIEx
         {
             width = 0;
             height = 0;
-            string viewBox = (string?)root.Attribute("viewBox");
+            string? viewBox = (string?)root.Attribute("viewBox");
             if (string.IsNullOrWhiteSpace(viewBox))
                 return false;
 

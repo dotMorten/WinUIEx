@@ -36,8 +36,15 @@ jobs:
       with:
         name: NuGet Packages
         path: artifacts/NuGet/Release 
-        
+
+    # Get a short-lived NuGet API key
+    - name: NuGet login (OIDC → temp API key)
+      uses: NuGet/login@v1
+      id: login
+      with:
+        user: ${{ secrets.NUGET_USER }}
+   
     - name: Push to NuGet
       run: |
-        dotnet nuget push artifacts\NuGet\Release\*.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://nuget.org
-        dotnet nuget push artifacts\NuGet\Release\*.snupkg -k ${{ secrets.NUGET_API_KEY }} -s https://nuget.org
+        dotnet nuget push artifacts\NuGet\Release\*.nupkg --api-key ${{steps.login.outputs.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json
+        dotnet nuget push artifacts\NuGet\Release\*.snupkg --api-key ${{steps.login.outputs.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json

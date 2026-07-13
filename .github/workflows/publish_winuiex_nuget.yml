@@ -14,26 +14,19 @@ jobs:
     
     steps:
     - name: Clone Repo
-      uses: actions/checkout@v1
+      uses: actions/checkout@v4
     
     - name: Setup Visual Studio Command Prompt
-      uses: microsoft/setup-msbuild@v1.1
-  
-#    - name: Get certificate
-#      id: cert_file
-#      uses: timheuer/base64-to-file@v1.2
-#      with:
-#        fileName: 'certfile.pfx'
-#        encodedString: ${{ secrets.BASE64_ENCODED_PFX }}
-      
+      uses: microsoft/setup-msbuild@v2
+
     - name: Build
       run: |
-        msbuild /restore /t:Build,Pack src/WinUIEx/WinUIEx.csproj /p:Configuration=Release /p:CertificatePath=${{ steps.cert_file.outputs.filePath }} /p:CertificatePassword=${{ secrets.PFX_PASSWORD }}
-      
-#    - name: Sign NuGet Package
-#      run: |
-#        nuget sign artifacts\NuGet\Release\*.nupkg -CertificatePath ${{ steps.cert_file.outputs.filePath }} -CertificatePassword ${{ secrets.PFX_PASSWORD }}  -Timestamper http://timestamp.digicert.com -NonInteractive
-#        nuget sign artifacts\NuGet\Release\*.snupkg -CertificatePath ${{ steps.cert_file.outputs.filePath }} -CertificatePassword ${{ secrets.PFX_PASSWORD }}  -Timestamper http://timestamp.digicert.com -NonInteractive
+        msbuild /restore /t:Build src/WinUIEx/WinUIEx.csproj /p:Configuration=Release
+
+
+    - name: Pack
+      run: |
+        msbuild /t:Pack src/WinUIEx/WinUIEx.csproj /p:Configuration=Release /p:NoBuild=true
 
     - name: Upload artifacts
       uses: actions/upload-artifact@v4
@@ -51,4 +44,3 @@ jobs:
     - name: Push to NuGet
       run: |
         dotnet nuget push artifacts\NuGet\Release\*.nupkg --api-key ${{steps.login.outputs.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json
-        dotnet nuget push artifacts\NuGet\Release\*.snupkg --api-key ${{steps.login.outputs.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json

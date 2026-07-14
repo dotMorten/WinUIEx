@@ -23,10 +23,37 @@ jobs:
       run: |
         msbuild /restore /t:Build src/WinUIEx/WinUIEx.csproj /p:Configuration=Release
 
-
     - name: Pack
       run: |
         msbuild /t:Pack src/WinUIEx/WinUIEx.csproj /p:Configuration=Release /p:NoBuild=true
+
+    - name: Set up .NET for package signing
+      uses: actions/setup-dotnet@v5
+      with:
+        dotnet-version: 10.0.x
+
+    - name: Azure login
+      uses: azure/login@v3
+      with:
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+    - name: Install Sign CLI
+      run: |
+        dotnet tool install --global sign --version 0.9.1-beta.26330.1
+
+    - name: Sign NuGet package and contained DLLs
+      run: |
+        sign code artifact-signing artifacts\NuGet\Release\*.nupkg `
+          --artifact-signing-endpoint ${{ vars.AZURE_ARTIFACT_SIGNING_ENDPOINT }} `
+          --artifact-signing-account ${{ vars.AZURE_ARTIFACT_SIGNING_ACCOUNT }} `
+          --artifact-signing-certificate-profile ${{ vars.AZURE_ARTIFACT_SIGNING_CERTIFICATE_PROFILE }} `
+          --azure-credential-type azure-cli `
+          --file-digest SHA256 `
+          --timestamp-url http://timestamp.acs.microsoft.com `
+          --timestamp-digest SHA256 `
+          --verbosity information
 
     - name: Upload artifacts
       uses: actions/upload-artifact@v4
@@ -41,6 +68,6 @@ jobs:
       with:
         user: ${{ secrets.NUGET_USER }}
    
-    #- name: Push to NuGet
-    #  run: |
-    #    dotnet nuget push artifacts\NuGet\Release\*.nupkg --api-key ${{steps.login.outputs.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json
+    # - name: Push to NuGet
+    #   run: |
+    #     dotnet nuget push artifacts\NuGet\Release\*.nupkg --api-key ${{steps.login.outputs.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json

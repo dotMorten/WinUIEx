@@ -178,9 +178,15 @@ namespace WinUIEx
         {
             _oauthCheckWasPerformed = true;
             if (activatedEventArgs is null)
+            {
+                EnsureCurrentInstanceIsRegistered();
                 return false;
+            }
             if (activatedEventArgs.Kind != Microsoft.Windows.AppLifecycle.ExtendedActivationKind.Protocol)
+            {
+                EnsureCurrentInstanceIsRegistered();
                 return false;
+            }
             var state = GetState(activatedEventArgs);
             if (state is not null && state["appInstanceId"] is string id && state["signinId"] is string signinId && !string.IsNullOrEmpty(signinId))
             {
@@ -204,6 +210,12 @@ namespace WinUIEx
                 }
             }
             return false;
+        }
+
+        private static void EnsureCurrentInstanceIsRegistered()
+        {
+            if (string.IsNullOrEmpty(Microsoft.Windows.AppLifecycle.AppInstance.GetCurrent().Key))
+                Microsoft.Windows.AppLifecycle.AppInstance.FindOrRegisterForKey(Guid.NewGuid().ToString());
         }
 
         private void CurrentAppInstance_Activated(object? sender, Microsoft.Windows.AppLifecycle.AppActivationArguments e)

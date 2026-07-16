@@ -22,6 +22,7 @@ namespace WinUIEx
         private readonly WindowMessageMonitor _monitor;
         private readonly Window _window;
         private OverlappedPresenter overlappedPresenter;
+        private readonly Microsoft.UI.Dispatching.DispatcherQueueTimer _persistenceTimer;
         private readonly static Dictionary<IntPtr, WeakReference<WindowManager>> managers = new Dictionary<IntPtr, WeakReference<WindowManager>>();
         private bool _isInitialized; // Set to true on first activation. Used to track persistence restore
 
@@ -75,6 +76,11 @@ namespace WinUIEx
             AppWindow.Changed += AppWindow_Changed;
             AppWindow.Destroying += AppWindow_Destroying;
 
+            _persistenceTimer = _window.DispatcherQueue.CreateTimer();
+            // Presenter changes are reported after their resize, so wait until the resize burst settles.
+            _persistenceTimer.Interval = TimeSpan.FromMilliseconds(100);
+            _persistenceTimer.IsRepeating = false;
+            _persistenceTimer.Tick += PersistenceTimer_Tick;
             overlappedPresenter = AppWindow.Presenter as OverlappedPresenter ?? Microsoft.UI.Windowing.OverlappedPresenter.Create();
             managers[window.GetWindowHandle()] = new WeakReference<WindowManager>(this);
             switch (overlappedPresenter.State)
@@ -103,6 +109,7 @@ namespace WinUIEx
         private void Window_Closed(object sender, WindowEventArgs args)
         {
             CleanUpBackdrop();
+            _persistenceTimer.Stop();
             SavePersistence();
             _trayIcon?.Dispose();
             _trayIcon = null;
@@ -134,6 +141,8 @@ namespace WinUIEx
                 _window.Activated -= Window_Activated;
                 _window.Closed -= Window_Closed;
                 _window.VisibilityChanged -= Window_VisibilityChanged;
+                _persistenceTimer.Stop();
+                _persistenceTimer.Tick -= PersistenceTimer_Tick;
                 _monitor.WindowMessageReceived -= OnWindowMessage;
                 _monitor.Dispose();
             }
@@ -267,6 +276,8 @@ namespace WinUIEx
                 {
                     _isInitialized = true;
                     LoadPersistence();
+                    if (AppWindow.Presenter.Kind == AppWindowPresenterKind.Overlapped)
+                        CacheOverlappedWindowPlacement();
                     _window.DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.High, () =>
                     {
                         InitBackdrop();
@@ -404,6 +415,20 @@ namespace WinUIEx
         public string? PersistenceId { get; set; }
 
         private bool _restoringPersistence; // Flag used to avoid WinUI DPI adjustment
+        private WINDOWPLACEMENT? _overlappedWindowPlacement;
+
+        private void CacheOverlappedWindowPlacement()
+        {
+            var placement = new WINDOWPLACEMENT();
+            Windows.Win32.PInvoke.GetWindowPlacement(new Windows.Win32.Foundation.HWND(_window.GetWindowHandle()), ref placement);
+            _overlappedWindowPlacement = placement;
+        }
+
+        private void PersistenceTimer_Tick(Microsoft.UI.Dispatching.DispatcherQueueTimer sender, object args)
+        {
+            if (AppWindow.Presenter.Kind == AppWindowPresenterKind.Overlapped)
+                CacheOverlappedWindowPlacement();
+        }
 
         /// <summary>
         /// Gets or sets the persistence storage for maintaining window settings across application settings.
@@ -508,8 +533,16 @@ namespace WinUIEx
                         sw.Write(monitor.RectMonitor.Right);
                         sw.Write(monitor.RectMonitor.Bottom);
                     }
-                    var placement = new WINDOWPLACEMENT();
-                    Windows.Win32.PInvoke.GetWindowPlacement(new Windows.Win32.Foundation.HWND(_window.GetWindowHandle()), ref placement);
+                    WINDOWPLACEMENT placement;
+                    if (AppWindow.Presenter.Kind != AppWindowPresenterKind.Overlapped && _overlappedWindowPlacement.HasValue)
+                    {
+                        placement = _overlappedWindowPlacement.Value;
+                    }
+                    else
+                    {
+                        placement = new WINDOWPLACEMENT();
+                        Windows.Win32.PInvoke.GetWindowPlacement(new Windows.Win32.Foundation.HWND(_window.GetWindowHandle()), ref placement);
+                    }
 
                     int structSize = Marshal.SizeOf(typeof(WINDOWPLACEMENT));
                     IntPtr buffer = Marshal.AllocHGlobal(structSize);
@@ -527,6 +560,11 @@ namespace WinUIEx
 
         private void AppWindow_Changed(Microsoft.UI.Windowing.AppWindow sender, Microsoft.UI.Windowing.AppWindowChangedEventArgs args)
         {
+            if ((args.DidPositionChange || args.DidSizeChange) && !string.IsNullOrEmpty(PersistenceId))
+            {
+                _persistenceTimer.Stop();
+                _persistenceTimer.Start();
+            }
             if (args.DidPositionChange)
                 PositionChanged?.Invoke(this, sender.Position);
             if (args.DidPresenterChange)
@@ -536,6 +574,8 @@ namespace WinUIEx
                     overlappedPresenter = op;
                     _IsTitleBarVisible = op.HasTitleBar;
                 }
+                if (sender.Presenter.Kind == AppWindowPresenterKind.Overlapped)
+                    CacheOverlappedWindowPlacement();
                 PresenterChanged?.Invoke(this, sender.Presenter);
             }
             if(args.DidZOrderChange)

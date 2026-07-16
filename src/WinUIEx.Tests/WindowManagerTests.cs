@@ -1,4 +1,5 @@
 ﻿using Microsoft.UI.Windowing;
+using System.Collections.Generic;
 
 namespace WinUIUnitTests
 {
@@ -232,6 +233,94 @@ namespace WinUIUnitTests
             finally //Ensure window is closed if test fails
             {
                 newWindow.Close();
+            }
+        });
+
+        [TestMethod]
+        public async Task PersistenceIgnoresFullScreenBounds() => await UITestHelper.RunWindowTest(async (window) =>
+        {
+            var previousStorage = WindowManager.PersistenceStorage;
+            WindowManager.PersistenceStorage = new Dictionary<string, object>();
+            try
+            {
+                window.Content = new Grid();
+                var manager = WindowManager.Get(window);
+                manager.PersistenceId = nameof(PersistenceIgnoresFullScreenBounds);
+                await window.Content.LoadAsync();
+                window.AppWindow.MoveAndResize(new Windows.Graphics.RectInt32(45, 67, 456, 345));
+                await Task.Delay(150);
+                window.AppWindow.SetPresenter(AppWindowPresenterKind.FullScreen);
+                await Task.Delay(150);
+                Assert.AreEqual(AppWindowPresenterKind.FullScreen, window.AppWindow.Presenter.Kind);
+                window.Close();
+
+                Window newWindow = new Window();
+                var manager2 = WindowManager.Get(newWindow);
+                manager2.PersistenceId = manager.PersistenceId;
+                newWindow.Content = new Grid();
+                try
+                {
+                    newWindow.Activate();
+                    await newWindow.Content.LoadAsync();
+                    Assert.AreEqual(AppWindowPresenterKind.Overlapped, newWindow.AppWindow.Presenter.Kind);
+                    Assert.AreEqual(45, newWindow.AppWindow.Position.X);
+                    Assert.AreEqual(67, newWindow.AppWindow.Position.Y);
+                    Assert.AreEqual(456, newWindow.AppWindow.Size.Width);
+                    Assert.AreEqual(345, newWindow.AppWindow.Size.Height);
+                }
+                finally
+                {
+                    newWindow.Close();
+                }
+            }
+            finally
+            {
+                WindowManager.PersistenceStorage = previousStorage;
+            }
+        });
+
+        [TestMethod]
+        public async Task PersistenceRetainsMaximizedStateBeforeFullScreen() => await UITestHelper.RunWindowTest(async (window) =>
+        {
+            var previousStorage = WindowManager.PersistenceStorage;
+            WindowManager.PersistenceStorage = new Dictionary<string, object>();
+            try
+            {
+                window.Content = new Grid();
+                var manager = WindowManager.Get(window);
+                manager.PersistenceId = nameof(PersistenceRetainsMaximizedStateBeforeFullScreen);
+                await window.Content.LoadAsync();
+                window.AppWindow.MoveAndResize(new Windows.Graphics.RectInt32(45, 67, 456, 345));
+                ((OverlappedPresenter)window.AppWindow.Presenter).Maximize();
+                await Task.Delay(150);
+                window.AppWindow.SetPresenter(AppWindowPresenterKind.FullScreen);
+                await Task.Delay(150);
+                window.Close();
+
+                Window newWindow = new Window();
+                var manager2 = WindowManager.Get(newWindow);
+                manager2.PersistenceId = manager.PersistenceId;
+                newWindow.Content = new Grid();
+                try
+                {
+                    newWindow.Activate();
+                    await newWindow.Content.LoadAsync();
+                    var presenter = (OverlappedPresenter)newWindow.AppWindow.Presenter;
+                    Assert.AreEqual(OverlappedPresenterState.Maximized, presenter.State);
+                    presenter.Restore();
+                    Assert.AreEqual(45, newWindow.AppWindow.Position.X);
+                    Assert.AreEqual(67, newWindow.AppWindow.Position.Y);
+                    Assert.AreEqual(456, newWindow.AppWindow.Size.Width);
+                    Assert.AreEqual(345, newWindow.AppWindow.Size.Height);
+                }
+                finally
+                {
+                    newWindow.Close();
+                }
+            }
+            finally
+            {
+                WindowManager.PersistenceStorage = previousStorage;
             }
         });
     }

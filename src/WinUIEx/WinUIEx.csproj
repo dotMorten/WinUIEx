@@ -25,6 +25,7 @@
     <PackageId>WinUIEx</PackageId>
     <Product>WinUI Extensions</Product>
     <PackageReleaseNotes>
+        - Route `WebAuthenticator` callbacks to the correct app when multiple instances are running (Issue #273).
         - Preserve the pre-fullscreen window size, position, and maximized state when using `WindowManager` persistence (Issue #253).
         - Add SVG file support to `TrayIcon.SetIcon(string)`, including relative path resolution and smart `.ico`/`.svg` detection.
     </PackageReleaseNotes>

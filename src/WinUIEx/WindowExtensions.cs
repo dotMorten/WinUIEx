@@ -3,7 +3,6 @@ using Microsoft.UI.Windowing;
 using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Win32;
 

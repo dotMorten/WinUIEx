@@ -396,7 +396,7 @@ namespace WinUIEx
         public static DataTransferManager GetDataTransferManagerForWindow(this Microsoft.UI.Xaml.Window window) => HwndExtensions.GetDataTransferManagerForWindow(window.GetWindowHandle());
 
         /// <summary>
-        /// Displays the Windows Share UI for this window with the specified <see cref="DataPackage"/> .
+        /// Displays the Windows Share UI for this window with the specified <see cref="DataPackage"/>.
         /// </summary>
         /// <param name="window">The window for which to display the Share UI.</param>
         /// <param name="data">The data package to share.</param>

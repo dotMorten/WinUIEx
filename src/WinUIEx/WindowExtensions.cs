@@ -408,9 +408,7 @@ namespace WinUIEx
             void handler(DataTransferManager sender, DataRequestedEventArgs args)
             {
                 args.Request.Data = data;
-                if (dtm is not null) {
-                    dtm.DataRequested -= handler;
-                }
+                dtm.DataRequested -= handler;
             }
 
             dtm.DataRequested += handler;

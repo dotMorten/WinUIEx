@@ -412,9 +412,8 @@ namespace WinUIEx
             }
 
             dtm.DataRequested += handler;
-            var hWnd = WinRT.Interop.WindowNative.GetWindowHandle(window);
             var interop = DataTransferManager.As<IDataTransferManagerInterop>();
-            interop.ShowShareUIForWindow(hWnd);
+            interop.ShowShareUIForWindow(window.GetWindowHandle());
         }
     }
 }

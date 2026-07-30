@@ -1,14 +1,14 @@
 ﻿using System;
-using System.Runtime.CompilerServices;
+using System.ComponentModel;
 using System.Runtime.InteropServices;
+
+using Microsoft.UI;
+
+using Windows.ApplicationModel.DataTransfer;
 using Windows.Win32;
 using Windows.Win32.Foundation;
-using Windows.Win32.UI.WindowsAndMessaging;
 using Windows.Win32.Graphics.Gdi;
-using WinRT;
-using Microsoft.UI;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using System.ComponentModel;
+using Windows.Win32.UI.WindowsAndMessaging;
 
 namespace WinUIEx
 {
@@ -372,6 +372,19 @@ namespace WinUIEx
             if (!PInvoke.SetLayeredWindowAttributes(handle, color, alpha, LAYERED_WINDOW_ATTRIBUTES_FLAGS.LWA_COLORKEY | LAYERED_WINDOW_ATTRIBUTES_FLAGS.LWA_ALPHA))
                 Marshal.ThrowExceptionForHR(Marshal.GetLastWin32Error());
         }*/
+
+        private static readonly Guid dtmIid = new(0xa5caee9b, 0x8708, 0x49d1, 0x8d, 0x36, 0x67, 0xd2, 0x5a, 0x8d, 0xa0, 0x0c);
+
+        /// <summary>
+        /// Gets the DataTransferManager for the specified window handle
+        /// </summary>
+        /// <param name="hwnd">Window handle</param>
+        /// <returns>The DataTransferManager associated with the specified window handle.</returns>
+        public static DataTransferManager GetDataTransferManagerForWindow(IntPtr hwnd) 
+        {
+            IDataTransferManagerInterop interop = DataTransferManager.As<IDataTransferManagerInterop>();
+            return WinRT.MarshalInterface<DataTransferManager>.FromAbi(interop.GetForWindow(hwnd, dtmIid));
+        }
     }
 
     /// <summary>
@@ -441,7 +454,7 @@ namespace WinUIEx
         Visible = 0x10000000,
         /// <summary>The window has a vertical scroll bar.</summary>
         VScroll = 0x00200000,
-    } 
+    }
 
     /// <summary>
     /// Flags used for ToggleExtendedWindowStyle method
@@ -511,5 +524,26 @@ namespace WinUIEx
         Transparent = 0x00000020,
         /// <summary>The window has a border with a raised edge.</summary>
         WindowEdge = 0x00000100,
+    }
+
+    [System.Runtime.InteropServices.ComImport]
+    [System.Runtime.InteropServices.Guid("3A3DCD6C-3EAB-43DC-BCDE-45671CE800C8")]
+    [System.Runtime.InteropServices.InterfaceType(
+        System.Runtime.InteropServices.ComInterfaceType.InterfaceIsIUnknown)]
+    interface IDataTransferManagerInterop 
+    {
+        /// <summary>
+        /// Initializes the Share UI for the specified window.
+        /// </summary>
+        /// <param name="appWindow">The window for which to initialize the Share UI.</param>
+        /// <param name="riid">The interface ID of the IDataTransferManager interface.</param>
+        /// <returns>The IDataTransferManager interface for the specified window.</returns>
+        IntPtr GetForWindow([System.Runtime.InteropServices.In] IntPtr appWindow, [System.Runtime.InteropServices.In] ref Guid riid);
+
+        /// <summary>
+        /// Displays the Share UI for the specified window.
+        /// </summary>
+        /// <param name="appWindow">The window for which to display the Share UI.</param>
+        void ShowShareUIForWindow(IntPtr appWindow);
     }
 }

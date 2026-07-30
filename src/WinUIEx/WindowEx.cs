@@ -61,8 +61,6 @@ namespace WinUIEx
             Grid.SetRow(windowArea, 1);
             rootContent.Children.Add(windowArea);
 
-            InitializeShare();
-
             this.Content = rootContent;
         }
 

@@ -1,7 +1,10 @@
 ﻿using Microsoft.UI;
 using Microsoft.UI.Windowing;
 using System;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+
+using Windows.ApplicationModel.DataTransfer;
 using Windows.Win32;
 
 namespace WinUIEx
@@ -121,7 +124,7 @@ namespace WinUIEx
             var appwindow = window.AppWindow;
             if (appwindow.Presenter is OverlappedPresenter overlapped)
                 action(overlapped);
-            else 
+            else
                 throw new NotSupportedException($"Not supported with a {appwindow.Presenter.Kind} presenter");
         }
         private static T GetOverlappedPresenterValue<T>(this Microsoft.UI.Xaml.Window window, Func<OverlappedPresenter?,T> action)
@@ -361,7 +364,7 @@ namespace WinUIEx
         /// <param name="window">window</param>
         /// <param name="chromaKey">The color that specifies the transparency color key to be used when composing the layered window. All pixels painted by the window in this color will be transparent.</param>
         /// <param name="alpha">Alpha value used to describe the opacity of the layered window. When <paramref name="alpha"/> is 0, the window is completely transparent. When <paramref name="alpha"/> is 255, the window is opaque.</param>
-        public static void SetLayeredWindowAttributes(this Microsoft.UI.Xaml.Window window, Windows.UI.Color chromaKey, byte alpha) 
+        public static void SetLayeredWindowAttributes(this Microsoft.UI.Xaml.Window window, Windows.UI.Color chromaKey, byte alpha)
             => HwndExtensions.SetLayeredWindowAttributes(GetWindowHandle(window), chromaKey.R, chromaKey.G, chromaKey.B, alpha);*/
 
         /// <summary>
@@ -384,6 +387,37 @@ namespace WinUIEx
             {
                 PInvoke.DeleteObject(rgn);
             }
+        }
+
+        /// <summary>
+        /// Gets the DataTransferManager for the specified window. This is used to enable sharing functionality in WinUI 3 desktop apps.
+        /// </summary>
+        /// <param name="window">The window for which to get the DataTransferManager.</param>
+        /// <returns>The DataTransferManager associated with the specified window.</returns>
+        public static DataTransferManager GetDataTransferManagerForWindow(this Microsoft.UI.Xaml.Window window) => HwndExtensions.GetDataTransferManagerForWindow(window.GetWindowHandle());
+
+        /// <summary>
+        /// Displays the Windows Share UI for this window and supplies the specified
+        /// <see cref="DataPackage"/> when the user completes the share operation.
+        /// </summary>
+        /// <param name="window">The window for which to display the Share UI.</param>
+        /// <param name="data">The data package to share.</param>
+        public static void Share(this Microsoft.UI.Xaml.Window window, DataPackage data)
+        {
+            var dtm = window.GetDataTransferManagerForWindow();
+
+            void handler(DataTransferManager sender, DataRequestedEventArgs args)
+            {
+                args.Request.Data = data;
+                if (dtm is not null) {
+                    dtm.DataRequested -= handler;
+                }
+            }
+
+            dtm.DataRequested += handler;
+            var hWnd = WinRT.Interop.WindowNative.GetWindowHandle(window);
+            var interop = DataTransferManager.As<IDataTransferManagerInterop>();
+            interop.ShowShareUIForWindow(hWnd);
         }
     }
 }

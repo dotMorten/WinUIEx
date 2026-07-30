@@ -1,9 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
-
 using Microsoft.UI;
-
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Win32;
 using Windows.Win32.Foundation;
@@ -380,7 +378,7 @@ namespace WinUIEx
         /// </summary>
         /// <param name="hwnd">Window handle</param>
         /// <returns>The DataTransferManager associated with the specified window handle.</returns>
-        public static DataTransferManager GetDataTransferManagerForWindow(IntPtr hwnd) 
+        public static DataTransferManager GetDataTransferManagerForWindow(IntPtr hwnd)
         {
             IDataTransferManagerInterop interop = DataTransferManager.As<IDataTransferManagerInterop>();
             return WinRT.MarshalInterface<DataTransferManager>.FromAbi(interop.GetForWindow(hwnd, dtmIid));
@@ -530,7 +528,7 @@ namespace WinUIEx
     [System.Runtime.InteropServices.Guid("3A3DCD6C-3EAB-43DC-BCDE-45671CE800C8")]
     [System.Runtime.InteropServices.InterfaceType(
         System.Runtime.InteropServices.ComInterfaceType.InterfaceIsIUnknown)]
-    interface IDataTransferManagerInterop 
+    interface IDataTransferManagerInterop
     {
         /// <summary>
         /// Initializes the Share UI for the specified window.

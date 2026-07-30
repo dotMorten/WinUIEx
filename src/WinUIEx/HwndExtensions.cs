@@ -383,6 +383,16 @@ namespace WinUIEx
             IDataTransferManagerInterop interop = DataTransferManager.As<IDataTransferManagerInterop>();
             return WinRT.MarshalInterface<DataTransferManager>.FromAbi(interop.GetForWindow(hwnd, dtmIid));
         }
+
+        /// <summary>
+        /// Displays the Windows Share UI for the specified window handle.
+        /// </summary>
+        /// <param name="hwnd">The window handle for which to display the Share UI.</param>
+        public static void ShowShareUIForWindow(IntPtr hwnd)
+        {
+            IDataTransferManagerInterop interop = DataTransferManager.As<IDataTransferManagerInterop>();
+            interop.ShowShareUIForWindow(hwnd);
+        }
     }
 
     /// <summary>

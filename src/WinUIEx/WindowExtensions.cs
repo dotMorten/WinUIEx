@@ -389,20 +389,26 @@ namespace WinUIEx
         }
 
         /// <summary>
-        /// Gets the DataTransferManager for the specified window. This is used to enable sharing functionality in WinUI 3 desktop apps.
+        /// Gets the <see cref="DataTransferManager"/> for the specified window.
         /// </summary>
-        /// <param name="window">The window for which to get the DataTransferManager.</param>
-        /// <returns>The DataTransferManager associated with the specified window.</returns>
-        public static DataTransferManager GetDataTransferManagerForWindow(this Microsoft.UI.Xaml.Window window) => HwndExtensions.GetDataTransferManagerForWindow(window.GetWindowHandle());
+        /// <param name="window">The window for which to get the <see cref="DataTransferManager"/>.</param>
+        /// <returns>The <see cref="DataTransferManager"/> associated with the specified window.</returns>
+        public static DataTransferManager GetDataTransferManager(this Microsoft.UI.Xaml.Window window) => HwndExtensions.GetDataTransferManagerForWindow(window.GetWindowHandle());
 
         /// <summary>
-        /// Displays the Windows Share UI for this window with the specified <see cref="DataPackage"/>.
+        /// Displays the Windows Share UI for the specified window.
         /// </summary>
         /// <param name="window">The window for which to display the Share UI.</param>
-        /// <param name="data">The data package to share.</param>
+        public static void ShowShareUI(this Microsoft.UI.Xaml.Window window) => HwndExtensions.ShowShareUIForWindow(window.GetWindowHandle());
+
+        /// <summary>
+        /// A convenience method that displays the Windows Share UI with the specified <see cref="DataPackage"/>.
+        /// </summary>
+        /// <param name="window">The window for which to display the Share UI.</param>
+        /// <param name="data">The <see cref="DataPackage"/> to share.</param>
         public static void Share(this Microsoft.UI.Xaml.Window window, DataPackage data)
         {
-            var dtm = window.GetDataTransferManagerForWindow();
+            var dtm = window.GetDataTransferManager();
 
             void handler(DataTransferManager sender, DataRequestedEventArgs args)
             {
@@ -411,7 +417,7 @@ namespace WinUIEx
             }
 
             dtm.DataRequested += handler;
-            HwndExtensions.ShowShareUIForWindow(window.GetWindowHandle());
+            window.ShowShareUI();
         }
     }
 }

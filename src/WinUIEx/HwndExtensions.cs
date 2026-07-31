@@ -387,7 +387,7 @@ namespace WinUIEx
         /// <summary>
         /// Displays the Windows Share UI for the specified window handle.
         /// </summary>
-        /// <param name="hwnd">The window handle for which to display the Share UI.</param>
+        /// <param name="hwnd">Window handle</param>
         public static void ShowShareUIForWindow(IntPtr hwnd)
         {
             IDataTransferManagerInterop interop = DataTransferManager.As<IDataTransferManagerInterop>();

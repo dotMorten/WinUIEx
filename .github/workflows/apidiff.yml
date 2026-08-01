@@ -2,9 +2,7 @@ name: PR API diff
 
 on:
   pull_request_target:
-    types: [opened, synchronize, reopened]
-  issue_comment:
-    types: [created]
+    types: [opened, synchronize, reopened, labeled]
 
 permissions:
   contents: read
@@ -15,14 +13,10 @@ jobs:
   api-diff:
     if: >-
       (
-        github.event_name == 'pull_request_target' &&
         contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.pull_request.author_association)
-      ) ||
-      (
-        github.event_name == 'issue_comment' &&
-        github.event.issue.pull_request &&
-        github.event.comment.body == '/api-diff' &&
-        contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.comment.author_association)
+      ) || (
+        github.event.action == 'labeled' &&
+        github.event.label.name == 'api-diff'
       )
     runs-on: windows-latest
 
@@ -32,14 +26,10 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            const pullNumber = context.eventName === 'pull_request_target'
-              ? context.payload.pull_request.number
-              : context.payload.issue.number;
-
             const pullRequest = await github.rest.pulls.get({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              pull_number: pullNumber
+              pull_number: context.payload.pull_request.number
             });
 
             core.setOutput('number', pullRequest.data.number);

@@ -1,0 +1,74 @@
+name: Post PR API diff
+
+on:
+  workflow_run:
+    workflows: [PR API diff]
+    types: [completed]
+
+permissions:
+  actions: read
+  issues: write
+
+jobs:
+  post-comment:
+    if: github.event.workflow_run.conclusion == 'success'
+    runs-on: windows-latest
+
+    steps:
+      - name: Download API diff
+        uses: actions/download-artifact@v4
+        with:
+          name: api-diff
+          run-id: ${{ github.event.workflow_run.id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create or update PR comment
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const fs = require('fs');
+            const marker = '<!-- dotnet-omd-api-diff -->';
+            const diff = fs.readFileSync('api-diff.md', 'utf8').trim();
+            const issue_number = Number(fs.readFileSync('pr-number.txt', 'utf8').trim());
+            const { owner, repo } = context.repo;
+
+            const comments = await github.paginate(github.rest.issues.listComments, {
+              owner,
+              repo,
+              issue_number,
+              per_page: 100
+            });
+
+            const existing = comments.find(comment =>
+              comment.user.type === 'Bot' && comment.body.includes(marker));
+
+            const body = diff
+              ? [
+                  marker,
+                  '## API changes',
+                  '',
+                  diff
+                ].join('\n')
+              : [
+                  marker,
+                  '## API changes',
+                  '',
+                  'No API changes are currently detected in this pull request.'
+                ].join('\n');
+
+            if (existing) {
+              await github.rest.issues.updateComment({
+                owner,
+                repo,
+                comment_id: existing.id,
+                body
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner,
+                repo,
+                issue_number,
+                body
+              });
+            }

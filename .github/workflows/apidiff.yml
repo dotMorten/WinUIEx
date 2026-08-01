@@ -1,18 +1,51 @@
 name: PR API diff
 
 on:
-  pull_request:
+  pull_request_target:
     types: [opened, synchronize, reopened]
+  issue_comment:
+    types: [created]
 
 permissions:
   contents: read
-  pull-requests: write
+  issues: write
+  pull-requests: read
 
 jobs:
   api-diff:
+    if: >-
+      (
+        github.event_name == 'pull_request_target' &&
+        contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.pull_request.author_association)
+      ) ||
+      (
+        github.event_name == 'issue_comment' &&
+        github.event.issue.pull_request &&
+        github.event.comment.body == '/api-diff' &&
+        contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.comment.author_association)
+      )
     runs-on: windows-latest
 
     steps:
+      - name: Get pull request references
+        id: pull_request
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const pullNumber = context.eventName === 'pull_request_target'
+              ? context.payload.pull_request.number
+              : context.payload.issue.number;
+
+            const pullRequest = await github.rest.pulls.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: pullNumber
+            });
+
+            core.setOutput('number', pullRequest.data.number);
+            core.setOutput('head_sha', pullRequest.data.head.sha);
+            core.setOutput('base_sha', pullRequest.data.base.sha);
+
       - name: Set up .NET
         uses: actions/setup-dotnet@v4
         with:
@@ -27,8 +60,8 @@ jobs:
           generateomd \
             --source=src/WinUIEx/WinUIEx.csproj \
             --gitRepo=${{ github.server_url }}/${{ github.repository }} \
-            --sourceRef=${{ github.event.pull_request.head.sha }} \
-            --compareRef=${{ github.event.pull_request.base.sha }} \
+            --sourceRef=${{ steps.pull_request.outputs.head_sha }} \
+            --compareRef=${{ steps.pull_request.outputs.base_sha }} \
             --format=md \
             --output=api-diff
 
@@ -56,7 +89,7 @@ jobs:
             const diff = fs.readFileSync('api-diff.md', 'utf8').trim();
             
             const { owner, repo } = context.repo;
-            const issue_number = context.payload.pull_request.number;
+            const issue_number = Number('${{ steps.pull_request.outputs.number }}');
 
             const comments = await github.paginate(github.rest.issues.listComments, {
               owner,

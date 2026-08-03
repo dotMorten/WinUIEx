@@ -15,8 +15,6 @@ using Windows.Foundation;
 using Windows.Foundation.Collections;
 using WinUIEx;
 
-using static System.Runtime.InteropServices.JavaScript.JSType;
-
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
@@ -64,7 +62,7 @@ namespace WinUIExSample.Pages
                 new Windows.UI.Popups.UICommand("Blue Pill"),
                 new Windows.UI.Popups.UICommand("Cancel")
             };
-            string message = "This is your last chance. After this, there is no turning back. You take the blue pill â€“ the story ends, you wake up in your bed and believe whatever you want to believe. You take the red pill â€“ you stay in Wonderland, and I show you how deep the rabbit hole goes. Remember, all I'm offering is the truth â€“ nothing more.";
+            string message = "This is your last chance. After this, there is no turning back. You take the blue pill – the story ends, you wake up in your bed and believe whatever you want to believe. You take the red pill – you stay in Wonderland, and I show you how deep the rabbit hole goes. Remember, all I'm offering is the truth – nothing more.";
             var result = await MainWindow.ShowMessageDialogAsync(message, commands, cancelCommandIndex: 2, title: "Morpheus Asks");
             resultText.Text = "You chose: " + result.Label;
         }

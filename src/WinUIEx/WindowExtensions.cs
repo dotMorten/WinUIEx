@@ -400,24 +400,5 @@ namespace WinUIEx
         /// </summary>
         /// <param name="window">The window for which to display the Share UI.</param>
         public static void ShowShareUI(this Microsoft.UI.Xaml.Window window) => HwndExtensions.ShowShareUIForWindow(window.GetWindowHandle());
-
-        /// <summary>
-        /// A convenience method that displays the Windows Share UI with the specified <see cref="DataPackage"/>.
-        /// </summary>
-        /// <param name="window">The window for which to display the Share UI.</param>
-        /// <param name="data">The <see cref="DataPackage"/> to share.</param>
-        public static void Share(this Microsoft.UI.Xaml.Window window, DataPackage data)
-        {
-            var dtm = window.GetDataTransferManager();
-
-            void handler(DataTransferManager sender, DataRequestedEventArgs args)
-            {
-                dtm.DataRequested -= handler;
-                args.Request.Data = data;
-            }
-
-            dtm.DataRequested += handler;
-            window.ShowShareUI();
-        }
     }
 }

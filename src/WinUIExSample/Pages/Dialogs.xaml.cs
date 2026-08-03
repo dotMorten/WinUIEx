@@ -67,12 +67,20 @@ namespace WinUIExSample.Pages
 
         private async void ShowShareSheet_Click(object sender, RoutedEventArgs e)
         {
-            resultText.Text = "";
-            var data = new Windows.ApplicationModel.DataTransfer.DataPackage();
-            data.Properties.Title = "WinUIEx Sample Share";
-            data.SetUri(new Uri("https://github.com/dotMorten/WinUIEx"));
-            data.SetText("Hello from WinUIEx!");
-            MainWindow.Share(data);
+            var dtm = MainWindow.GetDataTransferManager();
+
+            void handler(DataTransferManager sender, DataRequestedEventArgs args)
+            {
+                dtm.DataRequested -= handler;
+
+                resultText.Text = "";
+                args.Request.Data.Properties.Title = "WinUIEx Sample Share";
+                args.Request.Data.SetUri(new Uri("https://github.com/dotMorten/WinUIEx"));
+                args.Request.Data.SetText("Hello from WinUIEx!");
+            }
+
+            dtm.DataRequested += handler;
+            MainWindow.ShowShareUI();
         }
 
     }

@@ -77,9 +77,11 @@ namespace WinUIExSample.Pages
                 args.Request.Data.SetText("Hello from WinUIEx!");
             }
 
-            var dtm = ((MainWindow)MainWindow).DataTransferManager;
-            dtm.DataRequested += handler;
-            MainWindow.ShowShareUI();
+            if (MainWindow is MainWindow m) 
+            {
+                m.DataTransferManager.DataRequested += handler;
+                MainWindow.ShowShareUI();
+            }
         }
 
     }

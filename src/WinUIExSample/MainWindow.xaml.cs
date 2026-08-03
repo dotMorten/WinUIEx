@@ -11,6 +11,7 @@ using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
+using Windows.ApplicationModel.DataTransfer;
 using Windows.Foundation;
 using Windows.Graphics;
 using WinUIEx;
@@ -25,8 +26,17 @@ namespace WinUIExSample
         internal Queue<string> WindowEvents { get; } = new Queue<string>(101);
         private readonly WindowMessageMonitor monitor;
         private LogWindow? logWindow;
+        private DataTransferManager? dataTransferManager;
 
         internal List<TrayIcon> TrayIcons { get; } = new List<TrayIcon>();
+        internal DataTransferManager DataTransferManager
+        {
+            get
+            {
+                dataTransferManager ??= this.GetDataTransferManager();
+                return dataTransferManager;
+            }
+        }
 
         public MainWindow()
         {

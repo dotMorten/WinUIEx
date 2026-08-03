@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.ApplicationModel.DataTransfer;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using WinUIEx;
@@ -60,25 +61,23 @@ namespace WinUIExSample.Pages
                 new Windows.UI.Popups.UICommand("Blue Pill"),
                 new Windows.UI.Popups.UICommand("Cancel")
             };
-            string message = "This is your last chance. After this, there is no turning back. You take the blue pill – the story ends, you wake up in your bed and believe whatever you want to believe. You take the red pill – you stay in Wonderland, and I show you how deep the rabbit hole goes. Remember, all I'm offering is the truth – nothing more.";
+            string message = "This is your last chance. After this, there is no turning back. You take the blue pill ï¿½ the story ends, you wake up in your bed and believe whatever you want to believe. You take the red pill ï¿½ you stay in Wonderland, and I show you how deep the rabbit hole goes. Remember, all I'm offering is the truth ï¿½ nothing more.";
             var result = await MainWindow.ShowMessageDialogAsync(message, commands, cancelCommandIndex: 2, title: "Morpheus Asks");
             resultText.Text = "You chose: " + result.Label;
         }
 
         private async void ShowShareSheet_Click(object sender, RoutedEventArgs e)
         {
-            var dtm = MainWindow.GetDataTransferManager();
-
             void handler(DataTransferManager sender, DataRequestedEventArgs args)
             {
-                dtm.DataRequested -= handler;
-
+                sender.DataRequested -= handler;
                 resultText.Text = "";
                 args.Request.Data.Properties.Title = "WinUIEx Sample Share";
                 args.Request.Data.SetUri(new Uri("https://github.com/dotMorten/WinUIEx"));
                 args.Request.Data.SetText("Hello from WinUIEx!");
             }
 
+            var dtm = ((MainWindow)MainWindow).DataTransferManager;
             dtm.DataRequested += handler;
             MainWindow.ShowShareUI();
         }

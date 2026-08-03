@@ -26,29 +26,8 @@ namespace WinUIExSample
         internal Queue<string> WindowEvents { get; } = new Queue<string>(101);
         private readonly WindowMessageMonitor monitor;
         private LogWindow? logWindow;
-        private DataTransferManager? dataTransferManager;
 
         internal List<TrayIcon> TrayIcons { get; } = new List<TrayIcon>();
-        internal Action<DataPackage>? ShareDataProvider 
-        {
-            private get;
-            set {
-                field = value;
-                if (dataTransferManager is null) {
-                    dataTransferManager = this.GetDataTransferManager();
-                    dataTransferManager.DataRequested += DataTransferManager_DataRequested;
-                }
-                this.ShowShareUI();
-            }
-        }
-        internal DataTransferManager DataTransferManager
-        {
-            get
-            {
-                dataTransferManager ??= this.GetDataTransferManager();
-                return dataTransferManager;
-            }
-        }
 
         public MainWindow()
         {
@@ -207,13 +186,6 @@ namespace WinUIExSample
         {
             if (contentFrame.CanGoBack)
                 contentFrame.GoBack();
-        }
-        private void DataTransferManager_DataRequested(DataTransferManager sender, DataRequestedEventArgs args) 
-        {
-            if (ShareDataProvider is not null) 
-            {
-                ShareDataProvider(args.Request.Data);
-            }
         }
     }
 }

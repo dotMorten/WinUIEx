@@ -1,3 +1,9 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
+
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -5,15 +11,14 @@ using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
+
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+
 using WinUIEx;
+
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -31,6 +36,7 @@ namespace WinUIExSample.Pages
         }
 
         public WindowEx MainWindow => ((App)Application.Current).MainWindow!;
+        private TypedEventHandler<DataTransferManager, DataRequestedEventArgs>? shareDataProvider;
 
         private async void ShowDialog_Click(object sender, RoutedEventArgs e)
         {
@@ -66,18 +72,22 @@ namespace WinUIExSample.Pages
             resultText.Text = "You chose: " + result.Label;
         }
 
-        private async void ShowShareSheet_Click(object sender, RoutedEventArgs e)
+        private async void ShowShareSheet_Click(object sender, RoutedEventArgs e) 
         {
-            if (MainWindow is MainWindow m) 
+            var dtm = MainWindow.GetDataTransferManager();
+            dtm.DataRequested -= shareDataProvider;
+
+            shareDataProvider = (sender, args) => 
             {
-                m.ShareDataProvider = (data) => 
-                {
-                    resultText.Text = "";
-                    data.Properties.Title = "WinUIEx Sample Share";
-                    data.SetUri(new Uri("https://github.com/dotMorten/WinUIEx"));
-                    data.SetText("Hello from WinUIEx!");
-                };
-            }
+                sender.DataRequested -= shareDataProvider;
+                resultText.Text = "";
+                args.Request.Data.Properties.Title = "WinUIEx Sample Share";
+                args.Request.Data.SetUri(new Uri("https://github.com/dotMorten/WinUIEx"));
+                args.Request.Data.SetText("Hello from WinUIEx!");
+            };
+
+            dtm.DataRequested += shareDataProvider;
+            MainWindow.ShowShareUI();
         }
 
     }

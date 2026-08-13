@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+
+  <head>
+    <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+      <title>Class WindowManager </title>
+      <meta name="viewport" content="width=device-width">
+      <meta name="title" content="Class WindowManager ">
+    
+    <meta name="description" content="Manages Window size, and ensures window correctly resizes during DPI changes to keep consistent DPI-independent sizing.">
+      <link rel="shortcut icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../styles/docfx.vendor.min.css">
+      <link rel="stylesheet" href="../styles/docfx.css">
+      <link rel="stylesheet" href="../styles/main.css">
+      <meta property="docfx:navrel" content="../toc.html">
+      <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/logo.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="WinUIEx.WindowManager">
+
+
+
+  <h1 id="WinUIEx_WindowManager" data-uid="WinUIEx.WindowManager" class="text-break">Class WindowManager</h1>
+  <div class="markdown level0 summary"><p>Manages Window size, and ensures window correctly resizes during DPI changes to keep consistent
+DPI-independent sizing.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
+    <div class="level1"><span class="xref">WindowManager</span></div>
+  </div>
+  <div class="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.idisposable">IDisposable</a></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode">object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone">object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring">object.ToString()</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="WinUIEx.html">WinUIEx</a></h6>
+  <h6><strong>Assembly</strong>: WinUIEx.dll</h6>
+  <h5 id="WinUIEx_WindowManager_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[WinRTRuntimeClassName(&quot;Windows.Foundation.IClosable&quot;)]
+[WinRTExposedType(typeof(WindowManagerWinRTTypeDetails))]
+public class WindowManager : IDisposable</code></pre>
+  </div>
+  <h3 id="properties">Properties
+</h3>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td id="WinUIEx_WindowManager_AppWindow" data-uid="WinUIEx.WindowManager.AppWindow">
+          <a class="xref" href="WinUIEx.WindowManager.AppWindow.html#WinUIEx_WindowManager_AppWindow">AppWindow</a>
+        </td>
+        <td class="markdown level1 summary"><p>Gets a reference to the AppWindow for the app</p>
+</td>
+      </tr>
+      <tr>
+        <td id="WinUIEx_WindowManager_Height" data-uid="WinUIEx.WindowManager.Height">
+          <a class="xref" href="WinUIEx.WindowManager.Height.html#WinUIEx_WindowManager_Height">Height</a>
+        </td>
+        <td class="markdown level1 summary"><p>Gets or sets the height of the window.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="WinUIEx_WindowManager_IsAlwaysOnTop" data-uid="WinUIEx.WindowManager.IsAlwaysOnTop">
+          <a class="xref" href="WinUIEx.WindowManager.IsAlwaysOnTop.html#WinUIEx_WindowManager_IsAlwaysOnTop">IsAlwaysOnTop</a>
+        </td>
+        <td class="markdown level1 summary"><p>Gets or sets a value indicating whether this window is always on top.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="WinUIEx_WindowManager_IsMaximizable" data-uid="WinUIEx.WindowManager.IsMaximizable">
+          <a class="xref" href="WinUIEx.WindowManager.IsMaximizable.html#WinUIEx_WindowManager_IsMaximizable">IsMaximizable</a>
+        </td>
+        <td class="markdown level1 summary"><p>Gets or sets a value indicating whether the maximimze button is visible</p>
+</td>
+      </tr>
+      <tr>
+        <td id="WinUIEx_WindowManager_IsMinimizable" data-uid="WinUIEx.WindowManager.IsMinimizable">
+          <a class="xref" href="WinUIEx.WindowManager.IsMinimizable.html#WinUIEx_WindowManager_IsMinimizable">IsMinimizable</a>
+        </td>
+        <td class="markdown level1 summary"><p>Gets or sets a value indicating whether the minimize button is visible</p>
+</td>
+      </tr>
+      <tr>
+        <td id="WinUIEx_WindowManager_IsResizable" data-uid="WinUIEx.WindowManager.IsResizable">
+          <a class="xref" href="WinUIEx.WindowManager.IsResizable.html#WinUIEx_WindowManager_IsResizable">IsResizable</a>
+        </td>
+        <td class="markdown level1 summary"><p>Gets or sets a value indicating whether the window can be resized.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="WinUIEx_WindowManager_IsTitleBarVisible" data-uid="WinUIEx.WindowManager.IsTitleBarVisible">
+          <a class="xref" href="WinUIEx.WindowManager.IsTitleBarVisible.html#WinUIEx_WindowManager_IsTitleBarVisible">IsTitleBarVisible</a>
+        </td>
+        <td class="markdown level1 summary"><p>Gets or sets a value indicating whether the default title bar is visible or not.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="WinUIEx_WindowManager_IsVisibleInTray" data-uid="WinUIEx.WindowManager.IsVisibleInTray">
+          <a class="xref" href="WinUIEx.WindowManager.IsVisibleInTray.html#WinUIEx_WindowManager_IsVisibleInTray">IsVisibleInTray</a>
+        </td>
+        <td class="markdown level1 summary"><p>Gets or sets a value indicating whether the window is shown in the system tray.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="WinUIEx_WindowManager_MaxHeight" data-uid="WinUIEx.WindowManager.MaxHeight">
+          <a class="xref" href="WinUIEx.WindowManager.MaxHeight.html#WinUIEx_WindowManager_MaxHeight">MaxHeight</a>
+        </td>
+        <td class="markdown level1 summary"><p>Gets or sets the maximum height of this window</p>
+</td>
+      </tr>
+      <tr>
+        <td id="WinUIEx_WindowManager_MaxWidth" data-uid="WinUIEx.WindowManager.MaxWidth">
+          <a class="xref" href="WinUIEx.WindowManager.MaxWidth.html#WinUIEx_WindowManager_MaxWidth">MaxWidth</a>
+        </td>
+        <td class="markdown level1 summary"><p>Gets or sets the maximum width of this window</p>
+</td>
+      </tr>
+      <tr>
+        <td id="WinUIEx_WindowManager_MinHeight" data-uid="WinUIEx.WindowManager.MinHeight">
+          <a class="xref" href="WinUIEx.WindowManager.MinHeight.html#WinUIEx_WindowManager_MinHeight">MinHeight</a>
+        </td>
+        <td class="markdown level1 summary"><p>Gets or sets the minimum height of this window</p>
+</td>
+      </tr>
+      <tr>
+        <td id="WinUIEx_WindowManager_MinWidth" data-uid="WinUIEx.WindowManager.MinWidth">
+          <a class="xref" href="WinUIEx.WindowManager.MinWidth.html#WinUIEx_WindowManager_MinWidth">MinWidth</a>
+        </td>
+        <td class="markdown level1 summary"><p>Gets or sets the minimum width of this window</p>
+</td>
+      </tr>
+      <tr>
+        <td id="WinUIEx_WindowManager_PersistenceId" data-uid="WinUIEx.WindowManager.PersistenceId">
+          <a class="xref" href="WinUIEx.WindowManager.PersistenceId.html#WinUIEx_WindowManager_PersistenceId">PersistenceId</a>
+        </td>
+        <td class="markdown level1 summary"></td>
+      </tr>
+      <tr>
+        <td id="WinUIEx_WindowManager_PersistenceStorage" data-uid="WinUIEx.WindowManager.PersistenceStorage">
+          <a class="xref" href="WinUIEx.WindowManager.PersistenceStorage.html#WinUIEx_WindowManager_PersistenceStorage">PersistenceStorage</a>
+        </td>
+        <td class="markdown level1 summary"><p>Gets or sets the persistence storage for maintaining window settings across application settings.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="WinUIEx_WindowManager_PresenterKind" data-uid="WinUIEx.WindowManager.PresenterKind">
+          <a class="xref" href="WinUIEx.WindowManager.PresenterKind.html#WinUIEx_WindowManager_PresenterKind">PresenterKind</a>
+        </td>
+        <td class="markdown level1 summary"><p>Gets or sets the presenter kind for the current window</p>
+</td>
+      </tr>
+      <tr>
+        <td id="WinUIEx_WindowManager_TrayIconId" data-uid="WinUIEx.WindowManager.TrayIconId">
+          <a class="xref" href="WinUIEx.WindowManager.TrayIconId.html#WinUIEx_WindowManager_TrayIconId">TrayIconId</a>
+        </td>
+        <td class="markdown level1 summary"><p>Gets or sets a unique identifier for the tray icon.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="WinUIEx_WindowManager_Width" data-uid="WinUIEx.WindowManager.Width">
+          <a class="xref" href="WinUIEx.WindowManager.Width.html#WinUIEx_WindowManager_Width">Width</a>
+        </td>
+        <td class="markdown level1 summary"><p>Gets or sets the width of the window.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="WinUIEx_WindowManager_WindowState" data-uid="WinUIEx.WindowManager.WindowState">
+          <a class="xref" href="WinUIEx.WindowManager.WindowState.html#WinUIEx_WindowManager_WindowState">WindowState</a>
+        </td>
+        <td class="markdown level1 summary"><p>Gets or sets the current window state.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+</h3>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td id="WinUIEx_WindowManager_Dispose" data-uid="WinUIEx.WindowManager.Dispose">
+          <a class="xref" href="WinUIEx.WindowManager.Dispose.html#WinUIEx_WindowManager_Dispose">Dispose()</a>
+        </td>
+        <td class="markdown level1 summary"><p>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="WinUIEx_WindowManager_Finalize" data-uid="WinUIEx.WindowManager.Finalize">
+          <a class="xref" href="WinUIEx.WindowManager.Finalize.html#WinUIEx_WindowManager_Finalize">~WindowManager()</a>
+        </td>
+        <td class="markdown level1 summary"><p>Finalizer</p>
+</td>
+      </tr>
+      <tr>
+        <td id="WinUIEx_WindowManager_Get_Microsoft_UI_Xaml_Window_" data-uid="WinUIEx.WindowManager.Get(Microsoft.UI.Xaml.Window)">
+          <a class="xref" href="WinUIEx.WindowManager.Get.html#WinUIEx_WindowManager_Get_Microsoft_UI_Xaml_Window_">Get(Window)</a>
+        </td>
+        <td class="markdown level1 summary"><p>Gets (or creates) a window manager for the specific window.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="events">Events
+</h3>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td id="WinUIEx_WindowManager_PositionChanged" data-uid="WinUIEx.WindowManager.PositionChanged">
+          <a class="xref" href="WinUIEx.WindowManager.PositionChanged.html">PositionChanged</a>
+        </td>
+        <td class="markdown level1 summary"><p>Raised if the window position changes.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="WinUIEx_WindowManager_PresenterChanged" data-uid="WinUIEx.WindowManager.PresenterChanged">
+          <a class="xref" href="WinUIEx.WindowManager.PresenterChanged.html">PresenterChanged</a>
+        </td>
+        <td class="markdown level1 summary"><p>Raised if the presenter for the window changes.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="WinUIEx_WindowManager_TrayIconContextMenu" data-uid="WinUIEx.WindowManager.TrayIconContextMenu">
+          <a class="xref" href="WinUIEx.WindowManager.TrayIconContextMenu.html">TrayIconContextMenu</a>
+        </td>
+        <td class="markdown level1 summary"><p>Occurs when the user right-clicks the tray icon.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="WinUIEx_WindowManager_TrayIconSelected" data-uid="WinUIEx.WindowManager.TrayIconSelected">
+          <a class="xref" href="WinUIEx.WindowManager.TrayIconSelected.html">TrayIconSelected</a>
+        </td>
+        <td class="markdown level1 summary"><p>Occurs when the user clicks the left mouse button on the tray icon.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="WinUIEx_WindowManager_WindowMessageReceived" data-uid="WinUIEx.WindowManager.WindowMessageReceived">
+          <a class="xref" href="WinUIEx.WindowManager.WindowMessageReceived.html">WindowMessageReceived</a>
+        </td>
+        <td class="markdown level1 summary"><p>Event raised when a windows message is received.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="WinUIEx_WindowManager_WindowStateChanged" data-uid="WinUIEx.WindowManager.WindowStateChanged">
+          <a class="xref" href="WinUIEx.WindowManager.WindowStateChanged.html">WindowStateChanged</a>
+        </td>
+        <td class="markdown level1 summary"><p>Occurs when the window's <a class="xref" href="WinUIEx.WindowManager.WindowState.html#WinUIEx_WindowManager_WindowState">WindowState</a> property changes.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="WinUIEx_WindowManager_ZOrderChanged" data-uid="WinUIEx.WindowManager.ZOrderChanged">
+          <a class="xref" href="WinUIEx.WindowManager.ZOrderChanged.html">ZOrderChanged</a>
+        </td>
+        <td class="markdown level1 summary"><p>Raised if the Z order of the window changes.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+
+</article>
+          </div>
+
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In this article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+      
+      <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script type="text/javascript" src="../styles/docfx.vendor.min.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

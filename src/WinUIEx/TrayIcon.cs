@@ -30,6 +30,11 @@ public class TrayIcon : IDisposable
     const uint NIM_SETVERSION = 0x00000004;
 
     private const uint TrayIconCallbackId = 0x8765;
+
+    // Message broadcast by explorer.exe to all top-level windows when it (re)starts, so apps know
+    // to re-create any tray icons, since Explorer restarting clears out all previously registered icons.
+    private static readonly uint WM_TASKBARCREATED = PInvoke.RegisterWindowMessage("TaskbarCreated");
+
     private readonly Window _window;
     private readonly nint _windowHandle;
     private readonly WindowMessageMonitor _monitor;
@@ -137,6 +142,14 @@ public class TrayIcon : IDisposable
 
     private unsafe void WindowMessageReceived(object? sender, WindowMessageEventArgs e)
     {
+        if (WM_TASKBARCREATED != 0 && e.Message.MessageId == WM_TASKBARCREATED)
+        {
+            // explorer.exe was restarted and cleared out any previously registered tray icons.
+            // Re-add ourselves to the tray if we're supposed to be visible.
+            if (_isVisible)
+                AddToTray(TrayIconId);
+            return;
+        }
         switch (e.MessageType)
         {
             case WindowsMessages.WM_GETMINMAXINFO:

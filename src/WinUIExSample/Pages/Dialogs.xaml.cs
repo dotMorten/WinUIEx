@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.ApplicationModel.DataTransfer;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using WinUIEx;
@@ -30,6 +31,7 @@ namespace WinUIExSample.Pages
         }
 
         public WindowEx MainWindow => ((App)Application.Current).MainWindow!;
+        private TypedEventHandler<DataTransferManager, DataRequestedEventArgs>? shareDataProvider;
 
         private async void ShowDialog_Click(object sender, RoutedEventArgs e)
         {
@@ -63,6 +65,24 @@ namespace WinUIExSample.Pages
             string message = "This is your last chance. After this, there is no turning back. You take the blue pill – the story ends, you wake up in your bed and believe whatever you want to believe. You take the red pill – you stay in Wonderland, and I show you how deep the rabbit hole goes. Remember, all I'm offering is the truth – nothing more.";
             var result = await MainWindow.ShowMessageDialogAsync(message, commands, cancelCommandIndex: 2, title: "Morpheus Asks");
             resultText.Text = "You chose: " + result.Label;
+        }
+
+        private async void ShowShareSheet_Click(object sender, RoutedEventArgs e) 
+        {
+            var dtm = MainWindow.GetDataTransferManager();
+            dtm.DataRequested -= shareDataProvider;
+
+            shareDataProvider = (sender, args) => 
+            {
+                sender.DataRequested -= shareDataProvider;
+                resultText.Text = "";
+                args.Request.Data.Properties.Title = "WinUIEx Sample Share";
+                args.Request.Data.SetUri(new Uri("https://github.com/dotMorten/WinUIEx"));
+                args.Request.Data.SetText("Hello from WinUIEx!");
+            };
+
+            dtm.DataRequested += shareDataProvider;
+            MainWindow.ShowShareUI();
         }
 
     }

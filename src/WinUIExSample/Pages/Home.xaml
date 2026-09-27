@@ -4,6 +4,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:WinUIExSample.Pages"
+    xmlns:animation="using:WinUIExSample.CubeAnimation"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
@@ -19,7 +20,12 @@
         </StackPanel>
         <Image Source="/Assets/LargeTile.png" Stretch="Uniform" HorizontalAlignment="Right" VerticalAlignment="Top" MaxHeight="100"
                Margin="0,0,20,0"/>
-        <StackPanel Grid.Row="1">
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
             <StackPanel Background="{StaticResource SemiTransparentBackgroundBrush}" CornerRadius="10" Padding="10" Margin="0,10,0,0">
                 <TextBlock>WinUIEx: A set of extension methods and classes to fill some gaps in WinUI 3, mostly around windowing and unit testing.</TextBlock>
                 <TextBlock TextWrapping="Wrap">
@@ -30,9 +36,10 @@
                     <Hyperlink NavigateUri="https://github.com/sponsors/dotMorten">sponsoring me</Hyperlink>.
                 </TextBlock>
             </StackPanel>
-            <StackPanel Background="{StaticResource SemiTransparentBackgroundBrush}" CornerRadius="10" Padding="10"  Margin="0,10,0,0">
+            <StackPanel Grid.Row="1" Background="{StaticResource SemiTransparentBackgroundBrush}" CornerRadius="10" Padding="10"  Margin="0,10,0,0">
                 <Button Content="Open Log Window" Click="OpenLogWindow_Click" />
             </StackPanel>
-        </StackPanel>
+            <animation:CubeScene Grid.Row="2" Margin="0,10,0,0" />
+        </Grid>
     </Grid>
 </Page>

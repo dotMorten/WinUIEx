@@ -1,0 +1,9 @@
+<UserControl
+    x:Class="WinUIExSample.CubeAnimation.CubeScene"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid x:Name="Host" CornerRadius="10">
+        <InfoBar x:Name="Error" IsOpen="False" IsClosable="False" Severity="Error"
+                 VerticalAlignment="Bottom" Margin="12" />
+    </Grid>
+</UserControl>

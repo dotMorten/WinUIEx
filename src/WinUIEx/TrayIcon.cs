@@ -275,12 +275,12 @@ public class TrayIcon : IDisposable
 
         if (Environment.Is64BitProcess)
         {
-            var notifyIconData = CreateIconData64(TrayIconId, hicon, null, 0);
+            var notifyIconData = CreateIconData64(TrayIconId, hicon, Tooltip, 0);
             PInvoke.Shell_NotifyIcon(NIM_MODIFY, notifyIconData);
         }
         else
         {
-            var notifyIconData = CreateIconData32(TrayIconId, hicon, null, 0);
+            var notifyIconData = CreateIconData32(TrayIconId, hicon, Tooltip, 0);
             PInvoke.Shell_NotifyIcon(NIM_MODIFY, notifyIconData);
         }
     }

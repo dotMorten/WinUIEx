@@ -25,9 +25,7 @@
     <PackageId>WinUIEx</PackageId>
     <Product>WinUI Extensions</Product>
     <PackageReleaseNotes>
-        - Route `WebAuthenticator` callbacks to the correct app when multiple instances are running (Issue #273).
-        - Preserve the pre-fullscreen window size, position, and maximized state when using `WindowManager` persistence (Issue #253).
-        - Fix `TrayIcon` (and `WindowManager.IsVisibleInTray`) icon disappearing when `explorer.exe` restarts, by re-adding the icon on the `TaskbarCreated` broadcast message (Issue #276).
+        - Preserve the tray icon tooltip when updating the icon with `TrayIcon.SetIcon` or changing a window's taskbar icon (Issue #279).
     </PackageReleaseNotes>
   </PropertyGroup>
 

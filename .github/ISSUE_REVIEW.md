@@ -28,7 +28,8 @@ It also installs the trusted WinUI development skills and `winui:winui-dev`
 agent from the current default branch of `microsoft/win-dev-skills`, with:
 
 ```powershell
-copilot plugin install 'https://github.com/microsoft/win-dev-skills.git'
+copilot plugin marketplace add microsoft/win-dev-skills
+copilot plugin install winui@win-dev-skills
 ```
 
 The investigation runs with that agent and can load its design, build/run, and

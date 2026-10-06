@@ -97,7 +97,9 @@ jobs:
       - name: Install Microsoft Windows development skills into Copilot
         if: steps.classify.outputs.is_bug == 'true'
         run: |
-          copilot plugin install 'https://github.com/microsoft/win-dev-skills.git'
+          copilot plugin marketplace add microsoft/win-dev-skills
+          if ($LASTEXITCODE -ne 0) { throw 'Windows development skills marketplace registration failed.' }
+          copilot plugin install winui@win-dev-skills
           if ($LASTEXITCODE -ne 0) { throw 'Windows development skills installation failed.' }
           copilot plugin list
           if ($LASTEXITCODE -ne 0) { throw 'Cannot verify installed Copilot plugins.' }

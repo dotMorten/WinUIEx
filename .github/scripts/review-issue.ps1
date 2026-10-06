@@ -25,7 +25,10 @@ function Invoke-ReviewCopilot([string] $Prompt, [switch] $Classification) {
         $arguments += '--deny-tool=shell'
     }
     else {
-        $arguments += @('--allow-all-tools', '--agent=winui:winui-dev', "--add-dir=$env:WINUIEX_SOURCE")
+        $arguments += @(
+            '--allow-all-tools', '--allow-all-paths',
+            '--agent=winui:winui-dev', "--add-dir=$env:WINUIEX_SOURCE"
+        )
     }
     Push-Location $reviewDirectory
     try {

@@ -69,6 +69,8 @@ try {
     New-Fixture 'non-bug' $false
     & $scriptPath -Stage Classify
     Assert ((Get-Content $env:GITHUB_OUTPUT -Raw).Trim() -eq 'is_bug=false') 'Non-bug gating failed.'
+    Assert ($global:reviewTestState.calls[0] -contains '--deny-tool=shell') 'Classification must not execute shell commands.'
+    Assert ($global:reviewTestState.calls[0] -notcontains '--allow-all-paths') 'Classification must retain scoped filesystem access.'
     Assert ($global:reviewTestState.nugetCalls -eq 0) 'Non-bug classification fetched dependencies.'
     Assert (-not (Test-Path (Join-Path $env:REVIEW_DIRECTORY 'reproducer'))) 'Non-bug classification created a repro.'
     $rejected = $false
@@ -84,6 +86,11 @@ try {
     $arguments = $global:reviewTestState.calls[1]
     Assert ($arguments -contains '--agent=winui:winui-dev') 'Investigation did not select the installed WinUI agent.'
     Assert ($arguments -contains "--add-dir=$sourceDirectory") 'Source checkout access was not granted.'
+    Assert ($arguments -contains '--allow-all-tools') 'Investigation must permit build and run tools without interactive approval.'
+    Assert ($arguments -contains '--allow-all-paths') 'Investigation must permit installed toolchain and dependency paths outside the workspace.'
+    Assert ($arguments -contains '--deny-tool=shell(git push)') 'Investigation must retain the git push restriction.'
+    Assert ($arguments -contains '--deny-tool=shell(gh)') 'Investigation must retain the GitHub CLI restriction.'
+    Assert ($arguments -notcontains '--allow-all') 'Investigation must not indiscriminately grant all permission categories.'
     Assert ($arguments -contains '--secret-env-vars=COPILOT_GITHUB_TOKEN,GITHUB_TOKEN,GH_TOKEN') 'Agent subprocess secrets were not stripped.'
     $prompt = $arguments[[Array]::IndexOf($arguments, '--prompt') + 1]
     Assert ($prompt -notmatch '\{\{WINUIEX_') 'Prompt contains unresolved source/version placeholders.'

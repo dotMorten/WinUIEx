@@ -7,9 +7,10 @@ default branch, and supply the single input, `issue_number`.
 
 - Create an `issue-review` GitHub environment. Add `COPILOT_REVIEW_TOKEN` as an
   environment secret: a fine-grained personal access token with **Copilot
-  Requests** permission belonging to an account with an active Copilot plan and
-  CLI access. The Actions `GITHUB_TOKEN` cannot authenticate Copilot. Do not
-  grant this PAT repository-write permissions.
+  Requests: Read-only** account permission belonging to an account with an active
+  Copilot plan and CLI access. This workflow authenticates Copilot with that PAT
+  and uses the Actions `GITHUB_TOKEN` for repository operations. Do not grant
+  this PAT repository-write permissions.
 - Configure environment reviewers and restrict deployment branches to the
   trusted default branch. Approve runs only after checking the issue and linked
   repro. The agent can build and execute repro code on an ephemeral hosted
@@ -19,6 +20,11 @@ default branch, and supply the single input, `issue_number`.
   and `issues: write`. Checkout does not persist credentials, built-in Copilot
   MCP servers and external custom instructions are disabled, and authentication
   variables are stripped from agent shell/MCP subprocess environments.
+  The investigation uses `--allow-all-tools` and `--allow-all-paths` so installed
+  MSBuild/.NET/Windows SDK tools and dependency caches outside the workspace do
+  not require interactive approval. This filesystem grant applies only to the
+  disposable hosted runner's investigation, not to classification. URL access
+  remains restricted, and the explicit `git push` and `gh` denials remain.
 
 Each run installs the latest Copilot CLI, **WinApp CLI** (with
 `microsoft/setup-WinAppCli`), Node.js, and stable .NET SDK on `windows-latest`,

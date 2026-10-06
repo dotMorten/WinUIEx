@@ -195,7 +195,7 @@ public class TrayIcon : IDisposable
             hWnd = _windowHandle,
             cbSize = (uint)Marshal.SizeOf<NOTIFYICONIDENTIFIER>(),
         };
-        if (PInvoke.Shell_NotifyIconGetRect(ref icon, out RECT rect) != 0)
+        if (PInvoke.Shell_NotifyIconGetRect(ref icon, out var rect) != 0)
             return null;
         return new Windows.Graphics.RectInt32(rect.left, rect.top, rect.Width, rect.Height);
     }

@@ -1,0 +1,178 @@
+name: Review issue with Copilot
+
+on:
+  workflow_dispatch:
+    inputs:
+      issue_number:
+        description: Bug report issue number
+        required: true
+        type: number
+
+permissions:
+  contents: read
+
+concurrency:
+  group: issue-review-${{ inputs.issue_number }}
+  cancel-in-progress: false
+
+jobs:
+  investigate:
+    runs-on: windows-latest
+    environment: issue-review
+    timeout-minutes: 60
+    permissions:
+      contents: read
+      issues: read
+    outputs:
+      is_bug: ${{ steps.classify.outputs.is_bug }}
+    defaults:
+      run:
+        shell: pwsh
+    steps:
+      - name: Initialize isolated review directories
+        run: |
+          Add-Content $env:GITHUB_ENV "REVIEW_DIRECTORY=$env:RUNNER_TEMP\issue-review"
+          Add-Content $env:GITHUB_ENV "COPILOT_HOME=$env:RUNNER_TEMP\issue-review-copilot"
+
+      - name: Read issue
+        uses: actions/github-script@main
+        env:
+          ISSUE_NUMBER: ${{ inputs.issue_number }}
+        with:
+          script: |
+            const fs = require('node:fs');
+            const path = require('node:path');
+            const number = Number(process.env.ISSUE_NUMBER);
+            if (!Number.isSafeInteger(number) || number <= 0) {
+              throw new Error('issue_number must be a positive integer.');
+            }
+            const { data: issue } = await github.rest.issues.get({
+              ...context.repo, issue_number: number
+            });
+            if (issue.pull_request) {
+              throw new Error('The number identifies a pull request, not an issue.');
+            }
+            fs.mkdirSync(process.env.REVIEW_DIRECTORY, { recursive: true });
+            fs.writeFileSync(path.join(process.env.REVIEW_DIRECTORY, 'issue.json'),
+              JSON.stringify({
+                number: issue.number, title: issue.title, body: issue.body ?? '',
+                labels: issue.labels.map(label => typeof label === 'string' ? label : label.name),
+                url: issue.html_url
+              }, null, 2));
+
+      - name: Check out review automation
+        uses: actions/checkout@main
+        with:
+          path: automation
+          persist-credentials: false
+          sparse-checkout: .github
+
+      - name: Set up Node.js
+        uses: actions/setup-node@main
+        with:
+          node-version: '*'
+          check-latest: true
+
+      - name: Install Copilot CLI
+        run: |
+          npm install --global @github/copilot@latest
+          if ($LASTEXITCODE -ne 0) { throw 'Copilot CLI installation failed.' }
+
+      - name: Stop unless the description reports a bug
+        id: classify
+        env:
+          COPILOT_GITHUB_TOKEN: ${{ secrets.COPILOT_REVIEW_TOKEN }}
+        run: |
+          & .\automation\.github\scripts\review-issue.ps1 -Stage Classify
+
+      - name: Clone WinUIEx source for investigation
+        if: steps.classify.outputs.is_bug == 'true'
+        uses: actions/checkout@main
+        with:
+          path: source
+          ref: ${{ github.event.repository.default_branch }}
+          persist-credentials: false
+          fetch-depth: 0
+
+      - name: Install Microsoft Windows development skills into Copilot
+        if: steps.classify.outputs.is_bug == 'true'
+        run: |
+          copilot plugin install 'https://github.com/microsoft/win-dev-skills.git'
+          if ($LASTEXITCODE -ne 0) { throw 'Windows development skills installation failed.' }
+          copilot plugin list
+          if ($LASTEXITCODE -ne 0) { throw 'Cannot verify installed Copilot plugins.' }
+
+      - name: Set up MSBuild
+        if: steps.classify.outputs.is_bug == 'true'
+        uses: microsoft/setup-msbuild@main
+
+      - name: Set up .NET
+        if: steps.classify.outputs.is_bug == 'true'
+        uses: actions/setup-dotnet@main
+        with:
+          dotnet-version: latest
+
+      - name: Install WinApp CLI for repro build, launch, and UI automation
+        if: steps.classify.outputs.is_bug == 'true'
+        uses: microsoft/setup-WinAppCli@main
+        with:
+          version: latest
+
+      - name: Verify WinApp CLI
+        if: steps.classify.outputs.is_bug == 'true'
+        run: |
+          winapp --version
+          if ($LASTEXITCODE -ne 0) { throw 'WinApp CLI is unavailable.' }
+
+      - name: Investigate and minimize the reproducer
+        if: steps.classify.outputs.is_bug == 'true'
+        env:
+          COPILOT_GITHUB_TOKEN: ${{ secrets.COPILOT_REVIEW_TOKEN }}
+          WINUIEX_SOURCE: ${{ github.workspace }}\source
+        run: |
+          & .\automation\.github\scripts\review-issue.ps1 -Stage Investigate
+
+      - name: Preserve investigation and source-only reproducer
+        if: steps.classify.outputs.is_bug == 'true'
+        uses: actions/upload-artifact@main
+        with:
+          name: issue-review-${{ inputs.issue_number }}
+          path: |
+            ${{ runner.temp }}\issue-review\output\result.json
+            ${{ runner.temp }}\issue-review\output\investigation.md
+            ${{ runner.temp }}\issue-review\output\reproducer.zip
+          if-no-files-found: error
+          retention-days: 90
+
+  publish:
+    needs: investigate
+    if: needs.investigate.outputs.is_bug == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+      issues: write
+    steps:
+      - name: Check out publishing automation
+        uses: actions/checkout@main
+        with:
+          persist-credentials: false
+          sparse-checkout: .github
+
+      - name: Download investigation
+        uses: actions/download-artifact@main
+        with:
+          name: issue-review-${{ inputs.issue_number }}
+          path: investigation
+
+      - name: Publish reproducer release and issue comment
+        uses: actions/github-script@main
+        env:
+          ISSUE_NUMBER: ${{ inputs.issue_number }}
+        with:
+          script: |
+            const publish = require('./.github/scripts/publish-issue-review.cjs');
+            await publish({
+              github, context, directory: 'investigation',
+              issueNumber: Number(process.env.ISSUE_NUMBER)
+            });

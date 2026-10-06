@@ -111,3 +111,16 @@ public partial class App : Application
     }
 }
 ```
+
+### Positioning your own window next to the icon
+
+If you show your own window instead of a flyout, use [`GetBounds()`](https://dotmorten.github.io/WinUIEx/api/WinUIEx.TrayIcon.GetBounds.html) to find where the icon is on screen. It returns the icon's bounds in physical screen pixels, or `null` if the icon isn't in the tray.
+
+```cs
+icon.Selected += (s, e) =>
+{
+    if (icon.GetBounds() is Windows.Graphics.RectInt32 bounds)
+        myWindow.AppWindow.Move(new Windows.Graphics.PointInt32(bounds.X, bounds.Y - myWindow.AppWindow.Size.Height));
+    myWindow.Activate();
+};
+```

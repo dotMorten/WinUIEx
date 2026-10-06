@@ -176,18 +176,35 @@ public class TrayIcon : IDisposable
         }
     }
 
-    private void ShowFlyout(FlyoutBase flyout)
+    /// <summary>
+    /// Gets the bounds of the icon in the tray, in screen coordinates.
+    /// </summary>
+    /// <remarks>
+    /// Use this to place your own window or UI next to the icon. The bounds are read from the shell each time,
+    /// since the icon can move, for example when the taskbar changes or the icon is shown in the overflow area.
+    /// </remarks>
+    /// <returns>The bounds of the icon in physical pixels, or <c>null</c> if the icon isn't in the tray or the shell can't locate it.</returns>
+    public Windows.Graphics.RectInt32? GetBounds()
     {
         CheckDisposed();
-        CloseFlyout();
+        if (!_isVisible)
+            return null;
         var icon = new NOTIFYICONIDENTIFIER()
         {
             uID = TrayIconId,
             hWnd = _windowHandle,
             cbSize = (uint)Marshal.SizeOf<NOTIFYICONIDENTIFIER>(),
         };
-        var hresult = PInvoke.Shell_NotifyIconGetRect(ref icon, out var location);
-        if (hresult == 0)
+        if (PInvoke.Shell_NotifyIconGetRect(ref icon, out var rect) != 0)
+            return null;
+        return new Windows.Graphics.RectInt32(rect.left, rect.top, rect.Width, rect.Height);
+    }
+
+    private void ShowFlyout(FlyoutBase flyout)
+    {
+        CheckDisposed();
+        CloseFlyout();
+        if (GetBounds() is Windows.Graphics.RectInt32 location)
         {
             if (_currentFlyout != null && _currentFlyout != flyout)
                 _currentFlyout.Hide();
@@ -199,8 +216,8 @@ public class TrayIcon : IDisposable
             _window.Activate();
             _window.Show();
             WindowExtensions.SetForegroundWindow(_window);
-            double w = (location.Width - location.X) /  grid.XamlRoot.RasterizationScale;
-            double h = (location.Height - location.Y) / grid.XamlRoot.RasterizationScale;
+            double w = location.Width / grid.XamlRoot.RasterizationScale;
+            double h = location.Height / grid.XamlRoot.RasterizationScale;
             
             _currentFlyout.ShowAt(_root, new FlyoutShowOptions()
             {

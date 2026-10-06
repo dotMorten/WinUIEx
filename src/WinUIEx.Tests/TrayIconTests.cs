@@ -85,6 +85,24 @@ namespace WinUIUnitTests
             }
         }
 
+        [TestMethod]
+        public async Task GetBounds_ReturnsIconBoundsOnlyWhileVisible()
+        {
+            await UITestHelper.RunUITest(_ =>
+            {
+                using var trayIcon = new WinUIEx.TrayIcon((uint)Interlocked.Increment(ref s_trayIconId), @"TestAssets\OKIcon.ico", "test");
+                Assert.IsNull(trayIcon.GetBounds());
+                trayIcon.IsVisible = true;
+                var bounds = trayIcon.GetBounds();
+                trayIcon.IsVisible = false;
+                Assert.IsNotNull(bounds);
+                Assert.IsTrue(bounds.Value.Width > 0, "Width");
+                Assert.IsTrue(bounds.Value.Height > 0, "Height");
+                Assert.IsNull(trayIcon.GetBounds());
+                return Task.CompletedTask;
+            });
+        }
+
         private static async Task RunSetIconTest(string iconPath)
         {
             await UITestHelper.RunUITest(_ =>

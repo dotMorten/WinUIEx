@@ -127,7 +127,7 @@ namespace Windows.Win32
 
         [DllImport("shell32.dll", SetLastError = true)]
         [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
-        internal static extern int Shell_NotifyIconGetRect([In] ref NOTIFYICONIDENTIFIER identifier, [Out] out Windows.Graphics.RectInt32 iconLocation);
+        internal static extern int Shell_NotifyIconGetRect([In] ref NOTIFYICONIDENTIFIER identifier, [Out] out RECT iconLocation);
     }
 
     /// <summary>Contains information about a system appbar message.</summary>

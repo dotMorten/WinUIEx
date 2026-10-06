@@ -26,6 +26,7 @@
     <Product>WinUI Extensions</Product>
     <PackageReleaseNotes>
         - Preserve the tray icon tooltip when updating the icon with `TrayIcon.SetIcon` or changing a window's taskbar icon (Issue #279).
+        - Add `TrayIcon.GetBounds()` to get the on-screen bounds of the tray icon, for example to place your own window next to it.
     </PackageReleaseNotes>
   </PropertyGroup>
 

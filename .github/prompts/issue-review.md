@@ -136,7 +136,10 @@ Every source-code link must be a verified permalink of the form
 `https://github.com/OWNER/REPO/blob/FULL_40_CHARACTER_COMMIT_SHA/path#L10-L20`.
 Use the correct repository, commit, path, and actual line numbers; never link
 to `main`, a branch, or a tag for source citations. Do not invent citations.
-Do not include issue attachments or release links; the publisher adds them.
+Do not include attachment links or claim a ZIP has been attached. The workflow
+posts the report only; a maintainer attaches the generated ZIP manually using
+GitHub's issue comment editor. Never create releases or tags to host
+investigation output.
 
 Write `output/result.json`:
 

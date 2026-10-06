@@ -44,26 +44,7 @@ module.exports = async function publish({ github, context, directory, issueNumbe
     if (data.length < 4 || data.readUInt32LE(0) !== 0x04034b50) {
       throw new Error('The source-only reproducer ZIP is missing or invalid.');
     }
-    const attempt = process.env.GITHUB_RUN_ATTEMPT || '1';
-    const tag = `issue-review-${issueNumber}-${context.runId}-${attempt}`;
-    const { data: release } = await github.rest.repos.createRelease({
-      ...context.repo,
-      tag_name: tag,
-      target_commitish: context.sha,
-      name: `Issue #${issueNumber} reproducer (run ${context.runId}, attempt ${attempt})`,
-      body: `Source-only reproducer for issue #${issueNumber}, investigated with WinUIEx ${result.winuiex_version}.\n\n[Investigation run](${runUrl})\n\nThis is an investigation attachment, not a WinUIEx package release.`,
-      draft: false,
-      prerelease: true,
-      make_latest: 'false'
-    });
-    const { data: asset } = await github.rest.repos.uploadReleaseAsset({
-      ...context.repo,
-      release_id: release.id,
-      name: `issue-${issueNumber}-reproducer.zip`,
-      data,
-      headers: { 'content-type': 'application/zip', 'content-length': data.length }
-    });
-    attachment = `\n\n**Reproducer:** [Download source-only ZIP](${asset.browser_download_url}) (persistent release asset; no binary build outputs).`;
+    attachment = '\n\n**Reproducer:** A source-only ZIP was generated but is not attached automatically. A maintainer must upload it to this issue using GitHub\'s comment editor.';
   }
   await github.rest.issues.createComment({
     ...context.repo,

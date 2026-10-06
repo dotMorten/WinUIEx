@@ -152,7 +152,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     permissions:
-      contents: write
+      contents: read
       issues: write
     steps:
       - name: Check out publishing automation
@@ -167,7 +167,7 @@ jobs:
           name: issue-review-${{ inputs.issue_number }}
           path: investigation
 
-      - name: Publish reproducer release and issue comment
+      - name: Post investigation report (ZIP attachment is manual)
         uses: actions/github-script@main
         env:
           ISSUE_NUMBER: ${{ inputs.issue_number }}

@@ -180,4 +180,4 @@ try {
 finally {
     $archive.Dispose()
 }
-Add-Content $env:GITHUB_STEP_SUMMARY "Reproduced with WinUIEx $version. A source-only ZIP will be published as a release asset."
+Add-Content $env:GITHUB_STEP_SUMMARY "Reproduced with WinUIEx $version. The source-only ZIP is ready for a maintainer to attach manually using GitHub's issue comment editor."

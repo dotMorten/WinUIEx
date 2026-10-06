@@ -15,9 +15,9 @@ default branch, and supply the single input, `issue_number`.
   trusted default branch. Approve runs only after checking the issue and linked
   repro. The agent can build and execute repro code on an ephemeral hosted
   Windows runner; permission flags and prompt instructions are not a sandbox.
-- Allow Actions to create releases and comment on issues. The investigation job
-  has only read permissions; only the separate publisher has `contents: write`
-  and `issues: write`. Checkout does not persist credentials, built-in Copilot
+- Allow Actions to comment on issues. Both jobs have only `contents: read`;
+  the separate publisher additionally has `issues: write` to post the
+  investigation report. Checkout does not persist credentials, built-in Copilot
   MCP servers and external custom instructions are disabled, and authentication
   variables are stripped from agent shell/MCP subprocess environments.
   The investigation uses `--allow-all-tools` and `--allow-all-paths` so installed
@@ -74,17 +74,20 @@ including not-reproduced, user-error, and blocked outcomes.
 
 For a confirmed reproduction, the workflow creates a source-only ZIP (excluding
 `bin`, `obj`, version-control folders, caches, binaries, and signing keys),
-uploads it to a dedicated **prerelease**, and links the persistent asset in the
-issue comment. GitHub has no supported REST API for directly attaching a ZIP to
-an issue comment; the release link is the attachment delivery mechanism. These
-releases are marked `make_latest: false` and are not WinUIEx package releases.
-The investigation report and ZIP are also retained as Actions artifacts for
-90 days. Review the generated report and source before trusting or running it.
+and posts the investigation report to the issue. **ZIP attachment is manual**:
+the token-authenticated media upload endpoint rejects ZIP files, so the workflow
+does not attempt an automatic upload. It never creates releases or tags and
+does not put artifact-download links in the issue comment.
 
-Each manual run adds a new comment and, if reproduced, a run/attempt-specific
-release. Publication failures fail the workflow rather than claiming a comment
-or attachment was posted. If release creation/upload succeeds but commenting
-fails, the release remains available from the repository's releases page.
+The investigation report and ZIP are retained as Actions artifacts for 90 days.
+To attach a confirmed repro, download the run's `issue-review-<number>` artifact,
+extract `reproducer.zip`, and drag that ZIP into a comment on the issue. This
+creates a native GitHub attachment/download link. Review the generated report
+and source before trusting or running it.
+
+Each manual run adds a new report comment. For confirmed reproductions it
+explicitly states that a maintainer must attach the ZIP manually, rather than
+claiming an attachment was posted. Publication failures fail the workflow.
 
 Automation lives in `workflows/review-issue.yml`, `scripts/review-issue.ps1`,
 `scripts/publish-issue-review.cjs`, and `prompts/issue-review.md`, relative to

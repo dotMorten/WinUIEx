@@ -22,16 +22,6 @@ function fixture(t, status = 'reproduced') {
   const calls = [];
   const github = {
     rest: {
-      repos: {
-        createRelease: async args => {
-          calls.push(['release', args]);
-          return { data: { id: 42 } };
-        },
-        uploadReleaseAsset: async args => {
-          calls.push(['asset', args]);
-          return { data: { browser_download_url: 'https://github.com/owner/repo/releases/download/tag/reproducer.zip' } };
-        }
-      },
       issues: {
         createComment: async args => {
           calls.push(['comment', args]);
@@ -47,21 +37,18 @@ function fixture(t, status = 'reproduced') {
   return { directory, result, save, calls, github, context, issueNumber: 7 };
 }
 
-test('confirmed reproduction publishes a non-latest prerelease and persistent attachment comment', async t => {
+test('confirmed reproduction posts only the report and requests a manual ZIP attachment', async t => {
   const f = fixture(t);
   f.result.regression = { status: 'confirmed', baseline_version: '2.8.0', evidence: 'Older version passes; latest fails.' };
   f.result.unpublished_fix.status = 'confirmed';
   f.result.unpublished_fix.evidence = 'Current source build passes the same test.';
   f.save();
   await publish(f);
-  assert.deepEqual(f.calls.map(call => call[0]), ['release', 'asset', 'comment']);
-  assert.equal(f.calls[0][1].prerelease, true);
-  assert.equal(f.calls[0][1].make_latest, 'false');
-  assert.equal(f.calls[0][1].target_commitish, f.context.sha);
-  assert.equal(f.calls[1][1].name, 'issue-7-reproducer.zip');
-  assert.equal(f.calls[1][1].headers['content-type'], 'application/zip');
-  assert.match(f.calls[2][1].body, /Download source-only ZIP/);
-  assert.equal(f.calls[2][1].issue_number, 7);
+  assert.deepEqual(f.calls.map(call => call[0]), ['comment']);
+  assert.match(f.calls[0][1].body, /not attached automatically/);
+  assert.match(f.calls[0][1].body, /maintainer must upload/);
+  assert.doesNotMatch(f.calls[0][1].body, /user-attachments|releases\/|actions\/runs\/123\/artifacts/);
+  assert.equal(f.calls[0][1].issue_number, 7);
 });
 
 for (const status of ['blocked', 'not_reproduced', 'user_error']) {
@@ -71,7 +58,7 @@ for (const status of ['blocked', 'not_reproduced', 'user_error']) {
     await publish(f);
     assert.deepEqual(f.calls.map(call => call[0]), ['comment']);
     assert.match(f.calls[0][1].body, new RegExp(status));
-    assert.doesNotMatch(f.calls[0][1].body, /Download source-only ZIP/);
+    assert.doesNotMatch(f.calls[0][1].body, /user-attachments/);
   });
 }
 
@@ -119,7 +106,7 @@ test('accepts commit- and line-pinned citations', async t => {
   const f = fixture(t);
   fs.writeFileSync(path.join(f.directory, 'investigation.md'), `[source](https://github.com/owner/repo/blob/${'a'.repeat(40)}/src/App.cs#L10-L20)`);
   await publish(f);
-  assert.equal(f.calls.length, 3);
+  assert.deepEqual(f.calls.map(call => call[0]), ['comment']);
 });
 
 test('rejects invalid issue numbers and statuses', async t => {
@@ -131,9 +118,17 @@ test('rejects invalid issue numbers and statuses', async t => {
   assert.equal(f.calls.length, 0);
 });
 
-test('upload failure prevents a success-shaped issue comment', async t => {
+test('comment publication failures are surfaced', async t => {
   const f = fixture(t);
-  f.github.rest.repos.uploadReleaseAsset = async () => { throw new Error('Upload failed'); };
-  await assert.rejects(publish(f), /Upload failed/);
-  assert.deepEqual(f.calls.map(call => call[0]), ['release']);
+  f.github.rest.issues.createComment = async () => { throw new Error('Comment failed'); };
+  await assert.rejects(publish(f), /Comment failed/);
+  assert.equal(f.calls.length, 0);
+});
+
+test('publisher has no repository-write permission', () => {
+  const workflow = fs.readFileSync(path.join(__dirname, '..', '..', 'workflows', 'review-issue.yml'), 'utf8');
+  const publisher = workflow.slice(workflow.indexOf('\n  publish:'));
+  assert.match(publisher, /contents: read/);
+  assert.match(publisher, /issues: write/);
+  assert.doesNotMatch(publisher, /contents: write/);
 });

@@ -20,6 +20,7 @@
             <Button Content="Show dialog" Click="ShowDialog_Click" />
             <Button Content="Show OK/Cancel" Click="ShowDialog2_Click" />
             <Button Content="Show 3-option dialog" Click="ShowDialog3_Click" />
+            <Button Content="Show share sheet" Click="ShowShareSheet_Click" />
             <TextBlock x:Name="resultText" />
         </StackPanel>
     </Grid>

@@ -1,7 +1,9 @@
 ﻿using Microsoft.UI;
 using Microsoft.UI.Windowing;
 using System;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using Windows.ApplicationModel.DataTransfer;
 using Windows.Win32;
 
 namespace WinUIEx
@@ -121,7 +123,7 @@ namespace WinUIEx
             var appwindow = window.AppWindow;
             if (appwindow.Presenter is OverlappedPresenter overlapped)
                 action(overlapped);
-            else 
+            else
                 throw new NotSupportedException($"Not supported with a {appwindow.Presenter.Kind} presenter");
         }
         private static T GetOverlappedPresenterValue<T>(this Microsoft.UI.Xaml.Window window, Func<OverlappedPresenter?,T> action)
@@ -361,7 +363,7 @@ namespace WinUIEx
         /// <param name="window">window</param>
         /// <param name="chromaKey">The color that specifies the transparency color key to be used when composing the layered window. All pixels painted by the window in this color will be transparent.</param>
         /// <param name="alpha">Alpha value used to describe the opacity of the layered window. When <paramref name="alpha"/> is 0, the window is completely transparent. When <paramref name="alpha"/> is 255, the window is opaque.</param>
-        public static void SetLayeredWindowAttributes(this Microsoft.UI.Xaml.Window window, Windows.UI.Color chromaKey, byte alpha) 
+        public static void SetLayeredWindowAttributes(this Microsoft.UI.Xaml.Window window, Windows.UI.Color chromaKey, byte alpha)
             => HwndExtensions.SetLayeredWindowAttributes(GetWindowHandle(window), chromaKey.R, chromaKey.G, chromaKey.B, alpha);*/
 
         /// <summary>
@@ -385,5 +387,18 @@ namespace WinUIEx
                 PInvoke.DeleteObject(rgn);
             }
         }
+
+        /// <summary>
+        /// Gets the <see cref="DataTransferManager"/> for the specified window.
+        /// </summary>
+        /// <param name="window">The window for which to get the <see cref="DataTransferManager"/>.</param>
+        /// <returns>The <see cref="DataTransferManager"/> associated with the specified window.</returns>
+        public static DataTransferManager GetDataTransferManager(this Microsoft.UI.Xaml.Window window) => HwndExtensions.GetDataTransferManagerForWindow(window.GetWindowHandle());
+
+        /// <summary>
+        /// Displays the Windows Share UI for the specified window.
+        /// </summary>
+        /// <param name="window">The window for which to display the Share UI.</param>
+        public static void ShowShareUI(this Microsoft.UI.Xaml.Window window) => HwndExtensions.ShowShareUIForWindow(window.GetWindowHandle());
     }
 }
